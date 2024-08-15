@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: c48085f849781f8468ad6cdcdeff8e56
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Modular_bridge_v1_1b
+    100002: Modular_bridge_v1_1c
+    100004: Modular_bridge_v1_1g
+    100006: Modular_bridge_v1_2b
+    100008: Modular_bridge_v1_2c
+    100010: Modular_bridge_v1_2g
+    100012: Modular_bridge_v1_3b
+    100014: Modular_bridge_v1_3c
+    100016: Modular_bridge_v1_3g
+    100018: Modular_bridge_v1_4b
+    100020: Modular_bridge_v1_4c
+    100022: Modular_bridge_v1_4g
+    100024: //RootNode
+    100026: Modular_bridge_v1_5b
+    100028: Modular_bridge_v1_5g
+    100030: Modular_bridge_v1_R1S
+    100032: Modular_bridge_v1_R1W
+    100034: Modular_bridge_v1_R2S
+    100036: Modular_bridge_v1_R2W
+    100038: Modular_bridge_v1_RSB
+    100040: Modular_bridge_v1_RWB
+    100042: Modular_bridge_v1_R3S
+    100044: Modular_bridge_v1_R3W
+    100046: Modular_bridge_v1_R4S
+    100048: Modular_bridge_v1_R4W
+    400000: Modular_bridge_v1_1b
+    400002: Modular_bridge_v1_1c
+    400004: Modular_bridge_v1_1g
+    400006: Modular_bridge_v1_2b
+    400008: Modular_bridge_v1_2c
+    400010: Modular_bridge_v1_2g
+    400012: Modular_bridge_v1_3b
+    400014: Modular_bridge_v1_3c
+    400016: Modular_bridge_v1_3g
+    400018: Modular_bridge_v1_4b
+    400020: Modular_bridge_v1_4c
+    400022: Modular_bridge_v1_4g
+    400024: //RootNode
+    400026: Modular_bridge_v1_5b
+    400028: Modular_bridge_v1_5g
+    400030: Modular_bridge_v1_R1S
+    400032: Modular_bridge_v1_R1W
+    400034: Modular_bridge_v1_R2S
+    400036: Modular_bridge_v1_R2W
+    400038: Modular_bridge_v1_RSB
+    400040: Modular_bridge_v1_RWB
+    400042: Modular_bridge_v1_R3S
+    400044: Modular_bridge_v1_R3W
+    400046: Modular_bridge_v1_R4S
+    400048: Modular_bridge_v1_R4W
+    2100000: 'Material #174'
+    2100002: 'Material #197'
+    2300000: Modular_bridge_v1_1b
+    2300002: Modular_bridge_v1_1c
+    2300004: Modular_bridge_v1_1g
+    2300006: Modular_bridge_v1_2b
+    2300008: Modular_bridge_v1_2c
+    2300010: Modular_bridge_v1_2g
+    2300012: Modular_bridge_v1_3b
+    2300014: Modular_bridge_v1_3c
+    2300016: Modular_bridge_v1_3g
+    2300018: Modular_bridge_v1_4b
+    2300020: Modular_bridge_v1_4c
+    2300022: Modular_bridge_v1_4g
+    2300024: Modular_bridge_v1_5b
+    2300026: Modular_bridge_v1_5g
+    2300028: Modular_bridge_v1_R1S
+    2300030: Modular_bridge_v1_R1W
+    2300032: Modular_bridge_v1_R2S
+    2300034: Modular_bridge_v1_R2W
+    2300036: Modular_bridge_v1_RSB
+    2300038: Modular_bridge_v1_RWB
+    2300040: Modular_bridge_v1_R3S
+    2300042: Modular_bridge_v1_R3W
+    2300044: Modular_bridge_v1_R4S
+    2300046: Modular_bridge_v1_R4W
+    3300000: Modular_bridge_v1_1b
+    3300002: Modular_bridge_v1_1c
+    3300004: Modular_bridge_v1_1g
+    3300006: Modular_bridge_v1_2b
+    3300008: Modular_bridge_v1_2c
+    3300010: Modular_bridge_v1_2g
+    3300012: Modular_bridge_v1_3b
+    3300014: Modular_bridge_v1_3c
+    3300016: Modular_bridge_v1_3g
+    3300018: Modular_bridge_v1_4b
+    3300020: Modular_bridge_v1_4c
+    3300022: Modular_bridge_v1_4g
+    3300024: Modular_bridge_v1_5b
+    3300026: Modular_bridge_v1_5g
+    3300028: Modular_bridge_v1_R1S
+    3300030: Modular_bridge_v1_R1W
+    3300032: Modular_bridge_v1_R2S
+    3300034: Modular_bridge_v1_R2W
+    3300036: Modular_bridge_v1_RSB
+    3300038: Modular_bridge_v1_RWB
+    3300040: Modular_bridge_v1_R3S
+    3300042: Modular_bridge_v1_R3W
+    3300044: Modular_bridge_v1_R4S
+    3300046: Modular_bridge_v1_R4W
+    4300000: Modular_bridge_v1_1b
+    4300002: Modular_bridge_v1_1g
+    4300004: Modular_bridge_v1_1c
+    4300006: Modular_bridge_v1_3b
+    4300008: Modular_bridge_v1_3c
+    4300010: Modular_bridge_v1_3g
+    4300012: Modular_bridge_v1_4c
+    4300014: Modular_bridge_v1_4g
+    4300016: Modular_bridge_v1_4b
+    4300018: Modular_bridge_v1_2c
+    4300020: Modular_bridge_v1_2b
+    4300022: Modular_bridge_v1_2g
+    4300024: Modular_bridge_v1_5g
+    4300026: Modular_bridge_v1_5b
+    4300028: Modular_bridge_v1_R1S
+    4300030: Modular_bridge_v1_RWB
+    4300032: Modular_bridge_v1_R2S
+    4300034: Modular_bridge_v1_R2W
+    4300036: Modular_bridge_v1_RSB
+    4300038: Modular_bridge_v1_R1W
+    4300040: Modular_bridge_v1_R3W
+    4300042: Modular_bridge_v1_R3S
+    4300044: Modular_bridge_v1_R4W
+    4300046: Modular_bridge_v1_R4S
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

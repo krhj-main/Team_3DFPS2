@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: df95e6e24c230a940b642e296611c4c1
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Concrete_fence_v1_1s1
+    100004: Concrete_fence_v1_1s1arm
+    100006: Concrete_fence_v1_1s2
+    100008: Concrete_fence_v1_1s2arm
+    100010: Concrete_fence_v1_1s3
+    100012: Concrete_fence_v1_1s3arm
+    100014: Concrete_fence_v1_1s4
+    100016: Concrete_fence_v1_1s4arm
+    100018: Concrete_fence_v1_2
+    100020: Concrete_fence_v1_2arm
+    100022: Concrete_fence_v1_3
+    100024: Concrete_fence_v1_3arm
+    400000: //RootNode
+    400002: Concrete_fence_v1_1s1
+    400004: Concrete_fence_v1_1s1arm
+    400006: Concrete_fence_v1_1s2
+    400008: Concrete_fence_v1_1s2arm
+    400010: Concrete_fence_v1_1s3
+    400012: Concrete_fence_v1_1s3arm
+    400014: Concrete_fence_v1_1s4
+    400016: Concrete_fence_v1_1s4arm
+    400018: Concrete_fence_v1_2
+    400020: Concrete_fence_v1_2arm
+    400022: Concrete_fence_v1_3
+    400024: Concrete_fence_v1_3arm
+    2100000: 24 - Default
+    2300000: //RootNode
+    2300002: Concrete_fence_v1_1s1
+    2300004: Concrete_fence_v1_1s1arm
+    2300006: Concrete_fence_v1_1s2
+    2300008: Concrete_fence_v1_1s2arm
+    2300010: Concrete_fence_v1_1s3
+    2300012: Concrete_fence_v1_1s3arm
+    2300014: Concrete_fence_v1_1s4
+    2300016: Concrete_fence_v1_1s4arm
+    2300018: Concrete_fence_v1_2
+    2300020: Concrete_fence_v1_2arm
+    2300022: Concrete_fence_v1_3
+    2300024: Concrete_fence_v1_3arm
+    3300000: //RootNode
+    3300002: Concrete_fence_v1_1s1
+    3300004: Concrete_fence_v1_1s1arm
+    3300006: Concrete_fence_v1_1s2
+    3300008: Concrete_fence_v1_1s2arm
+    3300010: Concrete_fence_v1_1s3
+    3300012: Concrete_fence_v1_1s3arm
+    3300014: Concrete_fence_v1_1s4
+    3300016: Concrete_fence_v1_1s4arm
+    3300018: Concrete_fence_v1_2
+    3300020: Concrete_fence_v1_2arm
+    3300022: Concrete_fence_v1_3
+    3300024: Concrete_fence_v1_3arm
+    4300000: Concrete_fence_v1
+    4300002: Concrete_fence_v1_3
+    4300004: Concrete_fence_v1_2
+    4300006: Concrete_fence_v1_1s3
+    4300008: Concrete_fence_v1_1s4
+    4300010: Concrete_fence_v1_1s1
+    4300012: Concrete_fence_v1_1s2
+    4300014: Concrete_fence_v1_2arm
+    4300016: Concrete_fence_v1_3arm
+    4300018: Concrete_fence_v1_1s1arm
+    4300020: Concrete_fence_v1_1s2arm
+    4300022: Concrete_fence_v1_1s3arm
+    4300024: Concrete_fence_v1_1s4arm
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
