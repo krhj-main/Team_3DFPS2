@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DronController : MonoBehaviour, SpecialWeapon
+public class DronController : MonoBehaviour, IEqupMent, Interectable
 {
     public Dron dron;
 
     public bool isOut = false;
     Camera charCamera;
+
+    Transform IEqupMent.transform { get => transform; set { } }
+    GameObject IEqupMent.gameObject { get => gameObject; set { } }
+    public EquipType type { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
+        type = EquipType.Special;
         charCamera = Camera.main;
     }
 
@@ -44,5 +50,32 @@ public class DronController : MonoBehaviour, SpecialWeapon
 
         }
            
+    }
+
+    public void OnHand(Transform _tr, Vector3 _offset)
+    {
+        transform.position = _tr.position + _offset;  //오브젝트 위치 조정
+        transform.rotation = _tr.rotation;
+    }
+
+    public void InputKey()
+    {
+        if (Input.GetMouseButton(0)) {
+            Use();
+        }
+    }
+
+    public void OutHand()
+    {
+        
+    }
+
+    public virtual void Interection(GameObject target)
+    {
+        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
+        if (swap != null)
+        {
+            swap.WeaponChange2(this, type);
+        }
     }
 }

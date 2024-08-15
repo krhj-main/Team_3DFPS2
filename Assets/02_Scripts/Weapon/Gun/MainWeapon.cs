@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainWeapon : MonoBehaviour
+public class MainWeapon : MonoBehaviour, Interectable, IEqupMent
 {
     // 실험
     protected float originBulletSpread;
@@ -38,21 +39,27 @@ public class MainWeapon : MonoBehaviour
 
     // 정조준 관련 변수
     public virtual float adsSpeed { get; set; }     // 정조준 속도
-    public virtual float adsFOV { get; set; }       // 정조준 시 카메라 FOV
-    private float shoulderFOV;                      // 견착 시 카메라 FOV
-    private float targetFOV;                        // 이동하려는 카메라 FOV
-    protected Vector3 adsPos;                       // 정조준 위치
+    public virtual float adsFOV { get; set; }       // 줌 정도
+    private float shoulderFOV;
+    private float targetFOV;
     Vector3 shoulderPos;                            // 견착 위치
-    Vector3 targetPos;                              // 이동하려는 위치 위치
-    private GunsSwap gunSwap;                       // 건스왑에서 총기 위치 옮겨줌
-    bool isAming = false;                           // 정조준 실행
-
+    protected Vector3 adsPos;                       // 정조준 위치
+    Vector3 targetPos;                              // 이동할 위치
+    private EquipmentsSwap gunSwap;                       // 건스왑에서 총기 위치 옮겨줌
+    bool isAming = false;
+    public Transform firePos;
     [SerializeField] protected Camera cam;          // 메인 카메라
     public virtual float headRatio { get; set; }    // 머리 비율
+    Transform IEqupMent.transform { get => transform; set { } }
+    GameObject IEqupMent.gameObject { get => gameObject; set { } }
+    bool isADS = false;
+
+    public EquipType type { get; set; }
     [SerializeField] public Sprite myImage;         // 무기 이미지
 
     protected virtual void Awake()
     {
+        type = EquipType.Weapon;
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
@@ -61,7 +68,7 @@ public class MainWeapon : MonoBehaviour
 
     protected virtual void Start()
     {
-        
+
     }
     /*
     public void BackAimBefore()
@@ -93,11 +100,11 @@ public class MainWeapon : MonoBehaviour
     {
         if (transform.parent != null)
         {
-            gunSwap = GetComponentInParent<GunsSwap>();
+            gunSwap = GetComponentInParent<EquipmentsSwap>();
             if (gunSwap) {
                 shoulderPos = gunSwap.GunPosition.localPosition;
             }
-            
+
             shoulderFOV = cam.fieldOfView;
         }
         else
@@ -113,11 +120,11 @@ public class MainWeapon : MonoBehaviour
         if (loadedAmmo > 0)                  // 장전된 탄약이 0보다 크면 탄약 빼주기
         {
             loadedAmmo--;                     // 탄약 마이너스
-            if(!_firePos.gameObject.CompareTag("Enemy"))
+            if (!_firePos.gameObject.CompareTag("Enemy"))
             {
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
             }
-            
+
             canShoot = true;                  // 슈팅 가능
         }
     }
@@ -129,7 +136,6 @@ public class MainWeapon : MonoBehaviour
         if (isReloading)
         {
             Debug.Log("재장전중");
-            Aming(false);           // 장전 중엔 줌 풀림
             return;
         }
 
@@ -174,7 +180,6 @@ public class MainWeapon : MonoBehaviour
 
     #region 정조준 함수
 
-    // 마우스 오른쪽 키 클릭시, 무기 위치 및 FOV 값 설정
     public void Aming(bool _whatAim)
     {
         isAming = true;
@@ -183,28 +188,26 @@ public class MainWeapon : MonoBehaviour
         {
             targetPos = adsPos;
             targetFOV = adsFOV;
-            bulletSpread = 0;                       // 현재 정조준 하면 탄퍼짐 X   
+            bulletSpread = 0;
         }
-        else
+
+        if (!_whatAim)
         {
             targetPos = shoulderPos;
             targetFOV = shoulderFOV;
-            bulletSpread = originBulletSpread;      // 탄퍼짐 원래대로
+            bulletSpread = originBulletSpread;
         }
-    }
-    
-    public IEnumerator AmingUI(bool _whatAim ,float _zoomUIdelayTime)
-    {
-        yield return new WaitForSeconds(_zoomUIdelayTime);
-
-        UIManager.Instance.SniperZoom(_whatAim);
+        Debug.Log(_whatAim);
     }
 
-    // 무기 위치 이동 및 FOV값 변경
     void UpdateAiming()
     {
+        if (gunSwap) 
+        { 
+            gunSwap.GunPosition.localPosition = Vector3.Lerp(gunSwap.GunPosition.localPosition, targetPos, Time.deltaTime * adsSpeed); 
+        }
         // 무기 위치 업데이트
-        gunSwap.GunPosition.localPosition = Vector3.Lerp(gunSwap.GunPosition.localPosition, targetPos, Time.deltaTime * adsSpeed);
+        
 
         // 카메라 FOV 업데이트
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * adsSpeed);
@@ -220,7 +223,7 @@ public class MainWeapon : MonoBehaviour
     protected Vector3 GetShootDir(Transform _firePos)
     {
         Vector3 _direction = _firePos.forward;  // 전방 기준
-        float _spread = Random.Range(-bulletSpread, bulletSpread) * spentBullet;
+        float _spread = UnityEngine.Random.Range(-bulletSpread, bulletSpread) * spentBullet;
 
         // 카메라의 위치 동기화 + 탄퍼짐
         if (_spread < maxSpread)
@@ -238,4 +241,51 @@ public class MainWeapon : MonoBehaviour
         return _direction.normalized;
     }
     #endregion
+    //상호작용
+    public virtual void Interection(GameObject target)
+    {
+        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
+        if (swap != null)
+        {
+            swap.WeaponChange2(this, EquipType.Weapon);
+        }
+    } 
+    //손에있을때 할 행동
+    public virtual void OnHand(Transform _tr,Vector3 _offSet)
+    {
+        transform.position = _tr.position + _offSet;  //오브젝트 위치 조정
+        transform.rotation = _tr.rotation;
+        UIManager.Instance.ReloadAmmoUIUpdate(loadedAmmo, remainAmmo);
+        UIManager.Instance.ChangeWeaponUIUpdate(myImage, 0, 0);
+    } 
+    //키입력
+    public virtual void InputKey()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Shoot(firePos);
+            GameManager.Instance.AggroEnemy(firePos.position, 30f);
+
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Aming(isADS);
+            isADS = !isADS;
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
+        }
+    }   
+    //무기 바꿀때 할 행동
+    public virtual void OutHand()
+    {
+        StopCoroutine(Reloading());
+        isReloading=false;
+        Aming(false);
+        isAming = false;
+    }   
 }
+
+    

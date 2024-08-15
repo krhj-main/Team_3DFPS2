@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemManager
-{//¾ÆÀÌÅÛÀ» °ü¸®ÇÏ´Â ¸Å´ÏÀú 
+{//ì•„ì´í…œì„ ê´€ë¦¬í•˜ëŠ” ë§¤ë‹ˆì € 
     public const int weaponSlotSize = 2;
     public const int throwSlotSize = 1;
     public const int specialSlotSize = 1;
@@ -11,6 +11,6 @@ public class ItemManager
     public Vector2 throwSlot { get { return new Vector2(weaponSlotSize, throwSlotSize); } }
     public Vector2 specialSlot { get { return new Vector2(throwSlotSize+ weaponSlotSize, specialSlotSize); } }
     public GameObject[] Guns = new GameObject[weaponSlotSize + throwSlotSize + specialSlotSize];
- 
+    public IEqupMent[] EqupMents = new IEqupMent[weaponSlotSize + throwSlotSize + specialSlotSize];
 
 }
