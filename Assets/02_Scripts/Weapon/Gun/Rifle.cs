@@ -1,0 +1,114 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+public class Rifle : MainWeapon
+{
+    private bool canReset = true;         // 처음에만 총알 넣어주기 위해
+    private float nextFireTime;           // 다음 발사 주기
+    public TextMeshProUGUI ammoTxt;       // 탄약 UI 표시
+
+    protected override void Awake()
+    {
+        // 실험
+        bulletSpread = 0.3f;
+        spentBullet = 1;
+        maxSpread = 1f;
+
+        base.Awake();
+        maxLoadedAmmo = 30;               // 장전될 수 있는 탄약
+        initializeAmmo = 180;             // 총기 최대 탄약
+        damage = 5;                       // 데미지
+        bulletRange = 10f;                // 총알 발사 거리
+        fireRate = 0.05f;                 // 총알 발사 주기
+        recoilX = 0.06f;                  // 좌우 반동
+        recoilY = 0.4f;                   // 수직 반동
+        recoilRecoverySpeed = 10f;        // 반동 회복 속도
+        reloadTime = 2f;                  // 장전 시간
+        adsSpeed = 6;                     // 정조준 속도
+        adsFOV = 45;                      // 정조준시 CameraFOV
+        ResetAmmo(initializeAmmo);        // 탄약 세팅
+    }
+
+    // 시작할 때, 탄약 세팅 함수
+    public void ResetAmmo(int _totalAmmo)
+    {
+        if (canReset)
+        {
+            loadedAmmo = maxLoadedAmmo;
+            remainAmmo = _totalAmmo - loadedAmmo;
+            canReset = false;
+        }
+    }
+
+    // 슈팅 함수
+    public override void Shoot(Transform _firePos)
+    {
+        if (Time.time >= nextFireTime)
+        {
+            nextFireTime = Time.time + fireRate;
+            base.Shoot(_firePos);
+            FireBullet(_firePos);
+
+            if(loadedAmmo <= 0)
+            {
+                Debug.Log("장전된 탄약 없음");
+                Reload();
+                canShoot = false;                 // 총알 없으면 슈팅 불가능
+            }
+        }
+    }
+
+    // 장전 함수
+    public override void Reload()
+    {
+        base.Reload();
+    }
+
+    // 발사 함수
+    public override void FireBullet(Transform _firePos)
+    {
+        RaycastHit hit;
+        Vector3 _bulletDir = GetShootDir(_firePos);
+        Vector3 direction = _firePos.forward + _bulletDir;
+
+        Debug.DrawRay(_firePos.position, direction * bulletRange, Color.red, 1f);
+
+        if (canShoot)
+        {
+            if (Physics.Raycast(_firePos.position, direction, out hit, bulletRange))       // 카메라 포지션에서 정면으로 총알 사거리만큼 쏨
+            {
+                if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
+                {
+                    Debug.Log($"벽에 닿음: {hit.transform.name}");
+                    return;
+                }
+
+                CharacterController _cc = hit.collider.GetComponent<CharacterController>();
+                if (_cc != null)
+                {
+                    // CharacterController의 실제 높이 계산
+                    float _controllerHeight = _cc.height * hit.transform.lossyScale.y;
+
+                    // CharacterController의 하단 y 좌표 계산 ( 지면 )
+                    float _bottomY = hit.transform.position.y + _cc.center.y * hit.transform.lossyScale.y - _controllerHeight / 2;
+
+                    // hit.point의 상대적 높이 비율 계산
+                    float _relativeHeight = (hit.point.y - _bottomY) / _controllerHeight;
+
+                    // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
+                    if (_relativeHeight >= (1 - headRatio))
+                    {
+                        Debug.Log("헤드샷");
+                        hit.transform.GetComponent<IDamageAble>().Damaged(damage * 2);
+                    }
+                    else
+                    {
+                        hit.transform.GetComponent<IDamageAble>().Damaged(damage);
+                    }
+                }
+            }
+        }
+    }
+}

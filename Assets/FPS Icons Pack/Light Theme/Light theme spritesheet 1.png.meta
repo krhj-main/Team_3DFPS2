@@ -1,0 +1,939 @@
+fileFormatVersion: 2
+guid: 5163ae49a0de665458bba61cd20c99b1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: LT Bullet 1
+  - first:
+      213: 21300002
+    second: LT Bullet 2
+  - first:
+      213: 21300004
+    second: LT Bullet 3
+  - first:
+      213: 21300006
+    second: LT Bullet 4
+  - first:
+      213: 21300008
+    second: LT Bullet 5
+  - first:
+      213: 21300010
+    second: LT Bullet 6
+  - first:
+      213: 21300012
+    second: LT Bullet 7
+  - first:
+      213: 21300014
+    second: LT Bullet 8
+  - first:
+      213: 21300016
+    second: LT Bullet 9
+  - first:
+      213: 21300018
+    second: LT Bullet 10
+  - first:
+      213: 21300020
+    second: LT Handgrenade 1
+  - first:
+      213: 21300022
+    second: LT Handgrenade 2
+  - first:
+      213: 21300024
+    second: LT Tank 1
+  - first:
+      213: 21300026
+    second: LT Handgrenade 3
+  - first:
+      213: 21300028
+    second: LT Handgrenade 4
+  - first:
+      213: 21300030
+    second: LT Handgrenade 5
+  - first:
+      213: 21300032
+    second: LT Handgrenade 6
+  - first:
+      213: 21300034
+    second: LT Handgrenade 7
+  - first:
+      213: 21300036
+    second: LT Handgrenade 8
+  - first:
+      213: 21300038
+    second: LT Handgrenade 9
+  - first:
+      213: 21300040
+    second: LT Tank 2
+  - first:
+      213: 21300042
+    second: LT Jet 1
+  - first:
+      213: 21300044
+    second: LT Jet 2
+  - first:
+      213: 21300046
+    second: LT Explosive
+  - first:
+      213: 21300048
+    second: LT Explosive remote
+  - first:
+      213: 21300050
+    second: LT Healthpack
+  - first:
+      213: 21300052
+    second: LT Health
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
+  cookieLightType: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Web
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FragGrenade_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 3418
+        width: 376
+        height: 620
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 331c23d3c41172d40b9af219d31d6f8c
+      internalID: 1638888286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Light theme spritesheet 1_1
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 3710
+        width: 292
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecb0173595a3d0241bdb11ae7df4294f
+      internalID: -1184492547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FragGrenade_2
+      rect:
+        serializedVersion: 2
+        x: 558
+        y: 3370
+        width: 460
+        height: 564
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92ff255fe8926384d8bcbefb84b51c39
+      internalID: 787823970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FragGrenade_3
+      rect:
+        serializedVersion: 2
+        x: 1070
+        y: 3374
+        width: 464
+        height: 564
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28367682bdd443c4a973d841ed4facaa
+      internalID: -528147403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ammo_1
+      rect:
+        serializedVersion: 2
+        x: 2994
+        y: 3446
+        width: 220
+        height: 580
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3cc9dc5fa287fa499893b97f70da2f5
+      internalID: 1873347332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ammo_2
+      rect:
+        serializedVersion: 2
+        x: 3238
+        y: 3446
+        width: 188
+        height: 572
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8c4b8a66665e7d4184e0cfe1ca8141f
+      internalID: 989243425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ammo_3
+      rect:
+        serializedVersion: 2
+        x: 3446
+        y: 3446
+        width: 188
+        height: 524
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2818640af6b586d4394e2bafecfe6291
+      internalID: -1472415692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ammo_4
+      rect:
+        serializedVersion: 2
+        x: 3658
+        y: 3446
+        width: 192
+        height: 420
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d35f778c7f4389c4187e561289b5f916
+      internalID: 867697203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ammo_5
+      rect:
+        serializedVersion: 2
+        x: 3874
+        y: 3446
+        width: 184
+        height: 412
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d602a6ac0b38d74eb3572ddd079b13c
+      internalID: -1421233600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Light theme spritesheet 1_9
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 3602
+        width: 92
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1776f91647a98e47aee09f20ca282b1
+      internalID: -964213125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Light theme spritesheet 1_10
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 3494
+        width: 332
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7067d5bbee16ba44990cb450e217a27
+      internalID: 2017571174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Light theme spritesheet 1_11
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 3402
+        width: 268
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45af3c66d7af4bf4db4d67448a9cd8ea
+      internalID: -47158960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PierecingAmmo_2
+      rect:
+        serializedVersion: 2
+        x: 3882
+        y: 2418
+        width: 172
+        height: 988
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86d40ceeb4c691549a94406989996712
+      internalID: 448220462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlashGrenade_1
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 2481
+        width: 424
+        height: 777
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aba75e301bd5ef043bc0ddc0ce2cae94
+      internalID: 1485955880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Light theme spritesheet 1_14
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 2490
+        width: 256
+        height: 308
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f287d959a655c04990db7f4c04fa29d
+      internalID: 1152875489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlashGrenade_2
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 2486
+        width: 428
+        height: 772
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2071fc2ff46189c42bee6b84a44ff9bb
+      internalID: 207371981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmokeGrenade_1
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 2482
+        width: 424
+        height: 756
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3ae14d021e202f4ab2799319a466ba8
+      internalID: 892689214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmokeGrenade_2
+      rect:
+        serializedVersion: 2
+        x: 1662
+        y: 2482
+        width: 420
+        height: 756
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2c12f530a8a1fb46a45b0b4fd4daae3
+      internalID: 1048273447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShotgunAmmo_1
+      rect:
+        serializedVersion: 2
+        x: 3018
+        y: 2414
+        width: 200
+        height: 620
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b20b284394d4354ea4d2e860a22c83b
+      internalID: -144159691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShotgunAmmo_2
+      rect:
+        serializedVersion: 2
+        x: 3238
+        y: 2418
+        width: 240
+        height: 528
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0998b116721dda41a6049af7dd96d43
+      internalID: -1586653539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ShotgunAmmo_3
+      rect:
+        serializedVersion: 2
+        x: 3490
+        y: 2418
+        width: 244
+        height: 496
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8751984336523d94181ecd2eecee7e85
+      internalID: -399573016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PierecingAmmo_1
+      rect:
+        serializedVersion: 2
+        x: 3750
+        y: 2418
+        width: 112
+        height: 636
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20dde43f6279f8049a0983267ddf1c01
+      internalID: 681383478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grenade_1
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 1670
+        width: 620
+        height: 756
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a281218d9f67f846a43c9487495ccbe
+      internalID: 1160989054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grenade_2
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 1701
+        width: 604
+        height: 732
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96bf3ed1a80cde0458f3f1e1f0d46ab7
+      internalID: -602278959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank_1
+      rect:
+        serializedVersion: 2
+        x: 3010
+        y: 1834
+        width: 1060
+        height: 496
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69772739eebb74f4fad7fa6f6902c49c
+      internalID: 1745459333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HackTool
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 858
+        width: 828
+        height: 624
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c38e508f09645349a5e7089d938d709
+      internalID: -265805309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Radio
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 858
+        width: 336
+        height: 704
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dee020e77135a44fb1b0024c3fbd972
+      internalID: 153108850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tank_2
+      rect:
+        serializedVersion: 2
+        x: 3010
+        y: 1250
+        width: 1060
+        height: 496
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5d3e3bc234c4bb4f8d4813c143ce19d
+      internalID: 585700923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthPack
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 94
+        width: 624
+        height: 620
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 663b70b8fdf9dba45a2c9db70f0ab144
+      internalID: 1934481096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Health
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 178
+        width: 452
+        height: 452
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e111d186ca74eb48aa82e2da1d975cb
+      internalID: -43373145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Zet_1
+      rect:
+        serializedVersion: 2
+        x: 3098
+        y: 534
+        width: 872
+        height: 656
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ff50f61307a7a241a2ca8d10d346e40
+      internalID: 1652631909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Zet_2
+      rect:
+        serializedVersion: 2
+        x: 2716
+        y: 50
+        width: 1338
+        height: 328
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74864a89d35731146a24e9819bf1451b
+      internalID: 518940945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ea139af3d3e6e7341b6b2c0c4c57c43f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Ammo_1: 1873347332
+      Ammo_2: 989243425
+      Ammo_3: -1472415692
+      Ammo_4: 867697203
+      Ammo_5: -1421233600
+      FlashGrenade_1: 1485955880
+      FlashGrenade_2: 207371981
+      FragGrenade_1: 1638888286
+      FragGrenade_2: 787823970
+      FragGrenade_3: -528147403
+      Grenade_1: 1160989054
+      Grenade_2: -602278959
+      HackTool: -265805309
+      Health: -43373145
+      HealthPack: 1934481096
+      Light theme spritesheet 1_1: -1184492547
+      Light theme spritesheet 1_10: 2017571174
+      Light theme spritesheet 1_11: -47158960
+      Light theme spritesheet 1_14: 1152875489
+      Light theme spritesheet 1_24: 851179445
+      Light theme spritesheet 1_9: -964213125
+      PierecingAmmo_1: 681383478
+      PierecingAmmo_2: 448220462
+      Radio: 153108850
+      ShotgunAmmo_1: -144159691
+      ShotgunAmmo_2: -1586653539
+      ShotgunAmmo_3: -399573016
+      SmokeGrenade_1: 892689214
+      SmokeGrenade_2: 1048273447
+      Tank_1: 1745459333
+      Tank_2: 585700923
+      Zet_1: 1652631909
+      Zet_2: 518940945
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

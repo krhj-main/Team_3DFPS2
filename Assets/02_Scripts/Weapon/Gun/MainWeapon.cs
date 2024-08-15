@@ -1,0 +1,241 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class MainWeapon : MonoBehaviour
+{
+    // 실험
+    protected float originBulletSpread;
+    protected float bulletSpread = 1f;           // 탄 퍼짐
+    protected float maxSpread = 1f;
+
+    // 탄약 관련 변수
+    public virtual int initializeAmmo { get; set; }  // 최대 탄약
+    public virtual int maxLoadedAmmo { get; set; }   // 최대 장탄수
+    public virtual int loadedAmmo { get; set; }      // 장전된 탄약
+    public virtual int remainAmmo { get; set; }      // 남은 탄약
+
+    // 데미지 관련 변수
+    public virtual int damage { get; set; }          // 데미지
+    public virtual float bulletRange { get; set; }   // 총알 사거리
+    public virtual float fireRate { get; set; }      // 발사 주기 
+    public virtual int spentBullet { get; set; }     // 총알 발사한 숫자 ( 탄 퍼짐 관련 변수 실험중)
+    protected bool canShoot = true;                  // 발사 가능 변수
+    public LayerMask canAttackMask;                  // 데미지 입힐 수 있는 유닛
+
+    // 반동 관련 변수
+    public virtual float recoilX { get; set; }               // 좌우 반동 크기
+    public virtual float recoilY { get; set; }               // 수직 반동 크기
+    public virtual float recoilRecoverySpeed { get; set; }   // 반동 회복 속도
+    public Vector3 currentRotation;                          // 현재 카메라 값
+    protected Vector3 targetRotation;                        // 반동될 카메라 값
+
+    // 재장전 관련 변수
+    public virtual float reloadTime { get; set; }   // 재장전 시간
+    private bool isReloading = false;               // 장전중
+
+    // 정조준 관련 변수
+    public virtual float adsSpeed { get; set; }     // 정조준 속도
+    public virtual float adsFOV { get; set; }       // 정조준 시 카메라 FOV
+    private float shoulderFOV;                      // 견착 시 카메라 FOV
+    private float targetFOV;                        // 이동하려는 카메라 FOV
+    protected Vector3 adsPos;                       // 정조준 위치
+    Vector3 shoulderPos;                            // 견착 위치
+    Vector3 targetPos;                              // 이동하려는 위치 위치
+    private GunsSwap gunSwap;                       // 건스왑에서 총기 위치 옮겨줌
+    bool isAming = false;                           // 정조준 실행
+
+    [SerializeField] protected Camera cam;          // 메인 카메라
+    public virtual float headRatio { get; set; }    // 머리 비율
+    [SerializeField] public Sprite myImage;         // 무기 이미지
+
+    protected virtual void Awake()
+    {
+        originBulletSpread = bulletSpread;
+        headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
+        //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
+        adsPos = new Vector3(0, -0.25f, 0.5f);
+    }
+
+    protected virtual void Start()
+    {
+        
+    }
+    /*
+    public void BackAimBefore()
+    {
+        targetRotation = Vector3.Lerp(targetRotation, new Vector3(0, 0, 0), recoilRecoverySpeed * Time.deltaTime);
+        currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
+        cam.transform.localRotation = Quaternion.Euler(currentRotation);
+    }
+
+    public void BackAim()
+    {
+        Vector3 _tiltRotation = tiltingTest.GetTiltRotation();
+        targetRotation = Vector3.Lerp(targetRotation, _tiltRotation, recoilRecoverySpeed * Time.deltaTime);
+        currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
+        cam.transform.localRotation = Quaternion.Euler(currentRotation + _tiltRotation);
+    }
+    */
+
+    private void Update()
+    {
+        if (isAming)
+        {
+            UpdateAiming();
+        }
+    }
+
+    // 부모가 생기면 초기화 해줌
+    private void OnTransformParentChanged()
+    {
+        if (transform.parent != null)
+        {
+            gunSwap = GetComponentInParent<GunsSwap>();
+            if (gunSwap) {
+                shoulderPos = gunSwap.GunPosition.localPosition;
+            }
+            
+            shoulderFOV = cam.fieldOfView;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    #region 슈팅 함수
+    public virtual void Shoot(Transform _firePos)
+    {
+        CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
+        if (loadedAmmo > 0)                  // 장전된 탄약이 0보다 크면 탄약 빼주기
+        {
+            loadedAmmo--;                     // 탄약 마이너스
+            if(!_firePos.gameObject.CompareTag("Enemy"))
+            {
+                camController.ApplyRecoil(recoilX, recoilY);    // 반동
+            }
+            
+            canShoot = true;                  // 슈팅 가능
+        }
+    }
+    #endregion
+
+    #region 장전 함수
+    public virtual void Reload()
+    {
+        if (isReloading)
+        {
+            Debug.Log("재장전중");
+            Aming(false);           // 장전 중엔 줌 풀림
+            return;
+        }
+
+        if (loadedAmmo == maxLoadedAmmo)
+        {
+            Debug.Log("탄창 꽉참");
+            return;
+        }
+
+        if (remainAmmo <= 0)
+        {
+            Debug.Log("남은 탄약 없음");
+            return;
+        }
+
+        StartCoroutine(Reloading());
+    }
+
+    // 장전 코루틴
+    IEnumerator Reloading()
+    {
+        isReloading = true;
+        Debug.Log("장전시작");
+        // 이 위치에 장전 애니메이션 추가
+
+        yield return new WaitForSeconds(reloadTime);  // 장전 걸리는 시간
+
+        int _ammoToMagazine = Mathf.Min(maxLoadedAmmo - loadedAmmo, remainAmmo);    // 둘 중 작은 값 비교하기
+        loadedAmmo += _ammoToMagazine;
+        remainAmmo -= _ammoToMagazine;
+        isReloading = false;
+        Debug.Log("장전 끝");
+
+        // 장전 끝나고 총알 수 UI에 반영
+        UIManager.Instance.ReloadAmmoUIUpdate(loadedAmmo, remainAmmo);
+    }
+    #endregion
+
+    #region 발사 함수
+    public virtual void FireBullet(Transform _firePos) { }    // 무조건 자식 클래스에서 재정의
+    #endregion
+
+    #region 정조준 함수
+
+    // 마우스 오른쪽 키 클릭시, 무기 위치 및 FOV 값 설정
+    public void Aming(bool _whatAim)
+    {
+        isAming = true;
+
+        if (_whatAim)
+        {
+            targetPos = adsPos;
+            targetFOV = adsFOV;
+            bulletSpread = 0;                       // 현재 정조준 하면 탄퍼짐 X   
+        }
+        else
+        {
+            targetPos = shoulderPos;
+            targetFOV = shoulderFOV;
+            bulletSpread = originBulletSpread;      // 탄퍼짐 원래대로
+        }
+    }
+    
+    public IEnumerator AmingUI(bool _whatAim ,float _zoomUIdelayTime)
+    {
+        yield return new WaitForSeconds(_zoomUIdelayTime);
+
+        UIManager.Instance.SniperZoom(_whatAim);
+    }
+
+    // 무기 위치 이동 및 FOV값 변경
+    void UpdateAiming()
+    {
+        // 무기 위치 업데이트
+        gunSwap.GunPosition.localPosition = Vector3.Lerp(gunSwap.GunPosition.localPosition, targetPos, Time.deltaTime * adsSpeed);
+
+        // 카메라 FOV 업데이트
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * adsSpeed);
+
+        if (cam.fieldOfView == targetFOV)
+        {
+            isAming = false;
+        }
+    }
+    #endregion
+
+    #region 탄 퍼짐 함수
+    protected Vector3 GetShootDir(Transform _firePos)
+    {
+        Vector3 _direction = _firePos.forward;  // 전방 기준
+        float _spread = Random.Range(-bulletSpread, bulletSpread) * spentBullet;
+
+        // 카메라의 위치 동기화 + 탄퍼짐
+        if (_spread < maxSpread)
+        {
+            _direction += _firePos.up * _spread;
+            _direction += _firePos.right * _spread;
+        }
+        else
+        {
+            _direction = _firePos.up * maxSpread;
+            _direction = _firePos.right * maxSpread;
+        }
+
+        // 결과값 리턴
+        return _direction.normalized;
+    }
+    #endregion
+}
