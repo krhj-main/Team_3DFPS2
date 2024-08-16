@@ -1914,6 +1914,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1180761160894769012, guid: e4067a069498d344299f330819737fe5,
+        type: 3}
+      propertyPath: m_Drag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180761160894769012, guid: e4067a069498d344299f330819737fe5,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180761160894769012, guid: e4067a069498d344299f330819737fe5,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1834826944814569597, guid: e4067a069498d344299f330819737fe5,
         type: 3}
       propertyPath: m_RootOrder
@@ -1979,6 +1994,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 7226871574691818117, guid: e4067a069498d344299f330819737fe5,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 5db22228dba12f040b02334139cc2b81,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 671129107523242780, guid: e4067a069498d344299f330819737fe5, type: 3}
     m_RemovedGameObjects: []

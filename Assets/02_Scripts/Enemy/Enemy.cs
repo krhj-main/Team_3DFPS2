@@ -89,6 +89,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     public List<Transform> wayPoints;
     int index;
 
+    // 상태이상 관련 변수
+    public float blindTime;
+
     // 컴포넌트
     CharacterController cc;
     Animator anim;
@@ -154,8 +157,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 //Die();
                 break;
             case EnemyState.Blind:
-                agent.isStopped = true;
-                agent.ResetPath(); 
+                Blind();
                 break;
         }
     }
@@ -230,6 +232,28 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 //anim.SetTrigger("IdleToMove");
             }
+        }
+    }
+    #endregion
+
+    #region "Blind"
+    public void Blind()
+    {
+        // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
+        findDis = 0.1f;
+        atkDis = 0f;
+        fov.visibleTargets.Clear();
+        // 이동을 멈추고 경로 초기화
+        agent.isStopped = true;
+        agent.ResetPath();
+
+        if (GameManager.Instance.BlindTimer(blindTime))
+        {
+            // 시야를 복구하고, 플레이어를 놓친 상태로 설정
+            findDis = originFindDis;
+            atkDis = originAtkDis;
+            agent.isStopped = false;
+            enemyState = missingState;
         }
     }
     #endregion

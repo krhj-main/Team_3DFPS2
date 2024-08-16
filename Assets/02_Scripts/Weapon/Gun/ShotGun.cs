@@ -117,7 +117,6 @@ public class ShotGun : MainWeapon
                 {
                     if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
                     {
-                        Debug.Log($"벽에 닿음: {hit.transform.name}");
                         continue;
                     }
 
@@ -136,7 +135,6 @@ public class ShotGun : MainWeapon
                         // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
                         if (_relativeHeight >= (1 - headRatio))
                         {
-                            Debug.Log("헤드샷");
                             hit.transform.GetComponent<IDamageAble>().Damaged(damage * 2);
                         }
                         else

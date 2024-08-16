@@ -13,9 +13,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     public List<Enemy> enemies = new List<Enemy>();
-    float calduration;
-    float baseTime = 1.5f;
-    //public List<IDamageAble> damageAbles = new List<IDamageAble>();
+    float calDuration;
 
     private void OnEnable()
     {
@@ -43,10 +41,11 @@ public class GameManager : Singleton<GameManager>
         Cursor.visible = false;
     }
 
+    #region "AggroEnemy"
     // Enemy의 어그로를 끄는 메서드
     public void AggroEnemy(Vector3 _soundPos, float _radius)
     {
-        foreach(Enemy enemy in enemies)
+        foreach (Enemy enemy in enemies)
         {
             // 에너미와 소리난 곳의 거리 계산
             float _distance = Vector3.Distance(_soundPos, enemy.gameObject.transform.position);
@@ -58,7 +57,7 @@ public class GameManager : Singleton<GameManager>
                 enemy.chasePos = _soundPos;
 
                 // 존버 상태가 아닐때만
-                if (enemy.enemyState != EnemyState.Hide)
+                if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind)
                 {
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
                     enemy.enemyState = EnemyState.Move;
@@ -66,6 +65,8 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+    #endregion
+
     #region "AggroEnemy 원본"
     /*
     // 플레이어쪽에서 호출해 일정 범위 안에 있는 enemy에게 플레이어의 위치값을 전달해주는 함수
@@ -98,11 +99,17 @@ public class GameManager : Singleton<GameManager>
     */
     #endregion
 
+    #region "섬광탄"
     // 섬광탄 효과 ( 눈뽕, 에너미 멈춤 등 )
     public IEnumerator FlashGrenadeExplode(Transform _explode, float _radius, float _effectDuration)
     {
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
+
+        // 거리별 값 판별 ( 멀어질수록 작은 값 )
+        float _rangePersentPlayer = 1 - (_distanceToPlayer / _radius);
+        calDuration = Mathf.RoundToInt(_effectDuration * _rangePersentPlayer);
+
         if ( _distanceToPlayer <= _radius )
         {
             if (IsLookingAtFlash(_explode, PlayerController.Instance.transform))
@@ -122,8 +129,9 @@ public class GameManager : Singleton<GameManager>
             float _distance = Vector3.Distance(_explode.position, enemy.transform.position);
 
             // 거리별 값 판별 ( 멀어질수록 작은 값 )
-            //float _rangePersent = 1 - (_distance / _radius);
-            //calduration = Mathf.RoundToInt(_effectDuration * _rangePersent);
+            float _rangePersent = 1 - (_distance / _radius);
+            float _baseTime = 1.5f;
+            enemy.blindTime = Mathf.RoundToInt(_effectDuration * _rangePersent) + _baseTime;
 
             // 거리가 범위 이내라면
             if (_distance < _radius)
@@ -131,20 +139,17 @@ public class GameManager : Singleton<GameManager>
                 // Enemy가 섬광탄을 보고있다면
                 if (IsLookingAtFlash(_explode, enemy.transform))
                 {
-                    // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
-                    enemy.findDis = 0.1f;
-                    enemy.atkDis = 0f;
-                    enemy.fov.visibleTargets.Clear();
+                    Debug.Log("섬광탄 확인" + enemy.blindTime);
                     enemy.enemyState = EnemyState.Blind;
                 }
             }
         }
 
         // 1.5초 + 거리별 시간 이후 섬광 끝 // 현재 각각 다르게 적용되어야 할 시간이 하나로만 적용중
-        yield return new WaitForSeconds(_effectDuration);
+        yield return new WaitForSeconds(calDuration);
 
         UIManager.Instance.FlashImage.gameObject.SetActive(false);
-
+        /*
         foreach (Enemy enemy in enemies)
         {
             // 시야를 복구하고, 플레이어를 놓친 상태로 설정
@@ -153,6 +158,7 @@ public class GameManager : Singleton<GameManager>
             enemy.agent.isStopped = false;
             enemy.enemyState = enemy.missingState;
         }
+        */
     }
 
     // 캐릭터가 섬광탄을 보고있는지 판단하는 메서드
@@ -179,7 +185,9 @@ public class GameManager : Singleton<GameManager>
         }
         return false;
     }
+    #endregion
 
+    #region "수류탄"
     // 수류탄 효과 ( 데미지 )
     public void FlagGrenadeExplode(Transform _explode, float _radius, float _damage)
     {
@@ -216,4 +224,20 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+    #endregion
+
+    #region "타이머"
+    float curTime;
+    public bool BlindTimer(float _targetTime)
+    {
+        curTime += Time.deltaTime;
+        if (curTime > _targetTime)
+        {
+            curTime = 0;
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
 }

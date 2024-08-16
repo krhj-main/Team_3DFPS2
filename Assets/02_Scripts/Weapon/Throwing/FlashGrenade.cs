@@ -5,16 +5,12 @@ using static UnityEditor.PlayerSettings;
 
 public class FlashGrenade : ThrowingWeapon
 {
-    float baseTime;
-    int calduration;
-
     protected override void Awake()
     {
         base.Awake();
         explosiondelay = 2f;
         explosionRadius = 10f;
         effectDuration = 5f;
-        baseTime = 2f;
     }
 
     protected override IEnumerator Explode()
@@ -24,8 +20,6 @@ public class FlashGrenade : ThrowingWeapon
         StartCoroutine(GameManager.Instance.FlashGrenadeExplode(transform, explosionRadius, effectDuration));
         
         /*
-        yield return new WaitForSeconds(explosiondelay);
-
         Collider[] _targetsInRadius = Physics.OverlapSphere(transform.position, explosionRadius, attackableMask);
 
         // null 체크 _targetsInRadius가 존재하면
@@ -42,7 +36,6 @@ public class FlashGrenade : ThrowingWeapon
                 // 에너미는
                 if (_target.CompareTag("Enemy"))
                 {
-                    Debug.Log(_target.name);
                     Enemy enemy = _target.GetComponent<Enemy>();
                     // 섬광탄을 보고있다면
                     if (IsPlayerLookingAtFlashbang(_target.transform))
@@ -105,9 +98,8 @@ public class FlashGrenade : ThrowingWeapon
 
         // 카메라가 바라보는 방향과, 플레이어에서 섬광탄으로의 방향 사이의 각도를 계산
         float angle = Vector3.Angle(_character.forward, directionToFlashbang);
-        Debug.Log(angle);
         // 시야각 확인 // 60 = 좌우로 60
-        if (angle < 90f)
+        if (angle < 60f)
         {
             // 레이캐스트로 장애물 체크
             RaycastHit hit;

@@ -37,8 +37,6 @@ public class FragGrenade : ThrowingWeapon
         }
         */
         GameManager.Instance.FlagGrenadeExplode(transform, explosionRadius, damage);
-
-        Debug.Log("수류탄 폭발!");
         // 이펙트, 데스트로이 혹은 셋액티브펄스
     }
 }
