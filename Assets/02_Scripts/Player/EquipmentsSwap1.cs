@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EquipmentsSwap : MonoBehaviour
+public class EquipmentsSwap1 : MonoBehaviour
 {
 
     public Transform GunPosition;                 //총이 있어야할 위치(빈게임오브젝트)  
@@ -17,7 +17,7 @@ public class EquipmentsSwap : MonoBehaviour
     public Transform firePos;
     EquipmentsSlot slot;
 
-
+    /*
     public int Index                                        //인덱스를 순환시키기 위한 프로퍼티 
     {
         get { return index; }
@@ -55,9 +55,9 @@ public class EquipmentsSwap : MonoBehaviour
     void Update()
     {
         
-        if (equp[index] != null)
+        if (slot.At(Index) != null)
         {
-            equp[index].OnHand(GunPosition, offsetPos);
+            slot.At(Index).OnHand(GunPosition, offsetPos);
         }
         float _wheelInput = Input.GetAxis("Mouse ScrollWheel"); //휠 입력을 받고
         if (_wheelInput > 0)                                    //휠 입력에 따라 후치 연산자를 통해 현재 선택된 오브젝트를 끄고
@@ -130,40 +130,40 @@ public class EquipmentsSwap : MonoBehaviour
     void Swap(int _setIndex, int _dir = 1)
     {//1또는 -1으로 들고있는 무기를 전환하는 함수
         offsetPos = Vector3.zero;
-        if (equp[index] != null)
+        IEquipMent _equp = slot.At(Index);
+        if (_equp != null)
         {//무기를 들고있으면 전환
-            equp[index].gameObject.SetActive(false);
-            equp[index].OutHand();
-            InputManger.Instance.keyAction -= equp[index].InputKey;
+            _equp.gameObject.SetActive(false);
+            _equp.OutHand();
+            InputManger.Instance.keyAction -= _equp.InputKey;
         }
         Index = _setIndex;
-        if (equp[Index] != null)
+        _equp = slot.At(Index);
+        if (_equp != null)
         {
-            equp[Index].gameObject.SetActive(true);
-            InputManger.Instance.keyAction += equp[Index].InputKey;
+            _equp.gameObject.SetActive(true);
+            InputManger.Instance.keyAction += _equp.InputKey;
         }
     }
     void SwapNext() { Swap(Index + 1); }
     void SwapPrev() { Swap(Index - 1, -1); }
+    //수류탄이랑 특수장비 예외처리해야함...
     void AddWeapon(IEquipMent Weapon, int slotStart, int slotSize)
     {
-        if (Weapon.type == EquipType.Weapon)
-        {
+        if (Weapon.type == EquipType.Weapon){
             ((MainWeapon)Weapon).firePos = firePos;
-        }
-        else if (Weapon.type == EquipType.Throw) {
-            ((ThrowingWeapon)Weapon).firePos = firePos;
         }
         //게임오브젝트와, 슬롯시작,슬롯 크기값을 입력받고 그 슬롯에 무기를 추가하는함수
         for (int i = slotStart; i < (slotStart + slotSize); i++)
         {//남는칸이 있을때
-            if (equp[i] == null)
+            IEquipMent _equp = slot.At(i);
+            if (_equp == null)
             {
-                equp[i] = Weapon;
-                equp[i].transform.SetParent(transform);
-                if (equp[Index] != null)
+                slot.Set(i, Weapon);
+                slot.At(i).transform.SetParent(transform);
+                if (slot.At(Index) != null)
                 {
-                    equp[Index].gameObject.SetActive(false);
+                    slot.At(Index).gameObject.SetActive(false);
                 }
 
                 size++;
@@ -175,15 +175,15 @@ public class EquipmentsSwap : MonoBehaviour
         IEquipMent _gun;
         if (Index >= slotStart && slotStart + slotSize > Index)//손에 들고있는거랑 같으면
         {
-            InputManger.Instance.keyAction -= equp[index].InputKey;
-            _gun = equp[Index];
-            equp[Index] = Weapon;
-            InputManger.Instance.keyAction += equp[index].InputKey;
+            _gun = slot.At(Index);
+            InputManger.Instance.keyAction -= _gun.InputKey;
+            slot.Set(Index, Weapon);
+            InputManger.Instance.keyAction += slot.At(Index).InputKey;
         }
         else
         {                                                  //손에 들고있는게 아니면 첫번째랑 교체
-            _gun = equp[slotStart];
-            equp[slotStart] = Weapon;
+            _gun = slot.At(slotStart);
+            slot.Set(slotStart, Weapon);
             Weapon.gameObject.SetActive(false);
         }
         _gun.transform.position = Weapon.transform.position;
@@ -194,17 +194,10 @@ public class EquipmentsSwap : MonoBehaviour
     public void DropWeapon()
     {
         IEquipMent _go;
-        _go = equp[Index];
-        equp[Index] = null;
+        _go = slot.At(Index);
+        slot.Set(Index,null);
         size--;
-        /*
-        if (throwingWeapon != null)
-        {
-            // ThrowingWeapon 스크립트가 있는 경우, Throw 메서드를 사용
-            throwingWeapon.Throw(Camera.main.transform);
 
-        }*/
-            // ThrowingWeapon이 아닌 경우, 기존의 드롭 로직 사용
         Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
         if (_rid)
         {
@@ -215,5 +208,6 @@ public class EquipmentsSwap : MonoBehaviour
         SwapNext();
 
     }
-
+    */
 }
+

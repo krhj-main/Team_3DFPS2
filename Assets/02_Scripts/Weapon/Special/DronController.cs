@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DronController : MonoBehaviour, IEqupMent, Interectable
+public class DronController : MonoBehaviour, IEquipMent, Interectable
 {
     public Dron dron;
 
     public bool isOut = false;
     Camera charCamera;
 
-    Transform IEqupMent.transform { get => transform; set { } }
-    GameObject IEqupMent.gameObject { get => gameObject; set { } }
+    Transform IEquipMent.transform { get => transform; set { } }
+    GameObject IEquipMent.gameObject { get => gameObject; set { } }
     public EquipType type { get; set; }
 
     // Start is called before the first frame update

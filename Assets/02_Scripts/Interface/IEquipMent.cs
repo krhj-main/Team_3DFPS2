@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEqupMent 
+public interface IEquipMent 
 {
     Transform transform { get; set; }
     GameObject gameObject { get; set; }

@@ -8,15 +8,16 @@ public class FragGrenade : ThrowingWeapon
     protected override void Awake()
     {
         base.Awake();
-        explosiondelay = 5f;         // 폭발 시간
+        explosiondelay = 1f;         // 폭발 시간
         explosionRadius = 10f;       // 폭발 반경
         damage = 100;                // 데미지
     }
 
+    
     protected override IEnumerator Explode()
     {
         yield return new WaitForSeconds(explosiondelay);
-
+        //throwingweapon 3 던질때 특정 값에 의해 효과가 변경
         /*
         Collider[] _colliders = Physics.OverlapSphere(transform.position, explosionRadius, attackableMask);
         foreach(Collider _collider in _colliders)
@@ -37,7 +38,8 @@ public class FragGrenade : ThrowingWeapon
         }
         */
         GameManager.Instance.FlagGrenadeExplode(transform, explosionRadius, damage);
-
+        gameObject.SetActive(false);
+        isThrow = false;
         Debug.Log("수류탄 폭발!");
         // 이펙트, 데스트로이 혹은 셋액티브펄스
     }

@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainWeapon : MonoBehaviour, Interectable, IEqupMent
+public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
 {
     // 실험
     protected float originBulletSpread;
@@ -50,8 +50,8 @@ public class MainWeapon : MonoBehaviour, Interectable, IEqupMent
     public Transform firePos;
     [SerializeField] protected Camera cam;          // 메인 카메라
     public virtual float headRatio { get; set; }    // 머리 비율
-    Transform IEqupMent.transform { get => transform; set { } }
-    GameObject IEqupMent.gameObject { get => gameObject; set { } }
+    Transform IEquipMent.transform { get => transform; set { } }
+    GameObject IEquipMent.gameObject { get => gameObject; set { } }
     bool isADS = false;
 
     public EquipType type { get; set; }
@@ -89,10 +89,7 @@ public class MainWeapon : MonoBehaviour, Interectable, IEqupMent
 
     private void Update()
     {
-        if (isAming)
-        {
-            UpdateAiming();
-        }
+        
     }
 
     // 부모가 생기면 초기화 해줌
@@ -197,7 +194,6 @@ public class MainWeapon : MonoBehaviour, Interectable, IEqupMent
             targetFOV = shoulderFOV;
             bulletSpread = originBulletSpread;
         }
-        Debug.Log(_whatAim);
     }
 
     void UpdateAiming()
@@ -257,6 +253,10 @@ public class MainWeapon : MonoBehaviour, Interectable, IEqupMent
         transform.rotation = _tr.rotation;
         UIManager.Instance.ReloadAmmoUIUpdate(loadedAmmo, remainAmmo);
         UIManager.Instance.ChangeWeaponUIUpdate(myImage, 0, 0);
+        if (isAming)
+        {
+            UpdateAiming();
+        }
     } 
     //키입력
     public virtual void InputKey()
