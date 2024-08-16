@@ -17,7 +17,6 @@ public class FragGrenade : ThrowingWeapon
     {
         yield return new WaitForSeconds(explosiondelay);
 
-        /*
         Collider[] _colliders = Physics.OverlapSphere(transform.position, explosionRadius, attackableMask);
         foreach(Collider _collider in _colliders)
         {
@@ -35,8 +34,6 @@ public class FragGrenade : ThrowingWeapon
                 }
             }
         }
-        */
-        GameManager.Instance.FlagGrenadeExplode(transform, explosionRadius, damage);
 
         Debug.Log("수류탄 폭발!");
         // 이펙트, 데스트로이 혹은 셋액티브펄스

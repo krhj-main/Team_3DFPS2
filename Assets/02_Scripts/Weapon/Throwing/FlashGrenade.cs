@@ -21,11 +21,6 @@ public class FlashGrenade : ThrowingWeapon
     {
         yield return new WaitForSeconds(explosiondelay);
 
-        StartCoroutine(GameManager.Instance.FlashGrenadeExplode(transform, explosionRadius, effectDuration));
-        
-        /*
-        yield return new WaitForSeconds(explosiondelay);
-
         Collider[] _targetsInRadius = Physics.OverlapSphere(transform.position, explosionRadius, attackableMask);
 
         // null 체크 _targetsInRadius가 존재하면
@@ -45,7 +40,7 @@ public class FlashGrenade : ThrowingWeapon
                     Debug.Log(_target.name);
                     Enemy enemy = _target.GetComponent<Enemy>();
                     // 섬광탄을 보고있다면
-                    if (IsPlayerLookingAtFlashbang(_target.transform))
+                    if (IsPlayerLookingAtFlashbang(_target.transform.position))
                     {
                         // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
                         enemy.findDis = 0.1f;
@@ -59,7 +54,7 @@ public class FlashGrenade : ThrowingWeapon
                 else if (_target.CompareTag("Player"))
                 {
                     // 플레이어가 섬광탄을 보고 있는지 확인
-                    if (IsPlayerLookingAtFlashbang(Camera.main.transform))
+                    if (IsPlayerLookingAtFlashbang(_target.transform.position))
                     {
                         // 눈뽕
                         UIManager.Instance.FlashImage.gameObject.SetActive(true);
@@ -90,28 +85,27 @@ public class FlashGrenade : ThrowingWeapon
                 }
             }
         }
-        //Destroy(gameObject);
-        */
+        Destroy(gameObject);
     }
 
     // 플레이어가 섬광탄을 보고있는지 판단하는 메서드
-    bool IsPlayerLookingAtFlashbang(Transform _character)
+    bool IsPlayerLookingAtFlashbang(Vector3 playerPosition)
     {
         // 플레이어 카메라 참조
-        //Camera playerCamera = Camera.main;
+        Camera playerCamera = Camera.main;
 
         // 플레이어 위치에서 섬광탄 위치로의 방향 벡터를 계산
-        Vector3 directionToFlashbang = transform.position - _character.position;
+        Vector3 directionToFlashbang = transform.position - playerPosition;
 
         // 카메라가 바라보는 방향과, 플레이어에서 섬광탄으로의 방향 사이의 각도를 계산
-        float angle = Vector3.Angle(_character.forward, directionToFlashbang);
-        Debug.Log(angle);
+        float angle = Vector3.Angle(playerCamera.transform.forward, directionToFlashbang);
+
         // 시야각 확인 // 60 = 좌우로 60
         if (angle < 90f)
         {
             // 레이캐스트로 장애물 체크
             RaycastHit hit;
-            if (Physics.Raycast(_character.position, directionToFlashbang, out hit))
+            if (Physics.Raycast(playerPosition, directionToFlashbang, out hit))
             {
                 // 레이캐스트가 섬광탄에 먼저 닿았는지 확인
                 if (hit.collider.gameObject == gameObject)

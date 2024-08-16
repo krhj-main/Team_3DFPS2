@@ -38,14 +38,14 @@ public class MainWeapon : MonoBehaviour
 
     // 정조준 관련 변수
     public virtual float adsSpeed { get; set; }     // 정조준 속도
-    public virtual float adsFOV { get; set; }       // 정조준 시 카메라 FOV
-    private float shoulderFOV;                      // 견착 시 카메라 FOV
-    private float targetFOV;                        // 이동하려는 카메라 FOV
-    protected Vector3 adsPos;                       // 정조준 위치
+    public virtual float adsFOV { get; set; }       // 줌 정도
+    private float shoulderFOV;
+    private float targetFOV;
     Vector3 shoulderPos;                            // 견착 위치
-    Vector3 targetPos;                              // 이동하려는 위치 위치
+    protected Vector3 adsPos;                       // 정조준 위치
+    Vector3 targetPos;                              // 이동할 위치
     private GunsSwap gunSwap;                       // 건스왑에서 총기 위치 옮겨줌
-    bool isAming = false;                           // 정조준 실행
+    bool isAming = false;
 
     [SerializeField] protected Camera cam;          // 메인 카메라
     public virtual float headRatio { get; set; }    // 머리 비율
@@ -94,10 +94,7 @@ public class MainWeapon : MonoBehaviour
         if (transform.parent != null)
         {
             gunSwap = GetComponentInParent<GunsSwap>();
-            if (gunSwap) {
-                shoulderPos = gunSwap.GunPosition.localPosition;
-            }
-            
+            shoulderPos = gunSwap.GunPosition.localPosition;
             shoulderFOV = cam.fieldOfView;
         }
         else
@@ -129,7 +126,6 @@ public class MainWeapon : MonoBehaviour
         if (isReloading)
         {
             Debug.Log("재장전중");
-            Aming(false);           // 장전 중엔 줌 풀림
             return;
         }
 
@@ -174,7 +170,6 @@ public class MainWeapon : MonoBehaviour
 
     #region 정조준 함수
 
-    // 마우스 오른쪽 키 클릭시, 무기 위치 및 FOV 값 설정
     public void Aming(bool _whatAim)
     {
         isAming = true;
@@ -183,24 +178,17 @@ public class MainWeapon : MonoBehaviour
         {
             targetPos = adsPos;
             targetFOV = adsFOV;
-            bulletSpread = 0;                       // 현재 정조준 하면 탄퍼짐 X   
+            bulletSpread = 0;
         }
-        else
+
+        if (!_whatAim)
         {
             targetPos = shoulderPos;
             targetFOV = shoulderFOV;
-            bulletSpread = originBulletSpread;      // 탄퍼짐 원래대로
+            bulletSpread = originBulletSpread;
         }
     }
-    
-    public IEnumerator AmingUI(bool _whatAim ,float _zoomUIdelayTime)
-    {
-        yield return new WaitForSeconds(_zoomUIdelayTime);
 
-        UIManager.Instance.SniperZoom(_whatAim);
-    }
-
-    // 무기 위치 이동 및 FOV값 변경
     void UpdateAiming()
     {
         // 무기 위치 업데이트
