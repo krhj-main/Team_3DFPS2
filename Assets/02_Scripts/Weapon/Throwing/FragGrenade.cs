@@ -1,42 +1,46 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class FragGrenade : ThrowingWeapon
+public class FragGrenade
 {
-    protected override void Awake()
+    #region "수류탄 효과"
+    // 수류탄 효과 ( 데미지 )
+    public IEnumerator FlagGrenadeExplode(Transform _explode, float _radius, float _delay ,float _damage)
     {
-        base.Awake();
-        explosiondelay = 5f;         // 폭발 시간
-        explosionRadius = 10f;       // 폭발 반경
-        damage = 100;                // 데미지
-    }
+        yield return new WaitForSeconds(_delay);
 
-    protected override IEnumerator Explode()
-    {
-        yield return new WaitForSeconds(explosiondelay);
+        // 플레이어와 폭발한 곳의 거리 계산
+        float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
+        if (_distanceToPlayer < _radius)
+        {
+            // 거리별 값 판별 ( 멀어질수록 작은 값 )
+            float _damagePersentToPlayer = 1 - (_distanceToPlayer / _radius);
+            int _calDamage = Mathf.RoundToInt(_damage * _damagePersentToPlayer);
+            PlayerController.Instance.Damaged(_calDamage);
+        }
 
-        /*
-        Collider[] _colliders = Physics.OverlapSphere(transform.position, explosionRadius, attackableMask);
-        foreach(Collider _collider in _colliders)
+        // 에너미
+        foreach (Enemy enemy in GameManager.Instance.enemies)
         {
             RaycastHit hit;
-            Vector3 _hitCollDir = (_collider.transform.position -transform.position).normalized;
-            float _distance = Vector3.Distance(transform.position, _collider.transform.position);
+            // 에너미와 폭발물의 방향 계산
+            Vector3 _hitDir = (enemy.transform.position - _explode.position).normalized;
+            // 에너미와 폭발한 곳의 거리 계산
+            float _distance = Vector3.Distance(_explode.position, enemy.transform.position);
 
-            if(Physics.Raycast(transform.position,_hitCollDir,out hit, _distance))
+            // 폭발물에서 에너미 방향으로 레이 발사
+            if (Physics.Raycast(_explode.position, _hitDir, out hit, _distance))
             {
-                if(_collider == hit.collider)
+                // 맞은 콜라이더가 에너미가 맞다면 데미지
+                if (hit.collider.CompareTag("Enemy"))
                 {
-                    float _damagePersent = 1 - (_distance / explosionRadius);
-                    int _calDamage = Mathf.RoundToInt(damage * _damagePersent);
-                    _collider.GetComponent<IDamageAble>().Damaged(_calDamage);
+                    // 거리별 값 판별 ( 멀어질수록 작은 값 )
+                    float _damagePersent = 1 - (_distance / _radius);
+                    int _calDamage = Mathf.RoundToInt(_damage * _damagePersent);
+                    enemy.Damaged(_calDamage);
                 }
             }
         }
-        */
-        GameManager.Instance.FlagGrenadeExplode(transform, explosionRadius, damage);
-        // 이펙트, 데스트로이 혹은 셋액티브펄스
     }
+    #endregion
 }

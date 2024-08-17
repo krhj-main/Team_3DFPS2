@@ -1,118 +1,86 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
-public class FlashGrenade : ThrowingWeapon
+public class FlashGrenade
 {
-    protected override void Awake()
+    float calDuration;
+
+    #region "섬광탄"
+    // 섬광탄 효과 ( 눈뽕, 에너미 멈춤 등 )
+    public IEnumerator FlashGrenadeExplode(Transform _explode, float _radius, float _delay, float _effectDuration)
     {
-        base.Awake();
-        explosiondelay = 2f;
-        explosionRadius = 10f;
-        effectDuration = 5f;
-    }
+        yield return new WaitForSeconds(_delay);
 
-    protected override IEnumerator Explode()
-    {
-        yield return new WaitForSeconds(explosiondelay);
+        // 플레이어와 폭발한 곳의 거리 계산
+        float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
 
-        StartCoroutine(GameManager.Instance.FlashGrenadeExplode(transform, explosionRadius, effectDuration));
-        
-        /*
-        Collider[] _targetsInRadius = Physics.OverlapSphere(transform.position, explosionRadius, attackableMask);
+        // 거리별 값 판별 ( 멀어질수록 작은 값 )
+        float _rangePersentPlayer = 1 - (_distanceToPlayer / _radius);
+        calDuration = Mathf.RoundToInt(_effectDuration * _rangePersentPlayer);
 
-        // null 체크 _targetsInRadius가 존재하면
-        if (_targetsInRadius != null)
+        if (_distanceToPlayer <= _radius)
         {
-            // _targetsInRadius 속의 _target들에게 아래 명령을 실행
-            foreach (Collider _target in _targetsInRadius)
+            if (IsLookingAtFlash(_explode, PlayerController.Instance.transform))
             {
                 // 거리별 값 판별 ( 멀어질수록 작은 값 )
-                float _distance = Vector3.Distance(transform.position, _target.transform.position);
-                float _rangePersent = 1 - (_distance / explosionRadius);
-                calduration = Mathf.RoundToInt(effectDuration * _rangePersent);
-
-                // 에너미는
-                if (_target.CompareTag("Enemy"))
-                {
-                    Enemy enemy = _target.GetComponent<Enemy>();
-                    // 섬광탄을 보고있다면
-                    if (IsPlayerLookingAtFlashbang(_target.transform))
-                    {
-                        // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
-                        enemy.findDis = 0.1f;
-                        enemy.atkDis = 0f;
-                        enemy.fov.visibleTargets.Clear();
-                        //enemy.fov.visibleObjects.Clear();
-                        enemy.enemyState = EnemyState.Blind;
-                    }
-                }
-                // 플레이어는
-                else if (_target.CompareTag("Player"))
-                {
-                    // 플레이어가 섬광탄을 보고 있는지 확인
-                    if (IsPlayerLookingAtFlashbang(Camera.main.transform))
-                    {
-                        // 눈뽕
-                        UIManager.Instance.FlashImage.gameObject.SetActive(true);
-                    }
-                }
+                //float _rangePersentToPlayer = 1 - (_distanceToPlayer / _radius);
+                //calduration = Mathf.RoundToInt(_effectDuration * _rangePersentToPlayer);
+                // 눈뽕
+                UIManager.Instance.FlashImage.gameObject.SetActive(true);
             }
-            // 섬광탄 지속 시간 이후
-            yield return new WaitForSeconds(calduration + baseTime);
+        }
 
-            // _targetsInRadius 속의 _target들에게 아래 명령을 실행
-            foreach (Collider _target in _targetsInRadius)
+        // 에너미
+        foreach (Enemy enemy in GameManager.Instance.enemies)
+        {
+            // 에너미와 폭발한 곳의 거리 계산
+            float _distance = Vector3.Distance(_explode.position, enemy.transform.position);
+
+            // 거리별 값 판별 ( 멀어질수록 작은 값 )
+            float _rangePersent = 1 - (_distance / _radius);
+            float _baseTime = 1.5f;
+            enemy.blindTime = Mathf.RoundToInt(_effectDuration * _rangePersent) + _baseTime;
+
+            // 거리가 범위 이내라면
+            if (_distance < _radius)
             {
-                // 에너미는
-                if (_target.CompareTag("Enemy"))
+                // Enemy가 섬광탄을 보고있다면
+                if (IsLookingAtFlash(_explode, enemy.transform))
                 {
-                    Enemy enemy = _target.GetComponent<Enemy>();
-
-                    // 시야를 복구하고, 플레이어를 놓친 상태로 설정
-                    enemy.findDis = enemy.originFindDis;
-                    enemy.atkDis = enemy.originAtkDis;
-                    enemy.agent.isStopped = false;
-                    enemy.enemyState = enemy.missingState;
-                }
-                // 플레이어는
-                else if (_target.CompareTag("Player"))
-                {
-                    UIManager.Instance.FlashImage.gameObject.SetActive(false);
+                    enemy.enemyState = EnemyState.Blind;
                 }
             }
         }
-        //Destroy(gameObject);
-        */
+
+        // 1.5초 + 거리별 시간 이후 섬광 끝 // 현재 각각 다르게 적용되어야 할 시간이 하나로만 적용중
+        yield return new WaitForSeconds(calDuration);
+
+        UIManager.Instance.FlashImage.gameObject.SetActive(false);
     }
 
-    // 플레이어가 섬광탄을 보고있는지 판단하는 메서드
-    bool IsPlayerLookingAtFlashbang(Transform _character)
+    // 캐릭터가 섬광탄을 보고있는지 판단하는 메서드
+    bool IsLookingAtFlash(Transform _flash, Transform _character)
     {
-        // 플레이어 카메라 참조
-        //Camera playerCamera = Camera.main;
-
         // 플레이어 위치에서 섬광탄 위치로의 방향 벡터를 계산
-        Vector3 directionToFlashbang = transform.position - _character.position;
+        Vector3 _dirToFlash = _flash.position - _character.position;
 
         // 카메라가 바라보는 방향과, 플레이어에서 섬광탄으로의 방향 사이의 각도를 계산
-        float angle = Vector3.Angle(_character.forward, directionToFlashbang);
+        float angle = Vector3.Angle(_character.forward, _dirToFlash);
         // 시야각 확인 // 60 = 좌우로 60
         if (angle < 60f)
         {
             // 레이캐스트로 장애물 체크
             RaycastHit hit;
-            if (Physics.Raycast(_character.position, directionToFlashbang, out hit))
+            if (Physics.Raycast(_character.position, _dirToFlash, out hit))
             {
                 // 레이캐스트가 섬광탄에 먼저 닿았는지 확인
-                if (hit.collider.gameObject == gameObject)
+                if (hit.collider.gameObject == _flash.gameObject)
                 {
                     return true;
                 }
             }
         }
-
         return false;
     }
+    #endregion
 }
