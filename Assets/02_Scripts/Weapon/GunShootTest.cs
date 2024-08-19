@@ -63,24 +63,8 @@ public class GunShootTest : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1))
             {
-                myMainWeapon.Aming(!isADS);
+                myMainWeapon.Aming(isADS);
                 isADS = !isADS;
-
-                // 스나이퍼 들고 있으면 줌 UI 이미지 보이게함
-                float _zoomUIdealyTime;
-                if (isADS)
-                {
-                    _zoomUIdealyTime = 0.5f;
-                }
-                else
-                {
-                    _zoomUIdealyTime = 0.1f;
-                }
-
-                if(GetComponentInChildren<Sniper>() != null)
-                {
-                    StartCoroutine(myMainWeapon.AmingUI(isADS, _zoomUIdealyTime));
-                }
             }
         }
 
