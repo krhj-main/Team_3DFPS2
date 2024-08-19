@@ -84,7 +84,6 @@ public class Rifle : MainWeapon
                     Debug.Log($"벽에 닿음: {hit.transform.name}");
                     return;
                 }
-
                 CharacterController _cc = hit.collider.GetComponent<CharacterController>();
                 if (_cc != null)
                 {

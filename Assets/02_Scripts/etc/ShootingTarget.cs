@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootingTarget : MonoBehaviour
+public class ShootingTarget : MonoBehaviour,IDamageAble
 {
     public enum TargetState
     {
@@ -15,7 +15,7 @@ public class ShootingTarget : MonoBehaviour
     Quaternion currentRot;
 
 
-    float testCount;
+    float upDelayCount;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,14 +38,26 @@ public class ShootingTarget : MonoBehaviour
     }
 
 
-void TargetUp()
+    void TargetUp()
     {
         currentRot= Quaternion.Lerp(currentRot,upRot,0.05f);
         transform.rotation = currentRot;
     }
     void TargetDown()
     {
+        
         currentRot = Quaternion.Lerp(currentRot, downRot, 0.05f);
         transform.rotation = currentRot;
+
+        if (upDelayCount + 2f < Time.time)
+        {
+            tState = TargetState.Up;
+        }
+    }
+
+    public void Damaged(int damage)
+    {
+        tState = TargetState.Down;
+        upDelayCount = Time.time;
     }
 }
