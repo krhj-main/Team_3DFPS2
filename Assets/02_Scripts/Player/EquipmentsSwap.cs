@@ -168,7 +168,6 @@ public class EquipmentsSwap : MonoBehaviour
         }
         Inventory.Set(_index,_weapon);
         int _num = Inventory.SlotIndexToIndex(_index);
-        Debug.Log(_num);
         Swap(_num);
         
         //주어진 슬롯에 남는 칸이 없으면
