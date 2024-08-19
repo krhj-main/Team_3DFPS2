@@ -169,6 +169,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 상태를 Move로 변경
             enemyState = EnemyState.Move;
 
+            anim.SetBool("doRun", true);
             //anim.SetTrigger("IdleToMove");
         }
         else
@@ -190,6 +191,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             {
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
+                anim.SetBool("doRun", true);
                 //anim.SetTrigger("IdleToMove");
             }
         }
@@ -209,6 +211,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 agent.speed = patrolSpd;
             }
             agent.SetDestination(wayPoints[index].position);
+            anim.SetBool("doPatrol", true);
         }
     }
     #endregion
@@ -227,7 +230,7 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
-
+                anim.SetBool("doRun", true);
                 //anim.SetTrigger("IdleToMove");
             }
         }
@@ -344,7 +347,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                     GetComponentInChildren<MainWeapon>().fireRate = atkDelay;
                 }
                 
-                //anim.SetTrigger("StartAttack");
+                anim.SetTrigger("doFire");
             }
             else
             {
@@ -356,6 +359,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             enemyState = EnemyState.Move;
             currentTime = 0;
 
+            anim.SetBool("doRun", true);
             //anim.SetTrigger("AttackToMove");
         }
     }
