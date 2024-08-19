@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IDamageAble
-{
-    //ëŒ€ë¯¸ì§€ë¥¼ ì²˜ë¦¬í•˜ê¸° ìœ„í•œ ì¸í„°í˜ì´ìŠ¤
-    public void Damaged(int damage);//ëŒ€ë¯¸ì§€ ì²˜ë¦¬ í•¨ìˆ˜
+{//´ë¹ÌÁö¸¦ Ã³¸®ÇÏ±â À§ÇÑ ÀÎÅÍÆäÀÌ½º
+    public void Damaged(int damage);//´ë¹ÌÁö Ã³¸® ÇÔ¼ö
 }

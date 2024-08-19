@@ -1,34 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine;
 
-public class Grenade 
+// 수류탄 타입
+public enum GrenadeType
 {
-    int duration;
-    float lastTime = 0, targetTime=1;
-    float escTime = 20;
-    GameObject target;
-    public Grenade(int _duration,GameObject _target) {
-        duration = _duration;
-        target = _target;
-        InputManger.Instance.keyAction += test;
+    FragGrenade,
+    FlashGrenade,
+    SmokeGrenade
+}
 
-    }
+public class Grenade : MonoBehaviour
+{
+    FragGrenade frag = new FragGrenade();
+    FlashGrenade flash = new FlashGrenade();
+    SmokeGrenade smoke = new SmokeGrenade();
 
-
-    public void test()
+    // 실제로 사용될 폭발 효과 메서드
+    public void Explode(Transform _explode, float _radius, float _delay, float _value, GrenadeType _type)
     {
-        escTime -= 0.1f;
-        if (Time.time - lastTime > targetTime)
+        switch(_type)
         {
-
-
-            InputManger.Instance.keyAction -= test;
-
+            case GrenadeType.FragGrenade:
+                StartCoroutine(frag.FlagGrenadeExplode(_explode, _radius, _delay, _value));
+                break;
+            case GrenadeType.FlashGrenade:
+                StartCoroutine(flash.FlashGrenadeExplode(_explode, _radius, _delay, _value));
+                break;
+            case GrenadeType.SmokeGrenade:
+                StartCoroutine(smoke.SmokeGrenadeExplode(_explode, _radius, _delay, _value));
+                break;
         }
-
     }
-
-
 }

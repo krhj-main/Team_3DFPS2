@@ -1,0 +1,150 @@
+fileFormatVersion: 2
+guid: f9c96f6ae69156b49acfc042eb80a219
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Industrial_building_v1_2ce
+    100002: Industrial_building_v1_2co
+    100004: Industrial_building_v1_2db
+    100006: Industrial_building_v1_2f
+    100008: Industrial_building_v1_2hb
+    100010: Industrial_building_v1_2rf
+    100012: Industrial_building_v1_2st
+    100014: Industrial_building_v1_2su
+    100016: Industrial_building_v1_2wi
+    100018: Industrial_building_v1_2wo
+    100020: //RootNode
+    100022: Industrial_building_v1_2wi_u
+    400000: Industrial_building_v1_2ce
+    400002: Industrial_building_v1_2co
+    400004: Industrial_building_v1_2db
+    400006: Industrial_building_v1_2f
+    400008: Industrial_building_v1_2hb
+    400010: Industrial_building_v1_2rf
+    400012: Industrial_building_v1_2st
+    400014: Industrial_building_v1_2su
+    400016: Industrial_building_v1_2wi
+    400018: Industrial_building_v1_2wo
+    400020: //RootNode
+    400022: Industrial_building_v1_2wi_u
+    2100000: 'Material #94'
+    2100002: 'Material #110'
+    2100004: 'Material #95'
+    2100006: 'Material #123'
+    2100008: 'Material #111'
+    2100010: 'Material #97'
+    2100012: 'Material #109'
+    2300000: Industrial_building_v1_2ce
+    2300002: Industrial_building_v1_2co
+    2300004: Industrial_building_v1_2db
+    2300006: Industrial_building_v1_2f
+    2300008: Industrial_building_v1_2hb
+    2300010: Industrial_building_v1_2rf
+    2300012: Industrial_building_v1_2st
+    2300014: Industrial_building_v1_2su
+    2300016: Industrial_building_v1_2wi
+    2300018: Industrial_building_v1_2wo
+    2300020: Industrial_building_v1_2wi_u
+    3300000: Industrial_building_v1_2ce
+    3300002: Industrial_building_v1_2co
+    3300004: Industrial_building_v1_2db
+    3300006: Industrial_building_v1_2f
+    3300008: Industrial_building_v1_2hb
+    3300010: Industrial_building_v1_2rf
+    3300012: Industrial_building_v1_2st
+    3300014: Industrial_building_v1_2su
+    3300016: Industrial_building_v1_2wi
+    3300018: Industrial_building_v1_2wo
+    3300020: Industrial_building_v1_2wi_u
+    4300000: Industrial_building_v1_2db
+    4300002: Industrial_building_v1_2ce
+    4300004: Industrial_building_v1_2rf
+    4300006: Industrial_building_v1_2hb
+    4300008: Industrial_building_v1_2wi
+    4300010: Industrial_building_v1_2st
+    4300012: Industrial_building_v1_2wo
+    4300014: Industrial_building_v1_2co
+    4300016: Industrial_building_v1_2su
+    4300018: Industrial_building_v1_2f
+    4300020: Industrial_building_v1_2wi_u
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

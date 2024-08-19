@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GunsSwap : MonoBehaviour
 {
+
     public Transform GunPosition;                 //총이 있어야할 위치(빈게임오브젝트)  
     [SerializeField] KeyCode dropKey;                       //들고있는 총 버리기 키
     public GameObject[] Guns;                           //담아야하는 요소를 모아둔 리스트 
@@ -74,10 +75,11 @@ public class GunsSwap : MonoBehaviour
                 UIManager.Instance.ReloadAmmoUIUpdate(Guns[Index].GetComponent<MainWeapon>().loadedAmmo, Guns[Index].GetComponent<MainWeapon>().remainAmmo);
                 UIManager.Instance.ChangeWeaponUIUpdate(Guns[Index].GetComponent<MainWeapon>().myImage, 0, 0);
             }
-            //UIManager.Instance
+            
 
             if (Input.GetKeyDown(dropKey))
             {
+                
                 DropWeapon();
             }
         }
@@ -106,6 +108,7 @@ public class GunsSwap : MonoBehaviour
         
     }
     void Swap(int dir) {//1또는 -1으로 들고있는 무기를 전환하는 함수
+        
         offsetPos = Vector3.zero;
         if (Guns[Index] != null) {//무기를 들고있으면 전환
             Guns[Index].gameObject.SetActive(false);
