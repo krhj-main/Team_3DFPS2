@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Interectable {
-    //»óÈ£ÀÛ¿ëÀ» À§ÇÑ ÀÎÅÍÆäÀÌ½º
-    //»ó¼Ó¹ŞÀ¸¸é »óÈ£ÀÛ¿ë °¡´É
+public interface Interactable 
+{
+    //ìƒí˜¸ì‘ìš©ì„ ìœ„í•œ ì¸í„°í˜ì´ìŠ¤
+    //ìƒì†ë°›ìœ¼ë©´ ìƒí˜¸ì‘ìš© ê°€ëŠ¥
 
-    //»óÈ£ÀÛ¿ë½Ã ½ÇÇàµÉ ºÎºĞ
-    public void Interection(GameObject target);
+    //ìƒí˜¸ì‘ìš©ì‹œ ì‹¤í–‰ë  ë¶€ë¶„
+    public void Interaction(GameObject target);
 }
-

@@ -9,6 +9,7 @@ TagManager:
   - EnemyBullet
   - Enviorment
   - SmokeGrenade
+  - Cursor
   layers:
   - Default
   - TransparentFX

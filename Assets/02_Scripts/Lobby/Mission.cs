@@ -14,15 +14,22 @@ public class Mission : MonoBehaviour
     public Image[] missionImage;
 
     // 비동기씬
+    int sceneNum;
     public Slider loadingBar;               // 로딩 슬라이더 바
     public TextMeshProUGUI loadingTxt;      // 로딩 진행 텍스트
+    MouseCursorMove mouseCursor;
 
-
-    void Start()
+    private void Awake()
     {
-        for(int i = 0; i < missionBtn.Length; i++)
+        //mouseCursor = GameObject.FindGameObjectWithTag("Cursor").GetComponent<MouseCursorMove>();
+    }
+
+    private void OnEnable()
+    {
+        //mouseCursor.ShowCursor();
+        for (int i = 0; i < missionBtn.Length; i++)
         {
-            if(i <= GameManager.Instance.gameClearNum)
+            if (i <= GameManager.Instance.gameClearNum)
             {
                 missionBtn[i].interactable = true;
                 missionTxt[i].color = Color.white;
@@ -30,11 +37,21 @@ public class Mission : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+
+    }
+
     // 각 버튼마다 연결
     public void MissionBtn(int num)
     {
-        StartCoroutine(TransitionNextScene(num));
+        sceneNum = num;
         MissionImage(num);
+    }
+
+    public void StartBtn()
+    {
+        StartCoroutine(TransitionNextScene(sceneNum));
     }
 
     // 비동기 신
