@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
         hpSlider = GetComponentInChildren<Slider>();
-        //anim = transform.GetComponentInChildren<Animator>();
+        anim = transform.GetComponentInChildren<Animator>();
     }
 
     private void Start()
