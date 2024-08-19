@@ -102,6 +102,18 @@ public class Enemy : MonoBehaviour, IDamageAble
 
     void Awake()
     {
+        index = 0;
+        //index = Random.Range(0, wayPoints.Count);
+
+        cc = GetComponent<CharacterController>();
+        agent = GetComponent<NavMeshAgent>();
+        fov = GetComponent<FieldOfView>();
+        hpSlider = GetComponentInChildren<Slider>();
+        //anim = transform.GetComponentInChildren<Animator>();
+    }
+
+    private void Start()
+    {
         // 외부 변수 관련 초기화
         GetComponentInChildren<MainWeapon>().loadedAmmo = 99999;
         atkDis = GetComponentInChildren<MainWeapon>().bulletRange;
@@ -112,15 +124,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         originFindDis = findDis;
         originAtkDis = atkDis;
         enemyState = firstState;
-
-        index = 0;
-        //index = Random.Range(0, wayPoints.Count);
-
-        cc = GetComponent<CharacterController>();
-        agent = GetComponent<NavMeshAgent>();
-        fov = GetComponent<FieldOfView>();
-        hpSlider = GetComponentInChildren<Slider>();
-        //anim = transform.GetComponentInChildren<Animator>();
     }
 
     void Update()
