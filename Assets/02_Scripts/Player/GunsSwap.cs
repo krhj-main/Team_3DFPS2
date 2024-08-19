@@ -10,7 +10,7 @@ public class GunsSwap : MonoBehaviour
     [SerializeField] KeyCode dropKey;                       //들고있는 총 버리기 키
     public GameObject[] Guns;                           //담아야하는 요소를 모아둔 리스트 
     int index = 0;                                          //선택된 항목의 인덱스
-    IEqupMent equp;
+    IEquipMent equp;
     int size = 0;
     float dropForce = 5;
     public Vector3 offsetPos;

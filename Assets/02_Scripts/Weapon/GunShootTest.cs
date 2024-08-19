@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class GunShootTest : MonoBehaviour
     public bool canThrow = false;       // 던질 수 있는 상태
     public bool isADS = false;          // 정조준 ( Aiming Down Sight )
 
+    public Action OnHand;
+    public Action OnClick;
+    public Action<Transform> OnPress;
 
     private void Start()
     {
@@ -26,6 +30,7 @@ public class GunShootTest : MonoBehaviour
 
     private void Update()
     {
+        //OnHand.Invoke();
         // 투척무기 던지기
         if (Input.GetMouseButtonUp(0))
         {

@@ -60,7 +60,7 @@ public class Dron : MonoBehaviour,Interectable
     }
     public void DronAwake() {
         dronCam.enabled = true;
-        Camera.main.enabled = false;
+        dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
         //rig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }

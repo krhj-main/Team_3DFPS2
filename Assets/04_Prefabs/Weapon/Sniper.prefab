@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 3562470361590000404}
   - component: {fileID: 7172001908222494017}
   - component: {fileID: 6739267740958009109}
-  - component: {fileID: 6418188927188727071}
   - component: {fileID: 6647109493811786793}
   m_Layer: 16
   m_Name: Sniper
@@ -213,19 +212,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6418188927188727071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5784690942125823329}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f5789fe1c9a3949a80dd4ff2ddc523, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
 --- !u!114 &6647109493811786793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +228,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   currentRotation: {x: 0, y: 0, z: 0}
+  firePos: {fileID: 0}
   cam: {fileID: 0}
   myImage: {fileID: 0}
   ammoTxt: {fileID: 0}
