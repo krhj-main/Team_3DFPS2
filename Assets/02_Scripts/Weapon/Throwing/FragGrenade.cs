@@ -8,7 +8,7 @@ public class FragGrenade
     public IEnumerator FlagGrenadeExplode(Transform _explode, float _radius, float _delay ,float _damage)
     {
         yield return new WaitForSeconds(_delay);
-
+        _explode.gameObject.SetActive(false);
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
         if (_distanceToPlayer < _radius)
@@ -41,6 +41,7 @@ public class FragGrenade
                 }
             }
         }
+        
     }
     #endregion
 }

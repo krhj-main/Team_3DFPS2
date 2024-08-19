@@ -18,7 +18,6 @@ public class EquipmentsSlot
         set { 
             equipCount = value;
             isFull = equipCount >= size;
-            Debug.Log(isFull);
         }
     
     }

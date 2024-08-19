@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // 수류탄 타입
@@ -8,25 +9,29 @@ public enum GrenadeType
     SmokeGrenade
 }
 
-public class Grenade : MonoBehaviour
+public class Grenade : ThrowingWeapon
 {
     FragGrenade frag = new FragGrenade();
     FlashGrenade flash = new FlashGrenade();
     SmokeGrenade smoke = new SmokeGrenade();
+    public float _radius;
+    public float _delay;
+    public float _value;
 
+    [SerializeField] GrenadeType type;
     // 실제로 사용될 폭발 효과 메서드
-    public void Explode(Transform _explode, float _radius, float _delay, float _value, GrenadeType _type)
+    protected override void Explode()
     {
-        switch(_type)
+        switch(type)
         {
             case GrenadeType.FragGrenade:
-                StartCoroutine(frag.FlagGrenadeExplode(_explode, _radius, _delay, _value));
+                StartCoroutine(frag.FlagGrenadeExplode(transform, _radius, _delay, _value));
                 break;
             case GrenadeType.FlashGrenade:
-                StartCoroutine(flash.FlashGrenadeExplode(_explode, _radius, _delay, _value));
+                StartCoroutine(flash.FlashGrenadeExplode(transform, _radius, _delay, _value));
                 break;
             case GrenadeType.SmokeGrenade:
-                StartCoroutine(smoke.SmokeGrenadeExplode(_explode, _radius, _delay, _value));
+                StartCoroutine(smoke.SmokeGrenadeExplode(transform, _radius, _delay, _value));
                 break;
         }
     }

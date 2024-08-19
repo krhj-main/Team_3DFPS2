@@ -166,9 +166,10 @@ public class EquipmentsSwap : MonoBehaviour
             IEquipMent _equip = slot.Current();
             DropWeapon(_equip);
         }
-        Inventory.Set(_index,_weapon);
+        
         int _num = Inventory.SlotIndexToIndex(_index);
-        Debug.Log(_num);
+        Debug.Log(_index);
+        Inventory.Set(_num, _weapon);
         Swap(_num);
         
         //주어진 슬롯에 남는 칸이 없으면
