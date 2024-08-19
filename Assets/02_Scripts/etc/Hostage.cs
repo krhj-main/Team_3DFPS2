@@ -12,9 +12,9 @@ public enum HostageState
     Dead,
 }
 
-public class Hostage : MonoBehaviour//, IDamageAble
+public class Hostage : MonoBehaviour, IDamageAble
 {
-    /*
+    
     // 인질의 상태
     HostageState hostageState;
 
@@ -24,6 +24,7 @@ public class Hostage : MonoBehaviour//, IDamageAble
     // 인질의 체력
     public float hp;
 
+    // 컴포넌트
     NavMeshAgent hostage;
     CharacterController cc;
 
@@ -40,23 +41,27 @@ public class Hostage : MonoBehaviour//, IDamageAble
         switch (hostageState)
         {
             case HostageState.Idle:
-                
+                Idle();
                 break;
             case HostageState.Move:
-
+                Move();
+                break;
+            case HostageState.Damaged:
+                break;
+            case HostageState.Dead:
                 break;
         }
     }
 
     void Idle()
     {
-
+        hostage.isStopped = true;
+        hostage.ResetPath();
     }
 
     void Move()
     {
-        hostage.isStopped = true;
-
+        hostage.isStopped = false;
         hostage.ResetPath();
 
         hostage.stoppingDistance = distanceToPlayer;
@@ -116,27 +121,16 @@ public class Hostage : MonoBehaviour//, IDamageAble
         {
             hostageState = HostageState.Damaged;
 
-            // 플레이어를 바라봄
-            Vector3 _dirP = (PlayerController.Instance.transform.position - agent.transform.position).normalized;
-            _dirP.y = 0;    // 이걸 뺼 경우 몸통이 같이 위를 향함, 추후 모델 넣고 수정
-            //transform.forward = _dirP;
-
-            // 현재 방향에서 목표 방향으로 부드럽게 회전
-            Quaternion targetRotation = Quaternion.LookRotation(_dirP);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-            chasePos = PlayerController.Instance.transform.position;
-
             //anim.SetTrigger("Damaged");
             Damaged();
         }
         else
         {
-            enemyState = EnemyState.Dead;
+            hostageState = HostageState.Dead;
 
             //anim.SetTrigger("Die");
             Die();
         }
     }
-    */
+    
 }
