@@ -48,7 +48,7 @@ public class EquipmentsSwap : MonoBehaviour
         firePos = Camera.main.transform;
         equp = GameManager.ItemManager.EqupMents;
         InputManger.Instance.keyAction += Inputkey;
-        slot = GameManager.ItemManager.equipmentsSlot;
+        //slot = GameManager.ItemManager.equipmentsSlot;
     }
 
     // Update is called once per frame

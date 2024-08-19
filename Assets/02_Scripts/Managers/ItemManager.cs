@@ -17,12 +17,10 @@ public class ItemManager
     public Vector2 specialSlot { get { return new Vector2(throwSlotSize+ weaponSlotSize, specialSlotSize); } }
     public GameObject[] Guns = new GameObject[weaponSlotSize + throwSlotSize + specialSlotSize];
     public IEquipMent[] EqupMents = new IEquipMent[weaponSlotSize + throwSlotSize + specialSlotSize];
-
-    public EquipmentsSlot equipmentsSlot=new EquipmentsSlot(weaponSlotSize, 4);
-
     public EquipmentsSlot weapon = new EquipmentsSlot(weaponSlotSize, weaponSlotWeight);
-    public EquipmentsSlot trow = new EquipmentsSlot(throwSlotSize, throwSlotWeight);
+    public EquipmentsSlot throws = new EquipmentsSlot(throwSlotSize, throwSlotWeight);
     public EquipmentsSlot special = new EquipmentsSlot(specialSlotSize, specialSlotWeight);
+
 
 
    

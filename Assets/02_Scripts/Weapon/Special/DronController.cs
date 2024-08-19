@@ -7,7 +7,7 @@ public class DronController : MonoBehaviour, IEquipMent, Interectable
     public Dron dron;
 
     public bool isOut = false;
-    Camera charCamera;
+    public Camera charCamera;
 
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }

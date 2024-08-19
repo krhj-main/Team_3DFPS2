@@ -240,10 +240,11 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
     //상호작용
     public virtual void Interection(GameObject target)
     {
-        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
+        Debug.Log(1);
+        EquipmentsSwap1 swap = target.GetComponent<EquipmentsSwap1>();
         if (swap != null)
         {
-            swap.WeaponChange2(this, EquipType.Weapon);
+            swap.WeaponChange(this, EquipType.Weapon);
         }
     } 
     //손에있을때 할 행동
@@ -283,8 +284,21 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
     {
         StopCoroutine(Reloading());
         isReloading=false;
-        Aming(false);
         isAming = false;
+        if (gunSwap)
+        {
+            gunSwap.GunPosition.localPosition = shoulderPos;
+        }
+        // 무기 위치 업데이트
+
+
+        // 카메라 FOV 업데이트
+        cam.fieldOfView = shoulderFOV;
+
+        if (cam.fieldOfView == targetFOV)
+        {
+            isAming = false;
+        }
     }   
 }
 
