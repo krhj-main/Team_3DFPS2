@@ -29,6 +29,11 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
         trajectoryLine.enabled = false;
     }
 
+    private void OnDisable()
+    {
+        isThrow = false;
+        transform.SetParent(PlayerController.Instance.transform);
+    }
     // 라인 렌더러 설정
     void SetupTrajectoryLine()
     {
@@ -81,10 +86,10 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
     // 폭발
     public void Explosion()
     {
-        StartCoroutine(Explode());
+        Explode();
     }
 
-    protected abstract IEnumerator Explode();
+    protected abstract void Explode();
 
     public void OnHand(Transform _tr, Vector3 _offset)
     {
@@ -125,7 +130,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)
         {
-            swap.WeaponChange(this, EquipType.Weapon);
+            swap.WeaponChange(this, type);
         }
     }
 }
