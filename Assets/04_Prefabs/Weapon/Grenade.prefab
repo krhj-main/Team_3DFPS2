@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2177279509759239302}
   - component: {fileID: 7226871574691818117}
   - component: {fileID: 1180761160894769012}
-  - component: {fileID: 3715919496194688636}
   - component: {fileID: 6252390236401454168}
+  - component: {fileID: -994648074451216294}
   m_Layer: 16
   m_Name: Grenade
   m_TagString: Untagged
@@ -135,19 +135,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3715919496194688636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4402955815833358430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f5789fe1c9a3949a80dd4ff2ddc523, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 1
 --- !u!120 &6252390236401454168
 LineRenderer:
   serializedVersion: 2
@@ -252,3 +239,15 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-994648074451216294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402955815833358430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d4f7c55fb3ec85409bbe9529c671415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

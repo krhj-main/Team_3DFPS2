@@ -11,6 +11,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
     public int damage { get; set; }                 // 데미지 ( 수류탄 )
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
+    [field: SerializeField]
     public EquipType type { get ; set ; }
 
     public LayerMask attackableMask;                // 효과 및 데미지 입을 대상
@@ -24,7 +25,6 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        type = EquipType.Throw;
         trajectoryLine = GetComponent<LineRenderer>();
         trajectoryLine.enabled = false;
     }

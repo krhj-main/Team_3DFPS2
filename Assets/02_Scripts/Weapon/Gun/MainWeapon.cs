@@ -53,13 +53,12 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
     bool isADS = false;
-
+    [field: SerializeField]
     public EquipType type { get; set; }
     [SerializeField] public Sprite myImage;         // 무기 이미지
 
     protected virtual void Awake()
     {
-        type = EquipType.Weapon;
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();

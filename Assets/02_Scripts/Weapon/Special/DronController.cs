@@ -11,12 +11,12 @@ public class DronController : MonoBehaviour, IEquipMent, Interectable
 
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
+    [field: SerializeField]
     public EquipType type { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        type = EquipType.Special;
         charCamera = Camera.main;
     }
 
