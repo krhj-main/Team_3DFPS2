@@ -276,7 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GunPosition: {fileID: 2414360524030251236}
-  dropKey: 0
+  dropKey: 103
   offsetPos: {x: 0, y: 0, z: 0}
   firePos: {fileID: 5144152026695066058}
 --- !u!1 &2343441769078436236
