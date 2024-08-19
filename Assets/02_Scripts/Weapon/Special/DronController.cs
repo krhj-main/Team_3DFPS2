@@ -75,7 +75,7 @@ public class DronController : MonoBehaviour, IEquipMent, Interectable
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)
         {
-            swap.WeaponChange2(this, type);
+            swap.WeaponChange(this, type);
         }
     }
 }

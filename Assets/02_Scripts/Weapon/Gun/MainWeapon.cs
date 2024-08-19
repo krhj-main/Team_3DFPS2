@@ -240,8 +240,7 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
     //상호작용
     public virtual void Interection(GameObject target)
     {
-        Debug.Log(1);
-        EquipmentsSwap1 swap = target.GetComponent<EquipmentsSwap1>();
+        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)
         {
             swap.WeaponChange(this, EquipType.Weapon);

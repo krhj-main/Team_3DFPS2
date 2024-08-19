@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EquipmentsSwap1 : MonoBehaviour
+public class EquipmentsSwap : MonoBehaviour
 {
 
     public Transform GunPosition;                 //총이 있어야할 위치(빈게임오브젝트)  
@@ -187,7 +187,7 @@ public class EquipmentsSwap1 : MonoBehaviour
         Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
         if (_rid)
         {
-           _rid.AddForce(Camera.main.transform.forward * dropForce, ForceMode.Impulse);
+           _rid.AddForce(Camera.main.transform.forward * dropForce+Vector3.up, ForceMode.Impulse);
         }
         InputManger.Instance.keyAction -= _equip.InputKey;
         _go.OutHand();

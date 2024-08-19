@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EquipmentsSwap : MonoBehaviour
+public class EquipmentsSwap1 : MonoBehaviour
 {
 
     public Transform GunPosition;                 //총이 있어야할 위치(빈게임오브젝트)  

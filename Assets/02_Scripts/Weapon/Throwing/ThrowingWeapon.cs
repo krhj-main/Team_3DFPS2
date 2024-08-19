@@ -122,7 +122,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
 
     public void Interection(GameObject target)
     {
-        EquipmentsSwap1 swap = target.GetComponent<EquipmentsSwap1>();
+        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)
         {
             swap.WeaponChange(this, EquipType.Weapon);

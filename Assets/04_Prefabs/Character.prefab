@@ -127,9 +127,9 @@ GameObject:
   - component: {fileID: 7698680938946738350}
   - component: {fileID: 3429491230259106396}
   - component: {fileID: 8088440755124444013}
-  - component: {fileID: 3701193899409062292}
   - component: {fileID: 4834768533179496594}
-  - component: {fileID: 6554148338404730723}
+  - component: {fileID: 2990756728891990538}
+  - component: {fileID: 5113832429846139687}
   m_Layer: 10
   m_Name: Character
   m_TagString: Player
@@ -152,7 +152,7 @@ Transform:
   - {fileID: 8209080203666209703}
   - {fileID: 4684105913192532447}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7698680938946738350
 MonoBehaviour:
@@ -167,7 +167,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arm: {fileID: 8209080203666209703}
-  downHeight: {x: 0, y: 0, z: 0}
   cam: {fileID: 5144152026695066058}
   character: {fileID: 4684105913192532447}
   mouseSensitivity: 2
@@ -183,8 +182,8 @@ MonoBehaviour:
   crouchSpeed: 2
   normalHeight: 2
   crouchHeight: 0.2
-  offset: {x: 0, y: -0.5, z: 0}
-  HP: 0
+  crouchCenter: {x: 0, y: 0, z: 0}
+  normalCenter: {x: 0, y: 0, z: 0}
   maxHP: 100
   pState: {fileID: 0}
 --- !u!114 &3429491230259106396
@@ -206,6 +205,7 @@ MonoBehaviour:
   isCrouch: 0
   isTiltingL: 0
   isTiltingR: 0
+  isOnViewer: 0
 --- !u!143 &8088440755124444013
 CharacterController:
   m_ObjectHideFlags: 0
@@ -232,21 +232,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3701193899409062292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753412935922706485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27f33a112d82d241b1025dfdc5933ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GunPosition: {fileID: 2414360524030251236}
-  dropKey: 103
-  Guns: []
 --- !u!114 &4834768533179496594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,7 +250,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   lootImage: {fileID: 0}
---- !u!114 &6554148338404730723
+--- !u!114 &2990756728891990538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -274,11 +259,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1753412935922706485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 898f52209d3aec34db9ac7f58be9df6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 64f3faae449b038409e7e1818fd63577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GunPosition: {fileID: 2414360524030251236}
+  dropKey: 103
+  offsetPos: {x: 0, y: 0, z: 0}
   firePos: {fileID: 5144152026695066058}
-  originRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5113832429846139687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753412935922706485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f96f0ca07e55142b87533d9a75e183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 0
 --- !u!1 &2343441769078436236
 GameObject:
   m_ObjectHideFlags: 0
