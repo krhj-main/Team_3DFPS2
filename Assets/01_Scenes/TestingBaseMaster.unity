@@ -3990,6 +3990,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -994648074451216294, guid: e4067a069498d344299f330819737fe5,
+        type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1834826944814569597, guid: e4067a069498d344299f330819737fe5,
         type: 3}
       propertyPath: m_RootOrder
@@ -4179,6 +4184,7 @@ MonoBehaviour:
   currentRotation: {x: 0, y: 0, z: 0}
   firePos: {fileID: 0}
   cam: {fileID: 0}
+  <type>k__BackingField: 0
   myImage: {fileID: 0}
   ammoTxt: {fileID: 0}
 --- !u!4 &1909046395 stripped
