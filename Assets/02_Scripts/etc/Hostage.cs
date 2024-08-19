@@ -22,7 +22,8 @@ public class Hostage : MonoBehaviour, IDamageAble
     public float distanceToPlayer = 3f;
 
     // 인질의 체력
-    public float hp;
+    float hp;
+    float maxHP = 100;
 
     // 컴포넌트
     NavMeshAgent hostage;
@@ -32,7 +33,11 @@ public class Hostage : MonoBehaviour, IDamageAble
     {
         hostage = GetComponent<NavMeshAgent>();
         cc = GetComponent<CharacterController>();
+    }
 
+    private void Start()
+    {
+        hp = maxHP;
         hostageState = HostageState.Idle;
     }
 
