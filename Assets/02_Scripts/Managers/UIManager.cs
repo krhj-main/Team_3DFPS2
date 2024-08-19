@@ -40,8 +40,6 @@ public class UIManager : Singleton<UIManager>
 
     [SerializeField] public GameObject missionViewer;
 
-    public GameObject sniperScope;
-
     private void Start()
     {
 
@@ -95,17 +93,5 @@ public class UIManager : Singleton<UIManager>
     {
         missionTime.text = string.Format("{0}", missionTimeCurrent);
         missionEnemy.text = string.Format("{0}", missionEnemyCount);
-    }
-
-    public void SniperZoom(bool _isZoom)
-    {
-        if (_isZoom)
-        {
-            sniperScope.SetActive(true);
-        }
-        else
-        {
-            sniperScope.SetActive(false);
-        }
     }
 }
