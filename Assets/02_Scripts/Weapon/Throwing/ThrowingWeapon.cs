@@ -3,20 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ThrowingWeapon : MonoBehaviour
+public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
 {
     public float explosiondelay { get; set; }       // 폭발 시간
     public float explosionRadius { get; set; }      // 폭발 반경
     public float effectDuration { get; set; }       // 효과 지속시간 ( 섬광, 연막 )
     public int damage { get; set; }                 // 데미지 ( 수류탄 )
+    Transform IEquipMent.transform { get => transform; set { } }
+    GameObject IEquipMent.gameObject { get => gameObject; set { } }
+    public EquipType type { get ; set ; }
 
     public LayerMask attackableMask;                // 효과 및 데미지 입을 대상
     public float throwForce = 10f;                  // 던지는 힘
     public LineRenderer trajectoryLine;             // 궤적 라인
     int trajectoryLinePoint = 30;                   // 궤적 포인트 갯수
-
+    public Transform firePos;
+    protected Rigidbody rb;
+    protected bool isThrow=false;
+    Grenade Grenade;
     protected virtual void Awake()
     {
+        rb = GetComponent<Rigidbody>();
+        type = EquipType.Throw;
         trajectoryLine = GetComponent<LineRenderer>();
         trajectoryLine.enabled = false;
     }
@@ -63,7 +71,6 @@ public abstract class ThrowingWeapon : MonoBehaviour
     public void Throw(Transform _firePos)
     {
         var (_velocity, _position) = CalculateTrajectoryVector(_firePos);
-        Rigidbody rb = GetComponent<Rigidbody>();
         this.transform.position = _position;
 
         rb.velocity = _velocity;
@@ -79,4 +86,46 @@ public abstract class ThrowingWeapon : MonoBehaviour
 
     protected abstract IEnumerator Explode();
 
+    public void OnHand(Transform _tr, Vector3 _offset)
+    {
+        if (!isThrow) 
+        {
+            gameObject.SetActive(true);
+            transform.position = _tr.position + _offset;  //오브젝트 위치 조정
+            transform.rotation = _tr.rotation;
+        }
+    }
+
+    public void InputKey()
+    {
+        if (!isThrow)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                UpdateTrajectory(firePos);
+
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                Throw(firePos);
+                Utill.DestroyOnLoad(gameObject);
+                isThrow = !isThrow;
+            }
+        }
+        
+    }
+
+    public void OutHand()
+    {
+        
+    }
+
+    public void Interection(GameObject target)
+    {
+        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
+        if (swap != null)
+        {
+            swap.WeaponChange(this, EquipType.Weapon);
+        }
+    }
 }
