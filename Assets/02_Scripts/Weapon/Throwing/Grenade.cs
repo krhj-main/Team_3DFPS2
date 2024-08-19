@@ -17,8 +17,31 @@ public class Grenade : ThrowingWeapon
     public float _radius;
     public float _delay;
     public float _value;
-
+    MeshFilter meshFilter;
+    MeshRenderer meshRenderer;
     [SerializeField] GrenadeType type;
+    protected override void Awake()
+    {
+        base.Awake();
+        meshFilter = GetComponent<MeshFilter>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        flash.init();
+
+    }
+    private void OnEnable()
+    {
+        switch(type)
+        {
+            case GrenadeType.FragGrenade:
+                break;
+            case GrenadeType.FlashGrenade:
+                meshFilter.mesh = flash.mesh;
+                meshRenderer.material = flash.material;
+                break;
+            case GrenadeType.SmokeGrenade:
+                break;
+        }
+    }
     // 실제로 사용될 폭발 효과 메서드
     protected override void Explode()
     {

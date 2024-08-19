@@ -31,8 +31,8 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
 
     private void OnDisable()
     {
+        //transform.SetParent(PlayerController.Instance.transform);
         isThrow = false;
-        transform.SetParent(PlayerController.Instance.transform);
     }
     // 라인 렌더러 설정
     void SetupTrajectoryLine()

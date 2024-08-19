@@ -4,6 +4,12 @@ using UnityEngine;
 public class FlashGrenade
 {
     float calDuration;
+    public Mesh mesh;
+    public Material material;
+    public void init() {
+        mesh = Resources.Load<Mesh>("assault1");
+        material = Resources.Load<Material>("assault1_mat");
+    }
 
     #region "섬광탄"
     // 섬광탄 효과 ( 눈뽕, 에너미 멈춤 등 )
