@@ -32,6 +32,8 @@ public class GameManager : Singleton<GameManager>
     }
     */
 
+    public int gameClearNum = 0;        // 게임 클리어하면 숫자 올라가서 미션 목록에서 다음 미션 선택 가능하게 해줌
+
     public List<Enemy> enemies = new List<Enemy>();
 
     private void OnEnable()
@@ -118,7 +120,7 @@ public class GameManager : Singleton<GameManager>
     */
     #endregion
 
-    
+ 
 
 
     #region "타이머"
