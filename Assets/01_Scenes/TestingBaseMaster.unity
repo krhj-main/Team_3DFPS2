@@ -542,17 +542,17 @@ PrefabInstance:
     - target: {fileID: 475511621423965885, guid: 6aaf3c350d503b948829c9a520ff677c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3128341937236824159, guid: 6aaf3c350d503b948829c9a520ff677c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4465442947604248030, guid: 6aaf3c350d503b948829c9a520ff677c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4921790816807697613, guid: 6aaf3c350d503b948829c9a520ff677c,
         type: 3}
@@ -674,10 +674,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: CompassCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7690536274133916400, guid: 6aaf3c350d503b948829c9a520ff677c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8512810418416192884, guid: 6aaf3c350d503b948829c9a520ff677c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -982,7 +987,7 @@ PrefabInstance:
     - target: {fileID: 5612346310145017588, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5615710915333398422, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
@@ -1027,7 +1032,7 @@ PrefabInstance:
     - target: {fileID: 8756470128004693498, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: NaN
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9074857708310259186, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
@@ -2239,7 +2244,6 @@ MonoBehaviour:
   missionEnemy: {fileID: 0}
   FlashImage: {fileID: 1369721490}
   missionViewer: {fileID: 374243488}
-  sniperScope: {fileID: 297312472}
 --- !u!114 &1087955081 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8959193309963091989, guid: 055d3f070e832e343955fc595e70cf36,
