@@ -236,6 +236,8 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
         return _direction.normalized;
     }
     #endregion
+
+    
     //상호작용
     public virtual void Interection(GameObject target)
     {

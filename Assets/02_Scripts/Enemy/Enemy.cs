@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
     [HideInInspector]
     public NavMeshAgent agent;
-
+    public float headRatio =0.3f;
     void Awake()
     {
         // 외부 변수 관련 초기화
@@ -396,15 +396,21 @@ public class Enemy : MonoBehaviour, IDamageAble
     #endregion
 
     // 데미지 인터페이스 구현
-    public void Damaged(int damage)
+    public void Damaged(int damage , Vector3 hitpoint)
     {
         // 죽어있을 경우 데미지를 적용하지 않는 예외 처리
         if (enemyState == EnemyState.Dead)
         {
             return;
         }
-
-        hp -= damage;
+        if (IsHeadShot(hitpoint))
+        {
+            hp -= damage*2;
+        }
+        else {
+            hp -= damage;
+        }
+        
 
         agent.isStopped = true;
         agent.ResetPath();
@@ -453,5 +459,18 @@ public class Enemy : MonoBehaviour, IDamageAble
             findDis = originFindDis;
             atkDis = originAtkDis;
         }
+    }
+    private bool IsHeadShot(Vector3 _hitpoint)
+    {
+        // CharacterController의 실제 높이 계산
+        float _controllerHeight = cc.height * transform.lossyScale.y;
+
+        // CharacterController의 하단 y 좌표 계산 ( 지면 )
+        float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
+
+        // hit.point의 상대적 높이 비율 계산
+        float _relativeHeight = (_hitpoint.y - _bottomY) / _controllerHeight;
+        // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
+        return (_relativeHeight >= (1 - headRatio));
     }
 }

@@ -171,9 +171,6 @@ public class EquipmentsSwap : MonoBehaviour
         Debug.Log(_index);
         Inventory.Set(_num, _weapon);
         Swap(_num);
-        
-        //주어진 슬롯에 남는 칸이 없으면
-        
         _weapon.transform.SetParent(transform);
         
     }
