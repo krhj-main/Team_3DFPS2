@@ -8,9 +8,9 @@ public class Inventory :MonoBehaviour
     List<EquipmentsSlot> equipmentsSlots;
     public int size=0;
     public EquipmentsSlot current;
-    public void Start()
+    private void Awake()
     {
-        equipmentsSlots= new List<EquipmentsSlot>();
+        equipmentsSlots = new List<EquipmentsSlot>();
         AddSlot(GameManager.ItemManager.weapon);
         AddSlot(GameManager.ItemManager.throws);
         AddSlot(GameManager.ItemManager.special);
