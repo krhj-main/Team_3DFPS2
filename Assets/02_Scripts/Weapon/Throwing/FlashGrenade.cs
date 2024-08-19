@@ -52,7 +52,7 @@ public class FlashGrenade
             }
         }
 
-        // 1.5초 + 거리별 시간 이후 섬광 끝 // 현재 각각 다르게 적용되어야 할 시간이 하나로만 적용중
+        // 거리별 시간 이후 시야 복구
         yield return new WaitForSeconds(calDuration);
 
         UIManager.Instance.FlashImage.gameObject.SetActive(false);
