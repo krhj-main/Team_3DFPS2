@@ -123,11 +123,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         //anim = transform.GetComponentInChildren<Animator>();
     }
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         // HP 실시간 파악
