@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour,Interectable
+public class Weapon : MonoBehaviour,Interactable
 {
     public GunsSwap.WeaponType type;
-    public void Interection(GameObject target)
+    public void Interaction(GameObject target)
     {
         GunsSwap swap =  target.GetComponent<GunsSwap>();
         //MainWeapon gun = gameObject.GetComponent<MainWeapon>();

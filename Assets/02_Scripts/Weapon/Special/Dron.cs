@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dron : MonoBehaviour,Interectable
+public class Dron : MonoBehaviour,Interactable
 {
     //총을 상속받아 총이랑 비슷하게 동작
 
@@ -65,7 +65,7 @@ public class Dron : MonoBehaviour,Interectable
         //rig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
-    public void Interection(GameObject target)
+    public void Interaction(GameObject target)
     {
         dronController.isOut = false;
         gameObject.SetActive(false);

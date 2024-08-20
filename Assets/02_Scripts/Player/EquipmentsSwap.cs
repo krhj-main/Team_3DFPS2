@@ -76,7 +76,7 @@ public class EquipmentsSwap : MonoBehaviour
             
             if (Input.GetKeyDown(dropKey))
             {
-                DropWeapon(equip);
+                DropWeapon(equip,Index);
             }
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 Swap(0);
@@ -87,9 +87,10 @@ public class EquipmentsSwap : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                if (index == 2)
+                if (index == 2&& equip!=null)
                 {
-                slot.Next();
+                ((Grenade)equip).Changetype();
+                equip.gameObject.SetActive(false);
                 }
                 else 
                 {
@@ -162,26 +163,28 @@ public class EquipmentsSwap : MonoBehaviour
             ((ThrowingWeapon)_weapon).firePos = firePos;
         }
         slot = Inventory.GetSlot(_index);
-        if (slot.isFull) {
+        if (slot.isFull)
+        {
             IEquipMent _equip = slot.Current();
-            DropWeapon(_equip);
+            DropWeapon(_equip, Inventory.SlotIndexToIndex(slot.Index));
         }
-        Inventory.Set(_index,_weapon);
+        
+        
+        
+        _weapon.gameObject.SetActive(false);
         int _num = Inventory.SlotIndexToIndex(_index);
-        Debug.Log(_num);
+        Inventory.Set(_num, _weapon);
+        _num = Inventory.SlotIndexToIndex(_index);
         Swap(_num);
-        
-        //주어진 슬롯에 남는 칸이 없으면
-        
         _weapon.transform.SetParent(transform);
         
     }
 
-    public void DropWeapon(IEquipMent _equip)
+    public void DropWeapon(IEquipMent _equip,int _index)
     {
         IEquipMent _go;
         _go = _equip;
-        Inventory.Set(Index,null);
+        Inventory.Set(_index, null);
         equip = null;
         Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
         if (_rid)

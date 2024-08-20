@@ -119,7 +119,12 @@ public class ShotGun : MainWeapon
                     {
                         continue;
                     }
-
+                    IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                    if (target != null)
+                    {
+                        target.Damaged(damage, hit.point);
+                    }
+                    /*
                     CharacterController _cc = hit.collider.GetComponent<CharacterController>();
                     if (_cc != null)
                     {
@@ -141,7 +146,7 @@ public class ShotGun : MainWeapon
                         {
                             hit.transform.GetComponent<IDamageAble>().Damaged(damage);
                         }
-                    }
+                    }*/
                 }
             }
         }

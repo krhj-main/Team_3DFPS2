@@ -56,8 +56,8 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     #region "AggroEnemy"
@@ -118,8 +118,14 @@ public class GameManager : Singleton<GameManager>
     */
     #endregion
 
-    
 
+    #region 로비 미션 UI 관련 ( 미션선택, 움직임 제한 )
+
+    public int canMissionChoice = 1;        // 게임 클리어 시 미션 목록에서 다음 미션 선택 가능하게 해줌
+    public bool openUI = false;             // UI 열리면 움직임 제한
+    public int selectSceneNum = 0;
+
+    #endregion
 
     #region "타이머"
     float curTime;

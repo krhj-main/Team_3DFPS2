@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DronController : MonoBehaviour, IEquipMent, Interectable
+public class DronController : MonoBehaviour, IEquipMent, Interactable
 {
     public Dron dron;
 
@@ -11,12 +11,12 @@ public class DronController : MonoBehaviour, IEquipMent, Interectable
 
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
+    [field: SerializeField]
     public EquipType type { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        type = EquipType.Special;
         charCamera = Camera.main;
     }
 
@@ -70,7 +70,7 @@ public class DronController : MonoBehaviour, IEquipMent, Interectable
         
     }
 
-    public virtual void Interection(GameObject target)
+    public virtual void Interaction(GameObject target)
     {
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)

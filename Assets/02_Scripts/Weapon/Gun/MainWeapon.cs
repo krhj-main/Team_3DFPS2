@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
+public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 {
     // 실험
     protected float originBulletSpread;
@@ -53,13 +53,12 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
     bool isADS = false;
-
+    [field: SerializeField]
     public EquipType type { get; set; }
     [SerializeField] public Sprite myImage;         // 무기 이미지
 
     protected virtual void Awake()
     {
-        type = EquipType.Weapon;
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
@@ -113,12 +112,13 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
     #region 슈팅 함수
     public virtual void Shoot(Transform _firePos)
     {
-        CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
+        
         if (loadedAmmo > 0)                  // 장전된 탄약이 0보다 크면 탄약 빼주기
         {
             loadedAmmo--;                     // 탄약 마이너스
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
+                CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
             }
 
@@ -237,8 +237,10 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
         return _direction.normalized;
     }
     #endregion
+
+    
     //상호작용
-    public virtual void Interection(GameObject target)
+    public virtual void Interaction(GameObject target)
     {
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)

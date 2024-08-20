@@ -35,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 7275738996871886628}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1934200576958800354
 MeshFilter:
@@ -153,6 +153,7 @@ MonoBehaviour:
   currentRotation: {x: 0, y: 0, z: 0}
   firePos: {fileID: 0}
   cam: {fileID: 0}
+  <type>k__BackingField: 0
   myImage: {fileID: 0}
   ammoTxt: {fileID: 0}
 --- !u!1001 &7165833305361486031

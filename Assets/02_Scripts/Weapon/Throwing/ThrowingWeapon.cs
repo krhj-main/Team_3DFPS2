@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
+public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
 {
     public float explosiondelay { get; set; }       // 폭발 시간
     public float explosionRadius { get; set; }      // 폭발 반경
@@ -11,6 +11,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
     public int damage { get; set; }                 // 데미지 ( 수류탄 )
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
+    [field: SerializeField]
     public EquipType type { get ; set ; }
 
     public LayerMask attackableMask;                // 효과 및 데미지 입을 대상
@@ -24,11 +25,15 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        type = EquipType.Throw;
         trajectoryLine = GetComponent<LineRenderer>();
         trajectoryLine.enabled = false;
     }
 
+    private void OnDisable()
+    {
+        //transform.SetParent(PlayerController.Instance.transform);
+        isThrow = false;
+    }
     // 라인 렌더러 설정
     void SetupTrajectoryLine()
     {
@@ -81,10 +86,10 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
     // 폭발
     public void Explosion()
     {
-        StartCoroutine(Explode());
+        Explode();
     }
 
-    protected abstract IEnumerator Explode();
+    protected abstract void Explode();
 
     public void OnHand(Transform _tr, Vector3 _offset)
     {
@@ -120,12 +125,12 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
         
     }
 
-    public void Interection(GameObject target)
+    public void Interaction(GameObject target)
     {
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)
         {
-            swap.WeaponChange(this, EquipType.Weapon);
+            swap.WeaponChange(this, type);
         }
     }
 }

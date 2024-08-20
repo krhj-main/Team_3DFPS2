@@ -89,7 +89,13 @@ public class Sniper : MainWeapon
                         Debug.Log($"벽에 닿음: {hit.transform.name}");
                         break; 
                     }
-
+                    IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                    if (target != null)
+                    {
+                        target.Damaged(damage, hit.point);
+                        _penetrateEnemy++;
+                    }
+                    /*
                     // 데미지 입히기
                     CharacterController _cc = hit.collider.GetComponent<CharacterController>();
                     if (_cc != null)
@@ -113,8 +119,8 @@ public class Sniper : MainWeapon
                         {
                             hit.transform.GetComponent<IDamageAble>().Damaged(damage);
                         }
-                        _penetrateEnemy++;
-                    }
+                        
+                    }*/
                     // 거리 계산하고 레이캐스트 다시 앞으로 나가기
                     distanceTraveled += hit.distance;
                     currentPosition = hit.point + direction * 0.001f;
