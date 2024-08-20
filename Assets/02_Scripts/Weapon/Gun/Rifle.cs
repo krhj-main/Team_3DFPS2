@@ -81,7 +81,7 @@ public class Rifle : MainWeapon
             {
                 if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
                 {
-                    Debug.Log($"벽에 닿음: {hit.transform.name}");
+                    //Debug.Log($"벽에 닿음: {hit.transform.name}");
                     return;
                 }
                 IDamageAble target = hit.transform.GetComponent<IDamageAble>();
