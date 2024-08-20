@@ -60,4 +60,9 @@ public class ShootingTarget : MonoBehaviour,IDamageAble
         tState = TargetState.Down;
         upDelayCount = Time.time;
     }
+
+    public void Damaged(int damage, Vector3 hitPoint)
+    {
+        throw new System.NotImplementedException();
+    }
 }
