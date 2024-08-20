@@ -112,12 +112,13 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     #region 슈팅 함수
     public virtual void Shoot(Transform _firePos)
     {
-        CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
+        
         if (loadedAmmo > 0)                  // 장전된 탄약이 0보다 크면 탄약 빼주기
         {
             loadedAmmo--;                     // 탄약 마이너스
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
+                CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
             }
 
