@@ -90,6 +90,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     CharacterController cc;
 
     Camera main;
+    public Camera PlayerCamera {
+        get => main;
+        private set {; }
+    }
 
     /*
     private void Awake()

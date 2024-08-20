@@ -96,15 +96,12 @@ public class FlashGrenade
         float angle = Vector3.Angle(_character.forward, _dirToFlash);
         Debug.Log(angle);
         // 시야각 확인 // 60 = 좌우로 60
-        if (angle < 100f)
+        if (angle < 90)
         {
-            Debug.Log("범위");
             // 레이캐스트로 장애물 체크
             RaycastHit hit;
-            Debug.DrawRay(_flash.position, _dirToFlash);
             if (Physics.Raycast(_flash.position, _dirToFlash*-1, out hit))
             {
-                Debug.Log(hit.collider.gameObject);
                 // 레이캐스트가 섬광탄에 먼저 닿았는지 확인
                 if (hit.collider.gameObject == _character.gameObject)
                 {
