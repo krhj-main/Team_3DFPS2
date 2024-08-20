@@ -65,32 +65,6 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
         adsPos = new Vector3(0, -0.25f, 0.5f);
     }
 
-    protected virtual void Start()
-    {
-
-    }
-    /*
-    public void BackAimBefore()
-    {
-        targetRotation = Vector3.Lerp(targetRotation, new Vector3(0, 0, 0), recoilRecoverySpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
-        cam.transform.localRotation = Quaternion.Euler(currentRotation);
-    }
-
-    public void BackAim()
-    {
-        Vector3 _tiltRotation = tiltingTest.GetTiltRotation();
-        targetRotation = Vector3.Lerp(targetRotation, _tiltRotation, recoilRecoverySpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
-        cam.transform.localRotation = Quaternion.Euler(currentRotation + _tiltRotation);
-    }
-    */
-
-    private void Update()
-    {
-        
-    }
-
     // 부모가 생기면 초기화 해줌
     private void OnTransformParentChanged()
     {
