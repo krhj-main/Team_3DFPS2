@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootingTarget : MonoBehaviour,IDamageAble
+public class ShootingTarget : MonoBehaviour, IDamageAble
 {
     public enum TargetState
     {
@@ -55,7 +55,7 @@ public class ShootingTarget : MonoBehaviour,IDamageAble
         }
     }
 
-    public void Damaged(int damage)
+    public void Damaged(int damage, Vector3 hitPoint)
     {
         tState = TargetState.Down;
         upDelayCount = Time.time;
