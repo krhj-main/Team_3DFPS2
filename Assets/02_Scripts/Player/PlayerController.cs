@@ -333,7 +333,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     }
 
     // 데미지 관련 임시 메서드
-    public void Damaged(int _damage)
+    public void Damaged(int _damage, Vector3 hitpoint)
     {
         pHP -= _damage;
     }

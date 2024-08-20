@@ -4,13 +4,19 @@ using UnityEngine;
 public class FlashGrenade
 {
     float calDuration;
+    public Mesh mesh;
+    public Material material;
+    public void init() {
+        mesh = Resources.Load<Mesh>("assault1");
+        material = Resources.Load<Material>("assault1_mat");
+    }
 
     #region "섬광탄"
     // 섬광탄 효과 ( 눈뽕, 에너미 멈춤 등 )
     public IEnumerator FlashGrenadeExplode(Transform _explode, float _radius, float _delay, float _effectDuration)
     {
         yield return new WaitForSeconds(_delay);
-
+        _explode.gameObject.SetActive(false);
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
 
@@ -56,6 +62,7 @@ public class FlashGrenade
         yield return new WaitForSeconds(calDuration);
 
         UIManager.Instance.FlashImage.gameObject.SetActive(false);
+
     }
 
     // 캐릭터가 섬광탄을 보고있는지 판단하는 메서드

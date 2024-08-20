@@ -109,7 +109,7 @@ public class Hostage : MonoBehaviour, IDamageAble
     }
     #endregion
 
-    public void Damaged(int damage)
+    public void Damaged(int damage,Vector3 hitpoint)
     {
         // 죽어있을 경우 데미지를 적용하지 않는 예외 처리
         if (hostageState == HostageState.Dead)
