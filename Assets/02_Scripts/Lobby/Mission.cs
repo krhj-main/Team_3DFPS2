@@ -17,19 +17,22 @@ public class Mission : MonoBehaviour
     int sceneNum;
     public Slider loadingBar;               // 로딩 슬라이더 바
     public TextMeshProUGUI loadingTxt;      // 로딩 진행 텍스트
-    MouseCursorMove mouseCursor;
+
+    // 미션UI 캔버스
+    public GameObject missionCanvas;
 
     private void Awake()
     {
-        //mouseCursor = GameObject.FindGameObjectWithTag("Cursor").GetComponent<MouseCursorMove>();
+        
     }
 
+    // UI 화면 켜지면 클리어 조건에 따라 버튼 클릭 가능
     private void OnEnable()
     {
         //mouseCursor.ShowCursor();
         for (int i = 0; i < missionBtn.Length; i++)
         {
-            if (i <= GameManager.Instance.gameClearNum)
+            if (i <= GameManager.Instance.canMissionChoice)
             {
                 missionBtn[i].interactable = true;
                 missionTxt[i].color = Color.white;
@@ -37,18 +40,33 @@ public class Mission : MonoBehaviour
         }
     }
 
-    void Start()
+    // UI 화면 꺼지면 이미지 다 끄기
+    private void OnDisable()
     {
-
+        for (int i = 0; i < missionImage.Length; i++)
+        {
+            missionImage[i].enabled = false;
+        }
     }
 
-    // 각 버튼마다 연결
+    // ESC 클릭시 UI 창 나가기
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            missionCanvas.SetActive(false);
+        }
+    }
+
+
+    // 미션 버튼 클릭 시 할 행동 ( 직접 연결 해줌 )
     public void MissionBtn(int num)
     {
         sceneNum = num;
         MissionImage(num);
     }
 
+    // 게임 시작 버튼 ( 직접 연결 해줌 )
     public void StartBtn()
     {
         StartCoroutine(TransitionNextScene(sceneNum));
@@ -81,7 +99,7 @@ public class Mission : MonoBehaviour
         }
     }
 
-    // 미션 이미지 or 동영상 켜주기
+    // 미션 이미지 켜주기
     void MissionImage(int num)
     {
         for(int i = 0; i < missionImage.Length; i++)
