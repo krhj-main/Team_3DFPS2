@@ -10,6 +10,9 @@ public class AnimIK : MonoBehaviour
     public Transform leftHand;
     public Transform rightHand;
 
+    [Range(0f,1f)]
+    public float val = 1f;
+
     Animator anim;
 
     private void Awake()
@@ -21,24 +24,23 @@ public class AnimIK : MonoBehaviour
     // 애니메이터의 IK 갱신
     private void OnAnimatorIK(int layerIndex)
     {
-        Debug.Log("적용");
         // 총의 기준점 gunPivot을 3D 모델의 오른쪽 팔꿈치 위치로 이동
         //gunPivot.position = anim.GetIKHintPosition(AvatarIKHint.RightElbow);
 
         // IK를 사용하여 왼손의 위치와 회전을 총의 오른쪽 손잡이에 맞춘다
-        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1.0f);
-        anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1.0f);
+        anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, val);
+        anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, val);
 
         anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHand.position);
         anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHand.rotation);
 
-        
+        /*
         // IK를 사용하여 오른손의 위치와 회전을 총의 오른쪽 손잡이에 맞춘다
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1.0f);
         anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0f);
 
         anim.SetIKPosition(AvatarIKGoal.RightHand, rightHand.position);
         anim.SetIKRotation(AvatarIKGoal.RightHand, rightHand.rotation);
-
+        */
     }
 }
