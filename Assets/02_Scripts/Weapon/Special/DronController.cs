@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DronController : MonoBehaviour, IEquipMent, Interectable
+public class DronController : MonoBehaviour, IEquipMent, Interactable
 {
     public Dron dron;
 
@@ -70,7 +70,7 @@ public class DronController : MonoBehaviour, IEquipMent, Interectable
         
     }
 
-    public virtual void Interection(GameObject target)
+    public virtual void Interaction(GameObject target)
     {
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)

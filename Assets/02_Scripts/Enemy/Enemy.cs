@@ -100,6 +100,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public NavMeshAgent agent;
     public float headRatio =0.3f;
+    MainWeapon weapon;
+
     void Awake()
     {
         index = 0;
@@ -109,16 +111,17 @@ public class Enemy : MonoBehaviour, IDamageAble
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
         hpSlider = GetComponentInChildren<Slider>();
-        //anim = transform.GetComponentInChildren<Animator>();
+        anim = transform.GetComponentInChildren<Animator>();
+        weapon = GetComponentInChildren<MainWeapon>();
     }
 
     private void Start()
     {
         // 외부 변수 관련 초기화
-        GetComponentInChildren<MainWeapon>().loadedAmmo = 99999;
-        atkDis = GetComponentInChildren<MainWeapon>().bulletRange;
-        GetComponentInChildren<MainWeapon>().fireRate = 0.5f;
-        atkDelay = GetComponentInChildren<MainWeapon>().fireRate;
+        weapon.loadedAmmo = 99999;
+        atkDis = weapon.bulletRange;
+        weapon.fireRate = 0.5f;
+        atkDelay = weapon.fireRate;
 
         hp = maxHp;
         originFindDis = findDis;
@@ -166,13 +169,17 @@ public class Enemy : MonoBehaviour, IDamageAble
         // Enemy 시야에 플레이어가 들어왔으면
         if (fov.visibleTargets.Count > 0)
         {
+            // Idle 애니메이션 종료
+            anim.SetBool("isIdle", false);
+
             // 상태를 Move로 변경
             enemyState = EnemyState.Move;
-
-            //anim.SetTrigger("IdleToMove");
         }
         else
         {
+            // Idle 애니메이션 재생
+            anim.SetBool("isIdle", true);
+
             agent.isStopped = true;
             agent.ResetPath();
         }
@@ -188,14 +195,19 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 플레이어 발견 범위보다 거리가 낮으면
             if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) < findDis)
             {
+                // Patrol 애니메이션 종료
+                anim.SetBool("isPatrol", false);
+
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
-                //anim.SetTrigger("IdleToMove");
             }
         }
         // 캐릭터가 시야 내에 없을 때
         else
         {
+            // Patrol 애니메이션 재생
+            anim.SetBool("isPatrol", true);
+
             // 지정된 위치를 왕복 이동
             agent.stoppingDistance = 0;
 
@@ -216,6 +228,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "존버"
     void Hide()
     {
+        // Hide(Idle) 애니메이션 재생
+        anim.SetBool("isIdle", true);
         // 만약 시야범위가 아닌 공격범위로 할 경우 아래 코드나 Hide 실행부분을 주석처리하면 됨 //
 
         if (fov.targetsInViewRadius.Length > 0)
@@ -223,12 +237,14 @@ public class Enemy : MonoBehaviour, IDamageAble
             // Enemy 범위에 플레이어가 들어왔다면 
             if (Vector3.Distance(transform.position, fov.targetsInViewRadius[0].transform.position) < atkDis)
             {
+                // Hide(Idle) 애니메이션 종료
+                anim.SetBool("isIdle", false);
+
+                // 쫓아갈 위치 대입
                 chasePos = PlayerController.Instance.transform.position;
 
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
-
-                //anim.SetTrigger("IdleToMove");
             }
         }
     }
@@ -237,6 +253,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "Blind"
     public void Blind()
     {
+        // Hide(Idle) 애니메이션 재생
+        anim.SetTrigger("doFlashbang");
+
         // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
         findDis = 0.1f;
         atkDis = 0f;
@@ -259,6 +278,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "이동"
     void Move()
     {
+        // Move 애니메이션 재생
+        anim.SetBool("isMove", true);
+
         // 플레이어가 Enemy 시야안에 들어왔을 경우
         if (fov.visibleTargets.Count > 0)
         {
@@ -268,6 +290,8 @@ public class Enemy : MonoBehaviour, IDamageAble
                 curTrackTime += Time.deltaTime;
                 if (curTrackTime >= trackTime)
                 {
+                    // Move 애니메이션 종료
+                    anim.SetBool("isMove", false);
                     fov.visibleTargets.Clear();
                     curTrackTime = 0;
                     enemyState = missingState;
@@ -316,6 +340,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "공격"
     void Attack()
     {
+        // Move 애니메이션 종료
+        anim.SetBool("isMove", false);
+
         if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) < atkDis)
         {
             agent.velocity = Vector3.zero;
@@ -329,22 +356,23 @@ public class Enemy : MonoBehaviour, IDamageAble
 
             if (currentTime > atkDelay)
             {
-                GetComponentInChildren<MainWeapon>().Shoot(transform);
+                // Attack 애니메이션 재생
+                anim.SetTrigger("doAttack");
+
+                weapon.Shoot(transform);
                 currentTime = 0;
 
-                // 단순 if문이 아니라 좀 더 범용적으로 수정? -> 상속으로 Enemy 종류 자체를 나눈다?, 
+                // 단순 if문이 아니라 좀 더 범용적으로 수정? ( Enemy 무기가 많아질경우 코드가 점점 길어짐 ) -> 상속으로 Enemy 종류 자체를 나눈다?, 
                 if (gameObject.name.Contains("Shotgun"))
                 {
                     atkDelay = Random.Range(1.5f, 2f);
-                    GetComponentInChildren<MainWeapon>().fireRate = atkDelay;
+                    weapon.fireRate = atkDelay;
                 }
                 else
                 {
                     atkDelay = Random.Range(0.25f, 1.5f);
-                    GetComponentInChildren<MainWeapon>().fireRate = atkDelay;
+                    weapon.fireRate = atkDelay;
                 }
-                
-                //anim.SetTrigger("StartAttack");
             }
             else
             {
@@ -355,8 +383,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         {
             enemyState = EnemyState.Move;
             currentTime = 0;
-
-            //anim.SetTrigger("AttackToMove");
         }
     }
     #endregion
@@ -364,14 +390,6 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "피격 행동"
     void Damaged()
     {
-        StartCoroutine(DamageProcess());
-    }
-
-    IEnumerator DamageProcess()
-    {
-        // 피격 모션 만큼 대기
-        yield return new WaitForSeconds(1f);
-
         enemyState = EnemyState.Move;
     }
     #endregion
@@ -382,19 +400,12 @@ public class Enemy : MonoBehaviour, IDamageAble
         // 진행 중인 피격 코루틴을 중지
         StopAllCoroutines();
 
-        // 죽음 상태를 처리하기 위한 코루틴 실행
-        StartCoroutine(DieProcess());
-    }
-
-    IEnumerator DieProcess()
-    {
+        // 사망 애니메이션 재생
+        anim.SetTrigger("doDead");
         // 캐릭터 컨트롤러 컴포넌트 비활성화
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
-
-        yield return new WaitForSeconds(0.01f);
-        Destroy(gameObject);
     }
     #endregion
 
@@ -430,17 +441,15 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 현재 방향에서 목표 방향으로 부드럽게 회전
             Quaternion targetRotation = Quaternion.LookRotation(_dirP);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
+            // 목표지점 (플레이어) 지정
             chasePos = PlayerController.Instance.transform.position;
 
-            //anim.SetTrigger("Damaged");
             Damaged();
         }
         else
         {
             enemyState = EnemyState.Dead;
 
-            //anim.SetTrigger("Die");
             Die();
         }
     }

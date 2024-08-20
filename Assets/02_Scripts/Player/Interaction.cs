@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interection : MonoBehaviour
-{//플레이어 상호작용기능 클레스
-    Interectable selected;                                  //선택된 상호작용이 가능한 오브젝트
+public class Interaction : MonoBehaviour
+{
+    //플레이어 상호작용기능 클래스
+    Interactable selected;                                  //선택된 상호작용이 가능한 오브젝트
     [Header("상호작용 조건")]
-    [SerializeField] KeyCode selectKey = KeyCode.E;         //상호작용시 입력받을 키
-    [SerializeField] float distace = 1;                     //상호작용이 가능한 최대 거리
+    [SerializeField] KeyCode selectKey = KeyCode.F;         //상호작용시 입력받을 키
+    [SerializeField] float distace = 3;                     //상호작용이 가능한 최대 거리
     [SerializeField] LayerMask hitLayer;                    //상호작용이 일어나는 레이어
     [Space(5)] [Header("UI")] 
     [SerializeField] GameObject lootImage;                  //상호작용이 가능하다고 알려줄 UI
@@ -32,12 +33,12 @@ public class Interection : MonoBehaviour
             if (Input.GetKeyDown(selectKey))
             {
                 //첫번째로 hit 한 오브젝트의 Interectable컴포넌트롤 가져오는걸 시도
-                selected = hit.collider.GetComponent<Interectable>();
-                if (selected != null) {//컴포넌트가 있으면 상호작용기능 메서드 실행
-                    selected.Interection(gameObject);
-                    
+                selected = hit.collider.GetComponent<Interactable>();
+                //컴포넌트가 있으면 상호작용기능 메서드 실행
+                if (selected != null) 
+                {
+                    selected.Interaction(gameObject);
                 }
-                
             }
         }
         //상호작용이 가능한 오브젝트가 검출되지 않았다면 UI 꺼짐
