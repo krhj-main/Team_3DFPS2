@@ -34,13 +34,13 @@ public class AnimIK : MonoBehaviour
         anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHand.position);
         anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHand.rotation);
 
-        /*
+        
         // IK를 사용하여 오른손의 위치와 회전을 총의 오른쪽 손잡이에 맞춘다
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1.0f);
         anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0f);
 
         anim.SetIKPosition(AvatarIKGoal.RightHand, rightHand.position);
         anim.SetIKRotation(AvatarIKGoal.RightHand, rightHand.rotation);
-        */
+        
     }
 }

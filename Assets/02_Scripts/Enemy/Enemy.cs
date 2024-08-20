@@ -354,13 +354,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 현재 방향에서 목표 방향으로 부드럽게 회전
             Quaternion targetRotation = Quaternion.LookRotation(_dirP);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-            if ((Time.time - currentTime) > 1) {
-                Debug.Log(Time.time);
-                Debug.Log(currentTime);
-                Debug.Log(atkDelay);
-                currentTime= Time.time;
-                Debug.Log(currentTime);
-            }
+            
             
             if ((Time.time-currentTime) > atkDelay)
             {
@@ -368,7 +362,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 currentTime = Time.time;
                 
                 // Attack 애니메이션 재생
-                //anim.SetTrigger("doAttack");
+                anim.SetTrigger("doAttack");
 
                 weapon.Shoot(transform);
 
