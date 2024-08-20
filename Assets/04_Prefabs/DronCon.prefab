@@ -110,6 +110,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2022270642766074874}
+  - {fileID: 2586865932536076282}
   m_Father: {fileID: 1969446501713678376}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -682,9 +683,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3999322323616411108}
-  - {fileID: 2586865932536076282}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &123885237283929478
 MeshFilter:
@@ -869,7 +869,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2586865932536076282
 RectTransform:
   m_ObjectHideFlags: 0
@@ -889,7 +889,7 @@ RectTransform:
   - {fileID: 6519616796581774367}
   - {fileID: 1167859298732109144}
   - {fileID: 6738917507388430397}
-  m_Father: {fileID: 1969446501713678376}
+  m_Father: {fileID: 3999322323616411108}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -906,8 +906,8 @@ Canvas:
   m_GameObject: {fileID: 7418527259191779840}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 7427911291779619778}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
