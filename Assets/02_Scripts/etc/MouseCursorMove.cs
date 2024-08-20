@@ -5,51 +5,59 @@ using UnityEngine.EventSystems;
 
 public class MouseCursorMove : MonoBehaviour
 {
-    enum MouseState { 
+    enum MouseState 
+    { 
         Lock,
         Confined,
     }
-    [SerializeField] RectTransform cursor;              //È­¸é¿¡ º¸ÀÏÄ¿¼­
-    [SerializeField] GameObject cursorIcon;             //Ä¿¼­ÀÇ ±âº» ¾ÆÀÌÄÜ
-    [SerializeField] GameObject cursorClickIcon;        //Å¬¸¯ÇßÀ»¶§ ¾ÆÀÌÄÜ
-    [SerializeField] GameObject cursorClickAbleIcon;    //Å¬¸¯ÀÌ °¡´ÉÇÑ UIÀ§¿¡ Ä¿¼­°¡ ¿Ã¶ó°¡¸é º¯ÇÏ´Â ¾ÆÀÌÄÜ
 
-    [SerializeField]MouseState state;                   //ÇöÀç ¸¶¿ì½º »óÅÂ
-    // Start is called before the first frame update
+    [SerializeField] RectTransform cursor;              //í™”ë©´ì— ë³´ì¼ì»¤ì„œ
+    [SerializeField] GameObject cursorIcon;             //ì»¤ì„œì˜ ê¸°ë³¸ ì•„ì´ì½˜
+    [SerializeField] GameObject cursorClickIcon;        //í´ë¦­í–ˆì„ë•Œ ì•„ì´ì½˜
+    [SerializeField] GameObject cursorClickAbleIcon;    //í´ë¦­ì´ ê°€ëŠ¥í•œ UIìœ„ì— ì»¤ì„œê°€ ì˜¬ë¼ê°€ë©´ ë³€í•˜ëŠ” ì•„ì´ì½˜
+
+    [SerializeField]MouseState state;                   //í˜„ì¬ ë§ˆìš°ìŠ¤ ìƒíƒœ
+
     void Start()
     {
-        Cursor.visible = false;                         //Ä¿¼­ ºñÇ¥½Ã
-        state = MouseState.Confined;                    //Ä¿¼­ È­¸é³»ºÎ¿¡ Á¦ÇÑ
+        Cursor.visible = false;                         //ì»¤ì„œ ë¹„í‘œì‹œ
+        state = MouseState.Confined;                    //ì»¤ì„œ í™”ë©´ë‚´ë¶€ì— ì œí•œ
         Cursor.lockState = CursorLockMode.Confined;
-        
+        HideCursor();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        cursor.position = Input.mousePosition;              //UIÀ§Ä¡ º¯È­
-        if (EventSystem.current.IsPointerOverGameObject())  //uiÀ§¿¡ ÀÖÀ¸¸é
+        cursor.position = Input.mousePosition;              //UIìœ„ì¹˜ ë³€í™”
+        if (EventSystem.current.IsPointerOverGameObject())  //uiìœ„ì— ìˆìœ¼ë©´
         {
             cursorClickAbleIcon.SetActive(true);
         }
-        else {
+        else 
+        {
             cursorClickAbleIcon.SetActive(false);
         }
-        if (Input.GetMouseButtonDown(0)) {                  //Å¬¸¯ÇÏ¸é
+
+        //í´ë¦­í•˜ë©´
+        if (Input.GetMouseButtonDown(0))
+        {                 
             cursorClickIcon.gameObject.SetActive(true);
         }
         else if (Input.GetMouseButtonUp(0))
         {
             cursorClickIcon.gameObject.SetActive(false);
         }
-
     }
 
-    public void ShowCursor() {                      //Ä¿¼­°¡ º¸ÀÌ°Ô ÇÏ´Â ¸Ş¼­µå
+    //ì»¤ì„œê°€ ë³´ì´ê²Œ í•˜ëŠ” ë©”ì„œë“œ
+    public void ShowCursor()
+    {                      
         Cursor.lockState = CursorLockMode.Confined;
         cursor.gameObject.SetActive(true);
     }
-    public void HideCursor()                        //Ä¿¼­¸¦ ¾Èº¸ÀÌ°ÔÇÏ°í Áß¾Ó¿¡ °íÁ¤ÇÏ´Â 1ÀÎÄª½Ã »ç¿ëÇÒ ¸Ş¼­µå
+
+    //ì»¤ì„œë¥¼ ì•ˆë³´ì´ê²Œí•˜ê³  ì¤‘ì•™ì— ê³ ì •í•˜ëŠ” 1ì¸ì¹­ì‹œ ì‚¬ìš©í•  ë©”ì„œë“œ
+    public void HideCursor()                        
     {
         Cursor.lockState = CursorLockMode.Locked;
         cursor.gameObject.SetActive(false);

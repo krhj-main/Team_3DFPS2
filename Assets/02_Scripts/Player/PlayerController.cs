@@ -194,6 +194,12 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 키 입력을 받았을 때 변수 값 전달 메서드
     void InputKey()
     {
+        if (GameManager.Instance.openUI)
+        {
+            return;
+        }
+
+
         // WASD 이동키
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         pState.isMoving = moveInput.magnitude != 0;
@@ -268,6 +274,12 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 카메라 마우스조작 메서드
     void LookAround()
     {
+        if (GameManager.Instance.openUI)
+        {
+            return;
+        }
+
+
         mouseDelta = new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
 
         Vector3 _camAngle = arm.rotation.eulerAngles;
