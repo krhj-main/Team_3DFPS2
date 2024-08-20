@@ -87,9 +87,10 @@ public class EquipmentsSwap : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                if (index == 2)
+                if (index == 2&& equip!=null)
                 {
-                slot.Next();
+                ((Grenade)equip).Changetype();
+                equip.gameObject.SetActive(false);
                 }
                 else 
                 {

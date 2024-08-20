@@ -4,12 +4,16 @@ using UnityEngine;
 public class FlashGrenade
 {
     float calDuration;
-    public Mesh mesh;
-    public Material material;
+    public static Mesh mesh;
+    public static Material material;
     public FlashGrenade() {
-        mesh = Resources.Load<Mesh>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Flashbang.obj/default");
+        if (mesh == null) {
+            mesh = Resources.Load<Mesh>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Flashbang");
+        }
 
-        material = Resources.Load<Material>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Materials/Flashbang_Base_Color");
+        if (material == null) {
+            material = Resources.Load<Material>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Materials/Flashbang_Base_Color");
+        }
     }
 
     #region "섬광탄"

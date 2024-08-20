@@ -3,6 +3,21 @@ using UnityEngine;
 
 public class FragGrenade
 {
+    public static Mesh mesh;
+    public static Material material;
+
+    public FragGrenade()
+    {
+        if (mesh == null)
+        {
+            mesh = Resources.Load<Mesh>("Grenades, Bombs & explosives Pack/Models & Textures/MK2_Frag/MK2FRAG");
+        }
+        if (material == null) {
+            material = Resources.Load<Material>("Grenades, Bombs & explosives Pack/Models & Textures/MK2_Frag/Materials/Grenade_DefaultMaterial_BaseColor");
+        }
+
+        
+    }
     #region "수류탄 효과"
     // 수류탄 효과 ( 데미지 )
     public IEnumerator FlagGrenadeExplode(Transform _explode, float _radius, float _delay ,float _damage)

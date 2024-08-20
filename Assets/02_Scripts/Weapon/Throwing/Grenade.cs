@@ -12,8 +12,8 @@ public enum GrenadeType
 public class Grenade : ThrowingWeapon
 {
     FragGrenade frag;
-    FlashGrenade flash ;
-    SmokeGrenade smoke ;
+    FlashGrenade flash;
+    SmokeGrenade smoke;
     public float _radius;
     public float _delay;
     public float _value;
@@ -34,12 +34,16 @@ public class Grenade : ThrowingWeapon
         switch(type)
         {
             case GrenadeType.FragGrenade:
+                meshFilter.mesh = FragGrenade.mesh;
+                meshRenderer.material = FragGrenade.material;
                 break;
             case GrenadeType.FlashGrenade:
-                meshFilter.mesh = flash.mesh;
-                meshRenderer.material = flash.material;
+                meshFilter.mesh = FlashGrenade.mesh;
+                meshRenderer.material = FlashGrenade.material;
                 break;
             case GrenadeType.SmokeGrenade:
+                meshFilter.mesh = SmokeGrenade.mesh;
+                meshRenderer.material = SmokeGrenade.material;
                 break;
         }
     }
@@ -56,6 +60,21 @@ public class Grenade : ThrowingWeapon
                 break;
             case GrenadeType.SmokeGrenade:
                 StartCoroutine(smoke.SmokeGrenadeExplode(transform, _radius, _delay, _value));
+                break;
+        }
+    }
+
+    public void Changetype() {
+        switch (type)
+        {
+            case GrenadeType.FragGrenade:
+                type = GrenadeType.FlashGrenade;
+                break;
+            case GrenadeType.FlashGrenade:
+                type = GrenadeType.SmokeGrenade;
+                break;
+            case GrenadeType.SmokeGrenade:
+                type = GrenadeType.FragGrenade;
                 break;
         }
     }
