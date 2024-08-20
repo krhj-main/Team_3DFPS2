@@ -4,15 +4,36 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Video;
 
 public class Lodding : MonoBehaviour
 {
     public Slider loadingBar;
     public TextMeshProUGUI loadingTxt;
+    public TextMeshProUGUI skipInfoTxt;
+
+    public VideoPlayer[] videoPlayers;
+    bool videoFinished = false;
 
     void Start()
     {
-        StartCoroutine(TransitionNextScene(Mission.sceneNum));
+        StartCoroutine(TransitionNextScene(GameManager.Instance.selectSceneNum));
+        ActiveVideo();
+    }
+
+    // 동영상 재생
+    void ActiveVideo()
+    {
+        VideoPlayer _selectedVideo = videoPlayers[GameManager.Instance.selectSceneNum];
+        _selectedVideo.gameObject.SetActive(true);
+        _selectedVideo.Play();
+        _selectedVideo.loopPointReached += OnVideoFinished;
+    }
+
+    // 동영상 재생이 끝나면 실행할 함수
+    void OnVideoFinished(VideoPlayer vp)
+    {
+        videoFinished = true;
     }
 
     // 비동기 신
@@ -28,18 +49,22 @@ public class Lodding : MonoBehaviour
         while (!_ao.isDone)
         {
             // 로딩 진행률을 슬라이더 바와 텍스트로 표시한다
-            loadingBar.value = _ao.progress;
-            loadingTxt.text = (_ao.progress * 100f).ToString() + "%";
+            float _progress = Mathf.Clamp01(_ao.progress / 0.9f);
+            loadingBar.value = _progress;
+            loadingTxt.text = (_progress * 100f).ToString("F0") + "%";
 
             // 만일 씬 로드 진행률이 90%를 넘어가면
             if (_ao.progress >= 0.9f)
             {
-                // 로드된 씬을 화면에 보이게 한다
-                _ao.allowSceneActivation = true;
+                skipInfoTxt.enabled = true;
+                // 비디오가 종료되거나 엔터키를 누르면 다음씬 활성화
+                if (videoFinished || Input.GetKeyDown(KeyCode.Escape))
+                {
+                    _ao.allowSceneActivation = true;
+                }
             }
-            // 다음 프레임이 될 때까지 기다린다
+
             yield return null;
         }
     }
-
 }
