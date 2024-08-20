@@ -13,9 +13,6 @@ public class Mission : MonoBehaviour
     public TextMeshProUGUI[] missionTxt;
     public Image[] missionImage;
 
-    // 씬이동
-    public static int sceneNum;
-
     // 미션UI 캔버스
     public GameObject missionCanvas;
 
@@ -61,7 +58,7 @@ public class Mission : MonoBehaviour
     // 미션 버튼 클릭 시 할 행동 ( 직접 연결 해줌 )
     public void MissionBtn(int num)
     {
-        sceneNum = num;
+        GameManager.Instance.selectSceneNum = num;
         MissionImage(num);
     }
 
