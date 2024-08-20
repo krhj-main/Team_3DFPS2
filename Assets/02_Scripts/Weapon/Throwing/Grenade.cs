@@ -11,9 +11,9 @@ public enum GrenadeType
 
 public class Grenade : ThrowingWeapon
 {
-    FragGrenade frag = new FragGrenade();
-    FlashGrenade flash = new FlashGrenade();
-    SmokeGrenade smoke = new SmokeGrenade();
+    FragGrenade frag;
+    FlashGrenade flash ;
+    SmokeGrenade smoke ;
     public float _radius;
     public float _delay;
     public float _value;
@@ -25,8 +25,9 @@ public class Grenade : ThrowingWeapon
         base.Awake();
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
-        flash.init();
-
+        frag = new FragGrenade();
+        flash = new FlashGrenade();
+        smoke = new SmokeGrenade();
     }
     private void OnEnable()
     {

@@ -6,9 +6,10 @@ public class FlashGrenade
     float calDuration;
     public Mesh mesh;
     public Material material;
-    public void init() {
-        mesh = Resources.Load<Mesh>("assault1");
-        material = Resources.Load<Material>("assault1_mat");
+    public FlashGrenade() {
+        mesh = Resources.Load<Mesh>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Flashbang.obj/default");
+
+        material = Resources.Load<Material>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Materials/Flashbang_Base_Color");
     }
 
     #region "섬광탄"
