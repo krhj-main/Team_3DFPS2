@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
+public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
 {
     public float explosiondelay { get; set; }       // 폭발 시간
     public float explosionRadius { get; set; }      // 폭발 반경
@@ -125,7 +125,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interectable
         
     }
 
-    public void Interection(GameObject target)
+    public void Interaction(GameObject target)
     {
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)

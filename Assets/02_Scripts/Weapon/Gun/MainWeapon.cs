@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
+public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 {
     // 실험
     protected float originBulletSpread;
@@ -239,7 +239,7 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
 
     
     //상호작용
-    public virtual void Interection(GameObject target)
+    public virtual void Interaction(GameObject target)
     {
         EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
         if (swap != null)
