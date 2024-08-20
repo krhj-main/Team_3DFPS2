@@ -65,7 +65,7 @@ public class DronController : MonoBehaviour, IEquipMent, Interactable
         }
     }
 
-    public void OutHand()
+    public void OnHandExit()
     {
         
     }
@@ -77,5 +77,10 @@ public class DronController : MonoBehaviour, IEquipMent, Interactable
         {
             swap.WeaponChange(this, type);
         }
+    }
+
+    public void OnHandEnter()
+    {
+        
     }
 }

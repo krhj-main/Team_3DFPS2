@@ -20,7 +20,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [SerializeField] float mouseSensitivity = 2;
     [Header("캐릭터 이동속도")]
     [SerializeField] float moveSpeed = 5f;
-
+    [Header("캐릭터 이동속도 배율")]
+    [SerializeField] public float moveSpeedScale = 0f;
     [Space(5)]
     [Header("그라운드 체크")]
     [Tooltip("T = 기즈모 킴 F = 기즈모 끔")]
@@ -170,7 +171,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             _groundVelocity /= 1.8f;
         }
 
-
+        _groundVelocity *= (1+moveSpeedScale);
 
         float _yVelocity = JumpingUpdate();
         velocity = new Vector3(_groundVelocity.x, _yVelocity, _groundVelocity.z);

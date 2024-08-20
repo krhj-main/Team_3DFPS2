@@ -138,7 +138,7 @@ public class EquipmentsSwap : MonoBehaviour
         if (equip != null)
         {//무기를 들고있으면 전환
             equip.gameObject.SetActive(false);
-            equip.OutHand();
+            equip.OnHandExit();
             InputManger.Instance.keyAction -= equip.InputKey;
         }
         Index = _setIndex;
@@ -147,6 +147,7 @@ public class EquipmentsSwap : MonoBehaviour
         if (equip != null)
         {
             equip.gameObject.SetActive(true);
+            equip.OnHandEnter();
             InputManger.Instance.keyAction += equip.InputKey;
         }
     }
@@ -192,7 +193,7 @@ public class EquipmentsSwap : MonoBehaviour
            _rid.AddForce((Camera.main.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
         }
         InputManger.Instance.keyAction -= _equip.InputKey;
-        _go.OutHand();
+        _go.OnHandExit();
         Utill.DestroyOnLoad(_go.gameObject);
        
         SwapNext();

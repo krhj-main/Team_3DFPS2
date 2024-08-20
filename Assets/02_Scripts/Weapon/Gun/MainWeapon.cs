@@ -47,7 +47,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     Vector3 targetPos;                              // 이동할 위치
     private EquipmentsSwap gunSwap;                       // 건스왑에서 총기 위치 옮겨줌
     bool isAming = false;
-    public Transform firePos;
+    public Transform firePos;                       // 총기가 발사될 위치
     [SerializeField] protected Camera cam;          // 메인 카메라
     public virtual float headRatio { get; set; }    // 머리 비율
     Transform IEquipMent.transform { get => transform; set { } }
@@ -56,6 +56,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [field: SerializeField]
     public EquipType type { get; set; }
     [SerializeField] public Sprite myImage;         // 무기 이미지
+    [Range(-100,100)]
+    [SerializeField] float speedDownForce;
 
     protected virtual void Awake()
     {
@@ -247,7 +249,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             swap.WeaponChange(this, EquipType.Weapon);
         }
-    } 
+    }
+    public void OnHandEnter()
+    {
+        PlayerController.Instance.moveSpeedScale = speedDownForce/100;
+    }
     //손에있을때 할 행동
     public virtual void OnHand(Transform _tr,Vector3 _offSet)
     {
@@ -255,11 +261,33 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         transform.rotation = _tr.rotation;
         UIManager.Instance.ReloadAmmoUIUpdate(loadedAmmo, remainAmmo);
         UIManager.Instance.ChangeWeaponUIUpdate(myImage, 0, 0);
+        
         if (isAming)
         {
             UpdateAiming();
         }
-    } 
+    }
+    public virtual void OnHandExit()
+    {
+        PlayerController.Instance.moveSpeedScale = 0;
+        StopCoroutine(Reloading());
+        isReloading = false;
+        isAming = false;
+        if (gunSwap)
+        {
+            gunSwap.GunPosition.localPosition = shoulderPos;
+        }
+        // 무기 위치 업데이트
+
+
+        // 카메라 FOV 업데이트
+        cam.fieldOfView = shoulderFOV;
+
+        if (cam.fieldOfView == targetFOV)
+        {
+            isAming = false;
+        }
+    }
     //키입력
     public virtual void InputKey()
     {
@@ -281,26 +309,9 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         }
     }   
     //무기 바꿀때 할 행동
-    public virtual void OutHand()
-    {
-        StopCoroutine(Reloading());
-        isReloading=false;
-        isAming = false;
-        if (gunSwap)
-        {
-            gunSwap.GunPosition.localPosition = shoulderPos;
-        }
-        // 무기 위치 업데이트
+    
 
-
-        // 카메라 FOV 업데이트
-        cam.fieldOfView = shoulderFOV;
-
-        if (cam.fieldOfView == targetFOV)
-        {
-            isAming = false;
-        }
-    }   
+    
 }
 
     

@@ -9,9 +9,10 @@ public interface IEquipMent
 
    
     public EquipType type { get; set; }
+    public void OnHandEnter();
     public void OnHand(Transform _tr,Vector3 _offset);               //손에 들고있을때 작동할 부분
     public void InputKey();  //버튼입력
-    public void OutHand();              //들고있다가 손에서 놓을때
+    public void OnHandExit();              //들고있다가 손에서 놓을때
 }
 public enum EquipType
 {
