@@ -121,6 +121,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(pHP);
         if (!main.enabled) { return; }
         InputKey();
         LookAround();
