@@ -46,6 +46,5 @@ public class Interaction : MonoBehaviour
         {
             lootImage.SetActive(false);
         }
-
     }
 }
