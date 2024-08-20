@@ -51,9 +51,11 @@ public class EquipmentsSlot
     public IEquipMent GetEquip(int _index) {
         if (Size > _index)
         {
+            /*
             if (weight < Index) {
                 return Current();
-            }
+            }*/
+            Index = _index;
             return list[_index];    
         }
         return null;

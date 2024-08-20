@@ -77,6 +77,12 @@ public class Pistol : MainWeapon
                     Debug.Log($"벽에 닿음: {hit.transform.name}");
                     return;
                 }
+                IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                if (target != null)
+                {
+                    target.Damaged(damage, hit.point);
+                }
+                /*
                 CharacterController _cc = hit.collider.GetComponent<CharacterController>();
                 if (_cc != null)
                 {
@@ -99,7 +105,7 @@ public class Pistol : MainWeapon
                     {
                         hit.transform.GetComponent<IDamageAble>().Damaged(damage);
                     }
-                }
+                }*/
             }
         }
     }

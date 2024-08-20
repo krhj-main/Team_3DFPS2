@@ -76,7 +76,7 @@ public class EquipmentsSwap : MonoBehaviour
             
             if (Input.GetKeyDown(dropKey))
             {
-                DropWeapon(equip);
+                DropWeapon(equip,Index);
             }
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 Swap(0);
@@ -162,24 +162,28 @@ public class EquipmentsSwap : MonoBehaviour
             ((ThrowingWeapon)_weapon).firePos = firePos;
         }
         slot = Inventory.GetSlot(_index);
-        if (slot.isFull) {
+        if (slot.isFull)
+        {
             IEquipMent _equip = slot.Current();
-            DropWeapon(_equip);
+            DropWeapon(_equip, Inventory.SlotIndexToIndex(slot.Index));
         }
         
+        
+        
+        _weapon.gameObject.SetActive(false);
         int _num = Inventory.SlotIndexToIndex(_index);
-        Debug.Log(_index);
         Inventory.Set(_num, _weapon);
+        _num = Inventory.SlotIndexToIndex(_index);
         Swap(_num);
         _weapon.transform.SetParent(transform);
         
     }
 
-    public void DropWeapon(IEquipMent _equip)
+    public void DropWeapon(IEquipMent _equip,int _index)
     {
         IEquipMent _go;
         _go = _equip;
-        Inventory.Set(Index,null);
+        Inventory.Set(_index, null);
         equip = null;
         Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
         if (_rid)

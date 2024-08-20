@@ -84,30 +84,11 @@ public class Rifle : MainWeapon
                     Debug.Log($"벽에 닿음: {hit.transform.name}");
                     return;
                 }
-                
-                CharacterController _cc = hit.collider.GetComponent<CharacterController>();
-                if (_cc != null)
-                {
-                    // CharacterController의 실제 높이 계산
-                    float _controllerHeight = _cc.height * hit.transform.lossyScale.y;
-
-                    // CharacterController의 하단 y 좌표 계산 ( 지면 )
-                    float _bottomY = hit.transform.position.y + _cc.center.y * hit.transform.lossyScale.y - _controllerHeight / 2;
-
-                    // hit.point의 상대적 높이 비율 계산
-                    float _relativeHeight = (hit.point.y - _bottomY) / _controllerHeight;
-
-                    // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
-                    if (_relativeHeight >= (1 - headRatio))
-                    {
-                        Debug.Log("헤드샷");
-                        hit.transform.GetComponent<IDamageAble>().Damaged(damage * 2);
-                    }
-                    else
-                    {
-                        hit.transform.GetComponent<IDamageAble>().Damaged(damage);
-                    }
+                IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                if (target != null) {
+                    target.Damaged(damage, hit.point);
                 }
+                
             }
         }
     }
