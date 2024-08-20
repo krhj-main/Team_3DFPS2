@@ -1102,6 +1102,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: NaN
       objectReference: {fileID: 0}
+    - target: {fileID: 9026745354012454586, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9074857708310259186, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2733,6 +2738,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -994648074451216294, guid: e4067a069498d344299f330819737fe5,
+        type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1180761160894769012, guid: e4067a069498d344299f330819737fe5,
         type: 3}
       propertyPath: m_Drag
