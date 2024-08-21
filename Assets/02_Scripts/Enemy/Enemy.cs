@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     // 누적 시간
     [HideInInspector]
     public float currentTime = 0;
+
     // 공격 딜레이
     [HideInInspector]
     public float atkDelay = 2f;
@@ -120,7 +121,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         // 외부 변수 관련 초기화
         weapon.loadedAmmo = 99999;
         atkDis = weapon.bulletRange;
-        weapon.fireRate = 0.5f;
+        weapon.fireRate = 1.5f;
         atkDelay = weapon.fireRate;
 
         hp = maxHp;
@@ -353,30 +354,31 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 현재 방향에서 목표 방향으로 부드럽게 회전
             Quaternion targetRotation = Quaternion.LookRotation(_dirP);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-            if (currentTime > atkDelay)
+            
+            
+            if ((Time.time-currentTime) > atkDelay)
             {
+                
+                currentTime = Time.time;
+                
                 // Attack 애니메이션 재생
                 anim.SetTrigger("doAttack");
 
                 weapon.Shoot(transform);
-                currentTime = 0;
 
-                // 단순 if문이 아니라 좀 더 범용적으로 수정? ( Enemy 무기가 많아질경우 코드가 점점 길어짐 ) -> 상속으로 Enemy 종류 자체를 나눈다?, 
                 if (gameObject.name.Contains("Shotgun"))
                 {
+                    Debug.Log("작동확인");
                     atkDelay = Random.Range(1.5f, 2f);
                     weapon.fireRate = atkDelay;
+                    
                 }
                 else
                 {
+                    
                     atkDelay = Random.Range(0.25f, 1.5f);
                     weapon.fireRate = atkDelay;
                 }
-            }
-            else
-            {
-                currentTime += Time.deltaTime;
             }
         }
         else

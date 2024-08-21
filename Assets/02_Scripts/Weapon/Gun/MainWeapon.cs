@@ -64,33 +64,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
-        adsPos = new Vector3(0, -0.25f, 0.5f);
-    }
-
-    protected virtual void Start()
-    {
-
-    }
-    /*
-    public void BackAimBefore()
-    {
-        targetRotation = Vector3.Lerp(targetRotation, new Vector3(0, 0, 0), recoilRecoverySpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
-        cam.transform.localRotation = Quaternion.Euler(currentRotation);
-    }
-
-    public void BackAim()
-    {
-        Vector3 _tiltRotation = tiltingTest.GetTiltRotation();
-        targetRotation = Vector3.Lerp(targetRotation, _tiltRotation, recoilRecoverySpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, recoilSpeed * Time.deltaTime);
-        cam.transform.localRotation = Quaternion.Euler(currentRotation + _tiltRotation);
-    }
-    */
-
-    private void Update()
-    {
-        
+        adsPos = new Vector3(0, -0.25f, 0f);
     }
 
     // 부모가 생기면 초기화 해줌

@@ -53,6 +53,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Tooltip("서있을 때 캐릭터 컨트롤러 중심 위치 값")]
     [SerializeField] Vector3 normalCenter;
 
+    Animator anim;
+
 
     [Space(5)]
     [Header("플레이어 체력")]
@@ -120,12 +122,14 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
         cc = GetComponent<CharacterController>();
+        anim = transform.GetComponentInChildren<Animator>();
         main = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log(pHP);
         if (!main.enabled) { return; }
         InputKey();
         LookAround();
@@ -147,7 +151,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     private void FixedUpdate()
     {
         ActiveMove();
-        
     }
 
     // 속도를 사용해 실제로 움직이는 부분
@@ -155,20 +158,37 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         Vector3 _groundVelocity = MovingUpdate(moveInput.x, moveInput.z);
 
+        // 이동 상태가 아닐 때
+        if (!pState.isMoving)
+        {
+            anim.SetBool("isMove", false);
+        }
+        else
+        {
+            anim.SetBool("isMove", true);
+        }
+
         // 걷기키가 눌렸을 때
         if (pState.isWalking)
         {
+            // 이동속도 및 애니메이션 속도 조절
             _groundVelocity /= 1.5f;
         }
-        // 뛰기키가 눌렸을 때 / 걷기키를 누를때는 같이 동작안함
+        // 뛰기키가 눌렸을 때 / 걷기키를 누를때는 같이 동작안함 -> 키 입력에 있어 걷기키가 최우선?
         if (pState.isRunning && !pState.isWalking)
         {
             _groundVelocity *= 1.5f;
         }
+
         // 앉기키를 눌렀을 때 
         if (pState.isCrouch)
         {
+            anim.SetBool("isCrouch", true);
             _groundVelocity /= 1.8f;
+        }
+        else
+        {
+            anim.SetBool("isCrouch", false);
         }
 
         _groundVelocity *= (1+moveSpeedScale);
@@ -293,7 +313,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
         if (_limit < 180)
         {
-            _limit = Mathf.Clamp(_limit, -1f, 80f);
+            _limit = Mathf.Clamp(_limit, -1f, 60f);
         }
         else
         {
