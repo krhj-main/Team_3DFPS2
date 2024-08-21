@@ -24,6 +24,7 @@ public class SmokeGrenade
     {
         yield return new WaitForSeconds(_delay);
         _explode.gameObject.SetActive(false);
+        Debug.Log("연막탄 폭발");
         // 연막 이펙트 생성
     }
 }

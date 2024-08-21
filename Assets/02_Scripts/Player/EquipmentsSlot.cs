@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -109,5 +110,14 @@ public class EquipmentsSlot
     }
     public IEquipMent RemoveEquip( int _index) {
         return SetEquip(null, _index);
+    }
+
+    public void Clear() {
+        for (int i = 0; i < list.Length; i++) {
+            if (list[i]!=null) {
+                GameObject.Destroy(list[i].gameObject);
+                list[i] = null;
+            }
+        }
     }
 }

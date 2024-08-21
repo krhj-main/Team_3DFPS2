@@ -22,6 +22,7 @@ public class FlashGrenade
     {
         yield return new WaitForSeconds(_delay);
         _explode.gameObject.SetActive(false);
+        Debug.Log("섬광탄 폭발");
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
 

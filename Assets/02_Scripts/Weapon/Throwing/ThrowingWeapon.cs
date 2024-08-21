@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
+public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
 {
     public float explosiondelay { get; set; }       // 폭발 시간
     public float explosionRadius { get; set; }      // 폭발 반경
@@ -43,7 +43,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
         trajectoryLine.endColor = Color.red;
     }
 
-    private (Vector3 velocity, Vector3 position) CalculateTrajectoryVector(Transform _firePos)
+    protected (Vector3 velocity, Vector3 position) CalculateTrajectoryVector(Transform _firePos)
     {
         Vector3 _velocity = _firePos.forward * throwForce;
         Vector3 _localStartPos = new Vector3(0.5f, 0, 1f);      // 카메라 기준으로 궤적 시작 위치 설정
@@ -73,25 +73,18 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
     }
 
     // 던지기
-    public void Throw(Transform _firePos)
+    public virtual void Throw(Transform _firePos)
     {
         var (_velocity, _position) = CalculateTrajectoryVector(_firePos);
         this.transform.position = _position;
 
         rb.velocity = _velocity;
         trajectoryLine.enabled = false;
-        Explosion();
     }
 
-    // 폭발
-    public void Explosion()
-    {
-        Explode();
-    }
 
-    protected abstract void Explode();
 
-    public void OnHand(Transform _tr, Vector3 _offset)
+    public virtual void OnHand(Transform _tr, Vector3 _offset)
     {
         if (!isThrow) 
         {
@@ -101,7 +94,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
         }
     }
 
-    public void InputKey()
+    public virtual void InputKey()
     {
         if (!isThrow)
         {
@@ -120,7 +113,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
         
     }
 
-    public void OnHandExit()
+    public virtual void OnHandExit()
     {
         
     }
@@ -134,7 +127,7 @@ public abstract class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
         }
     }
 
-    public void OnHandEnter()
+    public virtual void OnHandEnter()
     {
     }
 }
