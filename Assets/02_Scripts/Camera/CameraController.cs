@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     private Vector3 finalRotation;
 
     // 현재 장착된 무기에 대한 참조
-    private MainWeapon mainWeapon;
+    private IEquipMent mainWeapon;
 
     Vector3 oriPos;
 
@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
         // 초기 위치와 회전값을 저장
         originalPosition = transform.localPosition;
         originalRotation = transform.localRotation;
+        mainWeapon = GetComponentInParent<EquipmentsSwap>().equip;
     }
 
     void Update()
@@ -52,7 +53,7 @@ public class CameraController : MonoBehaviour
     void UpdateWeaponReference()
     {
         // 현재 장착된 무기를 찾아 참조를 업데이트
-        mainWeapon = GetComponentInParent<CharacterController>().GetComponentInChildren<MainWeapon>();
+        //mainWeapon = GetComponentInParent<CharacterController>().GetComponentInChildren<MainWeapon>();
     }
 
     void UpdateTilt()
@@ -83,7 +84,7 @@ public class CameraController : MonoBehaviour
     void UpdateRecoil()
     {
         // 무기가 있으면 해당 무기의 반동 회복 속도를 사용, 없으면 기본값 5 사용
-        float recoilRecoverySpeed = mainWeapon != null ? mainWeapon.recoilRecoverySpeed : 5f;
+        float recoilRecoverySpeed = (mainWeapon != null&& mainWeapon.type==EquipType.Weapon) ? ((MainWeapon)mainWeapon).recoilRecoverySpeed : 5f;
 
         // 반동을 서서히 0으로 줄임
         if(Time.time - lastRecoilTime > recoilRecoveryDelay)

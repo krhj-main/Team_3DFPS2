@@ -16,7 +16,7 @@ public class EquipmentsSwap : MonoBehaviour
     public Transform firePos;
     public Inventory Inventory;
     EquipmentsSlot slot;
-    IEquipMent equip;
+    public IEquipMent equip;
 
 
     public int Index                                        //인덱스를 순환시키기 위한 프로퍼티 
@@ -73,7 +73,7 @@ public class EquipmentsSwap : MonoBehaviour
 
     public void Inputkey() {
                                  //무기가 하나이상 있으면
-            
+         
             if (Input.GetKeyDown(dropKey))
             {
                 if (index != 2)
