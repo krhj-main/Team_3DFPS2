@@ -62,7 +62,7 @@ public class MainWeapon : MonoBehaviour, Interectable, IEquipMent
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
-        adsPos = new Vector3(0, -0.25f, 0.5f);
+        adsPos = new Vector3(0, -0.25f, 0f);
     }
 
     // 부모가 생기면 초기화 해줌

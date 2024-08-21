@@ -380,17 +380,11 @@ public class Enemy : MonoBehaviour, IDamageAble
                     weapon.fireRate = atkDelay;
                 }
             }
-            else
-            {
-                
-            }
         }
         else
         {
-            Debug.Log(1);
             enemyState = EnemyState.Move;
             currentTime = 0;
-            
         }
     }
     #endregion

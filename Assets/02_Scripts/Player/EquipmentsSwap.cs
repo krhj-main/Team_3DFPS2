@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class EquipmentsSwap : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class EquipmentsSwap : MonoBehaviour
     Inventory Inventory;
     EquipmentsSlot slot;
     IEquipMent equip;
+
+    [SerializeField] PlayerAnimIK playerAnimIK;
+    [SerializeField] TwoBoneIKConstraint leftHandIK;
+    [SerializeField] TwoBoneIKConstraint rightHandIK;
 
 
     public int Index                                        //인덱스를 순환시키기 위한 프로퍼티 
@@ -46,6 +51,7 @@ public class EquipmentsSwap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         Inventory = GetComponent<Inventory>();
         firePos = Camera.main.transform;
         InputManger.Instance.keyAction += Inputkey;
@@ -146,6 +152,17 @@ public class EquipmentsSwap : MonoBehaviour
         if (equip != null)
         {
             equip.gameObject.SetActive(true);
+
+            // 무기가 전환되는 부분
+            // 전환될 때 PlayerAnimIK의 left,rightHand에
+            // equip의 자식에 있는 Left, RightHand에 대입
+            
+            leftHandIK.data.target = equip.transform.Find("LeftHandPos");
+            rightHandIK.data.target = equip.transform.Find("RightHandPos");
+            
+            //playerAnimIK.leftHand = equip.transform.Find("LeftHandPos");
+            //playerAnimIK.rightHand = equip.transform.Find("RightHandPos");
+
             InputManger.Instance.keyAction += equip.InputKey;
         }
     }
