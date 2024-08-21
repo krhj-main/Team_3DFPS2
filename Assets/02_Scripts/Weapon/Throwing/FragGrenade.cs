@@ -60,6 +60,7 @@ public class FragGrenade
                 }
             }
         }
+        Debug.Log("수류탄 폭발");
         /*
         // 에너미
         foreach (Enemy enemy in GameManager.Instance.enemies)

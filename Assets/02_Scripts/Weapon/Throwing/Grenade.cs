@@ -9,7 +9,7 @@ public enum GrenadeType
     SmokeGrenade
 }
 
-public class Grenade : ThrowingWeapon
+public class Grenade :MonoBehaviour
 {
     FragGrenade frag;
     FlashGrenade flash;
@@ -19,12 +19,14 @@ public class Grenade : ThrowingWeapon
     public float _value;
     MeshFilter meshFilter;
     MeshRenderer meshRenderer;
+    public Rigidbody rb;
     [SerializeField] GrenadeType type;
-    protected override void Awake()
+    public GrenadeFactory factory;
+    protected void Awake()
     {
-        base.Awake();
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
+        rb= GetComponent<Rigidbody>();
         frag = new FragGrenade();
         flash = new FlashGrenade();
         smoke = new SmokeGrenade();
@@ -47,8 +49,22 @@ public class Grenade : ThrowingWeapon
                 break;
         }
     }
+
+    private void OnDisable()
+    {
+        if (transform.parent == null)
+        {
+            Invoke("Pulling", Time.deltaTime);//그냥 호출하면 오류 발생 다음프레임정도에 작동
+        }
+    }
+    private void Pulling() {
+            factory.ReturnGrenade(this);
+            transform.SetParent(factory.transform);
+    }
+
+
     // 실제로 사용될 폭발 효과 메서드
-    protected override void Explode()
+    public void Explode()
     {
         switch(type)
         {
@@ -64,18 +80,7 @@ public class Grenade : ThrowingWeapon
         }
     }
 
-    public void Changetype() {
-        switch (type)
-        {
-            case GrenadeType.FragGrenade:
-                type = GrenadeType.FlashGrenade;
-                break;
-            case GrenadeType.FlashGrenade:
-                type = GrenadeType.SmokeGrenade;
-                break;
-            case GrenadeType.SmokeGrenade:
-                type = GrenadeType.FragGrenade;
-                break;
-        }
+    public void Changetype(GrenadeType _type ) {
+        type = _type;
     }
 }

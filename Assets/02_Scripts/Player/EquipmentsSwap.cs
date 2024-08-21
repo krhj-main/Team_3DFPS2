@@ -14,7 +14,7 @@ public class EquipmentsSwap : MonoBehaviour
     float dropForce = 3;
     public Vector3 offsetPos;
     public Transform firePos;
-    Inventory Inventory;
+    public Inventory Inventory;
     EquipmentsSlot slot;
     IEquipMent equip;
 
@@ -76,7 +76,10 @@ public class EquipmentsSwap : MonoBehaviour
             
             if (Input.GetKeyDown(dropKey))
             {
-                DropWeapon(equip,Index);
+                if (index != 2)
+                {
+                    DropWeapon(equip, Index);
+                }
             }
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
                 Swap(0);
@@ -89,8 +92,7 @@ public class EquipmentsSwap : MonoBehaviour
             {
                 if (index == 2&& equip!=null)
                 {
-                ((Grenade)equip).Changetype();
-                equip.gameObject.SetActive(false);
+                ((GrenadeFactory)equip).Changetype();
                 }
                 else 
                 {

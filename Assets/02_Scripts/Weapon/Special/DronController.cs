@@ -2,27 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DronController : MonoBehaviour, IEquipMent, Interactable
+public class DronController : SpecialWeapon
 {
     public Dron dron;
 
     public bool isOut = false;
     public Camera charCamera;
 
-    Transform IEquipMent.transform { get => transform; set { } }
-    GameObject IEquipMent.gameObject { get => gameObject; set { } }
-    [field: SerializeField]
-    public EquipType type { get; set; }
+    
 
     // Start is called before the first frame update
     void Start()
     {
         charCamera = Camera.main;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public void DronReturn() {
@@ -42,9 +34,7 @@ public class DronController : MonoBehaviour, IEquipMent, Interactable
             Rigidbody _rid = dron.gameObject.GetComponent<Rigidbody>();
             if (_rid)
             {
-               
                 _rid.AddForce(Camera.main.transform.forward * 1, ForceMode.Impulse);
-                
             }
             isOut = !isOut;
 
@@ -52,35 +42,16 @@ public class DronController : MonoBehaviour, IEquipMent, Interactable
            
     }
 
-    public void OnHand(Transform _tr, Vector3 _offset)
+    public override void OnHand(Transform _tr, Vector3 _offset)
     {
         transform.position = _tr.position + _offset;  //오브젝트 위치 조정
         transform.rotation = _tr.rotation;
     }
 
-    public void InputKey()
+    public override void InputKey()
     {
         if (Input.GetMouseButton(0)) {
             Use();
         }
-    }
-
-    public void OnHandExit()
-    {
-        
-    }
-
-    public virtual void Interaction(GameObject target)
-    {
-        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
-        if (swap != null)
-        {
-            swap.WeaponChange(this, type);
-        }
-    }
-
-    public void OnHandEnter()
-    {
-        
     }
 }
