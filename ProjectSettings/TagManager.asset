@@ -20,7 +20,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - PlayerBody
   - Player
   - PlayerBullet
   - Enemy
