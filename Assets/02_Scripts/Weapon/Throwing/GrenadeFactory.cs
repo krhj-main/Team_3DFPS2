@@ -4,16 +4,17 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class GrenadeFactory : ThrowingWeapon
 {
-    [SerializeField] public List<Grenade> grenades = new List<Grenade>();
-    [SerializeField] Grenade prefab;
-    [SerializeField] int objectSIze = 3;
+    [SerializeField][Header("오브젝트 풀링")] [Tooltip("풀링되는 오브젝트 리스트")] public List<Grenade> grenades = new List<Grenade>();
+    [SerializeField] [Tooltip("풀링되는 오브젝트 프리팹")] Grenade prefab;
+    [SerializeField] [Tooltip("풀링되는 오브젝트 개수")] int objectSIze = 3;
     MeshRenderer renderer;
     Collider col;
     GrenadeType grenadeType;
     Grenade current;
-    [SerializeField] int fragCount;
-    [SerializeField] int flashCount;
-    [SerializeField] int smokeCount;
+    [SerializeField] [Header("수류탄 개수")]
+    [Tooltip("파열수류탄 개수")]int fragCount;
+    [SerializeField] [Tooltip("섬광탄 개수")] int flashCount;
+    [SerializeField] [Tooltip("연막탄 개수")] int smokeCount;
      int FragCount 
     { 
         set 

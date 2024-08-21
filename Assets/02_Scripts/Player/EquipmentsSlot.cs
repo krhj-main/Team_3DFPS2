@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//장비 슬롯
 public class EquipmentsSlot
 {
     IEquipMent[] list;      //슬롯의 리스트
@@ -12,8 +12,8 @@ public class EquipmentsSlot
     public int Size {           //슬롯크기 프로퍼티
         get => size;
     }
-    public bool isFull=false;
-    int equipCount = 0;
+    public bool isFull=false;   //꽉찼는지 확인
+    int equipCount = 0;         //차있는 개수
     int EquipCount {
         get => equipCount;
         set { 

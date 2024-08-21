@@ -5,20 +5,17 @@ using UnityEngine.UI;
 
 public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
 {
-    public float explosiondelay { get; set; }       // 폭발 시간
-    public float explosionRadius { get; set; }      // 폭발 반경
-    public float effectDuration { get; set; }       // 효과 지속시간 ( 섬광, 연막 )
-    public int damage { get; set; }                 // 데미지 ( 수류탄 )
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
-    [field: SerializeField]
+    [field: SerializeField][field: Header("무기정보")][Tooltip("무기타입")]
     public EquipType type { get ; set ; }
-
+    [Tooltip("공격 레이어")]
     public LayerMask attackableMask;                // 효과 및 데미지 입을 대상
+    [Tooltip("던지는 힘")]
     public float throwForce = 10f;                  // 던지는 힘
-    public LineRenderer trajectoryLine;             // 궤적 라인
+    [HideInInspector] public LineRenderer trajectoryLine;             // 궤적 라인
     int trajectoryLinePoint = 30;                   // 궤적 포인트 갯수
-    public Transform firePos;
+    [HideInInspector] public Transform firePos;                       // 던지는 방향
     protected Rigidbody rb;
     protected bool isThrow=false;
     Grenade Grenade;
