@@ -24,12 +24,12 @@ public class PlayerAnimIK : MonoBehaviour
     // 애니메이터의 IK 갱신
     private void OnAnimatorIK(int layerIndex)
     {
-        /*
+        
         if (leftHand == null || rightHand == null)
         {
             return;
         }
-        */
+        
         // 총의 기준점 gunPivot을 3D 모델의 오른쪽 팔꿈치 위치로 이동
         //gunPivot.position = anim.GetIKHintPosition(AvatarIKHint.RightElbow);  
 
