@@ -24,6 +24,9 @@ public class AnimIK : MonoBehaviour
         // 총의 기준점 gunPivot을 3D 모델의 오른쪽 팔꿈치 위치로 이동
         //gunPivot.position = anim.GetIKHintPosition(AvatarIKHint.RightElbow);
 
+        anim.SetLookAtPosition(PlayerController.Instance.transform.position);
+        anim.SetLookAtWeight(0.3f);   
+
         // IK를 사용하여 왼손의 위치와 회전을 총의 오른쪽 손잡이에 맞춘다
         anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);
         anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1f);
@@ -31,13 +34,13 @@ public class AnimIK : MonoBehaviour
         anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHand.position);
         anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHand.rotation);
 
-        /*
+        
         // IK를 사용하여 오른손의 위치와 회전을 총의 오른쪽 손잡이에 맞춘다
         anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1.0f);
         anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1.0f);
 
         anim.SetIKPosition(AvatarIKGoal.RightHand, rightHand.position);
         anim.SetIKRotation(AvatarIKGoal.RightHand, rightHand.rotation);
-        */
+        
     }
 }
