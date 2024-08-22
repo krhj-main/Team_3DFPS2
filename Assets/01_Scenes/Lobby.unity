@@ -85350,6 +85350,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 451254762716931987, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.43867922
+      objectReference: {fileID: 0}
+    - target: {fileID: 451254762716931987, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.9894091
+      objectReference: {fileID: 0}
+    - target: {fileID: 451254762716931987, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1358865392756968992, guid: 5bb64481b58e48d46bf1db4454c161a0,
         type: 3}
       propertyPath: mouseCursor
@@ -85535,6 +85550,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4389060752495621517, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6343956309972177508, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7472567527472939538, guid: 5bb64481b58e48d46bf1db4454c161a0,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -85573,7 +85598,7 @@ PrefabInstance:
     - target: {fileID: 8632616760216667192, guid: 5bb64481b58e48d46bf1db4454c161a0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8934613832808028755, guid: 5bb64481b58e48d46bf1db4454c161a0,
         type: 3}
