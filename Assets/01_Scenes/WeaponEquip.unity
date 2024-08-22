@@ -271,8 +271,9 @@ GameObject:
   - component: {fileID: 49534906}
   - component: {fileID: 49534905}
   - component: {fileID: 49534904}
+  - component: {fileID: 49534907}
   m_Layer: 5
-  m_Name: UniformTop_Select_Button (1)
+  m_Name: MainWeapon_Select_Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,7 +323,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -343,14 +344,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871012924}
-        m_TargetAssemblyTypeName: Customize, Assembly-CSharp
-        m_MethodName: SelectUnifrom
+      - m_Target: {fileID: 871012927}
+        m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+        m_MethodName: GetMainWeapon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -393,6 +394,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 49534902}
   m_CullTransparentMesh: 1
+--- !u!114 &49534907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49534902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 871012927}
+          m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+          m_MethodName: MainChangeText2
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &49698391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3762,8 +3792,9 @@ GameObject:
   - component: {fileID: 615511508}
   - component: {fileID: 615511507}
   - component: {fileID: 615511506}
+  - component: {fileID: 615511509}
   m_Layer: 5
-  m_Name: UniformTop_Select_Button (2)
+  m_Name: MainWeapon_Select_Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3813,7 +3844,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3834,14 +3865,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871012924}
-        m_TargetAssemblyTypeName: Customize, Assembly-CSharp
-        m_MethodName: SelectUnifrom
+      - m_Target: {fileID: 871012927}
+        m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+        m_MethodName: GetMainWeapon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3884,6 +3915,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615511504}
   m_CullTransparentMesh: 1
+--- !u!114 &615511509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615511504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 871012927}
+          m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+          m_MethodName: MainChangeText3
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &638621423
 GameObject:
   m_ObjectHideFlags: 0
@@ -4334,8 +4394,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 403094599}
   - {fileID: 584360614}
+  - {fileID: 403094599}
   m_Father: {fileID: 710710219}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4367,8 +4427,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
+    m_SelectedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4388,17 +4448,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1432606565}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 871012927}
+        m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+        m_MethodName: OpenSelectPanel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &705967377
 MonoBehaviour:
@@ -5036,8 +5096,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.05724919, g: 1, b: 0, a: 1}
+    m_SelectedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5057,17 +5117,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1432606565}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 871012927}
+        m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+        m_MethodName: OpenSelectPanel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &825010533
 MonoBehaviour:
@@ -5408,11 +5468,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60eb9fb8dc8afd34e941905ee7e0df58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSelectPanel: []
-  mainWeaponImage: []
-  mainType: {fileID: 0}
-  mainName: {fileID: 0}
-  mainInfo: {fileID: 0}
+  weaponSelectPanel:
+  - {fileID: 1432606565}
+  - {fileID: 1432606565}
+  - {fileID: 1927033438}
+  equipWeaponImage:
+  - {fileID: 223933781}
+  - {fileID: 584360615}
+  mainWeaponImage:
+  - {fileID: -1939214708, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
+  - {fileID: 486746668, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
+  - {fileID: 1851779761, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
+  - {fileID: 267165063, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
+  selectMainWeaponBtn:
+  - {fileID: 1504457390}
+  - {fileID: 49534904}
+  - {fileID: 615511506}
+  - {fileID: 1687738675}
+  mainType: {fileID: 1725817720}
+  mainName: {fileID: 920336826}
+  mainInfo: {fileID: 1798546760}
   throwingPcs:
   - {fileID: 1877481211}
   - {fileID: 2099315114}
@@ -5491,7 +5566,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: M4A1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c742a81417fda6b4d8edfe027a82d1f8, type: 2}
   m_sharedMaterial: {fileID: -2409927212178105272, guid: c742a81417fda6b4d8edfe027a82d1f8,
@@ -8144,8 +8219,9 @@ GameObject:
   - component: {fileID: 1504457392}
   - component: {fileID: 1504457391}
   - component: {fileID: 1504457390}
+  - component: {fileID: 1504457393}
   m_Layer: 5
-  m_Name: UniformTop_Select_Button
+  m_Name: MainWeapon_Select_Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8195,7 +8271,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -8216,9 +8292,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871012924}
-        m_TargetAssemblyTypeName: Customize, Assembly-CSharp
-        m_MethodName: SelectUnifrom
+      - m_Target: {fileID: 871012927}
+        m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+        m_MethodName: GetMainWeapon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8266,6 +8342,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504457388}
   m_CullTransparentMesh: 1
+--- !u!114 &1504457393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504457388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 871012927}
+          m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+          m_MethodName: MainChangeText1
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1577656571
 GameObject:
   m_ObjectHideFlags: 0
@@ -8810,8 +8915,9 @@ GameObject:
   - component: {fileID: 1687738677}
   - component: {fileID: 1687738676}
   - component: {fileID: 1687738675}
+  - component: {fileID: 1687738678}
   m_Layer: 5
-  m_Name: UniformTop_Select_Button (3)
+  m_Name: MainWeapon_Select_Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8861,7 +8967,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -8882,14 +8988,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871012924}
-        m_TargetAssemblyTypeName: Customize, Assembly-CSharp
-        m_MethodName: SelectUnifrom
+      - m_Target: {fileID: 871012927}
+        m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+        m_MethodName: GetMainWeapon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8932,6 +9038,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687738673}
   m_CullTransparentMesh: 1
+--- !u!114 &1687738678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687738673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 871012927}
+          m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+          m_MethodName: MainChangeText4
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1707560150
 GameObject:
   m_ObjectHideFlags: 0
@@ -9125,7 +9260,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB3CC\uACA9\uC18C\uCD1D"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c742a81417fda6b4d8edfe027a82d1f8, type: 2}
   m_sharedMaterial: {fileID: -2409927212178105272, guid: c742a81417fda6b4d8edfe027a82d1f8,
@@ -9261,8 +9396,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCE74\uBE48\uD615 \uB3CC\uACA9\uC18C\uCD1D\n\uBAA8\uB4E0 \uAC1C\uC120\uC810\uC774
-    \uCD1D\uD569\uB41C \n\uC644\uC804\uC790\uB3D9\uBC1C\uC0AC\uD615"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c742a81417fda6b4d8edfe027a82d1f8, type: 2}
   m_sharedMaterial: {fileID: -2409927212178105272, guid: c742a81417fda6b4d8edfe027a82d1f8,
@@ -10533,8 +10667,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
+    m_SelectedColor: {r: 0.05882353, g: 1, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -10554,14 +10688,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 871012924}
-        m_TargetAssemblyTypeName: Customize, Assembly-CSharp
-        m_MethodName: UnifromPanel
+      - m_Target: {fileID: 871012927}
+        m_TargetAssemblyTypeName: LoadOut, Assembly-CSharp
+        m_MethodName: OpenSelectPanel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
