@@ -58,7 +58,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] public Sprite myImage;         // 무기 이미지
     [Range(-100,100)]
     [SerializeField] float speedDownForce;
-
+    [SerializeField] GameObject arms;
+    [SerializeField] public Transform CameraPos;
     protected virtual void Awake()
     {
         originBulletSpread = bulletSpread;
@@ -226,7 +227,10 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public void OnHandEnter()
     {
+
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
+        arms.SetActive(true);
+        firePos.SetParent(CameraPos);
     }
     //손에있을때 할 행동
     public virtual void OnHand(Transform _tr,Vector3 _offSet)
@@ -261,6 +265,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             isAming = false;
         }
+        arms.SetActive(false);
+        firePos.SetParent(null);
     }
     //키입력
     public virtual void InputKey()

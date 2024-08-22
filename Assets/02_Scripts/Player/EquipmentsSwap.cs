@@ -16,10 +16,12 @@ public class EquipmentsSwap : MonoBehaviour
     public Vector3 offsetPos;
     public Transform firePos;
     public Inventory Inventory;
+    
     EquipmentsSlot slot;
     public IEquipMent equip;
 
-    [SerializeField] PlayerAnimIK playerAnimIK;
+    [SerializeField] GameObject playerArms;
+    [SerializeField] Transform playerSight;
     //[SerializeField] TwoBoneIKConstraint leftHandIK;
     //[SerializeField] TwoBoneIKConstraint rightHandIK;
     //[SerializeField] RigBuilder rigBuilder;
@@ -159,24 +161,29 @@ public class EquipmentsSwap : MonoBehaviour
         slot = Inventory.GetSlotToIndex(Index);
         if (equip != null)
         {
+            playerArms.SetActive(false);
             equip.gameObject.SetActive(true);
-            
+
             equip.OnHandEnter();
 
             // 무기가 전환되는 부분
             // 전환될 때 PlayerAnimIK의 left,rightHand에
             // equip의 자식에 있는 Left, RightHand에 대입
-            
+
             /*
             leftHandIK.data.target = equip.transform.Find("LeftHandPos");
             rightHandIK.data.target = equip.transform.Find("RightHandPos");
             rigBuilder.Build();
             */
-            
+
             //playerAnimIK.leftHand = equip.transform.Find("LeftHandPos");
-           // playerAnimIK.rightHand = equip.transform.Find("RightHandPos");
-            
+            // playerAnimIK.rightHand = equip.transform.Find("RightHandPos");
+
             InputManger.Instance.keyAction += equip.InputKey;
+        }
+        else {
+            firePos.SetParent(playerSight);
+            playerArms.SetActive(true);
         }
     }
     void SwapNext() { Swap(Index + 1); }
