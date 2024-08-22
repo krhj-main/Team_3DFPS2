@@ -158,13 +158,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         Vector3 _groundVelocity = MovingUpdate(moveInput.x, moveInput.z);
 
         // 이동 상태가 아닐 때
-        if (!pState.isMoving)
+        if (pState.isMoving)
         {
-            anim.SetBool("isMove", false);
-        }
-        else
-        {
-            anim.SetBool("isMove", true);
             anim.SetFloat("speed", cc.velocity.magnitude);
         }
 
@@ -183,12 +178,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         // 앉기키를 눌렀을 때 
         if (pState.isCrouch)
         {
-            anim.SetBool("isCrouch", true);
             _groundVelocity /= 1.8f;
-        }
-        else
-        {
-            anim.SetBool("isCrouch", false);
         }
 
         _groundVelocity *= (1+moveSpeedScale);
