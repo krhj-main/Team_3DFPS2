@@ -26,7 +26,7 @@ public class Interaction : MonoBehaviour
         Ray ray = new Ray(main.transform.position, main.transform.forward);
 
         RaycastHit hit;
-        Debug.DrawRay(main.transform.position, main.transform.forward,Color.black, distace);
+        //Debug.DrawRay(main.transform.position, main.transform.forward,Color.black, distace);
         if (Physics.Raycast(ray, out hit, distace, hitLayer))
         {
             lootImage.SetActive(true);

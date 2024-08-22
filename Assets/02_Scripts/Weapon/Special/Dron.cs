@@ -21,8 +21,8 @@ public class Dron : MonoBehaviour,Interactable
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpCoolTime = 2f;
     
-    float h=0;
-    float v=0;
+    [SerializeField]float h=0;
+    [SerializeField] float v=0;
     public DronController dronController;
 
     public KeyCode returnKey;
@@ -36,6 +36,7 @@ public class Dron : MonoBehaviour,Interactable
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float mouseSensitivity = 2;
     [SerializeField] Image cooltime;
+    [SerializeField] Animator anim;
     Vector2 mouseDelta;
     public bool IsGround;
     public bool jumpAble = true;
@@ -48,12 +49,21 @@ public class Dron : MonoBehaviour,Interactable
     }
     private void FixedUpdate()
     {
+        if (v == 0 && h == 0)
+        {
+            anim.SetBool("Walk_Anim", false);
+        }
+        else {
+            anim.SetBool("Walk_Anim", true);
+        }
         IsGround = Grounded();
         if (IsGround)
         {
+            
             PlayerDir();
             Move();
         }
+        anim.SetBool("Roll_Anim", !IsGround);
     }
     // Update is called once per frame
     void Update()
@@ -67,8 +77,6 @@ public class Dron : MonoBehaviour,Interactable
     void Inputkey() {
         if (dronCam.enabled && isActive)
         {
-            h = 0;
-            v = 0;
             if (Input.GetKey(KeyCode.W)) { v = 1; }
             if (Input.GetKey(KeyCode.S)) { v = -1; }
             if (Input.GetKey(KeyCode.A)) { h = -1; }
@@ -81,6 +89,7 @@ public class Dron : MonoBehaviour,Interactable
             if (Input.GetKeyDown(KeyCode.Space) && jumpAble)
             {
                 jumpAble = false;
+                anim.SetBool("Roll_Anim", true);
                 rig.AddForce(dronCam.transform.forward*jumpeForce, ForceMode.Impulse);
                 StartCoroutine(JumpCoolTime());
             }
@@ -89,6 +98,9 @@ public class Dron : MonoBehaviour,Interactable
                 dronUI.enabled = false;
                 dronCam.enabled = false;
                 dronController.DronReturn();
+                anim.SetBool("Open_Anim", false);
+                v = 0;
+                h = 0;
             }
             
         }
@@ -120,7 +132,8 @@ public class Dron : MonoBehaviour,Interactable
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
-        //rig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        anim.SetBool("Open_Anim", true);
+        dronController.phoneMat.color = Color.white;
     }
 
     public void Interaction(GameObject target)
@@ -129,6 +142,7 @@ public class Dron : MonoBehaviour,Interactable
         gameObject.SetActive(false);
         transform.SetParent(dronController.transform);
         isActive = false;
+        dronController.phoneMat.color = Color.black;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -142,7 +156,7 @@ public class Dron : MonoBehaviour,Interactable
     }
     void LookAround()
     {
-        if (GameManager.Instance.openUI)
+        if (!dronCam.enabled)
         {
             return;
         }
