@@ -5,20 +5,9 @@ using UnityEngine.UI;
 
 public class Customize : MonoBehaviour
 {
-    public GameObject[] character;            // 캐릭터
+    public GameObject[] character;          // 캐릭터
     public GameObject[] unifromPanel;       // 상의 선택 패널
     public Material[] characterUniform;     // 캐릭터 유니폼
-
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void UnifromPanel(int _num)
     {
