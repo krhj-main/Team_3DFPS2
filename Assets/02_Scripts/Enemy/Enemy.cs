@@ -212,7 +212,14 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 지정된 위치를 왕복 이동
             agent.stoppingDistance = 0;
 
-            patrolDis = Vector3.Distance(transform.position, wayPoints[index].position);
+            // CharacterController의 실제 높이 계산
+            float _controllerHeight = cc.height * transform.lossyScale.y;
+            // CharacterController의 하단 y 좌표 계산 ( 지면 )
+            float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
+            // 지면을 기준으로 거리 판단
+            Vector3 enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
+
+            patrolDis = Vector3.Distance(enemyPos, wayPoints[index].position);
 
             if (patrolDis < 0.1f)
             {
