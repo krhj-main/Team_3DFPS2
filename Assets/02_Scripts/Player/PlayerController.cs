@@ -129,7 +129,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(pHP);
         if (!main.enabled) { return; }
         InputKey();
         LookAround();
@@ -166,6 +165,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         else
         {
             anim.SetBool("isMove", true);
+            anim.SetFloat("speed", cc.velocity.magnitude);
         }
 
         // 걷기키가 눌렸을 때

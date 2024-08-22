@@ -44,16 +44,9 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // 매 프레임마다 실행되는 주요 함수들
-        UpdateWeaponReference();
         UpdateTilt();
         UpdateRecoil();
         ApplyFinalRotation();
-    }
-
-    void UpdateWeaponReference()
-    {
-        // 현재 장착된 무기를 찾아 참조를 업데이트
-        //mainWeapon = GetComponentInParent<CharacterController>().GetComponentInChildren<MainWeapon>();
     }
 
     void UpdateTilt()
