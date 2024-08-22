@@ -85390,6 +85390,41 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2074483297043431677, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596018376657357672, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596018376657357672, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596018376657357672, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596018376657357672, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596018376657357672, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3596018376657357672, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3908333650488412675, guid: 5bb64481b58e48d46bf1db4454c161a0,
         type: 3}
       propertyPath: m_Pivot.x
@@ -85493,6 +85528,11 @@ PrefabInstance:
     - target: {fileID: 3908333650488412675, guid: 5bb64481b58e48d46bf1db4454c161a0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227882177684760984, guid: 5bb64481b58e48d46bf1db4454c161a0,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7472567527472939538, guid: 5bb64481b58e48d46bf1db4454c161a0,
