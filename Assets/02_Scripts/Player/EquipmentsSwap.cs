@@ -20,9 +20,9 @@ public class EquipmentsSwap : MonoBehaviour
     public IEquipMent equip;
 
     [SerializeField] PlayerAnimIK playerAnimIK;
-    [SerializeField] TwoBoneIKConstraint leftHandIK;
-    [SerializeField] TwoBoneIKConstraint rightHandIK;
-    [SerializeField] RigBuilder rigBuilder;
+    //[SerializeField] TwoBoneIKConstraint leftHandIK;
+    //[SerializeField] TwoBoneIKConstraint rightHandIK;
+    //[SerializeField] RigBuilder rigBuilder;
 
 
     public int Index                                        //인덱스를 순환시키기 위한 프로퍼티 
@@ -173,8 +173,8 @@ public class EquipmentsSwap : MonoBehaviour
             rigBuilder.Build();
             */
             
-            playerAnimIK.leftHand = equip.transform.Find("LeftHandPos");
-            playerAnimIK.rightHand = equip.transform.Find("RightHandPos");
+            //playerAnimIK.leftHand = equip.transform.Find("LeftHandPos");
+           // playerAnimIK.rightHand = equip.transform.Find("RightHandPos");
             
             InputManger.Instance.keyAction += equip.InputKey;
         }

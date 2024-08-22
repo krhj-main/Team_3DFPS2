@@ -44,16 +44,9 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // 매 프레임마다 실행되는 주요 함수들
-        UpdateWeaponReference();
         UpdateTilt();
         UpdateRecoil();
         ApplyFinalRotation();
-    }
-
-    void UpdateWeaponReference()
-    {
-        // 현재 장착된 무기를 찾아 참조를 업데이트
-        //mainWeapon = GetComponentInParent<CharacterController>().GetComponentInChildren<MainWeapon>();
     }
 
     void UpdateTilt()
@@ -61,20 +54,20 @@ public class CameraController : MonoBehaviour
         // 오른쪽으로 기울이는 경우
         if (PlayerController.Instance.pState.isTiltingR)
         {
-            targetTiltPosition = new Vector3(tiltPositionOffset, 0, 0);
-            targetTiltRotation = Quaternion.Euler(0, 0, -tiltAngle);
+            targetTiltPosition = new Vector3(-tiltPositionOffset, 0, 0);
+            targetTiltRotation = Quaternion.Euler(originalRotation.eulerAngles+new Vector3(0, 0, -tiltAngle));
         }
         // 왼쪽으로 기울이는 경우
         else if (PlayerController.Instance.pState.isTiltingL)
         {
-            targetTiltPosition = new Vector3(-tiltPositionOffset, 0, 0);
-            targetTiltRotation = Quaternion.Euler(0, 0, tiltAngle);
+            targetTiltPosition = new Vector3(+tiltPositionOffset, 0, 0);
+            targetTiltRotation = Quaternion.Euler(originalRotation.eulerAngles + new Vector3(0, 0, +tiltAngle));
         }
         // 기울이지 않는 경우
         else
         {
             targetTiltPosition = Vector3.zero;
-            targetTiltRotation = Quaternion.identity;
+            targetTiltRotation = originalRotation;
         }
 
         // 현재 위치에서 목표 위치로 부드럽게 이동
@@ -100,12 +93,9 @@ public class CameraController : MonoBehaviour
 
         // 반동 회전값을 Quaternion으로 변환
         Quaternion recoilRotationQuat = Quaternion.Euler(recoilRotation);
-
+        Debug.Log(recoilRotation);
         // 원래 회전값, 기울기 회전값, 반동 회전값을 모두 합산
-        finalRotation = (originalRotation * tiltRotation * recoilRotationQuat).eulerAngles;
-
-        // 최종 회전값을 카메라에 적용
-        transform.localRotation = Quaternion.Euler(finalRotation);
+        transform.localRotation = Quaternion.Euler((recoilRotationQuat.eulerAngles + tiltRotation.eulerAngles));
 
     }
 
