@@ -197,7 +197,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) < findDis)
             {
                 // Patrol 애니메이션 종료
-                anim.SetBool("isPatrol", false);
+                //anim.SetBool("isPatrol", false);
 
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
@@ -207,7 +207,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         else
         {
             // Patrol 애니메이션 재생
-            anim.SetBool("isPatrol", true);
+            //anim.SetBool("isPatrol", true);
 
             // 지정된 위치를 왕복 이동
             agent.stoppingDistance = 0;
@@ -215,7 +215,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             patrolDis = Vector3.Distance(transform.position, wayPoints[index].position);
 
             if (patrolDis < 0.1f)
-            {
+            {        
                 //index++;
                 //if (index == wayPoints.Count) index = 0;
                 index = Random.Range(0, wayPoints.Count);
