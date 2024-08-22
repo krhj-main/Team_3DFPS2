@@ -579,7 +579,7 @@ MonoBehaviour:
   dronController: {fileID: 5293780662825668694}
   returnKey: 304
   boxSize: {x: 0.1, y: 0, z: 0.1}
-  maxDistance: 0.2
+  maxDistance: 0.15
   groundLayer:
     serializedVersion: 2
     m_Bits: 32768
@@ -1505,7 +1505,7 @@ Transform:
   - {fileID: 3999322323616411108}
   - {fileID: 7675702196339459251}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &123885237283929478
 MeshFilter:
