@@ -1905,7 +1905,7 @@ PrefabInstance:
     - target: {fileID: 7706442653079426420, guid: 778746f1428ae1f489950591e62ea6a7,
         type: 3}
       propertyPath: boxSize.y
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7706442653079426420, guid: 778746f1428ae1f489950591e62ea6a7,
         type: 3}
@@ -1914,8 +1914,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7706442653079426420, guid: 778746f1428ae1f489950591e62ea6a7,
         type: 3}
+      propertyPath: returnKey
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706442653079426420, guid: 778746f1428ae1f489950591e62ea6a7,
+        type: 3}
       propertyPath: maxDistance
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7706442653079426420, guid: 778746f1428ae1f489950591e62ea6a7,
         type: 3}
@@ -6352,7 +6357,7 @@ PrefabInstance:
     - target: {fileID: 1508216466373979570, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 130103
+      value: 261175
       objectReference: {fileID: 0}
     - target: {fileID: 1753412935922706485, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}

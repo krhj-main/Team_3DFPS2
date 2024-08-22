@@ -17,7 +17,7 @@ public class EquipmentsSwap : MonoBehaviour
     public Transform firePos;
     public Inventory Inventory;
     EquipmentsSlot slot;
-    IEquipMent equip;
+    public IEquipMent equip;
 
     [SerializeField] PlayerAnimIK playerAnimIK;
     [SerializeField] TwoBoneIKConstraint leftHandIK;
@@ -77,10 +77,14 @@ public class EquipmentsSwap : MonoBehaviour
             SwapPrev();
         }
     }
+    private void FixedUpdate()
+    {
+        
+    }
 
     public void Inputkey() {
                                  //무기가 하나이상 있으면
-            
+         
             if (Input.GetKeyDown(dropKey))
             {
                 if (index != 2)
@@ -156,6 +160,7 @@ public class EquipmentsSwap : MonoBehaviour
         if (equip != null)
         {
             equip.gameObject.SetActive(true);
+            
             equip.OnHandEnter();
 
             // 무기가 전환되는 부분
@@ -179,12 +184,16 @@ public class EquipmentsSwap : MonoBehaviour
     //수류탄이랑 특수장비 예외처리해야함...
     void AddWeapon(IEquipMent _weapon, int _index)
     {
-        if (_weapon.type == EquipType.Weapon){
+        if (_weapon.type == EquipType.Weapon)
+        {
             ((MainWeapon)_weapon).firePos = firePos;
         }
         else if (_weapon.type == EquipType.Throw)
         {
             ((ThrowingWeapon)_weapon).firePos = firePos;
+        }
+        else if (_weapon.type == EquipType.Special) {
+            ((SpecialWeapon)_weapon).Swap = this;
         }
         slot = Inventory.GetSlot(_index);
         if (slot.isFull)
@@ -200,7 +209,7 @@ public class EquipmentsSwap : MonoBehaviour
         Inventory.Set(_num, _weapon);
         _num = Inventory.SlotIndexToIndex(_index);
         Swap(_num);
-        _weapon.transform.SetParent(transform);
+        _weapon.transform.SetParent(GunPosition);
         
     }
 

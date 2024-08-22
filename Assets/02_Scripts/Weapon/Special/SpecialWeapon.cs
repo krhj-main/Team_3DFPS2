@@ -8,6 +8,7 @@ public class SpecialWeapon : MonoBehaviour, IEquipMent, Interactable
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
     [field: SerializeField]
     public EquipType type { get; set; }
+    public EquipmentsSwap Swap { get; set; }
     private void Awake()
     {
         type = EquipType.Special;

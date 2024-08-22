@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dron : MonoBehaviour,Interactable
 {
@@ -15,54 +16,124 @@ public class Dron : MonoBehaviour,Interactable
 
     Rigidbody rig;
     Camera dronCam;
-    float jumpeForce = 5f;
-    float moveSpeed = 5f;
-    float rotateSpeed = 10;
-    float h=0;
-    float v=0;
+    [SerializeField] Canvas dronUI;
+    [SerializeField] float jumpeForce = 20f;
+    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float jumpCoolTime = 2f;
+    
+    [SerializeField]float h=0;
+    [SerializeField] float v=0;
     public DronController dronController;
 
     public KeyCode returnKey;
 
     bool isActive = false;
+    [Tooltip("그라운드 체크할 박스의 사이즈")]
+    [SerializeField] Vector3 boxSize;
+    [Tooltip("플레이어로부터 그라운드 박스의 거리")]
+    [SerializeField] float maxDistance;
+    [Tooltip("땅으로 인식할 레이어")]
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float mouseSensitivity = 2;
+    [SerializeField] Image cooltime;
+    [SerializeField] Animator anim;
+    Vector2 mouseDelta;
+    public bool IsGround;
+    public bool jumpAble = true;
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody>();
         dronCam = GetComponentInChildren<Camera>();
+        InputManger.Instance.keyAction+= Inputkey;
     }
     private void FixedUpdate()
     {
-        Vector3 vel = transform.forward * v * moveSpeed;
-        vel.y = rig.velocity.y;
-        rig.velocity = vel;
-
-        transform.Rotate(Vector3.up * rotateSpeed * h);
-        
+        if (v == 0 && h == 0)
+        {
+            anim.SetBool("Walk_Anim", false);
+        }
+        else {
+            anim.SetBool("Walk_Anim", true);
+        }
+        IsGround = Grounded();
+        if (IsGround)
+        {
+            
+            PlayerDir();
+            Move();
+        }
+        anim.SetBool("Roll_Anim", !IsGround);
     }
-
     // Update is called once per frame
     void Update()
     {
-        if (dronCam.enabled&&isActive) {
-            h = Input.GetAxis("Horizontal");
-            v = Input.GetAxis("Vertical");
-            if (Input.GetKeyDown(KeyCode.Space))
+        
+            LookAround();
+       
+        
+        
+    }
+    void Inputkey() {
+        if (dronCam.enabled && isActive)
+        {
+            if (Input.GetKey(KeyCode.W)) { v = 1; }
+            if (Input.GetKey(KeyCode.S)) { v = -1; }
+            if (Input.GetKey(KeyCode.A)) { h = -1; }
+            if (Input.GetKey(KeyCode.D)) { h = 1; }
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) { v = 0; }
+            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) { h = 0; }
+
+
+
+            if (Input.GetKeyDown(KeyCode.Space) && jumpAble)
             {
-                rig.AddForce(new Vector3(0, jumpeForce, 0), ForceMode.Impulse);
+                jumpAble = false;
+                anim.SetBool("Roll_Anim", true);
+                rig.AddForce(dronCam.transform.forward*jumpeForce, ForceMode.Impulse);
+                StartCoroutine(JumpCoolTime());
             }
             if (Input.GetKeyDown(returnKey))
             {
+                dronUI.enabled = false;
                 dronCam.enabled = false;
                 dronController.DronReturn();
+                anim.SetBool("Open_Anim", false);
+                v = 0;
+                h = 0;
             }
+            
         }
+
+    }
+    bool Grounded()
+    {
+        bool _isGrounded = Physics.BoxCast(transform.position, boxSize, -transform.up, transform.rotation, maxDistance, groundLayer);
+        return _isGrounded;
+    }
+    void PlayerDir()
+    {
+        Vector3 _lookForward = new Vector3(dronCam.transform.forward.x, 0, dronCam.transform.forward.z).normalized;
+        transform.forward = _lookForward;
+        Quaternion camrot = dronCam.transform.localRotation;
+        camrot.y = 0;
+        camrot.z = 0;
+        dronCam.transform.localRotation = camrot;
+    }
+    public void Move()
+    {
+        Vector3 vel = transform.forward * v + transform.right * h;
+        vel = vel.normalized * moveSpeed;
+        vel.y = rig.velocity.y;
+        rig.velocity = vel;
     }
     public void DronAwake() {
+        dronUI.enabled = true;
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
-        //rig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        anim.SetBool("Open_Anim", true);
+        dronController.phoneMat.color = Color.white;
     }
 
     public void Interaction(GameObject target)
@@ -71,6 +142,7 @@ public class Dron : MonoBehaviour,Interactable
         gameObject.SetActive(false);
         transform.SetParent(dronController.transform);
         isActive = false;
+        dronController.phoneMat.color = Color.black;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -82,5 +154,40 @@ public class Dron : MonoBehaviour,Interactable
             isActive = true;
         }
     }
+    void LookAround()
+    {
+        if (!dronCam.enabled)
+        {
+            return;
+        }
 
+
+        mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+
+        Vector3 _camAngle = dronCam.transform.rotation.eulerAngles;
+
+        float _limit = _camAngle.x - mouseDelta.y;
+
+        if (_limit < 180)
+        {
+            _limit = Mathf.Clamp(_limit, -1f, 80f);
+        }
+        else
+        {
+            _limit = Mathf.Clamp(_limit, 320f, 361f);
+        }
+        dronCam.transform.rotation = Quaternion.Euler(_limit, _camAngle.y + (mouseDelta.x * mouseSensitivity), _camAngle.z);
+    }
+
+    public IEnumerator JumpCoolTime() {
+        float time =0;
+        while (time < jumpCoolTime) {
+            yield return new WaitForSeconds(0.1f);
+            time += 0.1f;
+            cooltime.fillAmount = (jumpCoolTime - time) / jumpCoolTime;
+        }
+        
+        
+        jumpAble = true;
+    }
 }
