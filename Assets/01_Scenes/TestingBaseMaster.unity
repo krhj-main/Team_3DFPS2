@@ -2067,12 +2067,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1321798492}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &643693676 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4684105913192532447, guid: 2a9992a71536b0d428fadabf33fd9c3b,
-    type: 3}
-  m_PrefabInstance: {fileID: 8366977842067901599}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &754480929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,6 +2260,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hands_Without_Weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 1543438502000814, guid: e73d4027c247ceb449169b8b039345cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4510811747264220, guid: e73d4027c247ceb449169b8b039345cc, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2309,6 +2307,11 @@ PrefabInstance:
     - target: {fileID: 4510811747264220, guid: e73d4027c247ceb449169b8b039345cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 95775643518693430, guid: e73d4027c247ceb449169b8b039345cc,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2555,6 +2558,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.7453012
+      objectReference: {fileID: 0}
+    - target: {fileID: 712513156761619007, guid: 9da521d096d999542a24e900b5d0db57,
+        type: 3}
+      propertyPath: firstState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 712513156761619007, guid: 9da521d096d999542a24e900b5d0db57,
         type: 3}
@@ -6409,6 +6417,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1341950588541763424, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1508216466373979570, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
       propertyPath: field of view
@@ -6623,7 +6636,7 @@ PrefabInstance:
         type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 643693676}
+      objectReference: {fileID: 0}
     - target: {fileID: 7698680938946738350, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
       propertyPath: crouchCenter.y
@@ -6655,11 +6668,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1341950588541763424, guid: 2a9992a71536b0d428fadabf33fd9c3b, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8209080203666209703, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 1724849751}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a9992a71536b0d428fadabf33fd9c3b, type: 3}
