@@ -132,7 +132,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         //Debug.Log(pHP);
         if (!main.enabled) { return; }
         InputKey();
-        LookAround();
+        //LookAround();
         PlayerDir();
         ActiveCrouch();
         OpenViewer();
@@ -296,6 +296,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         character.forward = _lookForward;
     }
 
+    /*
     // 카메라 마우스조작 메서드
     void LookAround()
     {
@@ -321,7 +322,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         }
         arm.rotation = Quaternion.Euler(_limit, _camAngle.y + (mouseDelta.x * mouseSensitivity) , _camAngle.z);
     }
-
+    */
 
 
 
@@ -334,7 +335,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             cc.height = cc.height - crouchSpeed * Time.deltaTime;
 
 
-            arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter, 0.03f);
+            arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter+Vector3.up*0.5f, 0.03f);
 
             cc.center = Vector3.Lerp(cc.center, crouchCenter, 0.03f);
 
@@ -350,14 +351,14 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             cc.height = cc.height + crouchSpeed * Time.deltaTime;
 
 
-            arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter, 0.03f);
+            arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter + Vector3.up * 0.5f, 0.03f);
 
 
             cc.center = Vector3.Lerp(cc.center, normalCenter, 0.03f);
             if (cc.height >= normalHeight)
             {
                 cc.height = normalHeight;
-                cc.center = Vector3.zero;
+                cc.center = normalCenter;
             }
         }
     }

@@ -183,6 +183,8 @@ public class EquipmentsSwap : MonoBehaviour
         }
         else {
             firePos.SetParent(playerSight);
+            firePos.localPosition = Vector3.zero;
+            firePos.localRotation = Quaternion.Euler(0,180,0);
             playerArms.SetActive(true);
         }
     }
@@ -229,7 +231,8 @@ public class EquipmentsSwap : MonoBehaviour
         Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
         if (_rid)
         {
-           _rid.AddForce((Camera.main.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
+           _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
+            Debug.DrawRay(PlayerController.Instance.PlayerCamera.transform.position, PlayerController.Instance.PlayerCamera.transform.forward);
         }
         InputManger.Instance.keyAction -= _equip.InputKey;
         _go.OnHandExit();

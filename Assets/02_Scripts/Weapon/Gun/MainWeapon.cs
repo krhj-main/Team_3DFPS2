@@ -60,12 +60,15 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] float speedDownForce;
     [SerializeField] GameObject arms;
     [SerializeField] public Transform CameraPos;
+    CameraController camController;
     protected virtual void Awake()
     {
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
         adsPos = new Vector3(0, -0.25f, 0f);
+        
+        
     }
 
     // 부모가 생기면 초기화 해줌
@@ -77,7 +80,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             if (gunSwap) {
                 shoulderPos = gunSwap.GunPosition.localPosition;
             }
-
+            cam = PlayerController.Instance.PlayerCamera;
+            camController = GetComponentInParent<CameraController>();
             shoulderFOV = cam.fieldOfView;
         }
         else
@@ -95,7 +99,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             loadedAmmo--;                     // 탄약 마이너스
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
-                CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
+                //CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
             }
 
@@ -231,6 +235,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
+        firePos.localPosition = Vector3.zero;
+        firePos.localRotation = Quaternion.Euler(0, 180, 0);
     }
     //손에있을때 할 행동
     public virtual void OnHand(Transform _tr,Vector3 _offSet)

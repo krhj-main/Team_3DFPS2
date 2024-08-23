@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CamAttatch : MonoBehaviour
 {
-    [Header ("Ä«¸Ş¶ó°¡ ºÙÀ» À§Ä¡ Æ®·£½ºÆû")]
+    [Header ("ì¹´ë©”ë¼ê°€ ë¶™ì„ ìœ„ì¹˜ íŠ¸ëœìŠ¤í¼")]
     [SerializeField] Transform arm;
     [SerializeField] CharacterController cc;
-    [Tooltip ("Ä«¸Ş¶óÀÇ ZÃà °£°İ °ª")]
+    [Tooltip ("ì¹´ë©”ë¼ì˜ Zì¶• ê°„ê²© ê°’")]
     [SerializeField] float offSetZ = 0;
 
     
@@ -21,6 +21,10 @@ public class CamAttatch : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void ChangeParent(Transform parent) {
+        transform.SetParent(parent);
     }
 
 }
