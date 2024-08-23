@@ -14,17 +14,20 @@ public class SelectEquip : MonoBehaviour
 
     private void Update()
     {
-        // ESC 누르면 패널 오프
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (this.gameObject.activeSelf == true)
         {
-            // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
-            if(selectPanelStack.Count == 0)
+            // ESC 누르면 패널 오프
+            if (Input.GetKeyDown(KeyCode.F1))
             {
-                exitWeaponEquip.SetActive(true);
-            }
-            else
-            {
-                ClosePanel();
+                // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
+                if (selectPanelStack.Count == 0)
+                {
+                    exitWeaponEquip.SetActive(true);
+                }
+                else
+                {
+                    ClosePanel();
+                }
             }
         }
     }
