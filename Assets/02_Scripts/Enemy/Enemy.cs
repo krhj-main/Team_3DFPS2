@@ -340,6 +340,27 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 // 내이게이션의 목적지를 소리난 위치로 지정
                 agent.destination = chasePos;
+
+                // 소리난 곳까지 오고 다음 행동 지정
+                if (Vector3.Distance(transform.position, chasePos) < 0.5f)
+                {
+                    // Move 애니메이션 종료
+                    anim.SetBool("isMove", false);
+                    anim.SetBool("isIdle", true);
+
+                    // 일정 시간 후 상태 전환
+                    curTrackTime += Time.deltaTime;
+                    if (curTrackTime >= trackTime)
+                    {
+                        anim.SetBool("isIdle", false);
+                        curTrackTime = 0;
+                        enemyState = missingState;
+                    }
+                }
+                else
+                {
+                    currentTime = 0;
+                }
             }
         }
     }

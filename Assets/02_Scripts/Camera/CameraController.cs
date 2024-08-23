@@ -93,7 +93,6 @@ public class CameraController : MonoBehaviour
 
         // 반동 회전값을 Quaternion으로 변환
         Quaternion recoilRotationQuat = Quaternion.Euler(recoilRotation);
-        Debug.Log(recoilRotation);
         // 원래 회전값, 기울기 회전값, 반동 회전값을 모두 합산
         transform.localRotation = Quaternion.Euler((recoilRotationQuat.eulerAngles + tiltRotation.eulerAngles));
 
