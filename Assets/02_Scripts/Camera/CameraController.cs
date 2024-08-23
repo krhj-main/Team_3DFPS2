@@ -79,9 +79,7 @@ public class CameraController : MonoBehaviour
         {
             _limit = Mathf.Clamp(_limit, 320f, 361f);
         }
-        Debug.Log(mouseDelta);
         rot = Quaternion.Euler(_limit, _camAngle.y + (mouseDelta.x * mouseSensitivity), _camAngle.z);
-        Debug.Log(rot);
     }
 
     void UpdateTilt()
