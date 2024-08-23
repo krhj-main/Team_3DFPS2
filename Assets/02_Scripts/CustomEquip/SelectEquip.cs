@@ -46,7 +46,6 @@ public class SelectEquip : MonoBehaviour
         }
     }
 
-
     // 메뉴 버튼에 연결
     public void SelectMenu(int _num)
     {

@@ -7,9 +7,8 @@ using UnityEngine.EventSystems;
 public class CamMove : MonoBehaviour
 {
     public GameObject character;
-
-    Quaternion originRotation;
-    float rotationSpeed = 5f;
+    private Quaternion originRotation;
+    private float rotationSpeed = 5f;
     private float mouseX;
 
     void Start()
@@ -19,15 +18,22 @@ public class CamMove : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButton(0))
+        CharacterRotation();
+    }
+
+    void CharacterRotation()
+    {
+        if (Input.GetMouseButton(0))
         {
             mouseX = Input.GetAxis("Mouse X");
 
             character.transform.Rotate(Vector3.up, mouseX * -rotationSpeed);
         }
-        if(Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0))
         {
             character.transform.rotation = originRotation;
         }
     }
+
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class WeponEquipFadeOut : MonoBehaviour
 {
-    public Image fadeOutImage;
+    float canvasAlpha = 0;
 
     private void OnEnable()
     {
@@ -15,17 +15,13 @@ public class WeponEquipFadeOut : MonoBehaviour
 
     IEnumerator FadeOut()
     {
-        while (true)
+        while (canvasAlpha <= 1f)
         {
-            float _colorA = 0;
-            _colorA += Time.deltaTime;
-            fadeOutImage.color = new Color(0, 0, 0, _colorA);
-            if(fadeOutImage.color.a >= 1)
-            {
-                break;
-            }
+            canvasAlpha = this.GetComponent<Image>().color.a;
+            canvasAlpha += Time.deltaTime;
+            this.GetComponent<Image>().color = new Color(0, 0, 0, canvasAlpha);
+            yield return null;
         }
-        yield return null;
         SceneManager.LoadScene("WeaponEquip");
     }
 }
