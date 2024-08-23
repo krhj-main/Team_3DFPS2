@@ -36,13 +36,17 @@ public class CameraController : MonoBehaviour
     Quaternion rot;
     Quaternion tilt;
     Vector3 recoilAmount;
+
+    [SerializeField] Transform arm;
+    [SerializeField] Transform waist;
     void Start()
     {
-        oriPos = transform.position;
+        oriPos = arm.position;
         // 초기 위치와 회전값을 저장
-        originalPosition = transform.localPosition;
-        originalRotation = transform.localRotation;
+        originalPosition = waist.localPosition;
+        originalRotation = arm.localRotation;
         mainWeapon = GetComponentInParent<EquipmentsSwap>().equip;
+        tilt = Quaternion.Euler(Vector3.zero);
     }
 
     void Update()
@@ -63,7 +67,7 @@ public class CameraController : MonoBehaviour
 
         mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-        Vector3 _camAngle = transform.rotation.eulerAngles;
+        Vector3 _camAngle = arm.localRotation.eulerAngles;
 
         float _limit = _camAngle.x - mouseDelta.y;
 
@@ -75,7 +79,9 @@ public class CameraController : MonoBehaviour
         {
             _limit = Mathf.Clamp(_limit, 320f, 361f);
         }
+        Debug.Log(mouseDelta);
         rot = Quaternion.Euler(_limit, _camAngle.y + (mouseDelta.x * mouseSensitivity), _camAngle.z);
+        Debug.Log(rot);
     }
 
     void UpdateTilt()
@@ -83,13 +89,13 @@ public class CameraController : MonoBehaviour
         // 오른쪽으로 기울이는 경우
         if (PlayerController.Instance.pState.isTiltingR)
         {
-            targetTiltPosition = new Vector3(-tiltPositionOffset, 0, 0);
+            targetTiltPosition = new Vector3(+tiltPositionOffset, 0, 0);
             targetTiltRotation = Quaternion.Euler(new Vector3(0, 0, -tiltAngle));
         }
         // 왼쪽으로 기울이는 경우
         else if (PlayerController.Instance.pState.isTiltingL)
         {
-            targetTiltPosition = new Vector3(+tiltPositionOffset, 0, 0);
+            targetTiltPosition = new Vector3(-tiltPositionOffset, 0, 0);
             targetTiltRotation = Quaternion.Euler( new Vector3(0, 0, +tiltAngle));
         }
         // 기울이지 않는 경우
@@ -100,7 +106,7 @@ public class CameraController : MonoBehaviour
         }
 
         // 현재 위치에서 목표 위치로 부드럽게 이동
-        transform.localPosition = Vector3.Lerp(transform.localPosition, originalPosition + targetTiltPosition, Time.deltaTime * smoothSpeed);
+        waist.localPosition = Vector3.Lerp(waist.localPosition,targetTiltPosition+ originalPosition, Time.deltaTime * smoothSpeed);
     }
 
     void UpdateRecoil()
@@ -119,12 +125,13 @@ public class CameraController : MonoBehaviour
     void ApplyFinalRotation()
     {
         // 현재 회전값에서 목표 회전값으로 부드럽게 전환 ( 기울기 )
-        Quaternion tiltRotation = Quaternion.Slerp(tilt, targetTiltRotation, Time.deltaTime * smoothSpeed);
-
+        //Quaternion tiltRotation = Quaternion.Slerp(tilt, targetTiltRotation, Time.deltaTime * smoothSpeed);
+        tilt = Quaternion.Slerp(tilt, targetTiltRotation, Time.deltaTime * smoothSpeed);
         // 반동 회전값을 Quaternion으로 변환
-        Quaternion recoilRotationQuat = Quaternion.Euler(recoilRotation);
         // 원래 회전값, 기울기 회전값, 반동 회전값을 모두 합산
-        transform.localRotation = Quaternion.Euler(new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, tilt.eulerAngles.z)+ recoilAmount);
+        //arm.localRotation = Quaternion.Euler(new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, tilt.eulerAngles.z)+ recoilAmount);
+        arm.localRotation = Quaternion.Euler(new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, tilt.eulerAngles.z) + recoilAmount);
+        //waist.localRotation = Quaternion.Euler(0, 0, tilt.eulerAngles.z);
         recoilAmount = Vector3.zero;
 
     }

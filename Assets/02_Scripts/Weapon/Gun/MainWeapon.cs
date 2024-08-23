@@ -245,7 +245,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
         firePos.localPosition = Vector3.zero;
-        firePos.localRotation = Quaternion.Euler(0, 180, 0);
+        firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
         PlayerController.Instance.anim = GetComponentInChildren<Animator>();     // 무기마다 애니메이션이 다르니까 무기를 들 때 마다 anim을 새로 받는다
     }

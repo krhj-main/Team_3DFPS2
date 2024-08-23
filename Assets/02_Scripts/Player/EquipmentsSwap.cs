@@ -171,7 +171,7 @@ public class EquipmentsSwap : MonoBehaviour
         else {
             firePos.SetParent(playerSight);
             firePos.localPosition = Vector3.zero;
-            firePos.localRotation = Quaternion.Euler(0,180,0);
+            firePos.localRotation = Quaternion.Euler(0,180,-0.15f);
             playerArms.SetActive(true);
         }
     }

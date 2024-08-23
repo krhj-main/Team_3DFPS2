@@ -9,6 +9,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
     
     [SerializeField] Transform arm;
+    [SerializeField] Transform waist;
     Vector3 armPos;
     
     [SerializeField] Transform cam;
@@ -325,7 +326,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             cc.height = cc.height - crouchSpeed * Time.deltaTime;
 
 
-            arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter+Vector3.up*0.5f, 0.03f);
+            arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter + Vector3.up * 0.5f, 0.03f);
 
             cc.center = Vector3.Lerp(cc.center, crouchCenter, 0.03f);
 
@@ -341,7 +342,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             cc.height = cc.height + crouchSpeed * Time.deltaTime;
 
 
-            arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter + Vector3.up * 0.5f, 0.03f);
+            arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter +Vector3.up*0.5f, 0.03f);
 
 
             cc.center = Vector3.Lerp(cc.center, normalCenter, 0.03f);
