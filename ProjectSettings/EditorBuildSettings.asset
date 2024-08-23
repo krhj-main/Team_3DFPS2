@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/01_Scenes/LoddingScene.unity
     guid: 0772307f26b688342af05b0b7d137df1
   - enabled: 1
+    path: Assets/01_Scenes/Mission1.unity
+    guid: e06a177547a5a9e479d4cef36accebfa
+  - enabled: 1
     path: Assets/01_Scenes/TestingBaseMaster.unity
     guid: 59a9042dd1466f341aa13fcbd44889ae
   - enabled: 1

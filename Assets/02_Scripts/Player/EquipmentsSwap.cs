@@ -20,11 +20,9 @@ public class EquipmentsSwap : MonoBehaviour
     EquipmentsSlot slot;
     public IEquipMent equip;
 
+
     [SerializeField] GameObject playerArms;
     [SerializeField] Transform playerSight;
-    //[SerializeField] TwoBoneIKConstraint leftHandIK;
-    //[SerializeField] TwoBoneIKConstraint rightHandIK;
-    //[SerializeField] RigBuilder rigBuilder;
 
 
     public int Index                                        //인덱스를 순환시키기 위한 프로퍼티 
@@ -167,17 +165,6 @@ public class EquipmentsSwap : MonoBehaviour
             equip.OnHandEnter();
 
             // 무기가 전환되는 부분
-            // 전환될 때 PlayerAnimIK의 left,rightHand에
-            // equip의 자식에 있는 Left, RightHand에 대입
-
-            /*
-            leftHandIK.data.target = equip.transform.Find("LeftHandPos");
-            rightHandIK.data.target = equip.transform.Find("RightHandPos");
-            rigBuilder.Build();
-            */
-
-            //playerAnimIK.leftHand = equip.transform.Find("LeftHandPos");
-            // playerAnimIK.rightHand = equip.transform.Find("RightHandPos");
 
             InputManger.Instance.keyAction += equip.InputKey;
         }

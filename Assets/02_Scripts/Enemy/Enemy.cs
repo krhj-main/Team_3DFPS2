@@ -212,7 +212,14 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 지정된 위치를 왕복 이동
             agent.stoppingDistance = 0;
 
-            patrolDis = Vector3.Distance(transform.position, wayPoints[index].position);
+            // CharacterController의 실제 높이 계산
+            float _controllerHeight = cc.height * transform.lossyScale.y;
+            // CharacterController의 하단 y 좌표 계산 ( 지면 )
+            float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
+            // 지면을 기준으로 거리 판단
+            Vector3 enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
+
+            patrolDis = Vector3.Distance(enemyPos, wayPoints[index].position);
 
             if (patrolDis < 0.1f)
             {
@@ -333,6 +340,27 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 // 내이게이션의 목적지를 소리난 위치로 지정
                 agent.destination = chasePos;
+
+                // 소리난 곳까지 오고 다음 행동 지정
+                if (Vector3.Distance(transform.position, chasePos) < 0.5f)
+                {
+                    // Move 애니메이션 종료
+                    anim.SetBool("isMove", false);
+                    anim.SetBool("isIdle", true);
+
+                    // 일정 시간 후 상태 전환
+                    curTrackTime += Time.deltaTime;
+                    if (curTrackTime >= trackTime)
+                    {
+                        anim.SetBool("isIdle", false);
+                        curTrackTime = 0;
+                        enemyState = missingState;
+                    }
+                }
+                else
+                {
+                    currentTime = 0;
+                }
             }
         }
     }

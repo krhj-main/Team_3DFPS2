@@ -87,35 +87,30 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region "AggroEnemy 원본"
-    /*
-    // 플레이어쪽에서 호출해 일정 범위 안에 있는 enemy에게 플레이어의 위치값을 전달해주는 함수
-    public void AggroEnemy(Vector3 soundPos, float radius)
+    
+    public void AggroEnemy2(Vector3 _soundPos, float _radius)
     {
-        // radius 범위안에 Enemy 레이어를 가진 콜라이더를 다 담는다
-        LayerMask _targetMask = LayerMask.GetMask("Enemy");
-        Collider[] _targetsInRadius = Physics.OverlapSphere(transform.position, radius, _targetMask);
-
-        // null 체크 _targetsInRadius가 존재하면
-        if (_targetsInRadius != null)
+        foreach (Enemy enemy in enemies)
         {
-            // _targetsInRadius 속의 _target들에게 아래 명령을 실행
-            foreach (Collider _target in _targetsInRadius)
-            {
-                if (_target.GetComponent<Enemy>().enemyState != EnemyState.Blind)
-                {
-                    // 소리의 위치를 player 변수에 담고
-                    _target.GetComponent<Enemy>().player = soundPos;
+            // 에너미와 소리난 곳의 거리 계산
+            float _distance = Vector3.Distance(_soundPos, enemy.gameObject.transform.position);
 
-                    if (_target.GetComponent<Enemy>().enemyState != EnemyState.Hide)
-                    {
-                        // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
-                        _target.GetComponent<Enemy>().enemyState = EnemyState.Move;
-                    }
+            // 거리가 범위 이내라면
+            if (_distance <= _radius)
+            {
+                // 소리의 위치를 chasePos 변수에 담고
+                enemy.chasePos = _soundPos;
+
+                // 존버 상태가 아닐때만
+                if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind)
+                {
+                    // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
+                    enemy.enemyState = EnemyState.Move;
                 }
             }
         }
     }
-    */
+    
     #endregion
 
 
