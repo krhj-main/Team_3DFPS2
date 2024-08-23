@@ -58,9 +58,9 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] public Sprite myImage;         // 무기 이미지
     [Range(-100,100)]
     [SerializeField] float speedDownForce;
-
-    public GameObject noWeaponHand;
-    //CameraController camController;
+    [SerializeField] GameObject arms;
+    [SerializeField] public Transform CameraPos;
+    CameraController camController;
 
     protected virtual void Awake()
     {
@@ -72,6 +72,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInChildren<CameraController>();
         adsPos = new Vector3(0, -0.25f, 0f);
+        
+        
     }
 
     // 부모가 생기면 초기화 해줌
@@ -83,7 +85,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             if (gunSwap) {
                 shoulderPos = gunSwap.GunPosition.localPosition;
             }
-
+            cam = PlayerController.Instance.PlayerCamera;
+            camController = GetComponentInParent<CameraController>();
             shoulderFOV = cam.fieldOfView;
         }
         else
@@ -100,7 +103,6 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             loadedAmmo--;                     // 탄약 마이너스
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
-                CameraController camController = GetComponentInChildren<CameraController>();
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
             }
 
@@ -238,7 +240,12 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public void OnHandEnter()
     {
+
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
+        arms.SetActive(true);
+        firePos.SetParent(CameraPos);
+        firePos.localPosition = Vector3.zero;
+        firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
         PlayerController.Instance.anim = GetComponentInChildren<Animator>();     // 무기마다 애니메이션이 다르니까 무기를 들 때 마다 anim을 새로 받는다
     }
@@ -275,6 +282,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             isAming = false;
         }
+        arms.SetActive(false);
+        firePos.SetParent(null);
     }
 
     //키입력
