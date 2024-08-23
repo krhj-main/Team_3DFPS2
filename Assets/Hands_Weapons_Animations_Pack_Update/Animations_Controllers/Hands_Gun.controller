@@ -59,7 +59,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: speed
+  m_BlendParameter: Speed
   m_BlendParameterY: Blend
   m_MinThreshold: -3
   m_MaxThreshold: 3
@@ -226,7 +226,7 @@ AnimatorController:
   m_Name: Hands_Gun
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: speed
+  - m_Name: Speed
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -481,7 +481,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 38e11c4163775d1429ad8eab7cd9d8c5, type: 3}
+    m_Motion: {fileID: 7400000, guid: 3bb85de41b290ba43ac3e211a74ee586, type: 3}
     m_Threshold: -5
     m_Position: {x: 0, y: 0}
     m_TimeScale: -0.5
@@ -513,7 +513,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 38e11c4163775d1429ad8eab7cd9d8c5, type: 3}
+    m_Motion: {fileID: 7400000, guid: 3bb85de41b290ba43ac3e211a74ee586, type: 3}
     m_Threshold: 5
     m_Position: {x: 0, y: 0}
     m_TimeScale: 0.5
@@ -528,7 +528,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: speed
+  m_BlendParameter: Speed
   m_BlendParameterY: Blend
   m_MinThreshold: -7
   m_MaxThreshold: 7

@@ -53,8 +53,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Tooltip("서있을 때 캐릭터 컨트롤러 중심 위치 값")]
     [SerializeField] Vector3 normalCenter;
 
-    Animator anim;
-
+    [HideInInspector]
+    public Animator anim;
 
     [Space(5)]
     [Header("플레이어 체력")]
@@ -122,7 +122,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
         cc = GetComponent<CharacterController>();
-        anim = transform.GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
         main = Camera.main;
     }
 
@@ -160,7 +160,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         // 이동 상태가 아닐 때
         if (pState.isMoving)
         {
-            anim.SetFloat("speed", cc.velocity.magnitude);
+            anim.SetFloat("Speed", cc.velocity.magnitude);
         }
 
         // 걷기키가 눌렸을 때

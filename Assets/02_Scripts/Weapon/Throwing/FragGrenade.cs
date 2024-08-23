@@ -25,6 +25,10 @@ public class FragGrenade
         
         yield return new WaitForSeconds(_delay);
         _explode.gameObject.SetActive(false);
+
+        // 폭발 소리로 인한 에너미 어그로
+        GameManager.Instance.AggroEnemy(_explode.position, 30f);
+
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
         if (_distanceToPlayer < _radius)

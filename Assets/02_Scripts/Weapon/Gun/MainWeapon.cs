@@ -59,11 +59,18 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [Range(-100,100)]
     [SerializeField] float speedDownForce;
 
+    public GameObject noWeaponHand;
+    //CameraController camController;
+
     protected virtual void Awake()
     {
+        // 시작할 때 무기없는 팔 애니메이션 가져오기 위한 초기화
+        // 어치피 OnHandEnter에서 해주니까 필요가 없나? ( 의문 )
+        //PlayerController.Instance.anim = GetComponentInChildren<Animator>();    
+
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
-        //camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
+        //camController = GetComponentInChildren<CameraController>();
         adsPos = new Vector3(0, -0.25f, 0f);
     }
 
@@ -88,13 +95,12 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     #region 슈팅 함수
     public virtual void Shoot(Transform _firePos)
     {
-        
         if (loadedAmmo > 0)                  // 장전된 탄약이 0보다 크면 탄약 빼주기
         {
             loadedAmmo--;                     // 탄약 마이너스
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
-                CameraController camController = GetComponentInParent<CharacterController>().GetComponentInChildren<CameraController>();
+                CameraController camController = GetComponentInChildren<CameraController>();
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
             }
 
@@ -132,7 +138,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     {
         isReloading = true;
         Debug.Log("장전시작");
+
         // 이 위치에 장전 애니메이션 추가
+        Aming(false);
+        isADS = false;
+        PlayerController.Instance.anim.SetTrigger("doReload");
 
         yield return new WaitForSeconds(reloadTime);  // 장전 걸리는 시간
 
@@ -159,6 +169,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
         if (_whatAim)
         {
+            PlayerController.Instance.anim.SetBool("isAiming", true);
             targetPos = adsPos;
             targetFOV = adsFOV;
             bulletSpread = 0;
@@ -166,6 +177,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
         if (!_whatAim)
         {
+            PlayerController.Instance.anim.SetBool("isAiming", false);
             targetPos = shoulderPos;
             targetFOV = shoulderFOV;
             bulletSpread = originBulletSpread;
@@ -227,6 +239,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public void OnHandEnter()
     {
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
+
+        PlayerController.Instance.anim = GetComponentInChildren<Animator>();     // 무기마다 애니메이션이 다르니까 무기를 들 때 마다 anim을 새로 받는다
     }
     //손에있을때 할 행동
     public virtual void OnHand(Transform _tr,Vector3 _offSet)
@@ -262,14 +276,16 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             isAming = false;
         }
     }
+
     //키입력
+    // 여기서 애니메이션 사용하지 않고 사용된 함수 내부에서 애니메이션 재생
     public virtual void InputKey()
     {
         if (Input.GetMouseButton(0))
         {
+            PlayerController.Instance.anim.SetTrigger("doAttack");
             Shoot(firePos);
-            GameManager.Instance.AggroEnemy(firePos.position, 30f);
-
+            //GameManager.Instance.AggroEnemy(firePos.position, 30f);
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -277,6 +293,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             Aming(isADS);
             isADS = !isADS;
         }
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             Reload();

@@ -162,7 +162,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 0cf113bf8aa7d4f4084fbed589580944, type: 3}
+    m_Motion: {fileID: 7400000, guid: 828511ac0c838e744b6ec456ddae63ae, type: 3}
     m_Threshold: -5
     m_Position: {x: 0, y: 0}
     m_TimeScale: -0.5
@@ -194,7 +194,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 0cf113bf8aa7d4f4084fbed589580944, type: 3}
+    m_Motion: {fileID: 7400000, guid: 828511ac0c838e744b6ec456ddae63ae, type: 3}
     m_Threshold: 5
     m_Position: {x: 0, y: 0}
     m_TimeScale: 0.5
@@ -209,7 +209,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: speed
+  m_BlendParameter: Speed
   m_BlendParameterY: Blend
   m_MinThreshold: -7
   m_MaxThreshold: 7
@@ -305,7 +305,7 @@ AnimatorController:
   m_Name: Hands_Automatic_rifle03
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: speed
+  - m_Name: Speed
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -381,7 +381,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Aim_Shoot
-  m_Speed: 1
+  m_Speed: 5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1258991183359459816}
@@ -435,7 +435,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shoot
-  m_Speed: 1
+  m_Speed: 5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1296578136426327303}
@@ -448,7 +448,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bf017600bdf10534d8b207521b3451fa, type: 3}
+  m_Motion: {fileID: 1827226128182048838, guid: bf017600bdf10534d8b207521b3451fa,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -465,13 +466,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102730230650647758}
-    m_Position: {x: 510, y: 60, z: 0}
+    m_Position: {x: 510, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102272100482368528}
     m_Position: {x: 830, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102217510687196770}
-    m_Position: {x: 510, y: 290, z: 0}
+    m_Position: {x: 510, y: 330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1410066797058514635}
     m_Position: {x: 510, y: 120, z: 0}
@@ -574,7 +575,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Blend
     m_Mirror: 0
-  m_BlendParameter: speed
+  m_BlendParameter: Speed
   m_BlendParameterY: Blend
   m_MinThreshold: -3
   m_MaxThreshold: 3
