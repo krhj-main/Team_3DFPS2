@@ -11,7 +11,7 @@ public class Mission : MonoBehaviour
     // 미션 목록
     public Button[] missionBtn;
     public TextMeshProUGUI[] missionTxt;
-    public Image[] missionImage;
+    public GameObject[] missionImage;
 
     // 미션UI 캔버스
     public GameObject missionCanvas;
@@ -40,7 +40,7 @@ public class Mission : MonoBehaviour
         mouseCursor.HideCursor();
         for (int i = 0; i < missionImage.Length; i++)
         {
-            missionImage[i].enabled = false;
+            missionImage[i].SetActive(false);
         }
         GameManager.Instance.openUI = false;
     }
@@ -75,11 +75,11 @@ public class Mission : MonoBehaviour
         {
             if(i == num)
             {
-                missionImage[i].enabled = true;
+                missionImage[i].SetActive(true);
             }
             else
             {
-                missionImage[i].enabled = false;
+                missionImage[i].SetActive(false);
             }
         }
     }
