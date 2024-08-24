@@ -8,21 +8,29 @@ public class ExitWeaopnEquip : MonoBehaviour
     public GameObject weaponEquip;
     public GameObject fadeOutCanvas;
     float canvasAlpha = 0;
+    private Image fadeImage;
+
+    private void Awake()
+    {
+        fadeImage = GetComponent<Image>();
+    }
+
     private void OnEnable()
     {
         StartCoroutine(FadeOut());
+        Debug.Log(canvasAlpha);
     }
 
     IEnumerator FadeOut()
     {
+        canvasAlpha = 0;
         while (canvasAlpha <= 1f)
         {
-            canvasAlpha = this.GetComponent<Image>().color.a;
             canvasAlpha += Time.deltaTime;
-            this.GetComponent<Image>().color = new Color(0, 0, 0, canvasAlpha);
+            fadeImage.color = new Color(0, 0, 0, canvasAlpha);
             yield return null;
         }
-        weaponEquip.SetActive(true);
+        weaponEquip.SetActive(!weaponEquip.activeSelf);
         fadeOutCanvas.gameObject.SetActive(false);
     }
 }

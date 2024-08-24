@@ -20,13 +20,15 @@ public class SelectEquip : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
-                if (selectPanelStack.Count == 0)
+                if (selectPanelStack.Count <= 0)
                 {
                     exitWeaponEquip.SetActive(true);
+                    Debug.Log("f1키");
                 }
                 else
                 {
                     ClosePanel();
+                    Debug.Log("f1키");
                 }
             }
         }
