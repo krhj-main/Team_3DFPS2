@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class ExitWeaopnEquip : MonoBehaviour
 {
-    public GameObject weaponEquip;
-    public GameObject fadeOutCanvas;
-    float canvasAlpha = 0;
-    private Image fadeImage;
+    public GameObject[] whenEnterWeaponEquip;   // 웨폰이큅 진입시 켜고 꺼질 UI
+    public GameObject fadeOutCanvas;            // 페이드 아웃 캔버스
+    private float canvasAlpha = 0;              // 캔버스 알파 값
+    private Image fadeImage;                    // 페이드 아웃 될 이미지
+    public Transform playerRotation;           // 카메라 방향 반대로 돌림
 
     private void Awake()
     {
@@ -18,19 +19,23 @@ public class ExitWeaopnEquip : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(FadeOut());
-        Debug.Log(canvasAlpha);
     }
 
     IEnumerator FadeOut()
     {
         canvasAlpha = 0;
-        while (canvasAlpha <= 1f)
+        while (canvasAlpha <= 1f)                                   // 알파값이 1이 될때까지 알파값을 더해줌
         {
             canvasAlpha += Time.deltaTime;
             fadeImage.color = new Color(0, 0, 0, canvasAlpha);
             yield return null;
         }
-        weaponEquip.SetActive(!weaponEquip.activeSelf);
-        fadeOutCanvas.gameObject.SetActive(false);
+
+        foreach (GameObject _uiPanel in whenEnterWeaponEquip)       // 알파값이 1이 되면 패널들 켜고 꺼줌
+        {
+            _uiPanel.SetActive(!_uiPanel.activeSelf);
+        }
+
+        fadeOutCanvas.gameObject.SetActive(false);                  // 페이드아웃 패널 꺼줌
     }
 }
