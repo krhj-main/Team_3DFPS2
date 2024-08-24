@@ -69,7 +69,6 @@ public class Rifle : MainWeapon
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
-        base.FireBullet(firePos);
         RaycastHit hit;
         Vector3 _bulletDir = GetShootDir(_firePos);
         Vector3 direction = _firePos.forward + _bulletDir;
@@ -78,6 +77,7 @@ public class Rifle : MainWeapon
 
         if (canShoot)
         {
+            base.FireBullet(firePos);
             if (Physics.Raycast(_firePos.position, direction, out hit, bulletRange))       // 카메라 포지션에서 정면으로 총알 사거리만큼 쏨
             {
                 if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)

@@ -62,6 +62,10 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] public Transform CameraPos;
     CameraController camController;
 
+    // 발사 시 효과 ( 소리, 이펙트 )
+    ParticleSystem playerEffect;
+    AudioSource playerSound;
+
     protected virtual void Awake()
     {
         // 시작할 때 무기없는 팔 애니메이션 가져오기 위한 초기화
@@ -162,7 +166,17 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     #region 발사 함수
     public virtual void FireBullet(Transform _firePos) 
     {
-        PlayerController.Instance.anim.SetTrigger("doAttack");
+        if (!_firePos.GetComponentInParent<CharacterController>().CompareTag("Enemy"))
+        {
+            PlayerController.Instance.anim.SetTrigger("doAttack");
+            playerEffect.Play();
+            playerSound.Play();   
+        }
+        else if (_firePos.GetComponentInParent<CharacterController>().CompareTag("Enemy"))
+        {
+            // 이곳에서 적의 공격 시 발생하는 효과 관리
+            // 아니면 따로 Enemy쪽에서 관리하는 방법도?
+        }
     }    // 무조건 자식 클래스에서 재정의
     #endregion
 
@@ -253,6 +267,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         
         PlayerController.Instance.anim = GetComponentInChildren<Animator>();     // 무기마다 애니메이션이 다르니까 무기를 들 때 마다 anim을 새로 받는다
         PlayerController.Instance.anim.enabled = true;
+        playerEffect = GetComponentInChildren<ParticleSystem>();
+        playerSound = GetComponentInChildren<AudioSource>();
     }
     //손에있을때 할 행동
     public virtual void OnHand(Transform _tr,Vector3 _offSet)
