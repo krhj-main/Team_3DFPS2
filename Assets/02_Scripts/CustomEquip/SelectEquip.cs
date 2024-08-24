@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class SelectEquip : MonoBehaviour
 {
@@ -12,12 +13,28 @@ public class SelectEquip : MonoBehaviour
     public Stack<GameObject> selectPanelStack = new Stack<GameObject>();
     public GameObject exitWeaponEquip;
 
+    // 마우스 커서 조작
+    public MouseCursorMove mouseCursor;
+
+    private void OnEnable()
+    {
+        mouseCursor.ShowCursor();
+        GameManager.Instance.openUI = true;
+    }
+
+
+    private void OnDisable()
+    {
+    mouseCursor.HideCursor();
+    GameManager.Instance.openUI = false;
+    }
+
     private void Update()
     {
         if (this.gameObject.activeSelf == true)
         {
             // ESC 누르면 패널 오프
-            if (Input.GetKeyDown(KeyCode.F1))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
                 if (selectPanelStack.Count <= 0)
