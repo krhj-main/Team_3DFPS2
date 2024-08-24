@@ -75,11 +75,13 @@ public class Mission : MonoBehaviour
         {
             if(i == num)
             {
-                missionImage[i].enabled = true;
+                //missionImage[i].enabled = true;
+                missionImage[i].gameObject.SetActive(true);
             }
             else
             {
-                missionImage[i].enabled = false;
+                //missionImage[i].enabled = false;
+                missionImage[i].gameObject.SetActive(false);
             }
         }
     }
