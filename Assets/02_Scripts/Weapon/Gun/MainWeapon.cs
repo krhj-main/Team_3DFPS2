@@ -172,7 +172,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         if (_whatAim)
         {
             PlayerController.Instance.anim.SetBool("isAiming", true);
-            targetPos = adsPos;
+            //targetPos = adsPos;
             targetFOV = adsFOV;
             bulletSpread = 0;
         }
@@ -180,7 +180,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         if (!_whatAim)
         {
             PlayerController.Instance.anim.SetBool("isAiming", false);
-            targetPos = shoulderPos;
+            //targetPos = shoulderPos;
             targetFOV = shoulderFOV;
             bulletSpread = originBulletSpread;
         }
@@ -190,7 +190,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     {
         if (gunSwap) 
         { 
-            gunSwap.GunPosition.localPosition = Vector3.Lerp(gunSwap.GunPosition.localPosition, targetPos, Time.deltaTime * adsSpeed); 
+            //gunSwap.GunPosition.localPosition = Vector3.Lerp(gunSwap.GunPosition.localPosition, targetPos, Time.deltaTime * adsSpeed); 
         }
         // 무기 위치 업데이트
         
@@ -266,6 +266,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public virtual void OnHandExit()
     {
+        PlayerController.Instance.anim.enabled = false;
+
         PlayerController.Instance.moveSpeedScale = 0;
         StopCoroutine(Reloading());
         isReloading = false;
