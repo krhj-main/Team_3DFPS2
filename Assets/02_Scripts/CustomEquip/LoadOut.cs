@@ -36,7 +36,7 @@ public class LoadOut : MonoBehaviour
     public InfomationText throwingWeaponInfoText;
     #endregion
 
-    #region 주무기 변수
+    #region 주무기 관련 변수
     [Space(5)]
     [Header("주무기 세팅 부분")]
 
@@ -50,11 +50,15 @@ public class LoadOut : MonoBehaviour
     public Button[] selectMainWeaponBtn;   
 
     [Tooltip("주무기 장착칸")]
-    int equipMainWeaponIndex; 
+    public int equipMainWeaponIndex; 
     public List <int> equipMainWeaponList = new List<int>();
+
+    public GameObject[] mainWeaponObject;
+    public int mainWeaponObjectIndex;
+
     #endregion
 
-    #region 투척무기 변수
+    #region 투척무기 관련 변수
     [Space(5)]
     [Header("투척무기 세팅 부분")]
 
@@ -79,12 +83,16 @@ public class LoadOut : MonoBehaviour
 
     #region Awake
     SelectEquip selectEquip;
+    public GameObject playerCharacter;
+    AnimIKPlayer animIkPlayer;
 
     private void Awake()
     {
         selectEquip = GetComponent<SelectEquip>();
+        animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
     }
     #endregion
+
 
     #region 무기 선택 패널 오픈
     public void OpenSelectPanel(int _index)
@@ -125,24 +133,60 @@ public class LoadOut : MonoBehaviour
 
     // ==== 이벤트 트리거 ====
 
-    public void MainChangeText1()
+    public void MainWeaponSelectChangeText1()
     {
         mainWeaponInfoText.ChangeText("돌격소총", "M4A1", "카빈형 돌격소총\n모든 개선점이 총합된\n완전자동발사형");
+        mainWeaponObjectIndex = 0;
+        SetAcitiveWeapon();
     }
 
-    public void MainChangeText2()
+    public void MainWeaponSelectChangeText2()
     {
         mainWeaponInfoText.ChangeText("산탄총", "M870", "펌프액션 산탄총\n산탄총 앞에서는\n모두가 평등하다");
+        mainWeaponObjectIndex = 1;
+        SetAcitiveWeapon();
     }
 
-    public void MainChangeText3()
+    public void MainWeaponSelectChangeText3()
     {
         mainWeaponInfoText.ChangeText("저격소총", "M24", "볼트액션 저격소총\n강력한 파괴력을 자랑하지만\n조준을 하지 않으면 명중률이 낮다");
+        mainWeaponObjectIndex = 2;
+        SetAcitiveWeapon();
     }
 
-    public void MainChangeText4()
+    public void MainWeaponSelectChangeText4()
     {
         mainWeaponInfoText.ChangeText("권총", "HK45", "자동권총\n살상력은 낮지만 은밀하고\n라이트를 사용할 수 있다");
+        mainWeaponObjectIndex = 3;
+        SetAcitiveWeapon();
+    }
+
+    public void mainWeaponButtonChangeIK1()
+    {
+        mainWeaponObjectIndex = equipMainWeaponList[0];
+        SetAcitiveWeapon();
+    }
+
+    public void mainWeaponButtonChangeIK2()
+    {
+        mainWeaponObjectIndex = equipMainWeaponList[1];
+        SetAcitiveWeapon();
+    }
+
+    void SetAcitiveWeapon()
+    {
+        for (int i = 0; i < mainWeaponObject.Length; i++)
+        {
+            if(mainWeaponObjectIndex == i)
+            {
+                mainWeaponObject[i].SetActive(true);
+                animIkPlayer.currentIkIndex = i;
+            }
+            else
+            {
+                mainWeaponObject[i].SetActive(false);
+            }
+        }
     }
     #endregion
 

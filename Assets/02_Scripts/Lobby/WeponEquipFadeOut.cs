@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WeponEquipFadeOut : MonoBehaviour
 {
+    public GameObject weaponEquip;
     float canvasAlpha = 0;
-
     private void OnEnable()
     {
         StartCoroutine(FadeOut());
@@ -22,6 +21,7 @@ public class WeponEquipFadeOut : MonoBehaviour
             this.GetComponent<Image>().color = new Color(0, 0, 0, canvasAlpha);
             yield return null;
         }
-        SceneManager.LoadScene("WeaponEquip");
+        this.gameObject.SetActive(false);
+        weaponEquip.SetActive(true);
     }
 }

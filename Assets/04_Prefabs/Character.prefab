@@ -971,3 +971,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4542436876608375062}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1341950588542247650 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 23be37a6ca88b6349a53a1cda1a87d92,
+    type: 3}
+  m_PrefabInstance: {fileID: 1341950588541859936}
+  m_PrefabAsset: {fileID: 0}

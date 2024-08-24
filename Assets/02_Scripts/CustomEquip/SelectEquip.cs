@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class SelectEquip : MonoBehaviour
 {
@@ -11,20 +12,51 @@ public class SelectEquip : MonoBehaviour
     public GameObject[] menuPanel;              // 메뉴 패널
     public Stack<GameObject> selectPanelStack = new Stack<GameObject>();
     public GameObject exitWeaponEquip;
+    public GameObject playerCharacter;
+    AnimIKPlayer animIkPlayer;
+    LoadOut loadOut;
+
+    // 마우스 커서 조작
+    public MouseCursorMove mouseCursor;
+
+    private void Awake()
+    {
+        animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
+        loadOut = GetComponent<LoadOut>();
+    }
+
+
+    private void OnEnable()
+    {
+        mouseCursor.ShowCursor();               // UI 패널 켜지면 마우스 커서 보임
+        GameManager.Instance.openUI = true;     // 움직임 제한
+    }
+
+
+    private void OnDisable()
+    {
+    mouseCursor.HideCursor();                   // UI 패널 꺼지면 마우스 커서 안보임
+    GameManager.Instance.openUI = false;        // 움직임 제한
+    }
 
     private void Update()
     {
-        // ESC 누르면 패널 오프
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (this.gameObject.activeSelf == true)
         {
-            // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
-            if(selectPanelStack.Count == 0)
+            // ESC 누르면 패널 오프
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                exitWeaponEquip.SetActive(true);
-            }
-            else
-            {
-                ClosePanel();
+                // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
+                if (selectPanelStack.Count <= 0)
+                {
+                    exitWeaponEquip.SetActive(true);
+                    Debug.Log("f1키");
+                }
+                else
+                {
+                    ClosePanel();
+                    Debug.Log("f1키");
+                }
             }
         }
     }
@@ -42,6 +74,7 @@ public class SelectEquip : MonoBehaviour
         if (selectPanelStack.Count > 0)
         {
             GameObject panel = selectPanelStack.Pop();
+            
             panel.SetActive(false);
         }
     }
@@ -49,19 +82,24 @@ public class SelectEquip : MonoBehaviour
     // 메뉴 버튼에 연결
     public void SelectMenu(int _num)
     {
+        ClosePanel();
         switch (_num)
         {
             case 0:
                 titleTxt.text = "로드아웃";
                 StartCoroutine(ImageMove(_num,65,110));         // 이동할 위치값과 사이즈값은 직접 확인 후 대입함
+                animIkPlayer.currentIkIndex = loadOut.equipMainWeaponIndex;
+                loadOut.mainWeaponObject[loadOut.equipMainWeaponList[0]].SetActive(true);
                 break;
 
             case 1:
                 titleTxt.text = "커스터마이즈";
                 StartCoroutine(ImageMove(_num, 190, 160));      // 이동할 위치값과 사이즈값은 직접 확인 후 대입함
+                animIkPlayer.currentIkIndex = 4;
+                loadOut.mainWeaponObject[loadOut.equipMainWeaponList[0]].SetActive(false);
+                loadOut.mainWeaponObject[loadOut.equipMainWeaponList[1]].SetActive(false);
                 break;
         }
-        ClosePanel();
     }
 
     // 버튼 클릭시 패널 및 메뉴 이름 변경
