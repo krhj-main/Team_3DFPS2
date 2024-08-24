@@ -160,7 +160,10 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     #endregion
 
     #region 발사 함수
-    public virtual void FireBullet(Transform _firePos) { }    // 무조건 자식 클래스에서 재정의
+    public virtual void FireBullet(Transform _firePos) 
+    {
+        PlayerController.Instance.anim.SetTrigger("doAttack");
+    }    // 무조건 자식 클래스에서 재정의
     #endregion
 
     #region 정조준 함수
@@ -296,9 +299,14 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     {
         if (Input.GetMouseButton(0))
         {
-            PlayerController.Instance.anim.SetTrigger("doAttack");
+            //PlayerController.Instance.anim.SetTrigger("doAttack");
+            PlayerController.Instance.anim.SetBool("isAttacking", true);
             Shoot(firePos);
             //GameManager.Instance.AggroEnemy(firePos.position, 30f);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            PlayerController.Instance.anim.SetBool("isAttacking", false);
         }
 
         if (Input.GetMouseButtonDown(1))

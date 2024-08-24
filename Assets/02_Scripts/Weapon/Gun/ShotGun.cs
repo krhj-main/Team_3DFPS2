@@ -104,6 +104,7 @@ public class ShotGun : MainWeapon
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
+        base.FireBullet(firePos);
         for (int i = 0; i< shell; i++)
         {
             Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, _firePos);

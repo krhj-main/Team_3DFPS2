@@ -68,6 +68,7 @@ public class Sniper : MainWeapon
     // 발사 함수 ( 수정 필요 )
     public override void FireBullet(Transform _firePos)
     {
+        base.FireBullet(firePos);
         int _penetrateEnemy = 0;
         RaycastHit hit;
         Vector3 _bulletDir = GetShootDir(_firePos);

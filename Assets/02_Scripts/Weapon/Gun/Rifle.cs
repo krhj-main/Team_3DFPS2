@@ -69,6 +69,7 @@ public class Rifle : MainWeapon
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
+        base.FireBullet(firePos);
         RaycastHit hit;
         Vector3 _bulletDir = GetShootDir(_firePos);
         Vector3 direction = _firePos.forward + _bulletDir;
