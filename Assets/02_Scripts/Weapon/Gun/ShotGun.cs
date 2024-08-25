@@ -17,14 +17,14 @@ public class ShotGun : MainWeapon
     {
         base.Awake();
         initializeAmmo = 50;             // 총기 최대 탄약
-        maxLoadedAmmo = 10;              // 장전될 수 있는 탄약
+        maxLoadedAmmo = 5;              // 장전될 수 있는 탄약
         damage = 5;                      // 데미지
         bulletRange = 5f;                // 총알 발사 거리
-        fireRate = 0.5f;                 // 총알 발사 주기
-        recoilX = 0.2f;                  // 좌우 반동
-        recoilY = 1f;                    // 수직 반동
+        fireRate = 1.26f;                 // 총알 발사 주기
+        recoilX = 0.75f;                  // 좌우 반동
+        recoilY = 25f;                    // 수직 반동
         recoilRecoverySpeed = 5f;        // 반동 회복 속도
-        reloadTime = 1f;                 // 장전 시간
+        reloadTime = 0.18f + 1.12f + 0.5f;                 // 장전 시간  //+2.12f
         adsSpeed = 5;                    // 정조준 속도
         adsFOV = 45;                     // 정조준시 CameraFOV
         ResetAmmo(initializeAmmo);       // 탄약 세팅
@@ -81,19 +81,31 @@ public class ShotGun : MainWeapon
             return;
         }
         stopReloading = false;
-        StartCoroutine(Reloading());
+        StartCoroutine(ShotgunReloading());
     }
 
-    IEnumerator Reloading()
+    IEnumerator ShotgunReloading()
     {
         _isReloading = true;
+        PlayerController.Instance.anim.SetBool("isReloading", true);
         while (loadedAmmo < maxLoadedAmmo && remainAmmo > 0 && !stopReloading)
         {
+            if (loadedAmmo < maxLoadedAmmo - 1)
+            {
+                PlayerController.Instance.anim.SetTrigger("doReload");
+            }
+            else if (loadedAmmo == maxLoadedAmmo - 1)
+            {
+                PlayerController.Instance.anim.SetBool("isReloading", false);
+            }
+
             yield return new WaitForSeconds(reloadTime);
 
             if (stopReloading)
             {
                 Debug.Log("장전 중단됨");
+                PlayerController.Instance.anim.SetBool("isReloading", false);
+                PlayerController.Instance.anim.SetTrigger("doAttack");
                 break;
             }
             loadedAmmo++;
@@ -104,6 +116,7 @@ public class ShotGun : MainWeapon
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
+        base.FireBullet(firePos);
         for (int i = 0; i< shell; i++)
         {
             Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, _firePos);
