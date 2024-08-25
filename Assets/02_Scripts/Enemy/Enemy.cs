@@ -396,7 +396,6 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 if (gameObject.name.Contains("Shotgun"))
                 {
-                    Debug.Log("작동확인");
                     atkDelay = Random.Range(1.5f, 2f);
                     weapon.fireRate = atkDelay;
                     

@@ -21,11 +21,11 @@ public class Rifle : MainWeapon
         initializeAmmo = 180;             // 총기 최대 탄약
         damage = 5;                       // 데미지
         bulletRange = 10f;                // 총알 발사 거리
-        fireRate = 0.05f;                 // 총알 발사 주기
-        recoilX = 0.06f;                  // 좌우 반동
+        fireRate = 0.06f;                 // 총알 발사 주기
+        recoilX = 0.5f;                  // 좌우 반동
         recoilY = 10f;                   // 수직 반동
         recoilRecoverySpeed = 10f;        // 반동 회복 속도
-        reloadTime = 2f;                  // 장전 시간
+        reloadTime = 2.5f;                  // 장전 시간
         adsSpeed = 6;                     // 정조준 속도
         adsFOV = 45;                      // 정조준시 CameraFOV
         ResetAmmo(initializeAmmo);        // 탄약 세팅
@@ -45,7 +45,7 @@ public class Rifle : MainWeapon
     // 슈팅 함수
     public override void Shoot(Transform _firePos)
     {
-        if (Time.time >= nextFireTime)
+        if (Time.time >= nextFireTime && !isReloading)
         {
             nextFireTime = Time.time + fireRate;
             base.Shoot(_firePos);

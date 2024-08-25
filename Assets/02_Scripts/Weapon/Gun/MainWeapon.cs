@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,7 +36,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
     // 재장전 관련 변수
     public virtual float reloadTime { get; set; }   // 재장전 시간
-    private bool isReloading = false;               // 장전중
+    protected bool isReloading = false;               // 장전중
 
     // 정조준 관련 변수
     public virtual float adsSpeed { get; set; }     // 정조준 속도
@@ -62,7 +63,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] public Transform CameraPos;
     CameraController camController;
 
+    AnimatorStateInfo stateInfo;
     // 발사 시 효과 ( 소리, 이펙트 )
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
+    public AudioClip weaponChangeSound;
     ParticleSystem playerEffect;
     AudioSource playerSound;
 
@@ -108,6 +113,13 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
+                /*
+                stateInfo = PlayerController.Instance.anim.GetCurrentAnimatorStateInfo(0);
+                if (stateInfo.IsName("Shoot") || stateInfo.IsName("Aim_Shoot"))
+                {
+                    camController.ApplyRecoil(recoilX, recoilY);    // 반동
+                }
+                */
             }
 
             canShoot = true;                  // 슈팅 가능
@@ -149,6 +161,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         Aming(false);
         isADS = false;
         PlayerController.Instance.anim.SetTrigger("doReload");
+        playerSound.clip = reloadSound;
+        playerSound.Play();
 
         yield return new WaitForSeconds(reloadTime);  // 장전 걸리는 시간
 
@@ -170,7 +184,16 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             PlayerController.Instance.anim.SetTrigger("doAttack");
             playerEffect.Play();
-            playerSound.Play();   
+            playerSound.clip = shootSound;
+            playerSound.Play();
+            /*
+            if (stateInfo.IsName("Shoot") || stateInfo.IsName("Aim_Shoot"))
+            {
+                playerEffect.Play();
+                playerSound.clip = shootSound;
+                playerSound.Play();
+            }
+            */
         }
         else if (_firePos.GetComponentInParent<CharacterController>().CompareTag("Enemy"))
         {
@@ -190,6 +213,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             PlayerController.Instance.anim.SetBool("isAiming", true);
             //targetPos = adsPos;
+            PlayerController.Instance.moveSpeedScale = -0.5f;   // 줌 시 이동속도 제한
             targetFOV = adsFOV;
             bulletSpread = 0;
         }
@@ -198,6 +222,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             PlayerController.Instance.anim.SetBool("isAiming", false);
             //targetPos = shoulderPos;
+            PlayerController.Instance.moveSpeedScale = 0f;
             targetFOV = shoulderFOV;
             bulletSpread = originBulletSpread;
         }
@@ -257,18 +282,18 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public void OnHandEnter()
     {
-
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
         firePos.localPosition = Vector3.zero;
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
-        
         PlayerController.Instance.anim = GetComponentInChildren<Animator>();     // 무기마다 애니메이션이 다르니까 무기를 들 때 마다 anim을 새로 받는다
         PlayerController.Instance.anim.enabled = true;
         playerEffect = GetComponentInChildren<ParticleSystem>();
         playerSound = GetComponentInChildren<AudioSource>();
+        playerSound.clip = weaponChangeSound; 
+        playerSound.Play();
     }
     //손에있을때 할 행동
     public virtual void OnHand(Transform _tr,Vector3 _offSet)
@@ -310,7 +335,6 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
 
     //키입력
-    // 여기서 애니메이션 사용하지 않고 사용된 함수 내부에서 애니메이션 재생
     public virtual void InputKey()
     {
         if (Input.GetMouseButton(0))

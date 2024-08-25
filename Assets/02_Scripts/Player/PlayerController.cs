@@ -99,6 +99,9 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         private set {; }
     }
 
+    public AudioSource playerSound;
+    public AudioClip walkSound;
+
     /*
     private void Awake()
     {
@@ -124,6 +127,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         pState = GetComponent<PlayerStateList>();
         cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
+        playerSound = GetComponent<AudioSource>();
         main = Camera.main;
     }
 
@@ -145,8 +149,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             }
         }
     }
-
-
     
     private void FixedUpdate()
     {
@@ -158,17 +160,19 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         Vector3 _groundVelocity = MovingUpdate(moveInput.x, moveInput.z);
 
-        // 이동 상태가 아닐 때
+        // 이동 상태일 때
         if (pState.isMoving)
         {
-            anim.SetFloat("Speed", cc.velocity.magnitude);
+            playerSound.volume = 1;
+            anim.SetFloat("Speed", velocity.magnitude);
         }
 
         // 걷기키가 눌렸을 때
         if (pState.isWalking)
         {
             // 이동속도 및 애니메이션 속도 조절
-            _groundVelocity /= 1.5f;
+            _groundVelocity *= 0.4f;
+            playerSound.volume = 0.5f;
         }
         // 뛰기키가 눌렸을 때 / 걷기키를 누를때는 같이 동작안함 -> 키 입력에 있어 걷기키가 최우선?
         if (pState.isRunning && !pState.isWalking)
