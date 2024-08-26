@@ -23,6 +23,7 @@ public class EquipmentsSwap : MonoBehaviour
 
     [SerializeField] GameObject playerArms;
     [SerializeField] GrenadeFactory grenadeFactory;
+    public GrenadeFactory GrenadeFactory { get; }
     [SerializeField] Transform playerSight;
 
 
@@ -159,6 +160,7 @@ public class EquipmentsSwap : MonoBehaviour
         if (equip != null)
         {
             playerArms.gameObject.SetActive(false);
+           // playerArms.OnHandExit();
             equip.gameObject.SetActive(true);
 
             equip.OnHandEnter();
@@ -171,6 +173,7 @@ public class EquipmentsSwap : MonoBehaviour
             firePos.SetParent(playerSight);
             firePos.localPosition = Vector3.zero;
             firePos.localRotation = Quaternion.Euler(0,180,-0.15f);
+            //playerArms.OnHandEnter();
             playerArms.gameObject.SetActive(true);
         }
     }

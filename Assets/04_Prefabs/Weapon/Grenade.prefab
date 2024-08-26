@@ -92,10 +92,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1834826944814569597}
-  - component: {fileID: 7226871574691818117}
   - component: {fileID: 1180761160894769012}
   - component: {fileID: 6252390236401454168}
   - component: {fileID: -994648074451216294}
+  - component: {fileID: 8627518526981373020}
   m_Layer: 11
   m_Name: Grenade
   m_TagString: Untagged
@@ -119,27 +119,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7226871574691818117
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4402955815833358430}
-  m_Material: {fileID: 13400000, guid: fba4fefa8c7cbff458c02a5aeab4d296, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.043045003
-  m_Center: {x: 0, y: 0.036140326, z: 0}
 --- !u!54 &1180761160894769012
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -292,3 +271,26 @@ MonoBehaviour:
   rb: {fileID: 0}
   type: 0
   factory: {fileID: 0}
+--- !u!136 &8627518526981373020
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4402955815833358430}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.03
+  m_Height: 0.12
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.03, z: 0}

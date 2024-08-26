@@ -219,5 +219,12 @@ public class GrenadeFactory : ThrowingWeapon
         Throw(firePos);
     }
 
+    public void SetGrenadeCount(int _frag,int _flash,int _smoke) {
+        FragCount = _frag;
+        FlashCount = _flash;
+        SmokeCount = _smoke;
+
+
+    }
 
 }
