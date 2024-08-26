@@ -25,10 +25,10 @@ public class Sniper : MainWeapon
         damage = 60;                      // 데미지
         bulletRange = 200f;               // 총알 발사 거리
         fireRate = 1.5f;                  // 총알 발사 주기
-        recoilX = 0.5f;                   // 좌우 반동
-        recoilY = 1f;                     // 수직 반동
+        recoilX = 1f;                   // 좌우 반동
+        recoilY = 40f;                     // 수직 반동
         recoilRecoverySpeed = 5f;         // 반동 회복 속도
-        reloadTime = 5f;                  // 장전 시간
+        reloadTime = 4.5f;                  // 장전 시간
         adsSpeed = 4;                     // 정조준 속도
         adsFOV = 15;                      // 정조준시 CameraFOV
         ResetAmmo(initializeAmmo);        // 탄약 세팅
@@ -51,7 +51,7 @@ public class Sniper : MainWeapon
     // 슈팅 함수
     public override void Shoot(Transform _firePos)
     {
-        if (Time.time >= nextFireTime)
+        if (Time.time >= nextFireTime && !isReloading)
         {
             nextFireTime = Time.time + fireRate;
             base.Shoot(_firePos);
@@ -68,6 +68,7 @@ public class Sniper : MainWeapon
     // 발사 함수 ( 수정 필요 )
     public override void FireBullet(Transform _firePos)
     {
+        base.FireBullet(firePos);
         int _penetrateEnemy = 0;
         RaycastHit hit;
         Vector3 _bulletDir = GetShootDir(_firePos);

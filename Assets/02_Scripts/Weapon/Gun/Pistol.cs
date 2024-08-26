@@ -21,9 +21,9 @@ public class Pistol : MainWeapon
         maxLoadedAmmo = 20;              // 장전될 수 있는 탄약
         damage = 10;                     // 데미지
         bulletRange = 10f;               // 총알 발사 거리
-        fireRate = 0.2f;                 // 총알 발사 주기
-        recoilX = 0.3f;                    // 좌우 반동
-        recoilY = 0.7f;                   // 수직 반동
+        fireRate = 0.6f;                 // 총알 발사 주기
+        recoilX = 0.25f;                    // 좌우 반동
+        recoilY = 5f;                   // 수직 반동
         recoilRecoverySpeed = 5f;        // 반동 회복 속도
         reloadTime = 1.5f;               // 장전 시간
         adsSpeed = 8;                    // 정조준 속도
@@ -62,6 +62,7 @@ public class Pistol : MainWeapon
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
+        base.FireBullet(firePos);
         RaycastHit hit;
         Vector3 _bulletDir = GetShootDir(_firePos);
         Vector3 direction = _firePos.forward + _bulletDir;

@@ -9,4 +9,10 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         GameManager.Instance.AggroEnemy(transform.position, _radius);
     }
+
+    public void PlayerWalkSound()
+    {
+        PlayerController.Instance.playerSound.clip = PlayerController.Instance.walkSound;
+        PlayerController.Instance.playerSound.Play();
+    }
 }
