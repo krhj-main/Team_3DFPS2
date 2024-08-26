@@ -23,6 +23,7 @@ public class Dron : MonoBehaviour,Interactable
     
     [SerializeField]float h=0;
     [SerializeField] float v=0;
+    [SerializeField] Collider col;
     public DronController dronController;
 
     public KeyCode returnKey;
@@ -128,6 +129,7 @@ public class Dron : MonoBehaviour,Interactable
         rig.velocity = vel;
     }
     public void DronAwake() {
+        col.enabled = true;
         dronUI.enabled = true;
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
@@ -138,7 +140,7 @@ public class Dron : MonoBehaviour,Interactable
     }
     public void DronDisable()
     {
-        
+        col.enabled = false;
         dronUI.enabled = false;
         dronCam.enabled = false;
         dronController.DronReturn();
