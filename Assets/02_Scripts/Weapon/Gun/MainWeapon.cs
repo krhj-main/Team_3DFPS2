@@ -62,7 +62,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] GameObject arms;
     [SerializeField] public Transform CameraPos;
     CameraController camController;
-
+    [SerializeField] Animator anim;
     AnimatorStateInfo stateInfo;
     // 발사 시 효과 ( 소리, 이펙트 )
     public AudioClip shootSound;

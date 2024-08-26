@@ -6,7 +6,8 @@ public class SmokeGrenade
 {
     public static Mesh mesh;
     public static Material material;
-
+    public static Vector3 midle = new Vector3(0, -0.0026f, 0);
+    public static Vector3 scale = new Vector3(0.5f, 0.5f, 0.5f);
     public SmokeGrenade ()
     {
         if (mesh == null)

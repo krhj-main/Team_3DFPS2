@@ -20,9 +20,10 @@ public class EquipmentsInit : MonoBehaviour
     [ContextMenu("장비 초기화 테스트")]
     public void test() {
         swap.Inventory.Clear();
-        InitInventory(mainWeapons);
+        
         InitInventory(throwingWeapons);
         InitInventory(specialWeapons);
+        InitInventory(mainWeapons);
     }
 
     void InitInventory(IEquipMent[] _array) {

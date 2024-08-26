@@ -7,7 +7,6 @@ public class GrenadeFactory : ThrowingWeapon
     [SerializeField][Header("오브젝트 풀링")] [Tooltip("풀링되는 오브젝트 리스트")] public List<Grenade> grenades = new List<Grenade>();
     [SerializeField] [Tooltip("풀링되는 오브젝트 프리팹")] Grenade prefab;
     [SerializeField] [Tooltip("풀링되는 오브젝트 개수")] int objectSIze = 3;
-    MeshRenderer renderer;
     Collider col;
     GrenadeType grenadeType;
     Grenade current;
@@ -15,7 +14,11 @@ public class GrenadeFactory : ThrowingWeapon
     [Tooltip("파열수류탄 개수")]int fragCount;
     [SerializeField] [Tooltip("섬광탄 개수")] int flashCount;
     [SerializeField] [Tooltip("연막탄 개수")] int smokeCount;
-     int FragCount 
+    [SerializeField] Transform hand;
+    [SerializeField] GameObject arms;
+    [SerializeField] Transform CameraPos;
+    [SerializeField] Animator animator;
+    int FragCount 
     { 
         set 
         {   fragCount = value;
@@ -61,7 +64,6 @@ public class GrenadeFactory : ThrowingWeapon
     {
         base.Awake();
         col = GetComponent<Collider>();
-        renderer = GetComponent<MeshRenderer>();
         SpawnGrenade();
     }
     void Start()
@@ -71,21 +73,26 @@ public class GrenadeFactory : ThrowingWeapon
     public override void OnHandEnter()
     {
         base.OnHandEnter();
-        renderer.enabled = false;
         col.enabled = false;
+        arms.SetActive(true);
+        firePos.SetParent(CameraPos);
+        firePos.localPosition = Vector3.zero;
+        firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
     }
 
     public override void OnHandExit()
     {
         base.OnHandExit();
-        renderer.enabled = true;
         col.enabled = true;
-
+        arms.SetActive(false);
+        firePos.SetParent(null);
     }
     public override void OnHand(Transform _tr, Vector3 _offset)
     {
-        if (!isThrow)
+        transform.position = _tr.position + _offset;  //오브젝트 위치 조정
+        transform.rotation = _tr.rotation;
+        if (true)
         {
             if (current == null)
             {
@@ -99,8 +106,8 @@ public class GrenadeFactory : ThrowingWeapon
                         current.Changetype(grenadeType);
                         current.gameObject.SetActive(true);
                     }
-                    current.transform.position = _tr.position + _offset;  //오브젝트 위치 조정
-                    current.transform.rotation = _tr.rotation;
+                    current.transform.position = hand.position + _offset;  //오브젝트 위치 조정
+                    current.transform.rotation = hand.rotation;
                 }
                 else {
                     current.gameObject.SetActive(false);
@@ -111,7 +118,7 @@ public class GrenadeFactory : ThrowingWeapon
         }
         
     }
-
+    
     public override void InputKey()
     {
         if (!isThrow&& !isEmpty())
@@ -123,20 +130,23 @@ public class GrenadeFactory : ThrowingWeapon
             }
             if (Input.GetMouseButtonUp(0))
             {
-                Throw(firePos);
+                trajectoryLine.enabled = false;
+                isThrow = true;
+                //Throw(firePos);
+                animator.SetTrigger("doThrow");
             }
         }
     }
 
     public override void Throw(Transform _firePos)
     {
+        isThrow = false;
         var (_velocity, _position) = CalculateTrajectoryVector(_firePos);
-        grenades[0].transform.position = _position;
+        current.transform.position = _position;
 
-        grenades[0].rb.velocity = _velocity;
-        trajectoryLine.enabled = false;
-        grenades[0].Explode();
-        grenades[0].transform.SetParent(null);
+        current.rb.velocity = _velocity;
+        current.Explode();
+        current.transform.SetParent(null);
         current = null;
         grenades.RemoveAt(0);
         DecreaseGrenade(grenadeType,1);
@@ -163,6 +173,7 @@ public class GrenadeFactory : ThrowingWeapon
         {
             grenades[0].gameObject.SetActive(false);
         }
+        animator.SetTrigger("doGet");
     }
 
     public bool isEmpty() {
@@ -202,4 +213,11 @@ public class GrenadeFactory : ThrowingWeapon
         grenades.Add(_grenade);
         isThrow = false;
     }
+
+    public void test() {
+        Debug.Log(gameObject.name);
+        Throw(firePos);
+    }
+
+
 }

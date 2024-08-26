@@ -17,15 +17,14 @@ public class Grenade :MonoBehaviour
     public float _radius;
     public float _delay;
     public float _value;
-    MeshFilter meshFilter;
-    MeshRenderer meshRenderer;
+    [SerializeField] Transform grenadeBase;
+    [SerializeField] MeshFilter meshFilter;
+    [SerializeField] MeshRenderer meshRenderer;
     public Rigidbody rb;
     [SerializeField] GrenadeType type;
     public GrenadeFactory factory;
     protected void Awake()
     {
-        meshFilter = GetComponent<MeshFilter>();
-        meshRenderer = GetComponent<MeshRenderer>();
         rb= GetComponent<Rigidbody>();
         frag = new FragGrenade();
         flash = new FlashGrenade();
@@ -38,14 +37,20 @@ public class Grenade :MonoBehaviour
             case GrenadeType.FragGrenade:
                 meshFilter.mesh = FragGrenade.mesh;
                 meshRenderer.material = FragGrenade.material;
+                grenadeBase.localPosition = FragGrenade.midle;
+                grenadeBase.localScale = FragGrenade.scale;
                 break;
             case GrenadeType.FlashGrenade:
                 meshFilter.mesh = FlashGrenade.mesh;
                 meshRenderer.material = FlashGrenade.material;
+                grenadeBase.localPosition = FlashGrenade.midle;
+                grenadeBase.localScale = FlashGrenade.scale;
                 break;
             case GrenadeType.SmokeGrenade:
                 meshFilter.mesh = SmokeGrenade.mesh;
                 meshRenderer.material = SmokeGrenade.material;
+                grenadeBase.localPosition = SmokeGrenade.midle;
+                grenadeBase.localScale = SmokeGrenade.scale;
                 break;
         }
     }
