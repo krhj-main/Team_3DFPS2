@@ -53,7 +53,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public virtual float headRatio { get; set; }    // 머리 비율
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
-    bool isADS = false;
+    protected bool isADS = false;
     [field: SerializeField]
     public EquipType type { get; set; }
     [SerializeField] public Sprite myImage;         // 무기 이미지
@@ -204,7 +204,6 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public void Aming(bool _whatAim)
     {
         isAming = true;
-
         if (_whatAim)
         {
             anim.SetBool("isAiming", true);
@@ -345,8 +344,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
         if (Input.GetMouseButtonDown(1))
         {
-            Aming(isADS);
             isADS = !isADS;
+            Aming(isADS);
         }
 
         if (Input.GetKeyDown(KeyCode.R))

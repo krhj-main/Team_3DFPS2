@@ -10,11 +10,16 @@ public class SelectEquip : MonoBehaviour
     public RectTransform selectMenuImage;       // 메뉴 이름 밑 빨간 밑줄
     public TextMeshProUGUI[] menuTxt;           // 메뉴 이름
     public GameObject[] menuPanel;              // 메뉴 패널
-    public Stack<GameObject> selectPanelStack = new Stack<GameObject>();
-    public GameObject exitWeaponEquip;
-    public GameObject playerCharacter;
-    AnimIKPlayer animIkPlayer;
-    LoadOut loadOut;
+    public GameObject exitWeaponEquip;          // 장비 장착 씬 나갈때 fadeOut 될 패널
+    public GameObject playerCharacter;          // 플레이어 캐릭터
+    AnimIKPlayer animIkPlayer;                  // 무기 장착 IK
+    LoadOut loadOut;                            // LoadOut 스크립트
+    public GameObject inventory;                // EquipmentsInit 스크립트가 붙어있는 오브젝트
+    EquipmentsInit equipmentsInit;              // EquipmentsInit 스크립트
+    public GameObject[] equipMainWeapon;        // 메인웨폰무기 ( 새로 산 에셋 무기 )
+    public Stack<GameObject> selectPanelStack = new Stack<GameObject>();        // 켜질 패널들 스택에 담아둠
+    //public Transform parentTransform;
+    //public GameObject dron;
 
     // 마우스 커서 조작
     public MouseCursorMove mouseCursor;
@@ -23,6 +28,7 @@ public class SelectEquip : MonoBehaviour
     {
         animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
         loadOut = GetComponent<LoadOut>();
+        equipmentsInit = inventory.GetComponent<EquipmentsInit>();
     }
 
 
@@ -35,8 +41,8 @@ public class SelectEquip : MonoBehaviour
 
     private void OnDisable()
     {
-    mouseCursor.HideCursor();                   // UI 패널 꺼지면 마우스 커서 안보임
-    GameManager.Instance.openUI = false;        // 움직임 제한
+        mouseCursor.HideCursor();                   // UI 패널 꺼지면 마우스 커서 안보임
+        GameManager.Instance.openUI = false;        // 움직임 제한
     }
 
     private void Update()
@@ -49,17 +55,47 @@ public class SelectEquip : MonoBehaviour
                 // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
                 if (selectPanelStack.Count <= 0)
                 {
+                    ApplyWeaponEquip();
+                    equipmentsInit.Init();
                     exitWeaponEquip.SetActive(true);
-                    Debug.Log("f1키");
                 }
                 else
                 {
                     ClosePanel();
-                    Debug.Log("f1키");
                 }
             }
         }
     }
+
+    void ApplyWeaponEquip()
+    {
+        ApplyMainEquip();
+        ApplyThrowingEquip();
+        //ApplySpecialEquip();
+    }
+
+    void ApplyMainEquip()
+    {
+        for (int i = 0; i < loadOut.equipMainWeaponList.Count; i++)
+        {
+            equipmentsInit.mainWeapons[i] = equipMainWeapon[loadOut.equipMainWeaponList[i]].GetComponent<MainWeapon>();
+            //GameObject _newWeapon = Instantiate(equipMainWeapon[loadOut.equipMainWeaponList[i]], parentTransform);
+            //equipmentsInit.mainWeapons[i] = _newWeapon.GetComponent<MainWeapon>();
+        }
+    }
+
+    void ApplyThrowingEquip()
+    {
+        equipmentsInit.frag = loadOut.countThrwing[0];
+        equipmentsInit.smoke = loadOut.countThrwing[1];
+        equipmentsInit.flash = loadOut.countThrwing[2];
+    }
+
+    void ApplySpecialEquip()
+    {
+       // equipmentsInit.specialWeapons[0] = dron.GetComponent<SpecialWeapon>();
+    }
+
 
     // 스택에 추가하고 패널 켜주기
     public void PushPanel(GameObject panel)

@@ -1495,8 +1495,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6450514113419061543}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.639999, y: 0.57, z: 9.19}
+  m_LocalRotation: {x: -0.16023141, y: -0.15198928, z: 0.025411183, w: -0.9749767}
+  m_LocalPosition: {x: 21.620922, y: 0.20295641, z: 15.549947}
   m_LocalScale: {x: 0.20000097, y: 0.19999897, z: 0.20000032}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1577,6 +1577,10 @@ MonoBehaviour:
   phoneMat: {fileID: 2100000, guid: 8adc489959242814c928a2b16f6726b1, type: 2}
   phone: {fileID: 5460955130441887195}
   sphere: {fileID: 6758621080839234161}
+  anim: {fileID: 0}
+  arms: {fileID: 0}
+  CameraPos: {fileID: 0}
+  dronpos: {fileID: 0}
 --- !u!54 &6401851603084812263
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3375,7 +3379,7 @@ PrefabInstance:
     - target: {fileID: 2633749899443558564, guid: 4b658ae02ca4e154f80cea2d74db1ef1,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3032176635680216034, guid: 4b658ae02ca4e154f80cea2d74db1ef1,
         type: 3}
