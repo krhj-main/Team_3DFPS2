@@ -15,6 +15,8 @@ public class SelectEquip : MonoBehaviour
     public GameObject playerCharacter;
     AnimIKPlayer animIkPlayer;
     LoadOut loadOut;
+    EquipmentsInit equipmentsInit;
+
 
     // 마우스 커서 조작
     public MouseCursorMove mouseCursor;
@@ -23,6 +25,7 @@ public class SelectEquip : MonoBehaviour
     {
         animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
         loadOut = GetComponent<LoadOut>();
+        equipmentsInit = playerCharacter.GetComponent<EquipmentsInit>();
     }
 
 
@@ -35,8 +38,8 @@ public class SelectEquip : MonoBehaviour
 
     private void OnDisable()
     {
-    mouseCursor.HideCursor();                   // UI 패널 꺼지면 마우스 커서 안보임
-    GameManager.Instance.openUI = false;        // 움직임 제한
+        mouseCursor.HideCursor();                   // UI 패널 꺼지면 마우스 커서 안보임
+        GameManager.Instance.openUI = false;        // 움직임 제한
     }
 
     private void Update()
@@ -50,16 +53,16 @@ public class SelectEquip : MonoBehaviour
                 if (selectPanelStack.Count <= 0)
                 {
                     exitWeaponEquip.SetActive(true);
-                    Debug.Log("f1키");
+                   
                 }
                 else
                 {
                     ClosePanel();
-                    Debug.Log("f1키");
                 }
             }
         }
     }
+
 
     // 스택에 추가하고 패널 켜주기
     public void PushPanel(GameObject panel)

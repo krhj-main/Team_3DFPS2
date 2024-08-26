@@ -8,25 +8,25 @@ public class EquipmentsInit : MonoBehaviour
     public ThrowingWeapon[] throwingWeapons = new ThrowingWeapon[ItemManager.throwSlotSize];
     public SpecialWeapon[] specialWeapons = new SpecialWeapon[ItemManager.specialSlotSize];
     public EquipmentsSwap swap;
-    // Start is called before the first frame update
+    
     void Start()
     {
-        
-
-
-
 
     }
+
     [ContextMenu("장비 초기화 테스트")]
-    public void test() {
+    public void EquipInventory() 
+    {
         swap.Inventory.Clear();
         InitInventory(mainWeapons);
         InitInventory(throwingWeapons);
         InitInventory(specialWeapons);
     }
 
-    void InitInventory(IEquipMent[] _array) {
-        for (int i = 0; i < _array.Length; i++) {
+    void InitInventory(IEquipMent[] _array) 
+    {
+        for (int i = 0; i < _array.Length; i++) 
+        {
             swap.WeaponChange(_array[i], _array[i].type);
         }
     }

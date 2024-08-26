@@ -9,8 +9,15 @@ public class CamAttatch : MonoBehaviour
     [SerializeField] CharacterController cc;
     [Tooltip ("카메라의 Z축 간격 값")]
     [SerializeField] float offSetZ = 0;
+    PlayerStateList pState;
+    Animator anim;
 
-    
+    private void Awake()
+    {
+        pState = GetComponentInParent<PlayerStateList>();
+        anim = GetComponent<Animator>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +27,14 @@ public class CamAttatch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (pState.isDead)
+        {
+            anim.Play("Death");
+        }
     }
 
-    public void ChangeParent(Transform parent) {
+    public void ChangeParent(Transform parent) 
+    {
         transform.SetParent(parent);
     }
 

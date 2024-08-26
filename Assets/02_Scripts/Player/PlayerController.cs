@@ -61,6 +61,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Header("플레이어 체력")]
     int HP;
     [SerializeField] public int maxHP = 100;
+    public bool death = false;
 
     public int pHP
     {
@@ -214,7 +215,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 키 입력을 받았을 때 변수 값 전달 메서드
     void InputKey()
     {
-        if (GameManager.Instance.openUI)
+        if (GameManager.Instance.openUI || pState.isDead)
         {
             return;
         }
@@ -369,5 +370,9 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     public void Damaged(int _damage, Vector3 hitpoint)
     {
         pHP -= _damage;
+        if(pHP <= 0)
+        {
+            pState.isDead = true;
+        }
     }
 }
