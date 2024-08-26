@@ -1,0 +1,234 @@
+fileFormatVersion: 2
+guid: f3af89f9111e251439e7dd622fdb597e
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: LP
+    100004: Object001
+    100006: Object002
+    100008: Object003
+    100010: Object004
+    100012: Object005
+    100014: Object006
+    100016: Object007
+    100018: Object008
+    100020: Object009
+    100022: EJunction_box_v1_1b
+    100024: EJunction_box_v1_1e
+    100026: EJunction_box_v1_1t
+    100028: EJunction_box_v1_2b
+    100030: EJunction_box_v1_2e
+    100032: EJunction_box_v1_3b
+    100034: EJunction_box_v1_3e
+    100036: EJunction_box_v1_4b
+    100038: EJunction_box_v1_4e
+    100040: EJunction_box_v1_5e
+    100042: EJunction_box_v1_6e
+    100044: EJunction_box_v1_7e
+    100046: EJunction_box_v1_8e
+    100048: EJunction_box_v1_2t
+    100050: EJunction_box_v1_3t
+    100052: EJunction_box_v1_4t
+    100054: EJunction_box_v1_1w
+    100056: EJunction_box_v1_2w
+    100058: EJunction_box_v1_3w
+    400000: //RootNode
+    400002: LP
+    400004: Object001
+    400006: Object002
+    400008: Object003
+    400010: Object004
+    400012: Object005
+    400014: Object006
+    400016: Object007
+    400018: Object008
+    400020: Object009
+    400022: EJunction_box_v1_1b
+    400024: EJunction_box_v1_1e
+    400026: EJunction_box_v1_1t
+    400028: EJunction_box_v1_2b
+    400030: EJunction_box_v1_2e
+    400032: EJunction_box_v1_3b
+    400034: EJunction_box_v1_3e
+    400036: EJunction_box_v1_4b
+    400038: EJunction_box_v1_4e
+    400040: EJunction_box_v1_5e
+    400042: EJunction_box_v1_6e
+    400044: EJunction_box_v1_7e
+    400046: EJunction_box_v1_8e
+    400048: EJunction_box_v1_2t
+    400050: EJunction_box_v1_3t
+    400052: EJunction_box_v1_4t
+    400054: EJunction_box_v1_1w
+    400056: EJunction_box_v1_2w
+    400058: EJunction_box_v1_3w
+    2100000: 'Material #214'
+    2300000: LP
+    2300002: Object001
+    2300004: Object002
+    2300006: Object003
+    2300008: Object004
+    2300010: Object005
+    2300012: Object006
+    2300014: Object007
+    2300016: Object008
+    2300018: Object009
+    2300020: EJunction_box_v1_1b
+    2300022: EJunction_box_v1_1e
+    2300024: EJunction_box_v1_1t
+    2300026: EJunction_box_v1_2b
+    2300028: EJunction_box_v1_2e
+    2300030: EJunction_box_v1_3b
+    2300032: EJunction_box_v1_3e
+    2300034: EJunction_box_v1_4b
+    2300036: EJunction_box_v1_4e
+    2300038: EJunction_box_v1_5e
+    2300040: EJunction_box_v1_6e
+    2300042: EJunction_box_v1_7e
+    2300044: EJunction_box_v1_8e
+    2300046: EJunction_box_v1_2t
+    2300048: EJunction_box_v1_3t
+    2300050: EJunction_box_v1_4t
+    2300052: EJunction_box_v1_1w
+    2300054: EJunction_box_v1_2w
+    2300056: EJunction_box_v1_3w
+    3300000: LP
+    3300002: Object001
+    3300004: Object002
+    3300006: Object003
+    3300008: Object004
+    3300010: Object005
+    3300012: Object006
+    3300014: Object007
+    3300016: Object008
+    3300018: Object009
+    3300020: EJunction_box_v1_1b
+    3300022: EJunction_box_v1_1e
+    3300024: EJunction_box_v1_1t
+    3300026: EJunction_box_v1_2b
+    3300028: EJunction_box_v1_2e
+    3300030: EJunction_box_v1_3b
+    3300032: EJunction_box_v1_3e
+    3300034: EJunction_box_v1_4b
+    3300036: EJunction_box_v1_4e
+    3300038: EJunction_box_v1_5e
+    3300040: EJunction_box_v1_6e
+    3300042: EJunction_box_v1_7e
+    3300044: EJunction_box_v1_8e
+    3300046: EJunction_box_v1_2t
+    3300048: EJunction_box_v1_3t
+    3300050: EJunction_box_v1_4t
+    3300052: EJunction_box_v1_1w
+    3300054: EJunction_box_v1_2w
+    3300056: EJunction_box_v1_3w
+    4300000: LP
+    4300002: Object001
+    4300004: Object002
+    4300006: Object003
+    4300008: Object004
+    4300010: Object005
+    4300012: Object006
+    4300014: Object007
+    4300016: Object008
+    4300018: Object009
+    4300020: EJunction_box_v1_1e
+    4300022: EJunction_box_v1_3b
+    4300024: EJunction_box_v1_1t
+    4300026: EJunction_box_v1_8e
+    4300028: EJunction_box_v1_7e
+    4300030: EJunction_box_v1_6e
+    4300032: EJunction_box_v1_5e
+    4300034: EJunction_box_v1_4e
+    4300036: EJunction_box_v1_3e
+    4300038: EJunction_box_v1_2e
+    4300040: EJunction_box_v1_4b
+    4300042: EJunction_box_v1_2b
+    4300044: EJunction_box_v1_1b
+    4300046: EJunction_box_v1_2t
+    4300048: EJunction_box_v1_3t
+    4300050: EJunction_box_v1_4t
+    4300052: EJunction_box_v1_3w
+    4300054: EJunction_box_v1_1w
+    4300056: EJunction_box_v1_2w
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

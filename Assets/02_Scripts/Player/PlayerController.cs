@@ -9,6 +9,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
     
     [SerializeField] Transform arm;
+    [SerializeField] Transform waist;
     Vector3 armPos;
     
     [SerializeField] Transform cam;
@@ -20,7 +21,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [SerializeField] float mouseSensitivity = 2;
     [Header("캐릭터 이동속도")]
     [SerializeField] float moveSpeed = 5f;
-
+    [Header("캐릭터 이동속도 배율")]
+    [SerializeField] public float moveSpeedScale = 0f;
     [Space(5)]
     [Header("그라운드 체크")]
     [Tooltip("T = 기즈모 킴 F = 기즈모 끔")]
@@ -52,6 +54,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Tooltip("서있을 때 캐릭터 컨트롤러 중심 위치 값")]
     [SerializeField] Vector3 normalCenter;
 
+    [HideInInspector]
+    public Animator anim;
 
     [Space(5)]
     [Header("플레이어 체력")]
@@ -90,6 +94,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     CharacterController cc;
 
     Camera main;
+    public Camera PlayerCamera {
+        get => main;
+        private set {; }
+    }
 
     /*
     private void Awake()
@@ -115,6 +123,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
         cc = GetComponent<CharacterController>();
+        anim = GetComponentInChildren<Animator>();
         main = Camera.main;
     }
 
@@ -123,7 +132,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         if (!main.enabled) { return; }
         InputKey();
-        LookAround();
+        //LookAround();
         PlayerDir();
         ActiveCrouch();
         OpenViewer();
@@ -142,7 +151,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     private void FixedUpdate()
     {
         ActiveMove();
-        
     }
 
     // 속도를 사용해 실제로 움직이는 부분
@@ -150,23 +158,31 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         Vector3 _groundVelocity = MovingUpdate(moveInput.x, moveInput.z);
 
+        // 이동 상태가 아닐 때
+        if (pState.isMoving)
+        {
+            anim.SetFloat("Speed", cc.velocity.magnitude);
+        }
+
         // 걷기키가 눌렸을 때
         if (pState.isWalking)
         {
+            // 이동속도 및 애니메이션 속도 조절
             _groundVelocity /= 1.5f;
         }
-        // 뛰기키가 눌렸을 때 / 걷기키를 누를때는 같이 동작안함
+        // 뛰기키가 눌렸을 때 / 걷기키를 누를때는 같이 동작안함 -> 키 입력에 있어 걷기키가 최우선?
         if (pState.isRunning && !pState.isWalking)
         {
             _groundVelocity *= 1.5f;
         }
+
         // 앉기키를 눌렀을 때 
         if (pState.isCrouch)
         {
             _groundVelocity /= 1.8f;
         }
 
-
+        _groundVelocity *= (1+moveSpeedScale);
 
         float _yVelocity = JumpingUpdate();
         velocity = new Vector3(_groundVelocity.x, _yVelocity, _groundVelocity.z);
@@ -194,6 +210,12 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 키 입력을 받았을 때 변수 값 전달 메서드
     void InputKey()
     {
+        if (GameManager.Instance.openUI)
+        {
+            return;
+        }
+
+
         // WASD 이동키
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         pState.isMoving = moveInput.magnitude != 0;
@@ -265,9 +287,16 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         character.forward = _lookForward;
     }
 
+    /*
     // 카메라 마우스조작 메서드
     void LookAround()
     {
+        if (GameManager.Instance.openUI)
+        {
+            return;
+        }
+
+
         mouseDelta = new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
 
         Vector3 _camAngle = arm.rotation.eulerAngles;
@@ -276,7 +305,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
         if (_limit < 180)
         {
-            _limit = Mathf.Clamp(_limit, -1f, 80f);
+            _limit = Mathf.Clamp(_limit, -1f, 60f);
         }
         else
         {
@@ -284,7 +313,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         }
         arm.rotation = Quaternion.Euler(_limit, _camAngle.y + (mouseDelta.x * mouseSensitivity) , _camAngle.z);
     }
-
+    */
 
 
 
@@ -297,7 +326,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             cc.height = cc.height - crouchSpeed * Time.deltaTime;
 
 
-            arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter, 0.03f);
+            arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter + Vector3.up * 0.5f, 0.03f);
 
             cc.center = Vector3.Lerp(cc.center, crouchCenter, 0.03f);
 
@@ -313,14 +342,14 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             cc.height = cc.height + crouchSpeed * Time.deltaTime;
 
 
-            arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter, 0.03f);
+            arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter +Vector3.up*0.5f, 0.03f);
 
 
             cc.center = Vector3.Lerp(cc.center, normalCenter, 0.03f);
             if (cc.height >= normalHeight)
             {
                 cc.height = normalHeight;
-                cc.center = Vector3.zero;
+                cc.center = normalCenter;
             }
         }
     }
@@ -333,7 +362,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     }
 
     // 데미지 관련 임시 메서드
-    public void Damaged(int _damage)
+    public void Damaged(int _damage, Vector3 hitpoint)
     {
         pHP -= _damage;
     }

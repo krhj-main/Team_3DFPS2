@@ -1,0 +1,203 @@
+fileFormatVersion: 2
+guid: 921376491baa30247bf5b22b1fccecd2
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Object001
+    100004: Object002
+    100006: Object003
+    100008: Object004
+    100010: Object005
+    100012: Box001
+    100014: Hangar_concrete_floor_v1_1
+    100016: Hangar_light_v1_1
+    100018: Hangar_metal_roof_v1_1
+    100020: Hangar_metal_wall_v1_1
+    100022: Hangar_metal_wall_v1_2
+    100024: Hangar_metal_wall_v1_3
+    100026: Hangar_supports_v1_3
+    100028: Hangar_supports_v1_4
+    100030: Concrete_platform_v1_p1
+    100032: Concrete_platform_v1_p2
+    100034: Concrete_platform_v1_p3
+    100036: Concrete_platform_v1_p4
+    100038: Concrete_platform_v1_p5
+    100040: Concrete_platform_v1_p6
+    400000: //RootNode
+    400002: Object001
+    400004: Object002
+    400006: Object003
+    400008: Object004
+    400010: Object005
+    400012: Box001
+    400014: Hangar_concrete_floor_v1_1
+    400016: Hangar_light_v1_1
+    400018: Hangar_metal_roof_v1_1
+    400020: Hangar_metal_wall_v1_1
+    400022: Hangar_metal_wall_v1_2
+    400024: Hangar_metal_wall_v1_3
+    400026: Hangar_supports_v1_3
+    400028: Hangar_supports_v1_4
+    400030: Concrete_platform_v1_p1
+    400032: Concrete_platform_v1_p2
+    400034: Concrete_platform_v1_p3
+    400036: Concrete_platform_v1_p4
+    400038: Concrete_platform_v1_p5
+    400040: Concrete_platform_v1_p6
+    2100000: 'Material #496'
+    2100002: 'Material #519'
+    2100004: 'Material #497'
+    2100006: Hangar_supports_v1
+    2100008: Hangar_metal_wall_v3
+    2100010: Hangar_metal_wall_v1
+    2100012: Hangar_metal_wall_v2
+    2100014: Hangar_metal_roof_v1
+    2100016: Concrete_floor_v1
+    2100018: No Name
+    2100020: 'Material #501'
+    2100022: 'Material #500'
+    2100024: 'Material #502'
+    2100026: 'Material #499'
+    2100028: Concrete_platform_v1
+    2300000: Object001
+    2300002: Object002
+    2300004: Object003
+    2300006: Object004
+    2300008: Object005
+    2300010: Box001
+    2300012: Hangar_concrete_floor_v1_1
+    2300014: Hangar_light_v1_1
+    2300016: Hangar_metal_roof_v1_1
+    2300018: Hangar_metal_wall_v1_1
+    2300020: Hangar_metal_wall_v1_2
+    2300022: Hangar_metal_wall_v1_3
+    2300024: Hangar_supports_v1_3
+    2300026: Hangar_supports_v1_4
+    2300028: Concrete_platform_v1_p1
+    2300030: Concrete_platform_v1_p2
+    2300032: Concrete_platform_v1_p3
+    2300034: Concrete_platform_v1_p4
+    2300036: Concrete_platform_v1_p5
+    2300038: Concrete_platform_v1_p6
+    3300000: Object001
+    3300002: Object002
+    3300004: Object003
+    3300006: Object004
+    3300008: Object005
+    3300010: Box001
+    3300012: Hangar_concrete_floor_v1_1
+    3300014: Hangar_light_v1_1
+    3300016: Hangar_metal_roof_v1_1
+    3300018: Hangar_metal_wall_v1_1
+    3300020: Hangar_metal_wall_v1_2
+    3300022: Hangar_metal_wall_v1_3
+    3300024: Hangar_supports_v1_3
+    3300026: Hangar_supports_v1_4
+    3300028: Concrete_platform_v1_p1
+    3300030: Concrete_platform_v1_p2
+    3300032: Concrete_platform_v1_p3
+    3300034: Concrete_platform_v1_p4
+    3300036: Concrete_platform_v1_p5
+    3300038: Concrete_platform_v1_p6
+    4300000: Object001
+    4300002: Object002
+    4300004: Object003
+    4300006: Object004
+    4300008: Object005
+    4300010: Hangar_supports_v1_4
+    4300012: Hangar_metal_wall_v1_1
+    4300014: Hangar_metal_wall_v1_2
+    4300016: Hangar_metal_wall_v1_3
+    4300018: Hangar_metal_roof_v1_1
+    4300020: Hangar_supports_v1_3
+    4300022: Hangar_concrete_floor_v1_1
+    4300024: Hangar_light_v1_1
+    4300026: Box001
+    4300028: Concrete_platform_v1_p3
+    4300030: Concrete_platform_v1_p4
+    4300032: Concrete_platform_v1_p6
+    4300034: Concrete_platform_v1_p1
+    4300036: Concrete_platform_v1_p2
+    4300038: Concrete_platform_v1_p5
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

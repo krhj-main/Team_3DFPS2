@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
-using static UnityEditorInternal.VersionControl.ListControl;
-using Unity.VisualScripting;
 
 public enum EnemyState
 {
@@ -72,6 +70,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     // 누적 시간
     [HideInInspector]
     public float currentTime = 0;
+
     // 공격 딜레이
     [HideInInspector]
     public float atkDelay = 2f;
@@ -89,6 +88,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     public List<Transform> wayPoints;
     int index;
 
+    // 상태이상 관련 변수
+    public float blindTime;
+
     // 컴포넌트
     CharacterController cc;
     Animator anim;
@@ -96,20 +98,11 @@ public class Enemy : MonoBehaviour, IDamageAble
     public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
     [HideInInspector]
     public NavMeshAgent agent;
+    public float headRatio =0.3f;
+    MainWeapon weapon;
 
     void Awake()
     {
-        // 외부 변수 관련 초기화
-        GetComponentInChildren<MainWeapon>().loadedAmmo = 99999;
-        atkDis = GetComponentInChildren<MainWeapon>().bulletRange;
-        GetComponentInChildren<MainWeapon>().fireRate = 0.5f;
-        atkDelay = GetComponentInChildren<MainWeapon>().fireRate;
-
-        hp = maxHp;
-        originFindDis = findDis;
-        originAtkDis = atkDis;
-        enemyState = firstState;
-
         index = 0;
         //index = Random.Range(0, wayPoints.Count);
 
@@ -117,12 +110,22 @@ public class Enemy : MonoBehaviour, IDamageAble
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
         hpSlider = GetComponentInChildren<Slider>();
-        //anim = transform.GetComponentInChildren<Animator>();
+        anim = transform.GetComponentInChildren<Animator>();
+        weapon = GetComponentInChildren<MainWeapon>();
     }
 
-    void Start()
+    private void Start()
     {
+        // 외부 변수 관련 초기화
+        weapon.loadedAmmo = 99999;
+        atkDis = weapon.bulletRange;
+        weapon.fireRate = 1.5f;
+        atkDelay = weapon.fireRate;
 
+        hp = maxHp;
+        originFindDis = findDis;
+        originAtkDis = atkDis;
+        enemyState = firstState;
     }
 
     void Update()
@@ -154,8 +157,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 //Die();
                 break;
             case EnemyState.Blind:
-                agent.isStopped = true;
-                agent.ResetPath(); 
+                Blind();
                 break;
         }
     }
@@ -166,13 +168,17 @@ public class Enemy : MonoBehaviour, IDamageAble
         // Enemy 시야에 플레이어가 들어왔으면
         if (fov.visibleTargets.Count > 0)
         {
+            // Idle 애니메이션 종료
+            anim.SetBool("isIdle", false);
+
             // 상태를 Move로 변경
             enemyState = EnemyState.Move;
-
-            //anim.SetTrigger("IdleToMove");
         }
         else
         {
+            // Idle 애니메이션 재생
+            anim.SetBool("isIdle", true);
+
             agent.isStopped = true;
             agent.ResetPath();
         }
@@ -188,18 +194,30 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 플레이어 발견 범위보다 거리가 낮으면
             if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) < findDis)
             {
+                // Patrol 애니메이션 종료
+                anim.SetBool("isPatrol", false);
+
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
-                //anim.SetTrigger("IdleToMove");
             }
         }
         // 캐릭터가 시야 내에 없을 때
         else
         {
+            // Patrol 애니메이션 재생
+            anim.SetBool("isPatrol", true);
+
             // 지정된 위치를 왕복 이동
             agent.stoppingDistance = 0;
 
-            patrolDis = Vector3.Distance(transform.position, wayPoints[index].position);
+            // CharacterController의 실제 높이 계산
+            float _controllerHeight = cc.height * transform.lossyScale.y;
+            // CharacterController의 하단 y 좌표 계산 ( 지면 )
+            float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
+            // 지면을 기준으로 거리 판단
+            Vector3 enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
+
+            patrolDis = Vector3.Distance(enemyPos, wayPoints[index].position);
 
             if (patrolDis < 0.1f)
             {
@@ -216,6 +234,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "존버"
     void Hide()
     {
+        // Hide(Idle) 애니메이션 재생
+        anim.SetBool("isIdle", true);
         // 만약 시야범위가 아닌 공격범위로 할 경우 아래 코드나 Hide 실행부분을 주석처리하면 됨 //
 
         if (fov.targetsInViewRadius.Length > 0)
@@ -223,13 +243,40 @@ public class Enemy : MonoBehaviour, IDamageAble
             // Enemy 범위에 플레이어가 들어왔다면 
             if (Vector3.Distance(transform.position, fov.targetsInViewRadius[0].transform.position) < atkDis)
             {
+                // Hide(Idle) 애니메이션 종료
+                anim.SetBool("isIdle", false);
+
+                // 쫓아갈 위치 대입
                 chasePos = PlayerController.Instance.transform.position;
 
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
-
-                //anim.SetTrigger("IdleToMove");
             }
+        }
+    }
+    #endregion
+
+    #region "Blind"
+    public void Blind()
+    {
+        // Hide(Idle) 애니메이션 재생
+        anim.SetTrigger("doFlashbang");
+
+        // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
+        findDis = 0.1f;
+        atkDis = 0f;
+        fov.visibleTargets.Clear();
+        // 이동을 멈추고 경로 초기화
+        agent.isStopped = true;
+        agent.ResetPath();
+
+        if (GameManager.Instance.BlindTimer(blindTime))
+        {
+            // 시야를 복구하고, 플레이어를 놓친 상태로 설정
+            findDis = originFindDis;
+            atkDis = originAtkDis;
+            agent.isStopped = false;
+            enemyState = missingState;
         }
     }
     #endregion
@@ -237,6 +284,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "이동"
     void Move()
     {
+        // Move 애니메이션 재생
+        anim.SetBool("isMove", true);
+
         // 플레이어가 Enemy 시야안에 들어왔을 경우
         if (fov.visibleTargets.Count > 0)
         {
@@ -246,6 +296,8 @@ public class Enemy : MonoBehaviour, IDamageAble
                 curTrackTime += Time.deltaTime;
                 if (curTrackTime >= trackTime)
                 {
+                    // Move 애니메이션 종료
+                    anim.SetBool("isMove", false);
                     fov.visibleTargets.Clear();
                     curTrackTime = 0;
                     enemyState = missingState;
@@ -286,6 +338,27 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 // 내이게이션의 목적지를 소리난 위치로 지정
                 agent.destination = chasePos;
+
+                // 소리난 곳까지 오고 다음 행동 지정
+                if (Vector3.Distance(transform.position, chasePos) < 0.5f)
+                {
+                    // Move 애니메이션 종료
+                    anim.SetBool("isMove", false);
+                    anim.SetBool("isIdle", true);
+
+                    // 일정 시간 후 상태 전환
+                    curTrackTime += Time.deltaTime;
+                    if (curTrackTime >= trackTime)
+                    {
+                        anim.SetBool("isIdle", false);
+                        curTrackTime = 0;
+                        enemyState = missingState;
+                    }
+                }
+                else
+                {
+                    currentTime = 0;
+                }
             }
         }
     }
@@ -294,6 +367,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "공격"
     void Attack()
     {
+        // Move 애니메이션 종료
+        anim.SetBool("isMove", false);
+
         if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) < atkDis)
         {
             agent.velocity = Vector3.zero;
@@ -304,37 +380,37 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 현재 방향에서 목표 방향으로 부드럽게 회전
             Quaternion targetRotation = Quaternion.LookRotation(_dirP);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
-            if (currentTime > atkDelay)
+            
+            
+            if ((Time.time-currentTime) > atkDelay)
             {
-                GetComponentInChildren<MainWeapon>().Shoot(transform);
-                currentTime = 0;
+                
+                currentTime = Time.time;
+                
+                // Attack 애니메이션 재생
+                anim.SetTrigger("doAttack");
 
-                // 단순 if문이 아니라 좀 더 범용적으로 수정? -> 상속으로 Enemy 종류 자체를 나눈다?, 
+                weapon.Shoot(transform);
+
                 if (gameObject.name.Contains("Shotgun"))
                 {
+                    Debug.Log("작동확인");
                     atkDelay = Random.Range(1.5f, 2f);
-                    GetComponentInChildren<MainWeapon>().fireRate = atkDelay;
+                    weapon.fireRate = atkDelay;
+                    
                 }
                 else
                 {
+                    
                     atkDelay = Random.Range(0.25f, 1.5f);
-                    GetComponentInChildren<MainWeapon>().fireRate = atkDelay;
+                    weapon.fireRate = atkDelay;
                 }
-                
-                //anim.SetTrigger("StartAttack");
-            }
-            else
-            {
-                currentTime += Time.deltaTime;
             }
         }
         else
         {
             enemyState = EnemyState.Move;
             currentTime = 0;
-
-            //anim.SetTrigger("AttackToMove");
         }
     }
     #endregion
@@ -342,14 +418,6 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "피격 행동"
     void Damaged()
     {
-        StartCoroutine(DamageProcess());
-    }
-
-    IEnumerator DamageProcess()
-    {
-        // 피격 모션 만큼 대기
-        yield return new WaitForSeconds(1f);
-
         enemyState = EnemyState.Move;
     }
     #endregion
@@ -360,32 +428,31 @@ public class Enemy : MonoBehaviour, IDamageAble
         // 진행 중인 피격 코루틴을 중지
         StopAllCoroutines();
 
-        // 죽음 상태를 처리하기 위한 코루틴 실행
-        StartCoroutine(DieProcess());
-    }
-
-    IEnumerator DieProcess()
-    {
+        // 사망 애니메이션 재생
+        anim.SetTrigger("doDead");
         // 캐릭터 컨트롤러 컴포넌트 비활성화
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
-
-        yield return new WaitForSeconds(0.01f);
-        Destroy(gameObject);
     }
     #endregion
 
     // 데미지 인터페이스 구현
-    public void Damaged(int damage)
+    public void Damaged(int damage , Vector3 hitpoint)
     {
         // 죽어있을 경우 데미지를 적용하지 않는 예외 처리
         if (enemyState == EnemyState.Dead)
         {
             return;
         }
-
-        hp -= damage;
+        if (IsHeadShot(hitpoint))
+        {
+            hp -= damage*2;
+        }
+        else {
+            hp -= damage;
+        }
+        
 
         agent.isStopped = true;
         agent.ResetPath();
@@ -402,17 +469,15 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 현재 방향에서 목표 방향으로 부드럽게 회전
             Quaternion targetRotation = Quaternion.LookRotation(_dirP);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-
+            // 목표지점 (플레이어) 지정
             chasePos = PlayerController.Instance.transform.position;
 
-            //anim.SetTrigger("Damaged");
             Damaged();
         }
         else
         {
             enemyState = EnemyState.Dead;
 
-            //anim.SetTrigger("Die");
             Die();
         }
     }
@@ -434,5 +499,18 @@ public class Enemy : MonoBehaviour, IDamageAble
             findDis = originFindDis;
             atkDis = originAtkDis;
         }
+    }
+    private bool IsHeadShot(Vector3 _hitpoint)
+    {
+        // CharacterController의 실제 높이 계산
+        float _controllerHeight = cc.height * transform.lossyScale.y;
+
+        // CharacterController의 하단 y 좌표 계산 ( 지면 )
+        float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
+
+        // hit.point의 상대적 높이 비율 계산
+        float _relativeHeight = (_hitpoint.y - _bottomY) / _controllerHeight;
+        // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
+        return (_relativeHeight >= (1 - headRatio));
     }
 }

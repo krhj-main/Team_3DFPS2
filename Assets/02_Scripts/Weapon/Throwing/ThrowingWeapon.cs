@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class ThrowingWeapon : MonoBehaviour
+public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
 {
-    public float explosiondelay { get; set; }       // 폭발 시간
-    public float explosionRadius { get; set; }      // 폭발 반경
-    public float effectDuration { get; set; }       // 효과 지속시간 ( 섬광, 연막 )
-    public int damage { get; set; }                 // 데미지 ( 수류탄 )
-
+    Transform IEquipMent.transform { get => transform; set { } }
+    GameObject IEquipMent.gameObject { get => gameObject; set { } }
+    [field: SerializeField][field: Header("무기정보")][Tooltip("무기타입")]
+    public EquipType type { get ; set ; }
+    [Tooltip("공격 레이어")]
     public LayerMask attackableMask;                // 효과 및 데미지 입을 대상
+    [Tooltip("던지는 힘")]
     public float throwForce = 10f;                  // 던지는 힘
-    public LineRenderer trajectoryLine;             // 궤적 라인
+    [HideInInspector] public LineRenderer trajectoryLine;             // 궤적 라인
     int trajectoryLinePoint = 30;                   // 궤적 포인트 갯수
-
+    [HideInInspector] public Transform firePos;                       // 던지는 방향
+    protected Rigidbody rb;
+    protected bool isThrow=false;
+    Grenade Grenade;
     protected virtual void Awake()
     {
+        rb = GetComponent<Rigidbody>();
         trajectoryLine = GetComponent<LineRenderer>();
         trajectoryLine.enabled = false;
     }
 
+    private void OnDisable()
+    {
+        //transform.SetParent(PlayerController.Instance.transform);
+        isThrow = false;
+    }
     // 라인 렌더러 설정
     void SetupTrajectoryLine()
     {
@@ -30,7 +40,7 @@ public abstract class ThrowingWeapon : MonoBehaviour
         trajectoryLine.endColor = Color.red;
     }
 
-    private (Vector3 velocity, Vector3 position) CalculateTrajectoryVector(Transform _firePos)
+    protected (Vector3 velocity, Vector3 position) CalculateTrajectoryVector(Transform _firePos)
     {
         Vector3 _velocity = _firePos.forward * throwForce;
         Vector3 _localStartPos = new Vector3(0.5f, 0, 1f);      // 카메라 기준으로 궤적 시작 위치 설정
@@ -60,23 +70,61 @@ public abstract class ThrowingWeapon : MonoBehaviour
     }
 
     // 던지기
-    public void Throw(Transform _firePos)
+    public virtual void Throw(Transform _firePos)
     {
         var (_velocity, _position) = CalculateTrajectoryVector(_firePos);
-        Rigidbody rb = GetComponent<Rigidbody>();
         this.transform.position = _position;
 
         rb.velocity = _velocity;
         trajectoryLine.enabled = false;
-        Explosion();
     }
 
-    // 폭발
-    public void Explosion()
+
+
+    public virtual void OnHand(Transform _tr, Vector3 _offset)
     {
-        StartCoroutine(Explode());
+        if (!isThrow) 
+        {
+            gameObject.SetActive(true);
+            transform.position = _tr.position + _offset;  //오브젝트 위치 조정
+            transform.rotation = _tr.rotation;
+        }
     }
 
-    protected abstract IEnumerator Explode();
+    public virtual void InputKey()
+    {
+        if (!isThrow)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                UpdateTrajectory(firePos);
 
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                Throw(firePos);
+                Utill.DestroyOnLoad(gameObject);
+                isThrow = !isThrow;
+            }
+        }
+        
+    }
+
+    public virtual void OnHandExit()
+    {
+        
+    }
+
+    public void Interaction(GameObject target)
+    {
+        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
+        if (swap != null)
+        {
+            swap.WeaponChange(this, type);
+        }
+    }
+
+    public virtual void OnHandEnter()
+    {
+    }
 }

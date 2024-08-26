@@ -1,0 +1,129 @@
+fileFormatVersion: 2
+guid: 98a4923c5c3a66e4389b679f0600fbd8
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Object001
+    100002: Object002
+    100004: Object003
+    100006: //RootNode
+    100008: Wooden_boxes_v1
+    100010: Wooden_box_v1_1
+    100012: Wooden_box_v1_2
+    100014: Wooden_box_v1_3
+    100016: Wooden_box_v1_4
+    400000: Object001
+    400002: Object002
+    400004: Object003
+    400006: //RootNode
+    400008: Wooden_boxes_v1
+    400010: Wooden_box_v1_1
+    400012: Wooden_box_v1_2
+    400014: Wooden_box_v1_3
+    400016: Wooden_box_v1_4
+    2100000: Wooden_boxes_v1
+    2300000: Object001
+    2300002: Object002
+    2300004: Object003
+    2300006: Wooden_boxes_v1
+    2300008: Wooden_box_v1_1
+    2300010: Wooden_box_v1_2
+    2300012: Wooden_box_v1_3
+    2300014: Wooden_box_v1_4
+    3300000: Object001
+    3300002: Object002
+    3300004: Object003
+    3300006: Wooden_boxes_v1
+    3300008: Wooden_box_v1_1
+    3300010: Wooden_box_v1_2
+    3300012: Wooden_box_v1_3
+    3300014: Wooden_box_v1_4
+    4300000: Wooden_boxes_v1
+    4300002: Object001
+    4300004: Object002
+    4300006: Object003
+    4300008: Wooden_box_v1_4
+    4300010: Wooden_box_v1_1
+    4300012: Wooden_box_v1_2
+    4300014: Wooden_box_v1_3
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

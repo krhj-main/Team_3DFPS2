@@ -8,7 +8,8 @@ public class Pistol : MainWeapon
     private bool canReset = true;         // 처음에만 총알 넣어주기 위해
     private float nextFireTime;           // 다음 발사 주기
     public TextMeshProUGUI ammoTxt;       // 탄약 UI 표시
-
+    [SerializeField] Light flashLight;
+    [SerializeField] KeyCode lightToggle;
     protected override void Awake()
     {
         bulletSpread = 0.01f;
@@ -77,6 +78,12 @@ public class Pistol : MainWeapon
                     Debug.Log($"벽에 닿음: {hit.transform.name}");
                     return;
                 }
+                IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                if (target != null)
+                {
+                    target.Damaged(damage, hit.point);
+                }
+                /*
                 CharacterController _cc = hit.collider.GetComponent<CharacterController>();
                 if (_cc != null)
                 {
@@ -99,8 +106,23 @@ public class Pistol : MainWeapon
                     {
                         hit.transform.GetComponent<IDamageAble>().Damaged(damage);
                     }
-                }
+                }*/
             }
+        }
+    }
+
+
+    public override void OnHand(Transform _tr, Vector3 _offSet)
+    {
+        base.OnHand(_tr, _offSet);
+        flashLight.transform.position = PlayerController.Instance.PlayerCamera.transform.position;
+        flashLight.transform.rotation = PlayerController.Instance.PlayerCamera.transform.rotation;
+    }
+    public override void InputKey()
+    {
+        base.InputKey();
+        if (Input.GetKeyDown(lightToggle)) {
+            flashLight.enabled = !flashLight.enabled;
         }
     }
 }

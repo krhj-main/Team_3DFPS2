@@ -2,21 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmokeGrenade : ThrowingWeapon
+public class SmokeGrenade
 {
-    protected override void Awake()
+    public static Mesh mesh;
+    public static Material material;
+
+    public SmokeGrenade ()
     {
-        base.Awake();
-        explosiondelay = 3f;        // 폭발 시간
-        explosionRadius = 5f;       // 폭발 반경
-        effectDuration = 15f;       // 효과 지속시간
+        if (mesh == null)
+        {
+            mesh = Resources.Load<Mesh>("Grenades, Bombs & explosives Pack/Models & Textures/Smoke_Grenade/Smoke_Grenade");
+        }
+        if (material == null)
+        {
+            material = Resources.Load<Material>("Grenades, Bombs & explosives Pack/Models & Textures/Smoke_Grenade/Materials/Smoke_Grenade_Base_Color");
+        }
+
+
     }
-
-
-    protected override IEnumerator Explode()
+    public IEnumerator SmokeGrenadeExplode(Transform _explode, float _radius, float _delay, float _effectDuration)
     {
-        yield return new WaitForSeconds(explosiondelay);
-
-        // 아래에 연막탄 이펙트 구현, 연막탄으로 Enemy가 받는 영향은 Enemy에서 OnTriggerStay로 구현
+        yield return new WaitForSeconds(_delay);
+        _explode.gameObject.SetActive(false);
+        Debug.Log("연막탄 폭발");
+        // 연막 이펙트 생성
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - EnemyBullet
   - Enviorment
   - SmokeGrenade
+  - Cursor
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - PlayerArm
+  - PlayerBody
   - Player
   - PlayerBullet
   - Enemy
@@ -27,6 +28,7 @@ TagManager:
   - Wall
   - Walkable
   - Interectalbe
+  - IgnoreCam
   - 
   - 
   - 
@@ -34,8 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - PostProsecing
   - 
   - 
   - 

@@ -29,8 +29,8 @@ public class Sniper : MainWeapon
         recoilY = 1f;                     // 수직 반동
         recoilRecoverySpeed = 5f;         // 반동 회복 속도
         reloadTime = 5f;                  // 장전 시간
-        adsSpeed = 6;                     // 정조준 속도
-        adsFOV = 4;                       // 정조준시 CameraFOV
+        adsSpeed = 4;                     // 정조준 속도
+        adsFOV = 15;                      // 정조준시 CameraFOV
         ResetAmmo(initializeAmmo);        // 탄약 세팅
         adsPos = new Vector3(0, -0.19f, 0.5f); // 스나만 다른 위치로 정조준 ( 조준경 때문에 )
         // 실험
@@ -58,30 +58,30 @@ public class Sniper : MainWeapon
             FireBullet(_firePos);
         }
     }
-    
+    //
     // 장전 함수
     public override void Reload()
     {
         base.Reload();
     }
 
-    // 발사 함수
+    // 발사 함수 ( 수정 필요 )
     public override void FireBullet(Transform _firePos)
     {
         int _penetrateEnemy = 0;
         RaycastHit hit;
         Vector3 _bulletDir = GetShootDir(_firePos);
-        Vector3 _currentPosition = _firePos.position;
-        Vector3 _direction = _firePos.forward + _bulletDir;
-        float _distanceTraveled = 0f;
+        Vector3 currentPosition = _firePos.position;
+        Vector3 direction = _firePos.forward + _bulletDir;
+        float distanceTraveled = 0f;
 
-        Debug.DrawRay(_firePos.position, _direction * bulletRange, Color.red, 5f);
+        Debug.DrawRay(_firePos.position, direction * bulletRange, Color.red, 5f);
 
         if (canShoot)
         {
-            while (_penetrateEnemy <= canPenetrateEnemy && _distanceTraveled < bulletRange)
+            while (_penetrateEnemy <= canPenetrateEnemy && distanceTraveled < bulletRange)
             {
-                if (Physics.Raycast(_currentPosition, _direction, out hit, bulletRange - _distanceTraveled))
+                if (Physics.Raycast(currentPosition, direction, out hit, bulletRange - distanceTraveled))
                 {
                     // canAttackMask에 해당하지 않는 오브젝트에 닿으면 즉시 중단
                     if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
@@ -89,7 +89,13 @@ public class Sniper : MainWeapon
                         Debug.Log($"벽에 닿음: {hit.transform.name}");
                         break; 
                     }
-
+                    IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                    if (target != null)
+                    {
+                        target.Damaged(damage, hit.point);
+                        _penetrateEnemy++;
+                    }
+                    /*
                     // 데미지 입히기
                     CharacterController _cc = hit.collider.GetComponent<CharacterController>();
                     if (_cc != null)
@@ -113,11 +119,11 @@ public class Sniper : MainWeapon
                         {
                             hit.transform.GetComponent<IDamageAble>().Damaged(damage);
                         }
-                        _penetrateEnemy++;
-                    }
+                        
+                    }*/
                     // 거리 계산하고 레이캐스트 다시 앞으로 나가기
-                    _distanceTraveled += hit.distance;
-                    _currentPosition = hit.point + _direction * 0.001f;
+                    distanceTraveled += hit.distance;
+                    currentPosition = hit.point + direction * 0.001f;
                 }
                 else
                 {
