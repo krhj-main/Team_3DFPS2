@@ -10,8 +10,8 @@ public class ShotGun : MainWeapon
     public TextMeshProUGUI ammoTxt;       // 탄약 UI 표시
     private int shell = 10;               // 발사되는 셸
     private float spreadAngle = 30f;      // 퍼지는각도
-    private bool _isReloading = false;    // 장전중
-    private bool stopReloading = false;   // 한발씩 장전
+    //private bool _isReloading = false;    // 장전중
+    //private bool stopReloading = false;   // 한발씩 장전
 
     private float reloadEnter = 0.18f;
     private float reloadEnd = 2.12f;
@@ -27,9 +27,10 @@ public class ShotGun : MainWeapon
         recoilX = 0.75f;                  // 좌우 반동
         recoilY = 25f;                    // 수직 반동
         recoilRecoverySpeed = 5f;        // 반동 회복 속도
-        reloadTime = 1.12f;              // 장전 시간  //0.18f + 1.12f + 0.5f+2.12f
+        reloadTime = 1.3f;              // 장전 시간  //0.18f + 1.12f + 0.5f+2.12f
         adsSpeed = 5;                    // 정조준 속도
         adsFOV = 45;                     // 정조준시 CameraFOV
+        bulletSpread = 0;
         ResetAmmo(initializeAmmo);       // 탄약 세팅
     }
 
@@ -51,13 +52,21 @@ public class ShotGun : MainWeapon
         {
             nextFireTime = Time.time + fireRate;
             base.Shoot(_firePos);
+
+            if (loadedAmmo <= 0)
+            {
+                Debug.Log("장전된 탄약 없음");
+                Reload();
+                canShoot = false;                 // 총알 없으면 슈팅 불가능
+            }
         }
 
         // 장전 중이면 장전 끝
-        if (_isReloading)
+        if (isReloading && loadedAmmo > 0)
         {
-            stopReloading = true;
-            _isReloading = false;
+            anim.SetBool("isReloading", false);
+            //stopReloading = true;
+            isReloading = false;
             return;
         }
     }
@@ -65,7 +74,7 @@ public class ShotGun : MainWeapon
     // 장전 함수
     public override void Reload()
     {
-        if (_isReloading)
+        if (isReloading)
         {
             Debug.Log("재장전중");
             return;
@@ -82,10 +91,11 @@ public class ShotGun : MainWeapon
             Debug.Log("남은 탄약 없음");
             return;
         }
-        stopReloading = false;
-        StartCoroutine(ShotgunReloading());
+        //stopReloading = false;
+        //StartCoroutine(ShotgunReloading());
+        anim.SetBool("isReloading", true);
     }
-
+    /*
     IEnumerator ShotgunReloading()
     {
         anim.SetBool("isReloading", true);
@@ -93,28 +103,19 @@ public class ShotGun : MainWeapon
 
         while (loadedAmmo < maxLoadedAmmo && remainAmmo > 0 && !stopReloading)
         {
+            if (loadedAmmo == maxLoadedAmmo - 1)
+            {
+                anim.SetBool("isReloading", false);
+                break;
+            }
             if (loadedAmmo < maxLoadedAmmo - 1)
             {
                 anim.SetTrigger("doReload");
             }
-            else if (loadedAmmo == maxLoadedAmmo - 1)
-            {
-                anim.SetBool("isReloading", false);
-                break;
-            }
-
             yield return new WaitForSeconds(reloadTime);
-
-            if (stopReloading)
-            {
-                Debug.Log("장전 중단됨");
-                anim.SetBool("isReloading", false);
-                anim.SetTrigger("doAttack");
-                break;
-            }
         }
     }
-        /*
+        
     IEnumerator ShotgunReloading()
     {
         _isReloading = true;
@@ -143,13 +144,15 @@ public class ShotGun : MainWeapon
             remainAmmo--;
         }
     }
-        */
+    */
 
+
+    #region "적 FireBullet"
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
         base.FireBullet(firePos);
-        for (int i = 0; i< shell; i++)
+        for (int i = 0; i < shell; i++)
         {
             Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, _firePos);
             Debug.DrawRay(_firePos.position, spreadDirection * bulletRange, Color.red, 1f);
@@ -173,21 +176,23 @@ public class ShotGun : MainWeapon
             }
         }
     }
+    #endregion
 
+    #region "플레이어 FireBullet"
     // 발사 함수
     public override void PlayerFireBullet()
     {
         base.PlayerFireBullet();
         for (int i = 0; i < shell; i++)
         {
-            Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, Camera.main.transform);
-            Debug.DrawRay(Camera.main.transform.position, spreadDirection * bulletRange, Color.red, 1f);
+            Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, cam.transform);
+            Debug.DrawRay(cam.transform.position, spreadDirection * bulletRange, Color.red, 1f);
 
             RaycastHit hit;
 
             if (canShoot)
             {
-                if (Physics.Raycast(Camera.main.transform.position, spreadDirection, out hit, bulletRange))       // 카메라 포지션에서 정면으로 총알 사거리만큼 쏨
+                if (Physics.Raycast(cam.transform.position, spreadDirection, out hit, bulletRange))       // 카메라 포지션에서 정면으로 총알 사거리만큼 쏨
                 {
                     if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
                     {
@@ -202,6 +207,7 @@ public class ShotGun : MainWeapon
             }
         }
     }
+    #endregion
 
     private Vector3 CalculateSpreadDirection(float _speadAngle, Transform _firePos)
     {

@@ -10,6 +10,7 @@ public class EnemyAnimEvent : MonoBehaviour
     public void EnemyWalkSound()
     {
         weapon.enemySound.clip = enemy.walkSound;
+        weapon.enemySound.volume = 0.7f;
         weapon.enemySound.Play();
     }
 

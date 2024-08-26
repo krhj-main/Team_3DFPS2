@@ -45,26 +45,19 @@ public class Rifle : MainWeapon
     // 슈팅 함수
     public override void Shoot(Transform _firePos)
     {
-        if (Time.time >= nextFireTime && !isReloading)
+        if (Time.time >= nextFireTime && !isReloading && canShoot)
         {
             nextFireTime = Time.time + fireRate;
             base.Shoot(_firePos);
 
             if (loadedAmmo <= 0)
             {
-                Debug.Log("장전된 탄약 없음");
                 Reload();
-                canShoot = false;                 // 총알 없으면 슈팅 불가능
             }
         }
     }
 
-    // 장전 함수
-    public override void Reload()
-    {
-        base.Reload();
-    }
-
+    #region "적 FireBullet"
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
@@ -85,11 +78,45 @@ public class Rifle : MainWeapon
                     return;
                 }
                 IDamageAble target = hit.transform.GetComponent<IDamageAble>();
-                if (target != null) {
+                if (target != null)
+                {
                     target.Damaged(damage, hit.point);
                 }
-                
+
             }
         }
     }
+    #endregion
+
+    #region "플레이어 FireBullet"
+    public override void PlayerFireBullet()
+    {
+        base.PlayerFireBullet();
+
+        RaycastHit hit;
+        Vector3 _bulletDir = GetShootDir(cam.transform);
+        Vector3 direction = cam.transform.forward + _bulletDir;
+
+        Debug.DrawRay(cam.transform.position, direction * bulletRange, Color.red, 1f);
+
+        if (canShoot)
+        {
+            base.FireBullet(firePos);
+            if (Physics.Raycast(cam.transform.position, direction, out hit, bulletRange))       // 카메라 포지션에서 정면으로 총알 사거리만큼 쏨
+            {
+                if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
+                {
+                    //Debug.Log($"벽에 닿음: {hit.transform.name}");
+                    return;
+                }
+                IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                if (target != null)
+                {
+                    target.Damaged(damage, hit.point);
+                }
+
+            }
+        }
+    }
+    #endregion
 }

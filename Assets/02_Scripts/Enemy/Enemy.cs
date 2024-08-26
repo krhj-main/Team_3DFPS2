@@ -173,6 +173,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 Blind();
                 break;
         }
+        Debug.Log(enemyState.ToString());
     }
 
     #region "대기"
@@ -401,14 +402,14 @@ public class Enemy : MonoBehaviour, IDamageAble
                 currentTime = Time.time;
                 
                 // Attack 애니메이션 재생
-                anim.SetTrigger("doAttack");
+                anim.SetTrigger("doEnemyAttack");
                 weapon.Shoot(enemyFirePos);
 
                 if (gameObject.name.Contains("Shotgun"))
                 {
                     atkDelay = Random.Range(1.5f, 2f);
+                    Debug.Log(weapon.fireRate);
                     weapon.fireRate = atkDelay;
-                    
                 }
                 else
                 {
@@ -426,9 +427,12 @@ public class Enemy : MonoBehaviour, IDamageAble
     #endregion
 
     #region "피격 행동"
-    void Damaged()
+    void DamagedAction()
     {
-        enemyState = EnemyState.Move;
+        if (enemyState != EnemyState.Attack)
+        {
+            enemyState = EnemyState.Move;
+        }
     }
     #endregion
 
@@ -469,7 +473,10 @@ public class Enemy : MonoBehaviour, IDamageAble
 
         if (hp > 0)
         {
-            enemyState = EnemyState.Damaged;
+            if (enemyState != EnemyState.Attack)
+            {
+                enemyState = EnemyState.Damaged;
+            }
 
             // 플레이어를 바라봄
             Vector3 _dirP = (PlayerController.Instance.transform.position - agent.transform.position).normalized;
@@ -482,7 +489,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 목표지점 (플레이어) 지정
             chasePos = PlayerController.Instance.transform.position;
 
-            Damaged();
+            DamagedAction();
         }
         else
         {

@@ -14,8 +14,11 @@ public class PlayerAnimEvent : MonoBehaviour
 
     public void PlayerWalkSound()
     {
-        PlayerController.Instance.playerSound.clip = PlayerController.Instance.walkSound;
-        PlayerController.Instance.playerSound.Play();
+        if (PlayerController.Instance.anim.GetFloat("Speed") >= 1f)
+        {
+            PlayerController.Instance.playerSound.clip = PlayerController.Instance.walkSound;
+            PlayerController.Instance.playerSound.Play();
+        }
     }
 
     public void PlayerFireBullet()
@@ -23,8 +26,37 @@ public class PlayerAnimEvent : MonoBehaviour
         weapon.PlayerFireBullet();
     }
 
+    #region "샷건 재장전 로직"
     public void PlayerShotgunReload()
     {
         weapon.ReloadFinish();
+    }
+
+    public void PlayerShotgunReloadCheck()
+    {
+        weapon.ReloadCheck();
+    }
+    #endregion
+
+    #region "무기 재장전 로직"
+    public void ReloadEnter()
+    {
+        weapon.ReloadEnter();
+    }
+    public void ReloadExit()
+    {
+        weapon.ReloadExit();
+    }
+    #endregion
+
+
+    public void PlayerReloadSound()
+    {
+        weapon.PlayerReloadSound();
+    }
+
+    public void PlayerReloadFinishSound()
+    {
+        weapon.PlayerReloadFinishSound();
     }
 }

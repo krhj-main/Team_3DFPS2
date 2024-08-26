@@ -271,7 +271,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   blindTime: 0
-  walkSound: {fileID: 0}
+  walkSound: {fileID: 8300000, guid: 43d7f2b11b5c26548be307abc62b0818, type: 3}
   chasePos: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
   headRatio: 0.3
@@ -1814,6 +1814,21 @@ PrefabInstance:
     - target: {fileID: 4381512026794152, guid: 43ab0ca5d42daf04a99c67697d0e9414, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82040238847878760, guid: 43ab0ca5d42daf04a99c67697d0e9414,
+        type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 82040238847878760, guid: 43ab0ca5d42daf04a99c67697d0e9414,
+        type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82040238847878760, guid: 43ab0ca5d42daf04a99c67697d0e9414,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

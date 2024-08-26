@@ -24,7 +24,7 @@ public class Sniper : MainWeapon
         maxLoadedAmmo = 5;                // 장전될 수 있는 탄약
         damage = 60;                      // 데미지
         bulletRange = 200f;               // 총알 발사 거리
-        fireRate = 1.5f;                  // 총알 발사 주기
+        fireRate = 2.5f;                  // 총알 발사 주기
         recoilX = 1f;                   // 좌우 반동
         recoilY = 40f;                     // 수직 반동
         recoilRecoverySpeed = 5f;         // 반동 회복 속도
@@ -34,7 +34,7 @@ public class Sniper : MainWeapon
         ResetAmmo(initializeAmmo);        // 탄약 세팅
         adsPos = new Vector3(0, -0.19f, 0.5f); // 스나만 다른 위치로 정조준 ( 조준경 때문에 )
         // 실험
-        spentBullet = 1;
+        bulletSpread = 2;
     }
 
     // 시작할 때, 탄약 세팅 함수 //
@@ -51,26 +51,19 @@ public class Sniper : MainWeapon
     // 슈팅 함수
     public override void Shoot(Transform _firePos)
     {
-        if (Time.time >= nextFireTime && !isReloading)
+        if (Time.time >= nextFireTime && !isReloading && canShoot)
         {
             nextFireTime = Time.time + fireRate;
             base.Shoot(_firePos);
 
             if (loadedAmmo <= 0)
             {
-                Debug.Log("장전된 탄약 없음");
                 Reload();
-                canShoot = false;                 // 총알 없으면 슈팅 불가능
             }
         }
     }
-    //
-    // 장전 함수
-    public override void Reload()
-    {
-        base.Reload();
-    }
 
+    #region "적 FireBullet"
     // 발사 함수 ( 수정 필요 )
     public override void FireBullet(Transform _firePos)
     {
@@ -102,32 +95,6 @@ public class Sniper : MainWeapon
                         target.Damaged(damage, hit.point);
                         _penetrateEnemy++;
                     }
-                    /*
-                    // 데미지 입히기
-                    CharacterController _cc = hit.collider.GetComponent<CharacterController>();
-                    if (_cc != null)
-                    {
-                        // CharacterController의 실제 높이 계산
-                        float _controllerHeight = _cc.height * hit.transform.lossyScale.y;
-
-                        // CharacterController의 하단 y 좌표 계산 ( 지면 )
-                        float _bottomY = hit.transform.position.y + _cc.center.y * hit.transform.lossyScale.y - _controllerHeight / 2;
-
-                        // hit.point의 상대적 높이 비율 계산
-                        float _relativeHeight = (hit.point.y - _bottomY) / _controllerHeight;
-
-                        // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
-                        if (_relativeHeight >= (1 - headRatio))
-                        {
-                            Debug.Log("헤드샷");
-                            hit.transform.GetComponent<IDamageAble>().Damaged(damage * 2);
-                        }
-                        else
-                        {
-                            hit.transform.GetComponent<IDamageAble>().Damaged(damage);
-                        }
-                        
-                    }*/
                     // 거리 계산하고 레이캐스트 다시 앞으로 나가기
                     distanceTraveled += hit.distance;
                     currentPosition = hit.point + direction * 0.001f;
@@ -139,4 +106,50 @@ public class Sniper : MainWeapon
             }
         }
     }
+    #endregion
+
+    #region "플레이어 FireBullet"
+    public override void PlayerFireBullet()
+    {
+        base.PlayerFireBullet();
+
+        int _penetrateEnemy = 0;
+        RaycastHit hit;
+        Vector3 _bulletDir = GetShootDir(cam.transform);
+        Vector3 currentPosition = cam.transform.position;
+        Vector3 direction = cam.transform.forward + _bulletDir;
+        float distanceTraveled = 0f;
+
+        Debug.DrawRay(cam.transform.position, direction * bulletRange, Color.red, 5f);
+
+        if (canShoot)
+        {
+            while (_penetrateEnemy <= canPenetrateEnemy && distanceTraveled < bulletRange)
+            {
+                if (Physics.Raycast(currentPosition, direction, out hit, bulletRange - distanceTraveled))
+                {
+                    // canAttackMask에 해당하지 않는 오브젝트에 닿으면 즉시 중단
+                    if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
+                    {
+                        Debug.Log($"벽에 닿음: {hit.transform.name}");
+                        break;
+                    }
+                    IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                    if (target != null)
+                    {
+                        target.Damaged(damage, hit.point);
+                        _penetrateEnemy++;
+                    }
+                    // 거리 계산하고 레이캐스트 다시 앞으로 나가기
+                    distanceTraveled += hit.distance;
+                    currentPosition = hit.point + direction * 0.001f;
+                }
+                else
+                {
+                    break;  // 아무것도 맞지 않았다면 루프 종료
+                }
+            }
+        }
+    }
+    #endregion
 }

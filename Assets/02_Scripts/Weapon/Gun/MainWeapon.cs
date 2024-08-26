@@ -67,10 +67,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     // 발사 시 효과 ( 소리, 이펙트 )
     public AudioClip shootSound;
     public AudioClip reloadSound;
+    public AudioClip reloadFinishSound;
     public AudioClip weaponChangeSound;
     // 플레이어 컴포넌트
     ParticleSystem playerEffect;
-    AudioSource playerSound;
+    protected AudioSource playerSound;
     // 에너미 컴포넌트
     public ParticleSystem enemyEffect;
     public AudioSource enemySound;
@@ -118,8 +119,6 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             {
                 FireBullet(_firePos);
             }
-
-            canShoot = true;                  // 슈팅 가능
         }
     }
     #endregion
@@ -145,7 +144,28 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             return;
         }
 
-        StartCoroutine(Reloading());
+        //StartCoroutine(Reloading());
+        anim.SetTrigger("doReload");
+    }
+
+    public void ReloadEnter()
+    {
+        canShoot = false;
+        isReloading = true;
+        Aming(false);
+        isADS = false;
+    }
+
+    public void ReloadExit()
+    {
+        int _ammoToMagazine = Mathf.Min(maxLoadedAmmo - loadedAmmo, remainAmmo);    // 둘 중 작은 값 비교하기
+        loadedAmmo += _ammoToMagazine;
+        remainAmmo -= _ammoToMagazine;
+        isReloading = false;
+        canShoot = true;
+
+        // 장전 끝나고 총알 수 UI에 반영
+        UIManager.Instance.ReloadAmmoUIUpdate(loadedAmmo, remainAmmo);
     }
 
     // 장전 코루틴
@@ -157,9 +177,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         // 이 위치에 장전 애니메이션 추가
         Aming(false);
         isADS = false;
-        anim.SetTrigger("doReload");
-        playerSound.clip = reloadSound;
-        playerSound.Play();
+        //anim.SetTrigger("doReload");
 
         yield return new WaitForSeconds(reloadTime);  // 장전 걸리는 시간
 
@@ -179,26 +197,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     {
 
     }
-    public virtual void EnemyFireBullet()
-    {
-        enemyEffect.Play();
-        enemySound.clip = shootSound;
-        enemySound.Play();
-    }
-    public virtual void PlayerFireBullet()
-    {
-        playerEffect.Play();
-        playerSound.clip = shootSound;
-        playerSound.Play();
-    }
-
-    public void ReloadFinish()
-    {
-        loadedAmmo++;
-        remainAmmo--;
-    }
     #endregion
-
 
     #region 정조준 함수
 
@@ -267,7 +266,6 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     #endregion
 
-    
     //상호작용
     public virtual void Interaction(GameObject target)
     {
@@ -355,7 +353,53 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             Reload();
         }
-    }   
+    }
+
+    #region "애니메이션 이벤트"
+
+    public virtual void EnemyFireBullet()
+    {
+        enemyEffect.Play();
+        enemySound.clip = shootSound;
+        enemySound.volume = 0.3f;
+        enemySound.Play();
+    }
+
+    public virtual void PlayerFireBullet()
+    {
+        playerEffect.Play();
+        playerSound.clip = shootSound;
+        playerSound.Play();
+    }
+
+    public void PlayerReloadSound()
+    {
+        playerSound.clip = reloadSound; playerSound.Play();
+    }
+    public void PlayerReloadFinishSound()
+    {
+        playerSound.clip = reloadFinishSound; playerSound.Play();
+    }
+
+    public void ReloadFinish()
+    {
+        loadedAmmo++;
+        remainAmmo--;
+    }
+
+    public void ReloadCheck()
+    {
+        if (loadedAmmo == maxLoadedAmmo - 1)
+        {
+            anim.SetBool("isReloading", false);
+        }
+        if (loadedAmmo < maxLoadedAmmo - 1)
+        {
+            anim.SetTrigger("doReload");
+        }
+    }
+
+    #endregion
 }
 
-    
+

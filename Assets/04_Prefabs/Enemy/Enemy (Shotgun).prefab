@@ -241,7 +241,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   blindTime: 0
-  walkSound: {fileID: 0}
+  walkSound: {fileID: 8300000, guid: 43d7f2b11b5c26548be307abc62b0818, type: 3}
   chasePos: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
   headRatio: 0.3
@@ -1579,8 +1579,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 82401324405209416, guid: 26fe161b92f34854fb8a3e4cbfdc5b34,
         type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 82401324405209416, guid: 26fe161b92f34854fb8a3e4cbfdc5b34,
+        type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82401324405209416, guid: 26fe161b92f34854fb8a3e4cbfdc5b34,
+        type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82401324405209416, guid: 26fe161b92f34854fb8a3e4cbfdc5b34,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198106746083209970, guid: 26fe161b92f34854fb8a3e4cbfdc5b34,
         type: 3}

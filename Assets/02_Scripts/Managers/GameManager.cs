@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
                 enemy.chasePos = _soundPos;
 
                 // 존버 상태가 아닐때만
-                if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind)
+                if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind && enemy.enemyState != EnemyState.Attack)
                 {
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
                     enemy.enemyState = EnemyState.Move;
