@@ -143,6 +143,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3800234840794808487, guid: f58cbb32c7b67b141a2131f6783b30e9,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 1246766455}
     - target: {fileID: 5784690942125823329, guid: f58cbb32c7b67b141a2131f6783b30e9,
         type: 3}
       propertyPath: m_Name
@@ -2744,6 +2749,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8366977842067901599}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1246766455 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6647109493811786793, guid: f58cbb32c7b67b141a2131f6783b30e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 60619422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c85e6f4a08edd4e85fdacb0ca947c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1275413109 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2784465094716954893, guid: 055d3f070e832e343955fc595e70cf36,
@@ -3762,6 +3779,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CompassCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8512810418416192884, guid: 6aaf3c350d503b948829c9a520ff677c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4354,6 +4376,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2006128295 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7044942659102491790, guid: 226e2e44942a91c4c8b45d42ccc0e370,
+    type: 3}
+  m_PrefabInstance: {fileID: 1436965251283624489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44d85940da48d0d4fa93d6cc3c626746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2051845264
 GameObject:
   m_ObjectHideFlags: 0
@@ -4540,6 +4574,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2433339152663176552, guid: 226e2e44942a91c4c8b45d42ccc0e370,
+        type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 2006128295}
     - target: {fileID: 2646533251333378572, guid: 226e2e44942a91c4c8b45d42ccc0e370,
         type: 3}
       propertyPath: m_Name

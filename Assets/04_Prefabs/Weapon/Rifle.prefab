@@ -785,7 +785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151be6551d566a547a8763bd4a4018a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 1892087289, guid: 59a9042dd1466f341aa13fcbd44889ae, type: 2}
+  weapon: {fileID: 7044942659102491790}
 --- !u!1 &3928919609578408620 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1488434204529494, guid: 2ad5c36edd0559141b78e7b2213712e6,
