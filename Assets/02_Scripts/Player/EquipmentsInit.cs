@@ -14,20 +14,19 @@ public class EquipmentsInit : MonoBehaviour
     void Start()
     {
         swap = PlayerController.Instance.gameObject.GetComponent<EquipmentsSwap>();
-
-
-
-
     }
+
     [ContextMenu("장비 초기화 테스트")]
-    public void Init() {
+    public void Init()
+    {
         swap.Inventory.Clear();
         swap.GrenadeFactory.SetGrenadeCount(frag, flash, smoke);
         InitInventory(specialWeapons);
         InitInventory(mainWeapons);
     }
 
-    void InitInventory(IEquipMent[] _array) {
+    void InitInventory(IEquipMent[] _array)
+    {
         for (int i = 0; i < _array.Length; i++) {
             swap.WeaponChange(_array[i], _array[i].type);
         }
