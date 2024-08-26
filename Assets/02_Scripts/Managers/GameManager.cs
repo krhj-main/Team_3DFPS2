@@ -31,6 +31,7 @@ public class GameManager : Singleton<GameManager>
         get { return Instance.smokeGrenade; }
     }
     */
+    //
 
     public List<Enemy> enemies = new List<Enemy>();
 
