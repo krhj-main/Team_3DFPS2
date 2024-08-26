@@ -30,6 +30,7 @@ public class CamAttatch : MonoBehaviour
         if (pState.isDead)
         {
             anim.Play("Death");
+            UIManager.Instance.OnDeadPanel();
         }
     }
 

@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3919655419699470805
 Transform:
   m_ObjectHideFlags: 0
@@ -26,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2646533251333378572}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.26, y: 1.0833335, z: -21.75}
+  m_LocalRotation: {x: -0.11483426, y: -0.19986966, z: 0.024178699, w: -0.97276956}
+  m_LocalPosition: {x: 21.367409, y: 0.16531312, z: 16.108952}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -92,6 +92,7 @@ MonoBehaviour:
   speedDownForce: 0
   arms: {fileID: 3929148363435620190}
   CameraPos: {fileID: 3930712274582172554}
+  anim: {fileID: 0}
   shootSound: {fileID: 8300000, guid: 8f04b3ff514c3254898fc3754113a032, type: 3}
   reloadSound: {fileID: 8300000, guid: cc988050393583047ad560d1ce931d72, type: 3}
   weaponChangeSound: {fileID: 8300000, guid: eac936d6299766c4f9b6acbd4f957f91, type: 3}
@@ -142,7 +143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1189357773368996, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1488434204529494, guid: 2ad5c36edd0559141b78e7b2213712e6, type: 3}
       propertyPath: m_Layer
@@ -895,6 +896,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 82040238847878760, guid: 43ab0ca5d42daf04a99c67697d0e9414,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: eac936d6299766c4f9b6acbd4f957f91, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

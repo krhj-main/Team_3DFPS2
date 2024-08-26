@@ -12,6 +12,7 @@ public class Sniper : MainWeapon
     public TextMeshProUGUI ammoTxt;       // 탄약 UI 표시
 
     private int canPenetrateEnemy = 2;       // 관통 가능한 숫자
+    public GameObject scope;
 
     protected override void Awake()
     {
@@ -30,12 +31,27 @@ public class Sniper : MainWeapon
         recoilRecoverySpeed = 5f;         // 반동 회복 속도
         reloadTime = 4.5f;                  // 장전 시간
         adsSpeed = 4;                     // 정조준 속도
-        adsFOV = 15;                      // 정조준시 CameraFOV
+        adsFOV = 10;                      // 정조준시 CameraFOV
         ResetAmmo(initializeAmmo);        // 탄약 세팅
-        adsPos = new Vector3(0, -0.19f, 0.5f); // 스나만 다른 위치로 정조준 ( 조준경 때문에 )
+        adsPos = new Vector3(0, -0.17f, 0.5f); // 스나만 다른 위치로 정조준 ( 조준경 때문에 )
         // 실험
         spentBullet = 1;
     }
+
+    private void Update()
+    {
+        if (isADS)
+        {
+            UIManager.Instance.snimperZoomUI.enabled = true;
+            scope.SetActive(false);
+        }
+        else
+        {
+            UIManager.Instance.snimperZoomUI.enabled = false;
+            scope.SetActive(true);
+        }
+    }
+
 
     // 시작할 때, 탄약 세팅 함수 //
     public void ResetAmmo(int _totalAmmo)

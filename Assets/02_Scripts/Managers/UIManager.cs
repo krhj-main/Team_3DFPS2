@@ -39,6 +39,11 @@ public class UIManager : Singleton<UIManager>
     public Image FlashImage;
 
     [SerializeField] public GameObject missionViewer;
+    public Image snimperZoomUI;
+
+    public GameObject deadPanel;
+    float deadPanelAlpha;
+    public GameObject[] deadPanelUI;
 
     private void Start()
     {
@@ -93,5 +98,29 @@ public class UIManager : Singleton<UIManager>
     {
         missionTime.text = string.Format("{0}", missionTimeCurrent);
         missionEnemy.text = string.Format("{0}", missionEnemyCount);
+    }
+
+    public void OnDeadPanel()
+    {
+        deadPanel.SetActive(true);
+        StartCoroutine(DeadPanelFadeOut());
+    }
+
+    IEnumerator DeadPanelFadeOut()
+    {
+        // 화면알파값 올려서 검정 화면 만들어줌
+        deadPanelAlpha = 0;
+        while (deadPanelAlpha <= 1f)
+        {
+            deadPanelAlpha += Time.deltaTime;
+            deadPanel.GetComponent<Image>().color = new Color(255, 255, 255, deadPanelAlpha);
+            yield return null;
+        }
+
+        // 검정화면 끝나면 데드패널에 있는 모든 ui 켜줌
+        foreach(GameObject ui in deadPanelUI)
+        {
+            ui.SetActive(true);
+        }
     }
 }

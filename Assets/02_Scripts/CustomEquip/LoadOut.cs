@@ -93,7 +93,6 @@ public class LoadOut : MonoBehaviour
     }
     #endregion
 
-
     #region 무기 선택 패널 오픈
     public void OpenSelectPanel(int _index)
     {
