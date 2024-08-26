@@ -292,33 +292,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         character.forward = _lookForward;
     }
 
-    /*
-    // 카메라 마우스조작 메서드
-    void LookAround()
-    {
-        if (GameManager.Instance.openUI)
-        {
-            return;
-        }
-
-
-        mouseDelta = new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
-
-        Vector3 _camAngle = arm.rotation.eulerAngles;
-
-        float _limit = _camAngle.x - mouseDelta.y;
-
-        if (_limit < 180)
-        {
-            _limit = Mathf.Clamp(_limit, -1f, 60f);
-        }
-        else
-        {
-            _limit = Mathf.Clamp(_limit,320f,361f);
-        }
-        arm.rotation = Quaternion.Euler(_limit, _camAngle.y + (mouseDelta.x * mouseSensitivity) , _camAngle.z);
-    }
-    */
 
 
 

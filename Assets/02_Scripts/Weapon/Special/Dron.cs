@@ -95,17 +95,17 @@ public class Dron : MonoBehaviour,Interactable
             }
             if (Input.GetKeyDown(returnKey))
             {
-                dronUI.enabled = false;
-                dronCam.enabled = false;
-                dronController.DronReturn();
-                anim.SetBool("Open_Anim", false);
-                v = 0;
-                h = 0;
+                DronDisable();
             }
             
         }
 
     }
+    private void OnEnable()
+    {
+        anim.enabled = false;
+    }
+
     bool Grounded()
     {
         bool _isGrounded = Physics.BoxCast(transform.position, boxSize, -transform.up, transform.rotation, maxDistance, groundLayer);
@@ -132,14 +132,25 @@ public class Dron : MonoBehaviour,Interactable
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
+        anim.enabled = true;
         anim.SetBool("Open_Anim", true);
         dronController.phoneMat.color = Color.white;
     }
+    public void DronDisable()
+    {
+        
+        dronUI.enabled = false;
+        dronCam.enabled = false;
+        dronController.DronReturn();
+        anim.SetBool("Open_Anim", false);
+        v = 0;
+        h = 0;
+    }
 
-    public void Interaction(GameObject target)
+        public void Interaction(GameObject target)
     {
         dronController.isOut = false;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         transform.SetParent(dronController.transform);
         isActive = false;
         dronController.phoneMat.color = Color.black;

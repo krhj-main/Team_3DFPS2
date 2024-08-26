@@ -5,7 +5,8 @@ public class FragGrenade
 {
     public static Mesh mesh;
     public static Material material;
-
+    public static Vector3 midle=new Vector3 (0,0,0);
+    public static Vector3 scale= new Vector3(1f, 1f, 1f);
     public FragGrenade()
     {
         if (mesh == null)

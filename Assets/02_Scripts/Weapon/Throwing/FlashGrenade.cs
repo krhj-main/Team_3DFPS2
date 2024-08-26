@@ -6,6 +6,8 @@ public class FlashGrenade
     float calDuration;
     public static Mesh mesh;
     public static Material material;
+    public static Vector3 midle = new Vector3(0, -0.0052f, 0);
+    public static Vector3 scale = new Vector3(0.75f, 0.75f, 0.75f);
     public FlashGrenade() {
         if (mesh == null) {
             mesh = Resources.Load<Mesh>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Flashbang");

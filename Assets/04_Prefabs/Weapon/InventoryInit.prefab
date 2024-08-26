@@ -47,8 +47,8 @@ MonoBehaviour:
   mainWeapons:
   - {fileID: 0}
   - {fileID: 0}
-  throwingWeapons:
-  - {fileID: 0}
   specialWeapons:
   - {fileID: 0}
-  swap: {fileID: 0}
+  frag: 0
+  flash: 0
+  smoke: 0
