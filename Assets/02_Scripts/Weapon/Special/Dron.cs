@@ -14,7 +14,7 @@ public class Dron : MonoBehaviour,Interactable
     //특정 키를 누르면 원래 카메라로 돌아옴
     //-> 돌아올 카메라를 담고있어야 한다,카메라에 따라 조작이 달라져야 한다
 
-    Rigidbody rig;
+    public Rigidbody rig;
     Camera dronCam;
     [SerializeField] Canvas dronUI;
     [SerializeField] float jumpeForce = 20f;
@@ -23,7 +23,7 @@ public class Dron : MonoBehaviour,Interactable
     
     [SerializeField]float h=0;
     [SerializeField] float v=0;
-    [SerializeField] Collider col;
+    [SerializeField] public Collider col;
     public DronController dronController;
 
     public KeyCode returnKey;
@@ -129,7 +129,7 @@ public class Dron : MonoBehaviour,Interactable
         rig.velocity = vel;
     }
     public void DronAwake() {
-        col.enabled = true;
+        
         dronUI.enabled = true;
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
@@ -140,7 +140,7 @@ public class Dron : MonoBehaviour,Interactable
     }
     public void DronDisable()
     {
-        col.enabled = false;
+        
         dronUI.enabled = false;
         dronCam.enabled = false;
         dronController.DronReturn();

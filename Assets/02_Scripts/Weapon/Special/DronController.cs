@@ -27,16 +27,18 @@ public class DronController : SpecialWeapon
     }
 
     public void Use() {
+             dron.rig.isKinematic = false;
+            dron.col.enabled = true;
             dron.gameObject.transform.position = PlayerController.Instance.PlayerCamera.transform.position+ PlayerController.Instance.PlayerCamera.transform.forward;
             dron.gameObject.SetActive(true);
             dron.transform.SetParent(null);
-           
-            Rigidbody _rid = dron.gameObject.GetComponent<Rigidbody>();
+
+       
         
-            if (_rid)
+            if (dron.rig)
             {
-            _rid.velocity = Vector3.zero;
-            _rid.AddForce(PlayerController.Instance.PlayerCamera.transform.forward * 1, ForceMode.Impulse);
+            dron.rig.velocity = Vector3.zero;
+            dron.rig.AddForce(PlayerController.Instance.PlayerCamera.transform.forward * 1, ForceMode.Impulse);
             }
             isOut = !isOut;
 
@@ -47,7 +49,6 @@ public class DronController : SpecialWeapon
     public override void OnHandEnter()
     {
         phone.enabled = true;
-        sphere.SetActive(false);
         arms.SetActive(true);
         PlayerController.Instance.PlayerCamera.transform.SetParent(CameraPos);
         PlayerController.Instance.PlayerCamera.transform.localPosition = Vector3.zero;
@@ -55,9 +56,10 @@ public class DronController : SpecialWeapon
     }
     public override void OnHandExit()
     {
+        dron.rig.isKinematic = true;
+        dron.col.enabled = false;
         phone.enabled = false;
-        sphere.SetActive(true);
-        arms.SetActive(true);
+        arms.SetActive(false);
         PlayerController.Instance.PlayerCamera.transform.SetParent(null);
     }
     public override void OnHand(Transform _tr, Vector3 _offset)
