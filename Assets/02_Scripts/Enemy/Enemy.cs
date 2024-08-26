@@ -173,7 +173,6 @@ public class Enemy : MonoBehaviour, IDamageAble
                 Blind();
                 break;
         }
-        Debug.Log(enemyState.ToString());
     }
 
     #region "대기"
