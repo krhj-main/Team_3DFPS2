@@ -49,9 +49,8 @@ public class Rifle : MainWeapon
         {
             nextFireTime = Time.time + fireRate;
             base.Shoot(_firePos);
-            FireBullet(_firePos);
 
-            if(loadedAmmo <= 0)
+            if (loadedAmmo <= 0)
             {
                 Debug.Log("장전된 탄약 없음");
                 Reload();

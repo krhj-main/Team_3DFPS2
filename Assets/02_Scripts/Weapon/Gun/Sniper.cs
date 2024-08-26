@@ -55,7 +55,13 @@ public class Sniper : MainWeapon
         {
             nextFireTime = Time.time + fireRate;
             base.Shoot(_firePos);
-            FireBullet(_firePos);
+
+            if (loadedAmmo <= 0)
+            {
+                Debug.Log("장전된 탄약 없음");
+                Reload();
+                canShoot = false;                 // 총알 없으면 슈팅 불가능
+            }
         }
     }
     //

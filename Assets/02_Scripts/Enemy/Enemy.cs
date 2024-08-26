@@ -73,7 +73,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public float currentTime = 0;
 
-    // 공격 딜레이
+    // 공격 관련 변수
+    [Header("발사 위치")]
+    public Transform enemyFirePos;
     [HideInInspector]
     public float atkDelay = 2f;
     [HideInInspector]
@@ -91,7 +93,12 @@ public class Enemy : MonoBehaviour, IDamageAble
     int index;
 
     // 상태이상 관련 변수
+    [Header("실명 시간")]
     public float blindTime;
+
+    // 애니메이션 관련 변수
+    [Header("애니메이션 변수")]
+    public AudioClip walkSound;
 
     // 컴포넌트
     CharacterController cc;
@@ -100,8 +107,12 @@ public class Enemy : MonoBehaviour, IDamageAble
     public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
     [HideInInspector]
     public NavMeshAgent agent;
-    public float headRatio =0.3f;
     MainWeapon weapon;
+    
+
+    [Header("머리 비율 설정")]
+    public float headRatio =0.3f;
+
 
     void Awake()
     {
@@ -391,8 +402,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 
                 // Attack 애니메이션 재생
                 anim.SetTrigger("doAttack");
-
-                weapon.Shoot(transform);
+                weapon.Shoot(enemyFirePos);
 
                 if (gameObject.name.Contains("Shotgun"))
                 {
@@ -402,8 +412,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 }
                 else
                 {
-                    
-                    atkDelay = Random.Range(0.25f, 1.5f);
+                    atkDelay = Random.Range(0.25f, 0.5f);
                     weapon.fireRate = atkDelay;
                 }
             }

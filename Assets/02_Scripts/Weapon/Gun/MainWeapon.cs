@@ -63,26 +63,25 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] public Transform CameraPos;
     CameraController camController;
 
-    AnimatorStateInfo stateInfo;
+    [SerializeField] protected Animator anim;
     // 발사 시 효과 ( 소리, 이펙트 )
     public AudioClip shootSound;
     public AudioClip reloadSound;
     public AudioClip weaponChangeSound;
+    // 플레이어 컴포넌트
     ParticleSystem playerEffect;
     AudioSource playerSound;
+    // 에너미 컴포넌트
+    public ParticleSystem enemyEffect;
+    public AudioSource enemySound;
 
     protected virtual void Awake()
     {
-        // 시작할 때 무기없는 팔 애니메이션 가져오기 위한 초기화
-        // 어치피 OnHandEnter에서 해주니까 필요가 없나? ( 의문 )
-        //PlayerController.Instance.anim = GetComponentInChildren<Animator>();    
         cam = Camera.main;
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInChildren<CameraController>();
         adsPos = new Vector3(0, -0.25f, 0f);
-        
-        
     }
 
     // 부모가 생기면 초기화 해줌
@@ -113,13 +112,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
-                /*
-                stateInfo = PlayerController.Instance.anim.GetCurrentAnimatorStateInfo(0);
-                if (stateInfo.IsName("Shoot") || stateInfo.IsName("Aim_Shoot"))
-                {
-                    camController.ApplyRecoil(recoilX, recoilY);    // 반동
-                }
-                */
+                anim.SetTrigger("doAttack");
+            }
+            else if (_firePos.gameObject.CompareTag("Enemy"))
+            {
+                FireBullet(_firePos);
             }
 
             canShoot = true;                  // 슈팅 가능
@@ -160,7 +157,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         // 이 위치에 장전 애니메이션 추가
         Aming(false);
         isADS = false;
-        PlayerController.Instance.anim.SetTrigger("doReload");
+        anim.SetTrigger("doReload");
         playerSound.clip = reloadSound;
         playerSound.Play();
 
@@ -180,28 +177,28 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     #region 발사 함수
     public virtual void FireBullet(Transform _firePos) 
     {
-        if (!_firePos.GetComponentInParent<CharacterController>().CompareTag("Enemy"))
-        {
-            PlayerController.Instance.anim.SetTrigger("doAttack");
-            playerEffect.Play();
-            playerSound.clip = shootSound;
-            playerSound.Play();
-            /*
-            if (stateInfo.IsName("Shoot") || stateInfo.IsName("Aim_Shoot"))
-            {
-                playerEffect.Play();
-                playerSound.clip = shootSound;
-                playerSound.Play();
-            }
-            */
-        }
-        else if (_firePos.GetComponentInParent<CharacterController>().CompareTag("Enemy"))
-        {
-            // 이곳에서 적의 공격 시 발생하는 효과 관리
-            // 아니면 따로 Enemy쪽에서 관리하는 방법도?
-        }
-    }    // 무조건 자식 클래스에서 재정의
+
+    }
+    public virtual void EnemyFireBullet()
+    {
+        enemyEffect.Play();
+        enemySound.clip = shootSound;
+        enemySound.Play();
+    }
+    public virtual void PlayerFireBullet()
+    {
+        playerEffect.Play();
+        playerSound.clip = shootSound;
+        playerSound.Play();
+    }
+
+    public void ReloadFinish()
+    {
+        loadedAmmo++;
+        remainAmmo--;
+    }
     #endregion
+
 
     #region 정조준 함수
 
@@ -211,7 +208,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
         if (_whatAim)
         {
-            PlayerController.Instance.anim.SetBool("isAiming", true);
+            anim.SetBool("isAiming", true);
             //targetPos = adsPos;
             PlayerController.Instance.moveSpeedScale = -0.5f;   // 줌 시 이동속도 제한
             targetFOV = adsFOV;
@@ -220,7 +217,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
         if (!_whatAim)
         {
-            PlayerController.Instance.anim.SetBool("isAiming", false);
+            anim.SetBool("isAiming", false);
             //targetPos = shoulderPos;
             PlayerController.Instance.moveSpeedScale = 0f;
             targetFOV = shoulderFOV;
@@ -288,8 +285,9 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         firePos.localPosition = Vector3.zero;
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
-        PlayerController.Instance.anim = GetComponentInChildren<Animator>();     // 무기마다 애니메이션이 다르니까 무기를 들 때 마다 anim을 새로 받는다
-        PlayerController.Instance.anim.enabled = true;
+        // 애니메이션, 사운드, 이펙트
+        PlayerController.Instance.anim = anim;
+        anim.enabled = true;
         playerEffect = GetComponentInChildren<ParticleSystem>();
         playerSound = GetComponentInChildren<AudioSource>();
         playerSound.clip = weaponChangeSound; 
@@ -310,7 +308,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public virtual void OnHandExit()
     {
-        PlayerController.Instance.anim.enabled = false;
+        anim.enabled = false;
 
         PlayerController.Instance.moveSpeedScale = 0;
         StopCoroutine(Reloading());
@@ -339,14 +337,12 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     {
         if (Input.GetMouseButton(0))
         {
-            //PlayerController.Instance.anim.SetTrigger("doAttack");
-            PlayerController.Instance.anim.SetBool("isAttacking", true);
+            anim.SetBool("isAttacking", true);
             Shoot(firePos);
-            //GameManager.Instance.AggroEnemy(firePos.position, 30f);
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            PlayerController.Instance.anim.SetBool("isAttacking", false);
+            anim.SetBool("isAttacking", false);
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -360,10 +356,6 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             Reload();
         }
     }   
-    //무기 바꿀때 할 행동
-    
-
-    
 }
 
     
