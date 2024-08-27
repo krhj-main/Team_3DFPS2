@@ -7,6 +7,9 @@ public class FragGrenade
     public static Material material;
     public static Vector3 midle=new Vector3 (0,0,0);
     public static Vector3 scale= new Vector3(1f, 1f, 1f);
+    float radius;
+    float delay;
+    float _damage;
     public FragGrenade()
     {
         if (mesh == null)
@@ -32,6 +35,7 @@ public class FragGrenade
 
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
+
         if (_distanceToPlayer < _radius)
         {
             // 거리별 값 판별 ( 멀어질수록 작은 값 )

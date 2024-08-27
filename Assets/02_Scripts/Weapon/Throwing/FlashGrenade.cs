@@ -31,15 +31,16 @@ public class FlashGrenade
         // 거리별 값 판별 ( 멀어질수록 작은 값 )
         float _rangePersentPlayer = 1 - (_distanceToPlayer / _radius);
         calDuration = Mathf.RoundToInt(_effectDuration * _rangePersentPlayer);
-
+        
         if (_distanceToPlayer <= _radius)
         {
-            if (IsLookingAtFlash(_explode, PlayerController.Instance.transform))
+            if (IsLookingAtFlash(_explode, PlayerController.Instance.waist))
             {
                 // 거리별 값 판별 ( 멀어질수록 작은 값 )
                 //float _rangePersentToPlayer = 1 - (_distanceToPlayer / _radius);
                 //calduration = Mathf.RoundToInt(_effectDuration * _rangePersentToPlayer);
                 // 눈뽕
+                
                 UIManager.Instance.FlashImage.gameObject.SetActive(true);
             }
         }
@@ -97,16 +98,18 @@ public class FlashGrenade
 
         // 카메라가 바라보는 방향과, 플레이어에서 섬광탄으로의 방향 사이의 각도를 계산
         float angle = Vector3.Angle(_character.forward, _dirToFlash);
-        Debug.Log(angle);
         // 시야각 확인 // 60 = 좌우로 60
-        if (angle < 90)
+        
+        if (angle < 120)
         {
+            Debug.Log(angle);
             // 레이캐스트로 장애물 체크
             RaycastHit hit;
             if (Physics.Raycast(_flash.position, _dirToFlash*-1, out hit))
             {
+                Debug.DrawRay(_flash.position, _dirToFlash * -1,Color.black,1f);
                 // 레이캐스트가 섬광탄에 먼저 닿았는지 확인
-                if (hit.collider.gameObject == _character.gameObject)
+                if (hit.collider.CompareTag(_character.tag))
                 {
                     return true;
                 }

@@ -9,7 +9,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
     
     [SerializeField] Transform arm;
-    [SerializeField] Transform waist;
+    [SerializeField] public Transform waist;
     Vector3 armPos;
     
     [SerializeField] Transform cam;

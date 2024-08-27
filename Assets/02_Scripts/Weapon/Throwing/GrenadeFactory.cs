@@ -18,36 +18,18 @@ public class GrenadeFactory : ThrowingWeapon
     [SerializeField] GameObject arms;
     [SerializeField] Transform CameraPos;
     [SerializeField] Animator animator;
-
     int FragCount 
     { 
         set 
         {   fragCount = value;
-            if (fragCount < 0) 
-            {
+            if (fragCount < 0) {
                 fragCount = 0;
             }
         } 
         get => fragCount; 
     }
-
-    [SerializeField]
-    int SmokeCount
-    {
-        set
-        {
-            smokeCount = value;
-            if (smokeCount < 0)
-            {
-                smokeCount = 0;
-            }
-        }
-        get => smokeCount;
-    }
-
-    int FlashCount 
-    { 
-        set 
+     int FlashCount 
+    { set 
         { 
             flashCount = value;
             if (flashCount < 0)
@@ -57,9 +39,18 @@ public class GrenadeFactory : ThrowingWeapon
         } 
         get => flashCount; 
     }
-    
-    private void SpawnGrenade() 
-    {
+    [SerializeField] int SmokeCount 
+    { set 
+        { 
+            smokeCount = value;
+            if (smokeCount < 0)
+            {
+                smokeCount = 0;
+            }
+        } 
+        get => smokeCount; 
+    }
+    private void SpawnGrenade() {
         for (int i = 0; i < objectSIze; i++) {
             Grenade grenade = GameObject.Instantiate(prefab, transform);
             grenades.Add(grenade);
@@ -67,6 +58,7 @@ public class GrenadeFactory : ThrowingWeapon
             grenade.gameObject.SetActive(false);
         }
     }
+    // Start is called before the first frame update
 
     protected override void Awake()
     {
@@ -74,7 +66,10 @@ public class GrenadeFactory : ThrowingWeapon
         col = GetComponent<Collider>();
         SpawnGrenade();
     }
-
+    void Start()
+    {
+        
+    }
     public override void OnHandEnter()
     {
         base.OnHandEnter();
@@ -83,6 +78,7 @@ public class GrenadeFactory : ThrowingWeapon
         firePos.SetParent(CameraPos);
         firePos.localPosition = Vector3.zero;
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
+
     }
 
     public override void OnHandExit()
@@ -92,7 +88,6 @@ public class GrenadeFactory : ThrowingWeapon
         arms.SetActive(false);
         firePos.SetParent(null);
     }
-
     public override void OnHand(Transform _tr, Vector3 _offset)
     {
         transform.position = _tr.position + _offset;  //오브젝트 위치 조정
@@ -103,8 +98,7 @@ public class GrenadeFactory : ThrowingWeapon
             {
                 current = grenades[0];
             }
-            else 
-            {
+            else {
                 if (!isEmpty())
                 {
                     if (!current.gameObject.activeSelf)
@@ -115,8 +109,7 @@ public class GrenadeFactory : ThrowingWeapon
                     current.transform.position = hand.position + _offset;  //오브젝트 위치 조정
                     current.transform.rotation = hand.rotation;
                 }
-                else 
-                {
+                else {
                     current.gameObject.SetActive(false);
                 }
                 
@@ -176,7 +169,6 @@ public class GrenadeFactory : ThrowingWeapon
                 grenadeType = GrenadeType.FragGrenade;
                 break;
         }
-
         if (grenades.Count > 0)
         {
             grenades[0].gameObject.SetActive(false);
@@ -184,8 +176,7 @@ public class GrenadeFactory : ThrowingWeapon
         animator.SetTrigger("doGet");
     }
 
-    public bool isEmpty() 
-    {
+    public bool isEmpty() {
         switch (grenadeType)
         {
             case GrenadeType.FragGrenade:
@@ -198,9 +189,7 @@ public class GrenadeFactory : ThrowingWeapon
                 return true;
         }
     }
-
-    public void IncreaseGrenade(GrenadeType _type,int _num)
-    {
+    public void IncreaseGrenade(GrenadeType _type,int _num) {
         switch (_type)
         {
             case GrenadeType.FragGrenade:
@@ -214,28 +203,27 @@ public class GrenadeFactory : ThrowingWeapon
                 break;
         }
     }
-
     public void DecreaseGrenade(GrenadeType _type, int _num)
     {
         IncreaseGrenade(_type, -_num);
     }
 
-    public void ReturnGrenade( Grenade _grenade) 
+        public void ReturnGrenade( Grenade _grenade) 
     {
         grenades.Add(_grenade);
         isThrow = false;
     }
 
-    public void test() 
-    {
-        Debug.Log(gameObject.name);
+    public void test() {
         Throw(firePos);
     }
 
-    public void SetGrenadeCount(int _frag,int _smoke,int _flash) 
-    {
+    public void SetGrenadeCount(int _frag,int _flash,int _smoke) {
         FragCount = _frag;
-        SmokeCount = _smoke;
         FlashCount = _flash;
+        SmokeCount = _smoke;
+
+
     }
+
 }

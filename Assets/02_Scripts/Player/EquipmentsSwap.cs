@@ -226,19 +226,22 @@ public class EquipmentsSwap : MonoBehaviour
             _go = _equip;
             Inventory.Set(_index, null);
             equip = null;
-            Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
+            if (_go!= null) {
+                Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
 
-            if (_rid)
-            {
-                _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
-                Debug.DrawRay(PlayerController.Instance.PlayerCamera.transform.position, PlayerController.Instance.PlayerCamera.transform.forward);
+                if (_rid)
+                {
+                    _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
+                    Debug.DrawRay(PlayerController.Instance.PlayerCamera.transform.position, PlayerController.Instance.PlayerCamera.transform.forward);
+                }
+                InputManger.Instance.keyAction -= _equip.InputKey;
+                _go.OnHandExit();
+                Utill.DestroyOnLoad(_go.gameObject);
+
+                SwapNext();
+                _equip.gameObject.SetActive(true);
             }
-            InputManger.Instance.keyAction -= _equip.InputKey;
-            _go.OnHandExit();
-            Utill.DestroyOnLoad(_go.gameObject);
-
-            SwapNext();
-            _equip.gameObject.SetActive(true);
+            
         }
     }
 }

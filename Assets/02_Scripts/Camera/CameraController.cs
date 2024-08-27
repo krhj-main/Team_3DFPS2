@@ -51,11 +51,13 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        // 매 프레임마다 실행되는 주요 함수들
-        UpdateTilt();
-        UpdateRecoil();
-        ApplyFinalRotation();
-        LookAround();
+        if (PlayerController.Instance.PlayerCamera.enabled) {
+            // 매 프레임마다 실행되는 주요 함수들
+            UpdateTilt();
+            UpdateRecoil();
+            ApplyFinalRotation();
+            LookAround();
+        }
     }
     void LookAround()
     {
