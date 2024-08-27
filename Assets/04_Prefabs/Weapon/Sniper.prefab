@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8500481383017725635
 Transform:
   m_ObjectHideFlags: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 1786732074777129118}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1651049843390464163
 MeshFilter:
@@ -92,10 +92,13 @@ MonoBehaviour:
   speedDownForce: 0
   arms: {fileID: 1784311423006781934}
   CameraPos: {fileID: 1786509193980662896}
-  anim: {fileID: 0}
+  anim: {fileID: 1843920151304511850}
   shootSound: {fileID: 8300000, guid: 5693fed405509e848b0b55568ab65ece, type: 3}
   reloadSound: {fileID: 8300000, guid: 49445863fb03df24e81d6b088856f783, type: 3}
+  reloadFinishSound: {fileID: 0}
   weaponChangeSound: {fileID: 8300000, guid: eac936d6299766c4f9b6acbd4f957f91, type: 3}
+  enemyEffect: {fileID: 0}
+  enemySound: {fileID: 0}
   ammoTxt: {fileID: 0}
   scope: {fileID: 4352893334967227596}
 --- !u!1 &7605163981082653424
@@ -882,6 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 151be6551d566a547a8763bd4a4018a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weapon: {fileID: 6647109493811786793}
 --- !u!1 &1784311423006781934 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1828781492867798, guid: 30e365fcd1d27fe4c94ab350c0484231,
@@ -897,6 +901,12 @@ Transform:
 --- !u!4 &1786732074777129118 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4193358140380070, guid: 30e365fcd1d27fe4c94ab350c0484231,
+    type: 3}
+  m_PrefabInstance: {fileID: 1784932390162703160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1843920151304511850 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95614729095742034, guid: 30e365fcd1d27fe4c94ab350c0484231,
     type: 3}
   m_PrefabInstance: {fileID: 1784932390162703160}
   m_PrefabAsset: {fileID: 0}

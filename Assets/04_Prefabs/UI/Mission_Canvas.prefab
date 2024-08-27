@@ -1079,7 +1079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 0.7882353}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4752,8 +4752,8 @@ MonoBehaviour:
   - {fileID: 8349329565307266550}
   missionImage:
   - {fileID: 0}
-  - {fileID: 451254762716931987}
-  - {fileID: 2899799599402248436}
+  - {fileID: 0}
+  - {fileID: 0}
   missionCanvas: {fileID: 8632616760216667192}
   mouseCursor: {fileID: 0}
 --- !u!1 &8739619280227523243

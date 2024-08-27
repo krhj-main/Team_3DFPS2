@@ -76,9 +76,11 @@ public class SelectEquip : MonoBehaviour
 
     void ApplyMainEquip()
     {
+        MainWeapon _weapon;
         for (int i = 0; i < loadOut.equipMainWeaponList.Count; i++)
         {
-            equipmentsInit.mainWeapons[i] = equipMainWeapon[loadOut.equipMainWeaponList[i]].GetComponent<MainWeapon>();
+            _weapon = Instantiate( equipMainWeapon[loadOut.equipMainWeaponList[i]].GetComponent<MainWeapon>());
+            equipmentsInit.mainWeapons[i] = _weapon;
             //GameObject _newWeapon = Instantiate(equipMainWeapon[loadOut.equipMainWeaponList[i]], parentTransform);
             //equipmentsInit.mainWeapons[i] = _newWeapon.GetComponent<MainWeapon>();
         }
