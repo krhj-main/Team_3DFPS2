@@ -7,16 +7,18 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
-
+    [Header("플레이어 HP")]
     [SerializeField] Slider playerHPBar;
     [SerializeField] TextMeshProUGUI playerHP_TXT;
     [SerializeField] Image playerPortrait;
 
+    [Header("장착중인 총의 탄")]
     [SerializeField] TextMeshProUGUI playerAmmo_TXT;
     [SerializeField] TextMeshProUGUI playerMaxAmmo_TXT;
     int playerAmmo;
     int playerMaxAmmo;
 
+    [Header("무기 이미지 / 이름")]
     [SerializeField] Image weaponMain1;
     [SerializeField] TextMeshProUGUI weaponMain1_TXT;
     string weaponMain1Name;
@@ -30,22 +32,24 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] TextMeshProUGUI weaponTactical_TXT;
     int weaponTacticalCount;
 
+    [Header("미션 정보")]
+    [SerializeField] public GameObject missionViewer;
     [SerializeField] TextMeshProUGUI missionTime;
     [SerializeField] TextMeshProUGUI missionEnemy;
     int missionTimeLimit;
     int missionTimeCurrent;
     int missionEnemyCount;
 
+    [Header("섬광탄 효과 (임시)")]
     public Image FlashImage;
 
-    [SerializeField] public GameObject missionViewer;
+    [Header("스나이퍼 줌 UI")]
     public Image snimperZoomUI;
 
+    [Header("사망 관련")]
     public GameObject deadPanel;
     float deadPanelAlpha;
     public GameObject[] deadPanelUI;
-
-    public TextMeshProUGUI enemyCount;
 
     private void Start()
     {
@@ -132,7 +136,10 @@ public class UIManager : Singleton<UIManager>
     {
         // 에너미가 죽을 때 남은 수를 업데이트
         GameManager.Instance.remainEnemy = GameManager.Instance.enemies.Count;
-        // 적용
-        enemyCount.text = $"{GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
+
+        // 남은 적 : n
+        missionEnemy.text = string.Format("남은 적 : {0}", GameManager.Instance.remainEnemy);
+        // 남은 적 : n / n
+        //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
     }
 }
