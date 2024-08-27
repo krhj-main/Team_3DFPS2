@@ -18,6 +18,12 @@ public enum EnemyState
     Blind
 }
 
+public enum PatrolState
+{
+    Random,
+    Constant
+}
+
 public class Enemy : MonoBehaviour, IDamageAble
 {
     // 상태 enum 변수
@@ -87,6 +93,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     float trackTime = 5f;
 
     // Patrol 관련 변수
+    [Header("순찰 방식(일정/랜덤)")]
+    public PatrolState patrolState;
     float patrolDis;    // Enemy와 웨이포인트와의 거리
     [Header("웨이 포인트 리스트")]
     public List<Transform> wayPoints;
@@ -116,8 +124,15 @@ public class Enemy : MonoBehaviour, IDamageAble
 
     void Awake()
     {
-        index = 0;
-        //index = Random.Range(0, wayPoints.Count);
+        switch (patrolState)
+        {
+            case PatrolState.Constant:
+                index = 0;
+                break;
+            case PatrolState.Random:
+                index = Random.Range(0, wayPoints.Count);
+                break;
+        }
 
         cc = GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
@@ -232,11 +247,18 @@ public class Enemy : MonoBehaviour, IDamageAble
 
             patrolDis = Vector3.Distance(enemyPos, wayPoints[index].position);
 
-            if (patrolDis < 0.1f)
+            if (patrolDis < 0.5f)
             {
-                //index++;
-                //if (index == wayPoints.Count) index = 0;
-                index = Random.Range(0, wayPoints.Count);
+                switch (patrolState)
+                {
+                    case PatrolState.Constant:
+                        index++;
+                        if (index == wayPoints.Count) index = 0;
+                        break;
+                    case PatrolState.Random:
+                        index = Random.Range(0, wayPoints.Count);
+                        break;
+                }
                 agent.speed = patrolSpd;
             }
             agent.SetDestination(wayPoints[index].position);

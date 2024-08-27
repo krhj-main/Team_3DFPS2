@@ -254,7 +254,7 @@ MonoBehaviour:
   atkDis: 2
   originFindDis: 0
   originAtkDis: 0
-  viewAngle: 180
+  viewAngle: 160
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -265,6 +265,7 @@ MonoBehaviour:
   enemyFirePos: {fileID: 4203833982897513660}
   atkDelay: 2
   reloadTime: 2
+  patrolState: 1
   wayPoints:
   - {fileID: 0}
   - {fileID: 0}
