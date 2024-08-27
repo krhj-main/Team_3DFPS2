@@ -119,7 +119,7 @@ public class UIManager : Singleton<UIManager>
         while (deadPanelAlpha <= 1f)
         {
             deadPanelAlpha += Time.deltaTime;
-            deadPanel.GetComponent<Image>().color = new Color(255, 255, 255, deadPanelAlpha);
+            deadPanel.GetComponent<Image>().color = new Color(0, 0, 0, deadPanelAlpha);
             yield return null;
         }
 

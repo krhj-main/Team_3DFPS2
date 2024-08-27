@@ -9,7 +9,6 @@ public class ExitWeaopnEquip : MonoBehaviour
     public GameObject fadeOutCanvas;            // 페이드 아웃 캔버스
     private float canvasAlpha = 0;              // 캔버스 알파 값
     private Image fadeImage;                    // 페이드 아웃 될 이미지
-    public Transform playerRotation;           // 카메라 방향 반대로 돌림
 
     private void Awake()
     {
