@@ -215,7 +215,6 @@ public class GrenadeFactory : ThrowingWeapon
     }
 
     public void test() {
-        Debug.Log(gameObject.name);
         Throw(firePos);
     }
 

@@ -16,7 +16,8 @@ public class Dron : MonoBehaviour,Interactable
 
     public Rigidbody rig;
     Camera dronCam;
-    [SerializeField] Canvas dronUI;
+    [SerializeField] GameObject dronUI;
+    public RawImage cam;
     [SerializeField] float jumpeForce = 20f;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpCoolTime = 2f;
@@ -28,7 +29,7 @@ public class Dron : MonoBehaviour,Interactable
 
     public KeyCode returnKey;
 
-    bool isActive = false;
+    public bool isActive = false;
     [Tooltip("그라운드 체크할 박스의 사이즈")]
     [SerializeField] Vector3 boxSize;
     [Tooltip("플레이어로부터 그라운드 박스의 거리")]
@@ -130,7 +131,8 @@ public class Dron : MonoBehaviour,Interactable
     }
     public void DronAwake() {
         
-        dronUI.enabled = true;
+        cam.enabled = false;
+        dronUI.SetActive(true);
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
@@ -140,10 +142,10 @@ public class Dron : MonoBehaviour,Interactable
     }
     public void DronDisable()
     {
-        
-        dronUI.enabled = false;
+        cam.enabled = true;
+        dronUI.SetActive(false);
         dronCam.enabled = false;
-        dronController.DronReturn();
+        dronController.charCamera.enabled = true;
         anim.SetBool("Open_Anim", false);
         v = 0;
         h = 0;
@@ -151,11 +153,10 @@ public class Dron : MonoBehaviour,Interactable
 
         public void Interaction(GameObject target)
     {
-        dronController.isOut = false;
-        //gameObject.SetActive(false);
-        transform.SetParent(dronController.transform);
+        cam.enabled = false;
         isActive = false;
         dronController.phoneMat.color = Color.black;
+        dronController.DronReturn();
     }
 
     private void OnCollisionEnter(Collision collision)

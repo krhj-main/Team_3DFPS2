@@ -23,13 +23,15 @@ public class DronController : SpecialWeapon
     }
 
     public void DronReturn() {
-        charCamera.enabled = true;
+        isOut = false;
+        //gameObject.SetActive(false);
+        dron.transform.SetParent(dronpos);
+        anim.SetBool("isThrow", isOut);
     }
 
     public void Use() {
              dron.rig.isKinematic = false;
             dron.col.enabled = true;
-            dron.gameObject.transform.position = PlayerController.Instance.PlayerCamera.transform.position+ PlayerController.Instance.PlayerCamera.transform.forward;
             dron.gameObject.SetActive(true);
             dron.transform.SetParent(null);
 
@@ -38,16 +40,18 @@ public class DronController : SpecialWeapon
             if (dron.rig)
             {
             dron.rig.velocity = Vector3.zero;
-            dron.rig.AddForce(PlayerController.Instance.PlayerCamera.transform.forward * 1, ForceMode.Impulse);
+            dron.rig.AddForce(PlayerController.Instance.PlayerCamera.transform.forward * 10, ForceMode.Impulse);
             }
-            isOut = !isOut;
+            isOut = true;
+        anim.SetBool("isThrow", isOut);
 
-        
-           
     }
 
     public override void OnHandEnter()
     {
+        dron.cam.gameObject.SetActive(true);
+        anim.enabled = true;
+        anim.SetBool("isThrow", isOut);
         phone.enabled = true;
         arms.SetActive(true);
         PlayerController.Instance.PlayerCamera.transform.SetParent(CameraPos);
@@ -56,8 +60,13 @@ public class DronController : SpecialWeapon
     }
     public override void OnHandExit()
     {
+        dron.cam.gameObject.SetActive(false);
+        anim.enabled = false;
         dron.rig.isKinematic = true;
-        dron.col.enabled = false;
+        if (!isOut) {
+            dron.col.enabled = false;
+        }
+        
         phone.enabled = false;
         arms.SetActive(false);
         PlayerController.Instance.PlayerCamera.transform.SetParent(null);
@@ -83,7 +92,8 @@ public class DronController : SpecialWeapon
             }
             else
             {
-                Use();
+                anim.SetTrigger("doThrow");
+                
             }
         }
     }
@@ -91,6 +101,6 @@ public class DronController : SpecialWeapon
     {
         base.Interaction(target);
         phone.enabled = true;
-
     }
+
 }
