@@ -45,9 +45,11 @@ public class UIManager : Singleton<UIManager>
     float deadPanelAlpha;
     public GameObject[] deadPanelUI;
 
+    public TextMeshProUGUI enemyCount;
+
     private void Start()
     {
-
+        RemainEnemy();
     }
 
     private void Update()
@@ -122,5 +124,15 @@ public class UIManager : Singleton<UIManager>
         {
             ui.SetActive(true);
         }
+    }
+
+    // "남은 적 수 / 최대 적 수" 를 표시해주는 메서드
+    // 해당 메서드는 에너미가 죽었을 때 사용
+    public void RemainEnemy()
+    {
+        // 에너미가 죽을 때 남은 수를 업데이트
+        GameManager.Instance.remainEnemy = GameManager.Instance.enemies.Count;
+        // 적용
+        enemyCount.text = $"{GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
     }
 }

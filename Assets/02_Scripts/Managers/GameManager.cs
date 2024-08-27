@@ -31,8 +31,12 @@ public class GameManager : Singleton<GameManager>
         get { return Instance.smokeGrenade; }
     }
     */
-
+    [HideInInspector]
     public List<Enemy> enemies = new List<Enemy>();
+    [HideInInspector]
+    public float maxEnemy;
+    [HideInInspector]
+    public float remainEnemy;
 
     private void OnEnable()
     {
@@ -52,6 +56,8 @@ public class GameManager : Singleton<GameManager>
         enemies.Clear();
         // 씬에 존재하는 모든 enemy를 담는다
         enemies.AddRange(FindObjectsOfType<Enemy>());
+        // 최대 에너미 수를 현재 씬에 있는 에너미 수만큼 저장
+        maxEnemy = enemies.Count;
     }
 
     void Start()

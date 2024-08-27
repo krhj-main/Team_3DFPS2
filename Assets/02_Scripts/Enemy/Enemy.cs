@@ -469,6 +469,9 @@ public class Enemy : MonoBehaviour, IDamageAble
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
+
+        //UI 업데이트
+        UIManager.Instance.RemainEnemy();
     }
     #endregion
 
