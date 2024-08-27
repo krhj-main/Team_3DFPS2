@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
-using static UnityEditorInternal.VersionControl.ListControl;
-using Unity.VisualScripting;
 
 public enum EnemyState
 {
