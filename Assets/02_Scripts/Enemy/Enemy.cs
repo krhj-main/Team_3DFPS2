@@ -140,6 +140,13 @@ public class Enemy : MonoBehaviour, IDamageAble
         weapon = GetComponentInChildren<MainWeapon>();
     }
 
+    private void OnEnable()
+    {
+
+         PlayerController.OnPlayerDeath += OnPlayerDied;
+        
+    }
+
     private void Start()
     {
         // 외부 변수 관련 초기화
@@ -481,11 +488,13 @@ public class Enemy : MonoBehaviour, IDamageAble
         {
             return;
         }
+
         if (IsHeadShot(hitpoint))
         {
             hp -= damage*2;
         }
-        else {
+        else 
+        {
             hp -= damage;
         }
         
@@ -551,5 +560,11 @@ public class Enemy : MonoBehaviour, IDamageAble
         float _relativeHeight = (_hitpoint.y - _bottomY) / _controllerHeight;
         // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
         return (_relativeHeight >= (1 - headRatio));
+    }
+
+
+    void OnPlayerDied()
+    {
+        firstState = EnemyState.Move;
     }
 }
