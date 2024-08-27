@@ -201,7 +201,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
     #region 정조준 함수
 
-    public void Aming(bool _whatAim)
+    public virtual void Aming(bool _whatAim)
     {
         isAming = true;
         if (_whatAim)
@@ -211,9 +211,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             PlayerController.Instance.moveSpeedScale = -0.5f;   // 줌 시 이동속도 제한
             targetFOV = adsFOV;
             bulletSpread = 0;
-        }
-
-        if (!_whatAim)
+        }else
         {
             anim.SetBool("isAiming", false);
             //targetPos = shoulderPos;
@@ -225,20 +223,15 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
     void UpdateAiming()
     {
-        if (gunSwap) 
-        { 
-            //gunSwap.GunPosition.localPosition = Vector3.Lerp(gunSwap.GunPosition.localPosition, targetPos, Time.deltaTime * adsSpeed); 
-        }
-        // 무기 위치 업데이트
-        
-
-        // 카메라 FOV 업데이트
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * adsSpeed);
-
         if (cam.fieldOfView == targetFOV)
         {
             isAming = false;
+            return;
         }
+        // 카메라 FOV 업데이트
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * adsSpeed);
+
+        
     }
     #endregion
 

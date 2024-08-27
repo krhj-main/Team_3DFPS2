@@ -27,7 +27,7 @@ public class Sniper : MainWeapon
         bulletRange = 200f;               // 총알 발사 거리
         fireRate = 2.5f;                  // 총알 발사 주기
         recoilX = 1f;                   // 좌우 반동
-        recoilY = 40f;                     // 수직 반동
+        recoilY = 10f;                     // 수직 반동
         recoilRecoverySpeed = 5f;         // 반동 회복 속도
         reloadTime = 4.5f;                  // 장전 시간
         adsSpeed = 4;                     // 정조준 속도
@@ -40,16 +40,7 @@ public class Sniper : MainWeapon
 
     private void Update()
     {
-        if (isADS)
-        {
-            UIManager.Instance.snimperZoomUI.enabled = true;
-            scope.SetActive(false);
-        }
-        else
-        {
-            UIManager.Instance.snimperZoomUI.enabled = false;
-            scope.SetActive(true);
-        }
+        
     }
 
 
@@ -168,4 +159,30 @@ public class Sniper : MainWeapon
         }
     }
     #endregion
+
+
+    public override void OnHand(Transform _tr, Vector3 _offSet)
+    {
+        base.OnHand(_tr, _offSet);
+        if (isADS)
+        {
+            UIManager.Instance.snimperZoomUI.enabled = true;
+            scope.SetActive(false);
+        }
+        else
+        {
+            UIManager.Instance.snimperZoomUI.enabled = false;
+            scope.SetActive(true);
+        }
+
+        UIManager.Instance.snimperZoomUI.enabled = isADS;
+        scope.SetActive(!isADS);
+    }
+
+    public override void Aming(bool _whatAim)
+    {
+        base.Aming(_whatAim);
+        UIManager.Instance.snimperZoomUI.enabled = _whatAim;
+        scope.SetActive(!_whatAim);
+    }
 }

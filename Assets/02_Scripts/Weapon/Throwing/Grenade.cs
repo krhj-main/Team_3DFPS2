@@ -74,13 +74,13 @@ public class Grenade :MonoBehaviour
         switch(type)
         {
             case GrenadeType.FragGrenade:
-                StartCoroutine(frag.FlagGrenadeExplode(transform, _radius, _delay, _value));
+                StartCoroutine(frag.FlagGrenadeExplode(transform));
                 break;
             case GrenadeType.FlashGrenade:
-                StartCoroutine(flash.FlashGrenadeExplode(transform, _radius, _delay, _value));
+                StartCoroutine(flash.FlashGrenadeExplode(transform));
                 break;
             case GrenadeType.SmokeGrenade:
-                StartCoroutine(smoke.SmokeGrenadeExplode(transform, _radius, _delay, _value));
+                StartCoroutine(smoke.SmokeGrenadeExplode(transform));
                 break;
         }
     }

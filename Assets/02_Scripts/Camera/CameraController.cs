@@ -119,6 +119,7 @@ public class CameraController : MonoBehaviour
         {
             recoilRotation = Vector3.Lerp(recoilRotation, Vector3.zero, Time.deltaTime * recoilRecoverySpeed);
             recoilAmount += (Vector3.zero - recoilRotation) * Time.deltaTime * recoilRecoverySpeed;
+            
         }
     }
 
@@ -133,13 +134,19 @@ public class CameraController : MonoBehaviour
         arm.localRotation = Quaternion.Euler(new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, tilt.eulerAngles.z) + recoilAmount);
         //waist.localRotation = Quaternion.Euler(0, 0, tilt.eulerAngles.z);
         recoilAmount = Vector3.zero;
+        if (arm.localRotation.eulerAngles.x > 0)
+        {
+            Debug.Log(arm.localRotation.eulerAngles.x);
+            Debug.Log(arm.rotation.eulerAngles.x);
+            recoilRotation = Vector3.zero;
+        }
 
     }
 
     public void ApplyRecoil(float recoilX, float recoilY)
     {
         Vector3 recoil= new Vector3(-recoilY, Random.Range(-recoilX, recoilX), 0);
-        recoil.x = Mathf.Clamp(recoil.x, -1.5f, 1.5f);
+        recoil.x = Mathf.Clamp(recoil.x, -100f, 100f);
         // 새로운 반동값을 현재 반동에 추가
         recoilRotation += recoil;
         recoilAmount += recoil;

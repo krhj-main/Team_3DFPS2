@@ -8,6 +8,9 @@ public class FlashGrenade
     public static Material material;
     public static Vector3 midle = new Vector3(0, -0.0052f, 0);
     public static Vector3 scale = new Vector3(0.75f, 0.75f, 0.75f);
+    float radius=10;
+    float delay=3f;
+    float effectDuration=5f;
     public FlashGrenade() {
         if (mesh == null) {
             mesh = Resources.Load<Mesh>("Grenades, Bombs & explosives Pack/Models & Textures/Flashbang/Flashbang");
@@ -20,19 +23,19 @@ public class FlashGrenade
 
     #region "섬광탄"
     // 섬광탄 효과 ( 눈뽕, 에너미 멈춤 등 )
-    public IEnumerator FlashGrenadeExplode(Transform _explode, float _radius, float _delay, float _effectDuration)
+    public IEnumerator FlashGrenadeExplode(Transform _explode)
     {
-        yield return new WaitForSeconds(_delay);
+        yield return new WaitForSeconds(delay);
         _explode.gameObject.SetActive(false);
         Debug.Log("섬광탄 폭발");
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
 
         // 거리별 값 판별 ( 멀어질수록 작은 값 )
-        float _rangePersentPlayer = 1 - (_distanceToPlayer / _radius);
-        calDuration = Mathf.RoundToInt(_effectDuration * _rangePersentPlayer);
+        float _rangePersentPlayer = 1 - (_distanceToPlayer / radius);
+        calDuration = Mathf.RoundToInt(effectDuration * _rangePersentPlayer);
         
-        if (_distanceToPlayer <= _radius)
+        if (_distanceToPlayer <= radius)
         {
             if (IsLookingAtFlash(_explode, PlayerController.Instance.waist))
             {
@@ -70,15 +73,15 @@ public class FlashGrenade
         {
             float _distance = Vector3.Distance(_explode.position, GameManager.Instance.enemies[i].transform.position);
             // 거리가 범위 이내라면
-            if (_distance < _radius)
+            if (_distance < radius)
             {
                 
                 // Enemy가 섬광탄을 보고있다면
                 if (IsLookingAtFlash(_explode, GameManager.Instance.enemies[i].transform))
                 {// 거리별 값 판별 ( 멀어질수록 작은 값 )
-                    float _rangePersent = 1 - (_distance / _radius);
+                    float _rangePersent = 1 - (_distance / radius);
                     float _baseTime = 1.5f;
-                    GameManager.Instance.enemies[i].blindTime = Mathf.RoundToInt(_effectDuration * _rangePersent) + _baseTime;
+                    GameManager.Instance.enemies[i].blindTime = Mathf.RoundToInt(effectDuration * _rangePersent) + _baseTime;
                     GameManager.Instance.enemies[i].enemyState = EnemyState.Blind;
                 }
             }
@@ -100,14 +103,12 @@ public class FlashGrenade
         float angle = Vector3.Angle(_character.forward, _dirToFlash);
         // 시야각 확인 // 60 = 좌우로 60
         
-        if (angle < 120)
+        if (angle < 90)
         {
-            Debug.Log(angle);
             // 레이캐스트로 장애물 체크
             RaycastHit hit;
             if (Physics.Raycast(_flash.position, _dirToFlash*-1, out hit))
             {
-                Debug.DrawRay(_flash.position, _dirToFlash * -1,Color.black,1f);
                 // 레이캐스트가 섬광탄에 먼저 닿았는지 확인
                 if (hit.collider.CompareTag(_character.tag))
                 {

@@ -8,6 +8,9 @@ public class SmokeGrenade
     public static Material material;
     public static Vector3 midle = new Vector3(0, -0.0026f, 0);
     public static Vector3 scale = new Vector3(0.5f, 0.5f, 0.5f);
+    float radius = 5;
+    float delay = 2;
+    float effectDuration = 5f;
     public SmokeGrenade ()
     {
         if (mesh == null)
@@ -21,11 +24,14 @@ public class SmokeGrenade
 
 
     }
-    public IEnumerator SmokeGrenadeExplode(Transform _explode, float _radius, float _delay, float _effectDuration)
+    public IEnumerator SmokeGrenadeExplode(Transform _explode)
     {
-        yield return new WaitForSeconds(_delay);
+        yield return new WaitForSeconds(delay);
         _explode.gameObject.SetActive(false);
         Debug.Log("연막탄 폭발");
         // 연막 이펙트 생성
+
+        yield return new WaitForSeconds(effectDuration);
+        // 연막 이펙트 제거
     }
 }
