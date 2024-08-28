@@ -25,8 +25,8 @@ public class FieldOfView : MonoBehaviour
     [HideInInspector]   // 플레이어 판단용
     public List<Transform> visibleTargets = new List<Transform>();
 
-    [HideInInspector]
-    public List<Transform> visibleObjects = new List<Transform>();
+    //[HideInInspector]
+    //public List<Transform> visibleObjects = new List<Transform>();
 
     [HideInInspector]
     public Collider[] targetsInViewRadius;  // Hide 상태에서 사용
@@ -56,7 +56,7 @@ public class FieldOfView : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        //visibleTargets.Clear();
+        visibleTargets.Clear();
         //visibleObjects.Clear();
         // viewRadius를 반지름으로 한 원 영역 내 targetMask 레이어(플레이어)인 콜라이더를 모두 가져옴
         targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
@@ -76,7 +76,7 @@ public class FieldOfView : MonoBehaviour
                 {
                     visibleTargets.Add(target);
                     //visibleObjects.Add(target);
-
+                    /*
                     // 공격 범위 안에 플레이어가 들어오면
                     if (Vector3.Distance(transform.position, visibleTargets[0].position) <= enemy.atkDis)
                     {
@@ -87,6 +87,7 @@ public class FieldOfView : MonoBehaviour
                             enemy.currentTime = enemy.atkDelay;
                         }
                     }
+                    */
                 }
             }
         }

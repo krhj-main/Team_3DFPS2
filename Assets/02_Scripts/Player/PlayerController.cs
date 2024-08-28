@@ -92,7 +92,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 캐릭터의 속도값
     Vector3 velocity;
     // 캐릭터 컨트롤러
-    CharacterController cc;
+    [HideInInspector] public CharacterController cc;
 
     Camera main;
     public Camera PlayerCamera {
@@ -346,6 +346,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         if(pHP <= 0)
         {
             pState.isDead = true;
+            cc.enabled = false;
         }
     }
 }

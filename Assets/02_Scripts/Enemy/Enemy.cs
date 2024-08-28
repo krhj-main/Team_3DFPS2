@@ -100,7 +100,7 @@ public class Enemy : MonoBehaviour, IDamageAble
 
     // 상태이상 관련 변수
     [Header("실명 시간")]
-    public float blindTime;
+    public float blindTime = 5f;
 
     // 애니메이션 관련 변수
     [Header("애니메이션 변수")]
@@ -214,18 +214,13 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "순찰"
     void Patrol()
     {
-        // 플레이어가 enemy의 시야 범위 내에 들어와 있다면
         if (fov.visibleTargets.Count > 0)
         {
-            // 플레이어 발견 범위보다 거리가 낮으면
-            if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) < findDis)
-            {
-                // Patrol 애니메이션 종료
-                anim.SetBool("isPatrol", false);
+            // Patrol 애니메이션 종료
+            anim.SetBool("isPatrol", false);
 
-                // 상태를 Move로 변경
-                enemyState = EnemyState.Move;
-            }
+            // 상태를 Move로 변경
+            enemyState = EnemyState.Move;
         }
         // 캐릭터가 시야 내에 없을 때
         else
@@ -241,9 +236,9 @@ public class Enemy : MonoBehaviour, IDamageAble
             // CharacterController의 하단 y 좌표 계산 ( 지면 )
             float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
             // 지면을 기준으로 거리 판단
-            Vector3 enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
+            Vector3 _enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
 
-            patrolDis = Vector3.Distance(enemyPos, wayPoints[index].position);
+            patrolDis = Vector3.Distance(_enemyPos, wayPoints[index].position);
 
             if (patrolDis < 0.5f)
             {
@@ -303,7 +298,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         agent.isStopped = true;
         agent.ResetPath();
 
-        if (GameManager.Instance.BlindTimer(blindTime))
+        if (GameManager.Instance.Timer(blindTime))
         {
             // 시야를 복구하고, 플레이어를 놓친 상태로 설정
             findDis = originFindDis;
@@ -323,75 +318,58 @@ public class Enemy : MonoBehaviour, IDamageAble
         // 플레이어가 Enemy 시야안에 들어왔을 경우
         if (fov.visibleTargets.Count > 0)
         {
-            //추적중 일정시간 동안 시야에서 벗어나면 담겨있는 리스트를 초기화하고 타이머 초기화
-            if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) > findDis)
+            // 쫓아갈 위치 대입
+            chasePos = PlayerController.Instance.transform.position;
+
+            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
+            agent.isStopped = true;
+            agent.ResetPath();
+            agent.speed = trackingSpd;
+
+            // 내비게이션으로 접근하는 최소 거리를 공격 가능 범위로 지정
+            agent.stoppingDistance = 0;
+
+            // 내이게이션의 목적지를 플레이어의 위치로 지정
+            agent.destination = chasePos;
+
+            // 거리가 atkDis보다 크다면 플레이어를 추적
+            if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) <= atkDis)
             {
-                curTrackTime += Time.deltaTime;
-                if (curTrackTime >= trackTime)
+                anim.SetBool("isMove", false);
+                currentTime = atkDelay;
+                enemyState = EnemyState.Attack;
+            }
+        }
+        // 플레이어가 Enemy 시야에 없을 경우
+        else
+        {
+            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
+            agent.isStopped = false;
+            agent.ResetPath();
+
+            // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
+            agent.stoppingDistance = 0;
+
+            // 내이게이션의 목적지를 소리난 위치로 지정
+            agent.destination = chasePos;
+
+            // 소리난 곳까지 오고 다음 행동 지정
+            if (Vector3.Distance(transform.position, chasePos) < 1f)
+            {
+                // Move 애니메이션 종료
+                anim.SetBool("isMove", false);
+                anim.SetBool("isIdle", true);
+
+                // 일정 시간 후 상태 전환
+                if (Timer(trackTime))
                 {
-                    // Move 애니메이션 종료
-                    anim.SetBool("isMove", false);
-                    fov.visibleTargets.Clear();
-                    curTrackTime = 0;
+                    anim.SetBool("isIdle", false);
                     enemyState = missingState;
                 }
             }
             else
             {
-                curTrackTime = 0;
-            }
-
-            // 거리가 atkDis보다 크다면 플레이어를 추적
-            if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) > atkDis)
-            {
-                // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
-                agent.isStopped = true;
-                agent.ResetPath();
-                agent.speed = trackingSpd;
-
-                // 내비게이션으로 접근하는 최소 거리를 공격 가능 범위로 지정
-                agent.stoppingDistance = atkDis;
-
-                // 내이게이션의 목적지를 플레이어의 위치로 지정
-                agent.destination = fov.visibleTargets[0].position;
-            }
-        }
-        // 플레이어가 Enemy 시야에 들어온 적이 없었을 경우
-        else if (fov.visibleTargets.Count <= 0)
-        {
-            // 플레이어의 소리를 들어서 플레이어의 위치값을 전달받았을 경우
-            if (chasePos != null)
-            {
-                // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
-                agent.isStopped = true;
-                agent.ResetPath();
-
-                // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
-                agent.stoppingDistance = 0;
-
-                // 내이게이션의 목적지를 소리난 위치로 지정
-                agent.destination = chasePos;
-
-                // 소리난 곳까지 오고 다음 행동 지정
-                if (Vector3.Distance(transform.position, chasePos) < 0.5f)
-                {
-                    // Move 애니메이션 종료
-                    anim.SetBool("isMove", false);
-                    anim.SetBool("isIdle", true);
-
-                    // 일정 시간 후 상태 전환
-                    curTrackTime += Time.deltaTime;
-                    if (curTrackTime >= trackTime)
-                    {
-                        anim.SetBool("isIdle", false);
-                        curTrackTime = 0;
-                        enemyState = missingState;
-                    }
-                }
-                else
-                {
-                    currentTime = 0;
-                }
+                currentTime = 0;
             }
         }
     }
@@ -403,43 +381,63 @@ public class Enemy : MonoBehaviour, IDamageAble
         // Move 애니메이션 종료
         anim.SetBool("isMove", false);
 
-        if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) < atkDis)
+        if (fov.visibleTargets.Count > 0)
         {
-            agent.velocity = Vector3.zero;
-            Vector3 _dirP = (fov.visibleTargets[0].position - agent.transform.position).normalized;
-            _dirP.y = 0;    // 이걸 뺼 경우 몸통이 같이 위를 향함, 추후 모델 넣고 수정
-            //transform.forward = _dirP;
+            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
+            agent.isStopped = true;
+            agent.ResetPath();
 
-            // 현재 방향에서 목표 방향으로 부드럽게 회전
-            Quaternion targetRotation = Quaternion.LookRotation(_dirP);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-            
-            
-            if ((Time.time-currentTime) > atkDelay)
+            // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
+            agent.stoppingDistance = atkDis;
+
+            // 내비게이션 위치를 확인한 플레이어 위치까지 지정
+            agent.destination = fov.visibleTargets[0].position;
+
+            // 공격범위 이내라면
+            if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) <= atkDis)
             {
-                currentTime = Time.time;
-                
-                // Attack 애니메이션 재생
-                anim.SetTrigger("doEnemyAttack");
-                weapon.Shoot(enemyFirePos);
+                agent.velocity = Vector3.zero;
+                Vector3 _dirP = (fov.visibleTargets[0].position - agent.transform.position).normalized;
+                _dirP.y = 0;    // 이걸 뺼 경우 몸통이 같이 위를 향함, 추후 모델 넣고 수정
 
-                if (gameObject.name.Contains("Shotgun"))
+                // 현재 방향에서 목표 방향으로 부드럽게 회전
+                Quaternion targetRotation = Quaternion.LookRotation(_dirP);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
+
+                if (Timer(atkDelay))
                 {
-                    atkDelay = Random.Range(1.5f, 2f);
-                    Debug.Log(weapon.fireRate);
-                    weapon.fireRate = atkDelay;
-                }
-                else
-                {
-                    atkDelay = Random.Range(0.25f, 0.5f);
-                    weapon.fireRate = atkDelay;
+                    // Attack 애니메이션 재생
+                    anim.SetTrigger("doEnemyAttack");
+                    weapon.Shoot(enemyFirePos);
+
+                    // 무기 종류에 따라 공격 속도 설정
+                    if (gameObject.name.Contains("Shotgun"))
+                    {
+                        atkDelay = Random.Range(1.5f, 2f);
+                        Debug.Log(weapon.fireRate);
+                        weapon.fireRate = atkDelay;
+                    }
+                    else
+                    {
+                        atkDelay = Random.Range(0.25f, 0.5f);
+                        weapon.fireRate = atkDelay;
+                    }
                 }
             }
+            // 공격범위 밖이라면
+            else
+            {
+                chasePos = PlayerController.Instance.transform.position;
+                enemyState = EnemyState.Move;
+                currentTime = 0;
+            }
         }
+        // 플레이어가 시야에 없다면
         else
         {
+            chasePos = PlayerController.Instance.transform.position;
             enemyState = EnemyState.Move;
-            currentTime = 0;
         }
     }
     #endregion
@@ -521,7 +519,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     }
 
     // 연막탄에 닿았을 시 Enemy에게 끼치는 영향
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("SmokeGrenade"))
         {
@@ -550,5 +548,17 @@ public class Enemy : MonoBehaviour, IDamageAble
         float _relativeHeight = (_hitpoint.y - _bottomY) / _controllerHeight;
         // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
         return (_relativeHeight >= (1 - headRatio));
+    }
+
+    public bool Timer(float _targetTime)
+    {
+        currentTime += Time.deltaTime;
+        if (currentTime > _targetTime)
+        {
+            currentTime = 0;
+            return true;
+        }
+
+        return false;
     }
 }
