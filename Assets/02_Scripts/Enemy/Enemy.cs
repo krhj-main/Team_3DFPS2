@@ -288,7 +288,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     public void Blind()
     {
         // Hide(Idle) 애니메이션 재생
-        anim.SetTrigger("doFlashbang");
+        //anim.SetTrigger("doFlashbang");
+        anim.SetBool("isFlashbang", true);
 
         // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
         findDis = 0.1f;
@@ -301,6 +302,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         if (GameManager.Instance.Timer(blindTime))
         {
             // 시야를 복구하고, 플레이어를 놓친 상태로 설정
+            anim.SetBool("isFlashbang", false);
             findDis = originFindDis;
             atkDis = originAtkDis;
             agent.isStopped = false;
