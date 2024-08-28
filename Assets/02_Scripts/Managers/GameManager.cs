@@ -31,6 +31,8 @@ public class GameManager : Singleton<GameManager>
         get { return Instance.smokeGrenade; }
     }
     */
+
+
     [HideInInspector]
     public List<Enemy> enemies = new List<Enemy>();
     [HideInInspector]

@@ -11,6 +11,7 @@ public class InputManger : Singleton<InputManger>
     bool isPress=false;
     void Start()
     {
+
     }
 
     // Update is called once per frame

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
 
@@ -79,7 +78,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     }
 
-    public event Action inputAction;
+    
 
 
     // 플레이어 상태 리스트
@@ -141,14 +140,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         PlayerDir();
         ActiveCrouch();
         OpenViewer();
-
-        if (inputAction != null)
-        {
-            if (Input.anyKey)
-            {
-                inputAction.Invoke();
-            }
-        }
     }
     
     private void FixedUpdate()
