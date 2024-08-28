@@ -158,7 +158,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     {
         // HP 실시간 파악
         hpSlider.value = (float)hp / (float)maxHp;
-        //Debug.Log("에너미 " + hp);
+
         switch (enemyState)
         {
             case EnemyState.Idle:
@@ -417,7 +417,6 @@ public class Enemy : MonoBehaviour, IDamageAble
             
             if ((Time.time-currentTime) > atkDelay)
             {
-                
                 currentTime = Time.time;
                 
                 // Attack 애니메이션 재생

@@ -362,6 +362,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
     public virtual void PlayerFireBullet()
     {
+        anim.SetBool("isReloading", false);
         playerEffect.Play();
         playerSound.clip = shootSound;
         playerSound.Play();
