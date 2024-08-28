@@ -9,15 +9,36 @@ public class AnimIK : MonoBehaviour
     public Transform gunPivot;
     public Transform leftHand;
     public Transform rightHand;
-
+    public Vector3 Offset;
+    public bool trigger; 
     Animator anim;
-
+    Transform chest;
     private void Awake()
     {
+        Offset = new Vector3(-34.3f, 31.4f, -60.40f);
         anim = GetComponent<Animator>();
+        if (anim)
+
+            chest = anim.GetBoneTransform(HumanBodyBones.UpperChest); // 해당 본의 transform 가져오기
+    }
+    private void LateUpdate()
+    {
+
+        //Offset= chest.localRotation.eulerAngles;
+        Debug.Log(chest.localRotation.eulerAngles);
+        if (trigger) {
+            chest.LookAt(PlayerController.Instance.waist.position);
+            chest.localRotation = Quaternion.Euler(Offset+ chest.localRotation.eulerAngles);
+            Debug.Log(chest.localRotation.eulerAngles);
+        }
+
     }
 
+    void test() { 
     
+    
+    }
+
     // 애니메이터의 IK 갱신
     private void OnAnimatorIK(int layerIndex)
     {
