@@ -7,6 +7,7 @@ public class FragGrenade
     public static Material material;
     public static Vector3 midle=new Vector3 (0,0,0);
     public static Vector3 scale= new Vector3(1f, 1f, 1f);
+    public static GameObject effect;
     float radius=5;
     float delay=2;
     float damage=100;
@@ -19,6 +20,9 @@ public class FragGrenade
         if (material == null) {
             material = Resources.Load<Material>("Grenades, Bombs & explosives Pack/Models & Textures/MK2_Frag/Materials/Grenade_DefaultMaterial_BaseColor");
         }
+        if (effect == null) {
+            effect = Resources.Load<GameObject>("GranadeGunExplosion");
+        }
 
         
     }
@@ -28,6 +32,8 @@ public class FragGrenade
     {
         
         yield return new WaitForSeconds(delay);
+        GameObject go = GameObject.Instantiate(effect);
+        go.transform.position = _explode.position;
         _explode.gameObject.SetActive(false);
 
         // 폭발 소리로 인한 에너미 어그로
@@ -69,7 +75,8 @@ public class FragGrenade
                 }
             }
         }
-        Debug.Log("수류탄 폭발");
+       
+        Debug.Log("수류탄 폭발"); 
         /*
         // 에너미
         foreach (Enemy enemy in GameManager.Instance.enemies)

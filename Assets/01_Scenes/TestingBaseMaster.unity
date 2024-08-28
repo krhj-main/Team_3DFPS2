@@ -148,6 +148,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sniper
       objectReference: {fileID: 0}
+    - target: {fileID: 5784690942125823329, guid: f58cbb32c7b67b141a2131f6783b30e9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8500481383017725635, guid: f58cbb32c7b67b141a2131f6783b30e9,
         type: 3}
       propertyPath: m_RootOrder

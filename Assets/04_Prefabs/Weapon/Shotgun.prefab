@@ -50,7 +50,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1694148824334815987
 Transform:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ Transform:
   m_Children:
   - {fileID: 2302705948388424734}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7799442950242413329
 MeshFilter:
@@ -142,7 +142,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1221850809722018, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1364437821317494, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
       propertyPath: m_Layer

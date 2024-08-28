@@ -164,6 +164,7 @@ public class Sniper : MainWeapon
     public override void OnHand(Transform _tr, Vector3 _offSet)
     {
         base.OnHand(_tr, _offSet);
+        /*
         if (isADS)
         {
             UIManager.Instance.snimperZoomUI.enabled = true;
@@ -174,9 +175,18 @@ public class Sniper : MainWeapon
             UIManager.Instance.snimperZoomUI.enabled = false;
             scope.SetActive(true);
         }
+        */
 
         UIManager.Instance.snimperZoomUI.enabled = isADS;
         scope.SetActive(!isADS);
+    }
+
+    public override void OnHandExit()
+    {
+        base.OnHandExit();
+
+        UIManager.Instance.snimperZoomUI.enabled = false;
+        scope.SetActive(false);
     }
 
     public override void Aming(bool _whatAim)
