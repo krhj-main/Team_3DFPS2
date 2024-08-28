@@ -40,6 +40,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public float remainEnemy;
 
+    
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

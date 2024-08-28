@@ -1591,7 +1591,7 @@ GameObject:
   - component: {fileID: 4944012116448795447}
   - component: {fileID: 8156070730107959370}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: HP_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2583,7 +2583,7 @@ RectTransform:
   - {fileID: 3746388721144457699}
   - {fileID: 8366461409695842398}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

@@ -51,11 +51,35 @@ public class UIManager : Singleton<UIManager>
     float deadPanelAlpha;
     public GameObject[] deadPanelUI;
 
+    private void OnEnable()
+    {
+        UIInit();
+    }
     private void Start()
     {
         RemainEnemy();
     }
+    void UIInit()
+    {
+        playerHPBar = GameObject.Find("HP_Slider").GetComponent<Slider>();
+        playerHP_TXT = GameObject.Find("HP").GetComponent<TextMeshProUGUI>();
+        playerPortrait = GameObject.Find("PlayerPortrait").GetComponent<Image>(); ;
 
+        
+        playerAmmo_TXT = GameObject.Find("Ammo").GetComponent<TextMeshProUGUI>(); ;
+        playerMaxAmmo_TXT = GameObject.Find("MaxAmmo").GetComponent<TextMeshProUGUI>(); ;
+
+        
+        weaponMain1 = GameObject.Find("Weapon1_IMG").GetComponent<Image>();
+        weaponMain1_TXT = weaponMain1.GetComponentInChildren<TextMeshProUGUI>();
+        weaponMain2 = GameObject.Find("Weapon2_IMG").GetComponent<Image>();
+        weaponMain2_TXT = weaponMain2.GetComponentInChildren<TextMeshProUGUI>();
+        weaponThrow = GameObject.Find("Weapon3_IMG").GetComponent<Image>();
+        weaponThrow_TXT = weaponThrow.GetComponentInChildren<TextMeshProUGUI>();
+
+        weaponTactical = GameObject.Find("Weapon4_IMG").GetComponent<Image>();
+        weaponTactical_TXT = weaponTactical.GetComponentInChildren<TextMeshProUGUI>();
+    }
     private void Update()
     {
         StatUIUpdate();
