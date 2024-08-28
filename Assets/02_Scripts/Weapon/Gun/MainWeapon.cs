@@ -28,7 +28,9 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public LayerMask canAttackMask;                  // 데미지 입힐 수 있는 유닛
 
     // 반동 관련 변수
+    [field: SerializeField]
     public virtual float recoilX { get; set; }               // 좌우 반동 크기
+    [field:SerializeField]
     public virtual float recoilY { get; set; }               // 수직 반동 크기
     public virtual float recoilRecoverySpeed { get; set; }   // 반동 회복 속도
     public Vector3 currentRotation;                          // 현재 카메라 값

@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
     // 현재의 반동으로 인한 회전값
     private Vector3 recoilRotation;
     // 최종적으로 적용될 회전값
-    private Vector3 finalRotation;
+    private Vector3 targetRotation;
 
     // 현재 장착된 무기에 대한 참조
     private IEquipMent mainWeapon;
@@ -115,11 +115,18 @@ public class CameraController : MonoBehaviour
         float recoilRecoverySpeed = (mainWeapon != null&& mainWeapon.type==EquipType.Weapon) ? ((MainWeapon)mainWeapon).recoilRecoverySpeed : 5f;
 
         // 반동을 서서히 0으로 줄임
-        if(Time.time - lastRecoilTime > recoilRecoveryDelay)
-        {
+        if (Vector3.Distance(recoilRotation, targetRotation) < 0.5f) {
+            if (Time.time - lastRecoilTime > recoilRecoveryDelay)
+            {
+                
+            }
             recoilRotation = Vector3.Lerp(recoilRotation, Vector3.zero, Time.deltaTime * recoilRecoverySpeed);
             recoilAmount += (Vector3.zero - recoilRotation) * Time.deltaTime * recoilRecoverySpeed;
-            
+            targetRotation = recoilRotation;
+        }
+        else {
+            recoilRotation = Vector3.Lerp(recoilRotation, targetRotation, Time.deltaTime * recoilRecoverySpeed*1.5f);
+            recoilAmount += (targetRotation - recoilRotation) * Time.deltaTime * recoilRecoverySpeed * 1.5f;
         }
     }
 
@@ -136,9 +143,9 @@ public class CameraController : MonoBehaviour
         recoilAmount = Vector3.zero;
         if (arm.localRotation.eulerAngles.x > 0)
         {
-            Debug.Log(arm.localRotation.eulerAngles.x);
-            Debug.Log(arm.rotation.eulerAngles.x);
-            recoilRotation = Vector3.zero;
+           
+            
+            //recoilRotation = Vector3.zero;
         }
 
     }
@@ -148,8 +155,11 @@ public class CameraController : MonoBehaviour
         Vector3 recoil= new Vector3(-recoilY, Random.Range(-recoilX, recoilX), 0);
         recoil.x = Mathf.Clamp(recoil.x, -100f, 100f);
         // 새로운 반동값을 현재 반동에 추가
-        recoilRotation += recoil;
-        recoilAmount += recoil;
+        //recoilRotation += recoil;
+        //recoilAmount += recoil;
+        targetRotation = recoilRotation + recoil;
+        targetRotation.x = Mathf.Clamp(targetRotation.x, -40, 360);
+        
         lastRecoilTime = Time.time;
     }
 
