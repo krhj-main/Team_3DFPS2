@@ -404,11 +404,16 @@ public class Enemy : MonoBehaviour, IDamageAble
                 Quaternion targetRotation = Quaternion.LookRotation(_dirP);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
+                float _maxHeight = 2f;
+                float _heightDif = (PlayerController.Instance.transform.position.y + PlayerController.Instance.cc.center.y) - transform.position.y;
+                float _clampHeight = Mathf.Clamp(_heightDif / _maxHeight, -1f, 0.5f);
+                anim.SetFloat("Rot", _clampHeight);
 
                 if (Timer(atkDelay))
                 {
                     // Attack 애니메이션 재생
                     anim.SetTrigger("doEnemyAttack");
+
                     weapon.Shoot(enemyFirePos);
 
                     // 무기 종류에 따라 공격 속도 설정

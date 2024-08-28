@@ -124,7 +124,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     }
     */
 
-    // Start is called before the first frame update
     void Start()
     {
         pHP = maxHP;
@@ -158,6 +157,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     
     private void FixedUpdate()
     {
+        if (!cc.enabled)
+        {
+            return;
+        }
         ActiveMove();
     }
 
@@ -352,7 +355,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         {
             pState.isDead = true;
             cc.enabled = false;
-            deathCam.enabled = true;
+            deathCam.Play("Death");
         }
     }
 
