@@ -17,15 +17,8 @@ public class Lodding : MonoBehaviour
 
     void Start()
     {
-        if (GameManager.Instance == null)
-        {
-            StartCoroutine(TransitionNextScene(0));
-        }
-        else
-        {
-            StartCoroutine(TransitionNextScene(GameManager.Instance.selectSceneNum));
-            ActiveVideo();
-        }
+        StartCoroutine(TransitionNextScene(GameManager.Instance.selectSceneNum));
+        ActiveVideo();
     }
 
     // 동영상 재생
@@ -47,7 +40,7 @@ public class Lodding : MonoBehaviour
     IEnumerator TransitionNextScene(int num)
     {
         // 지정된 씬을 비동기 형식으로 로드한다
-        AsyncOperation _ao = SceneManager.LoadSceneAsync(num);
+        AsyncOperation _ao = SceneManager.LoadSceneAsync(num + 2);
 
         // 로드되는 씬의 모습이 화면에 보이지 않게 한다
         _ao.allowSceneActivation = false;
