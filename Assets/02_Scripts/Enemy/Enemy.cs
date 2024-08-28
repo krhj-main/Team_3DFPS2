@@ -140,13 +140,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         weapon = GetComponentInChildren<MainWeapon>();
     }
 
-    private void OnEnable()
-    {
-
-         PlayerController.OnPlayerDeath += OnPlayerDied;
-        
-    }
-
     private void Start()
     {
         // 외부 변수 관련 초기화

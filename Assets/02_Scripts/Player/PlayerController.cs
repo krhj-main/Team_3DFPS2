@@ -352,10 +352,4 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             cc.enabled = false;
         }
     }
-
-    public void Die()
-    {
-        this.gameObject.layer = 0;
-        OnPlayerDeath?.Invoke();
-    }
 }

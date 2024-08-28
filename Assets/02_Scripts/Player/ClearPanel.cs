@@ -17,6 +17,7 @@ public class ClearPanel : MonoBehaviour
     public TextMeshProUGUI scoreResultText;     // 점수 결과 (문자)
     public TextMeshProUGUI scoreResultNum;      // 점수 결과 (숫자)
     public TextMeshProUGUI bestScoreText;       // 최고 점수 (문자)
+    int score;
 
     public TextMeshProUGUI clearTime;           // 클리어 시간
     public TextMeshProUGUI bestClearTime;       // 최고 클리어 시간
@@ -33,20 +34,21 @@ public class ClearPanel : MonoBehaviour
 
     void SettingClearPanel()
     {
-        missionName.text = "";                      // 게임매니저 같은데서 미션 이름 받아서 넣기 (씬매니저)
+        missionName.text = GameManager.Instance.missionNames[GameManager.Instance.selectSceneNum-2]; // 미션 이름
+
         for(int i = 0; i < goalName.Length; i++)
         {
-            goal[i].SetActive(true);                // 게임매니저 같은데서 숫자 받기 ( 씬매니저 )
-            goalName[i].text = "";                  // 마차간지로 텍스트 받기 ( 씬매니저 )
-            clearGoal[i].SetActive(true);           // 미션 클리어시 다른데서 체크해서 밑줄 그어주자 일단 켜주기만
+            goal[i].SetActive(true);                                     // 게임매니저 같은데서 숫자 받기 ( 씬매니저 )
+            goalName[i].text = "";                                       // 마찬가지로 텍스트 받기 ( 씬매니저 )
+            clearGoal[i].SetActive(true);                                // 미션 클리어시 다른데서 체크해서 밑줄 그어주자 일단 켜주기만
         }
 
-        scoreResultText.text = "";                  // 초기화
-        scoreResultNum.text = "0";                  // 초기화
-        bestScoreText.text = "";                    // 게임매니저에서 받아오기
+        scoreResultText.text = "";                                       // 초기화
+        scoreResultNum.text = "0";                                       // 초기화
+        bestScoreText.text = GameManager.Instance.bestScoreText;         // 베스트스코어 텍스트
 
-        clearTime.text = "";                        // 게임매니저에서 받아오기 (씬매니저)
-        bestClearTime.text = "";                    // 게임매니저에서 받아오기
+        clearTime.text = "";                                             // 게임매니저에서 받아오기 (씬매니저)
+        bestClearTime.text = GameManager.Instance.bestClearTimeText;     // 베스트 클리어타임
 
         StartCoroutine(CountScore(CalculaterScore(), 0));
     }
@@ -70,6 +72,10 @@ public class ClearPanel : MonoBehaviour
         }
         _current = _target;
         scoreResultNum.text = string.Format("{0:n0}", (int)_current);
+
+        yield return new WaitForSeconds(1f);
+        UpdateBestScore();
+        UpdateBestClearTime();
     }
     #endregion
 
@@ -136,6 +142,61 @@ public class ClearPanel : MonoBehaviour
         // 작아지는 효과 실행
         scoreResultText.transform.DOScale(_originalScale, emphasizeDuration);
     }
+    #endregion
 
+    #region 최고 점수 UI 변경
+    void UpdateBestScore()
+    {
+        if(score <= GameManager.Instance.bestScore)
+        {
+            return;
+        }
+
+        GameManager.Instance.bestScore = score;
+
+        (float _threshold, string _grade, string _color)[] gradeInfo =
+        {
+            (1f, "S", "#A19228"),
+            (0.8f, "A", "#BCC071"),
+            (0.6f, "B", "#9F9D97"),
+            (0.4f, "C", "#666666"),
+            (0.25f, "D", "#505050"),
+            (0.1f, "E", "#383838"),
+        };
+
+        float normalizedScore = (float)score / (GameManager.Instance.bestScore * 0.0005f);
+        for (int i = 0; i < gradeInfo.Length; i++)
+        {
+            if (normalizedScore >= gradeInfo[i]._threshold)
+            {
+                GameManager.Instance.bestGrade = gradeInfo[i]._grade;
+                GameManager.Instance.bestColor = gradeInfo[i]._color;
+                break;
+            }
+        }
+        UpdateBestScoreUI();
+    }
+
+    void UpdateBestScoreUI()
+    {
+        bestScoreText.text = GameManager.Instance.bestScoreText;
+    }
+
+    void UpdateBestClearTime()
+    {
+        if(GameManager.Instance.clearTime >= GameManager.Instance.bestClearTime)
+        {
+            return;
+        }
+
+        GameManager.Instance.bestClearTime = GameManager.Instance.clearTime;
+        if(GameManager.Instance.bestClearTime >= 60)
+        {
+            float _min = GameManager.Instance.bestClearTime / 60;
+            float _sec = GameManager.Instance.bestClearTime % 60;
+            bestClearTime.text = string.Format("{0:D2} : {1:D2}", _min, (int)_sec);
+            GameManager.Instance.bestClearTimeText = bestClearTime.text;
+        }
+    }
     #endregion
 }
