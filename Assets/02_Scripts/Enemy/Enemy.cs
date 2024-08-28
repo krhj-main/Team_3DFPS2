@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     private void OnEnable()
     {
 
-         PlayerController.OnPlayerDeath += OnPlayerDied;
+         
         
     }
 
