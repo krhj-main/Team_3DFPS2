@@ -23,6 +23,7 @@ public class ExitWeaopnEquip : MonoBehaviour
     IEnumerator FadeOut()
     {
         canvasAlpha = 0;
+
         while (canvasAlpha <= 1f)                                   // 알파값이 1이 될때까지 알파값을 더해줌
         {
             canvasAlpha += Time.deltaTime;

@@ -60,8 +60,11 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Space(5)]
     [Header("플레이어 체력")]
     int HP;
-    [SerializeField] public int maxHP = 100;
+    [SerializeField] public int maxHP = 10;
+
+    // 플레이어 죽었을 때
     public bool death = false;
+    public static event Action OnPlayerDeath;
 
     public int pHP
     {
@@ -348,5 +351,11 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             pState.isDead = true;
             cc.enabled = false;
         }
+    }
+
+    public void Die()
+    {
+        this.gameObject.layer = 0;
+        OnPlayerDeath?.Invoke();
     }
 }
