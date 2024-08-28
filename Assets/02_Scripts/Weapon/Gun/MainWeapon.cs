@@ -304,6 +304,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         StopCoroutine(Reloading());
         isReloading = false;
         isAming = false;
+        isADS = false;
         if (gunSwap)
         {
             gunSwap.GunPosition.localPosition = shoulderPos;
