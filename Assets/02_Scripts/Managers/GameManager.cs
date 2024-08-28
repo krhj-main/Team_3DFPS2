@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;  // 씬 매니저
@@ -171,9 +172,22 @@ public class GameManager : Singleton<GameManager>
     public int bestScore;
     public string bestGrade;
     public string bestColor;
+    
 
     // 베스트 스코어 , 타임 텍스트를 생성하는 속성
     public string bestScoreText => $"<color={bestColor}>{bestScore} ({bestGrade})</color>";
     public string bestClearTimeText;
+
+    public string ClearTimeText()
+    {
+        if(clearTime != 0)
+        {
+            int _min = (int)(clearTime / 60);   // 분
+            int _sec = (int)(clearTime % 60);   // 초
+            return string.Format("{0:D2} : {1:D2}", _min, _sec); // 분 : 초 텍스트 만들어 반환
+        }
+        return "00 : 00";
+    }
+
     #endregion
 }

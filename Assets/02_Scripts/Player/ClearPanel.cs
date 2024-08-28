@@ -17,14 +17,14 @@ public class ClearPanel : MonoBehaviour
     public TextMeshProUGUI scoreResultText;     // 점수 결과 (문자)
     public TextMeshProUGUI scoreResultNum;      // 점수 결과 (숫자)
     public TextMeshProUGUI bestScoreText;       // 최고 점수 (문자)
-    int score;
+    private int score;                          // 점수
 
-    public TextMeshProUGUI clearTime;           // 클리어 시간
-    public TextMeshProUGUI bestClearTime;       // 최고 클리어 시간
+    public TextMeshProUGUI timeText;            // 클리어 시간 텍스트
+    public TextMeshProUGUI bestClearTimeText;   // 최고 클리어 시간 텍스트
 
-    string hexaCode;                            // 글자색 헥사코드
-    float emphasizeDuration = 1f;               // 글자 강조 시간
-    float emphasizeScale = 3f;                  // 글자 커지는 크기
+    private string hexaCode;                    // 글자색 헥사코드
+    private float emphasizeDuration = 1f;       // 글자 강조 시간
+    private float emphasizeScale = 3f;          // 글자 커지는 크기
 
 
     private void OnEnable()
@@ -34,21 +34,23 @@ public class ClearPanel : MonoBehaviour
 
     void SettingClearPanel()
     {
-        missionName.text = GameManager.Instance.missionNames[GameManager.Instance.selectSceneNum-2]; // 미션 이름
+        int _currentSceneNum = GameManager.Instance.selectSceneNum - 2;
 
-        for(int i = 0; i < goalName.Length; i++)
+        missionName.text = GameManager.Instance.missionNames[_currentSceneNum]; // 미션 이름
+
+        for(int i = 0; i < GameManager.Instance.goals[_currentSceneNum].Length; i++)
         {
-            goal[i].SetActive(true);                                     // 게임매니저 같은데서 숫자 받기 ( 씬매니저 )
-            goalName[i].text = "";                                       // 마찬가지로 텍스트 받기 ( 씬매니저 )
-            clearGoal[i].SetActive(true);                                // 미션 클리어시 다른데서 체크해서 밑줄 그어주자 일단 켜주기만
+            goal[i].SetActive(true);                                                         // 게임매니저에 적어놓은 만큼 ui 활성화
+            goalName[i].text = GameManager.Instance.goals[_currentSceneNum][i];              // 게임매니저에 적어놓은 글자 활성화
+            clearGoal[i].SetActive(GameManager.Instance.clearGoals[_currentSceneNum][i]);    // 미션 클리어시 빨간 밑줄
         }
 
-        scoreResultText.text = "";                                       // 초기화
-        scoreResultNum.text = "0";                                       // 초기화
-        bestScoreText.text = GameManager.Instance.bestScoreText;         // 베스트스코어 텍스트
+        scoreResultText.text = "";                                          // 초기화
+        scoreResultNum.text = "0";                                          // 초기화
+        bestScoreText.text = GameManager.Instance.bestScoreText;            // 베스트스코어 텍스트
 
-        clearTime.text = "";                                             // 게임매니저에서 받아오기 (씬매니저)
-        bestClearTime.text = GameManager.Instance.bestClearTimeText;     // 베스트 클리어타임
+        timeText.text = GameManager.Instance.ClearTimeText();               // 게임매니저에서 시간 텍스트 가져옴
+        bestClearTimeText.text = GameManager.Instance.bestClearTimeText;    // 베스트 클리어타임
 
         StartCoroutine(CountScore(CalculaterScore(), 0));
     }
@@ -190,13 +192,10 @@ public class ClearPanel : MonoBehaviour
         }
 
         GameManager.Instance.bestClearTime = GameManager.Instance.clearTime;
-        if(GameManager.Instance.bestClearTime >= 60)
-        {
-            float _min = GameManager.Instance.bestClearTime / 60;
-            float _sec = GameManager.Instance.bestClearTime % 60;
-            bestClearTime.text = string.Format("{0:D2} : {1:D2}", _min, (int)_sec);
-            GameManager.Instance.bestClearTimeText = bestClearTime.text;
-        }
+        float _min = GameManager.Instance.bestClearTime / 60;                   // 분
+        float _sec = GameManager.Instance.bestClearTime % 60;                   // 초
+        bestClearTimeText.text = string.Format("{0:D2} : {1:D2}", _min, (int)_sec); // 분 : 초 텍스트 만들어주기
+        GameManager.Instance.bestClearTimeText = bestClearTimeText.text;            
     }
     #endregion
 }
