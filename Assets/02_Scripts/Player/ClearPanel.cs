@@ -1,0 +1,141 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
+
+public class ClearPanel : MonoBehaviour
+{
+    public TextMeshProUGUI missionName;         // 미션 이름
+
+    public GameObject[] goal;                   // 목표 ( 씬의 목표 갯수에 맞게 활성화 )
+    public TextMeshProUGUI[] goalName;          // 목표 이름
+    public GameObject[] clearGoal;              // 클리어 여부 ( 클리어되면 빨간 밑줄 쳐짐 )
+
+    public Image fillScore;                     // 가운데 점수에 따라 채워질 이미지 
+    public TextMeshProUGUI scoreResultText;     // 점수 결과 (문자)
+    public TextMeshProUGUI scoreResultNum;      // 점수 결과 (숫자)
+    public TextMeshProUGUI bestScoreText;       // 최고 점수 (문자)
+
+    public TextMeshProUGUI clearTime;           // 클리어 시간
+    public TextMeshProUGUI bestClearTime;       // 최고 클리어 시간
+
+    string hexaCode;                            // 글자색 헥사코드
+    float emphasizeDuration = 1f;               // 글자 강조 시간
+    float emphasizeScale = 3f;                  // 글자 커지는 크기
+
+
+    private void OnEnable()
+    {
+        SettingClearPanel();
+    }
+
+    void SettingClearPanel()
+    {
+        missionName.text = "";                      // 게임매니저 같은데서 미션 이름 받아서 넣기 (씬매니저)
+        for(int i = 0; i < goalName.Length; i++)
+        {
+            goal[i].SetActive(true);                // 게임매니저 같은데서 숫자 받기 ( 씬매니저 )
+            goalName[i].text = "";                  // 마차간지로 텍스트 받기 ( 씬매니저 )
+            clearGoal[i].SetActive(true);           // 미션 클리어시 다른데서 체크해서 밑줄 그어주자 일단 켜주기만
+        }
+
+        scoreResultText.text = "";                  // 초기화
+        scoreResultNum.text = "0";                  // 초기화
+        bestScoreText.text = "";                    // 게임매니저에서 받아오기
+
+        clearTime.text = "";                        // 게임매니저에서 받아오기 (씬매니저)
+        bestClearTime.text = "";                    // 게임매니저에서 받아오기
+
+        StartCoroutine(CountScore(CalculaterScore(), 0));
+    }
+
+    #region 점수 올라가는 코루틴
+    IEnumerator CountScore(float _target, float _current)   // _target : 최종점수 _current : 현재 점수
+    {
+        yield return new WaitForSeconds(2f);      // 2초 후에 시작
+        // 카운팅에 걸리는 시간
+        float _duration = 2f;
+        float _offset = (_target - _current) / _duration;
+
+        while (_current < _target)
+        {
+            _current += _offset * Time.deltaTime;
+
+            scoreResultNum.text = string.Format("{0:n0}", (int)_current);
+            fillScore.fillAmount = _current * 0.0005f;
+            UpdateScoreResult();
+            yield return null;
+        }
+        _current = _target;
+        scoreResultNum.text = string.Format("{0:n0}", (int)_current);
+    }
+    #endregion
+
+    #region 점수 계산
+    float CalculaterScore()
+    {
+        // 시간 + 목표 점수 + 적 처치
+        float _score = 1000 + 500 + 500;
+
+        return _score;
+    }
+    #endregion
+
+    #region 글자 변경 및 효과
+    void UpdateScoreResult()
+    {
+        // 등급과 색상을 정의한 배열
+        (float _threshold, string _grade, string _color)[] gradeInfo =
+        {
+            (1f, "S", "#A19228"),
+            (0.8f, "A", "#BCC071"),
+            (0.6f, "B", "#9F9D97"),
+            (0.4f, "C", "#666666"),
+            (0.25f, "D", "#505050"),
+            (0.1f, "E", "#383838"),
+        };
+
+        // 적절한 등급 찾기
+        string _grade = "F";
+        string _color = "#272727";
+
+        for (int i = 0; i < gradeInfo.Length; i++)
+        {
+            if (fillScore.fillAmount >= gradeInfo[i]._threshold)
+            {
+                _grade = gradeInfo[i]._grade;
+                _color = gradeInfo[i]._color;
+                break;
+            }
+        }
+
+        // 결과 적용
+        scoreResultText.text = _grade;
+        hexaCode = _color;
+        EmphasizeString();
+        UpdateColor(hexaCode);
+    }
+
+    void UpdateColor(string _hexa)
+    {
+        Color _color;
+        ColorUtility.TryParseHtmlString(_hexa, out _color);
+        scoreResultText.color = _color;
+    }
+    
+    void EmphasizeString()
+    {
+        // 원래 값 저장
+        Vector3 _originalScale = scoreResultText.transform.localScale;
+
+        // 처음에 텍스트를 큰 상태로 설정
+        scoreResultText.transform.localScale = _originalScale * emphasizeScale;
+
+        // 작아지는 효과 실행
+        scoreResultText.transform.DOScale(_originalScale, emphasizeDuration);
+    }
+
+    #endregion
+}
