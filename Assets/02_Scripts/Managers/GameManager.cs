@@ -66,6 +66,7 @@ public class GameManager : Singleton<GameManager>
     {
         PlayerController pc = PlayerController.Instance;
 
+        pc.deathCam.enabled = false;
         pc.cc.enabled = true;
         pc.pHP = pc.maxHP;
     }

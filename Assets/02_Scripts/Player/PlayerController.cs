@@ -65,6 +65,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 플레이어 죽었을 때
     public bool death = false;
     public static event Action OnPlayerDeath;
+    [HideInInspector] public Animator deathCam;
 
     public int pHP
     {
@@ -133,6 +134,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         anim = GetComponentInChildren<Animator>();
         playerSound = GetComponent<AudioSource>();
         main = Camera.main;
+        deathCam = main.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -350,6 +352,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         {
             pState.isDead = true;
             cc.enabled = false;
+            deathCam.enabled = true;
         }
     }
 
