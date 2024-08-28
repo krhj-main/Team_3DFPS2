@@ -40,7 +40,7 @@ public class Lodding : MonoBehaviour
     IEnumerator TransitionNextScene(int num)
     {
         // 지정된 씬을 비동기 형식으로 로드한다
-        AsyncOperation _ao = SceneManager.LoadSceneAsync(num + 2);
+        AsyncOperation _ao = SceneManager.LoadSceneAsync(num);
 
         // 로드되는 씬의 모습이 화면에 보이지 않게 한다
         _ao.allowSceneActivation = false;
