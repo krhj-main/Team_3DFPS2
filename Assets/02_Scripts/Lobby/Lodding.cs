@@ -17,6 +17,10 @@ public class Lodding : MonoBehaviour
 
     void Start()
     {
+        if (SceneManager.GetActiveScene().buildIndex < 2)
+        {
+            GameManager.Instance.selectSceneNum = 2;
+        }
         StartCoroutine(TransitionNextScene(GameManager.Instance.selectSceneNum));
         ActiveVideo();
     }

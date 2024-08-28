@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DeActive : MonoBehaviour
-{    
+{
+    int activeNum;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,9 +15,14 @@ public class DeActive : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex > 2)
+        activeNum = SceneManager.GetActiveScene().buildIndex;
+        if (activeNum < 2)
         {
             gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
         }
     }
 }
