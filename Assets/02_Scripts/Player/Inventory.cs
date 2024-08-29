@@ -59,8 +59,6 @@ public class Inventory :MonoBehaviour
             {
                 int _num = _index - (_current - equipmentsSlots[i].weight);
                 _prev = equipmentsSlots[i].Insert(_equip, _num);
-                Debug.Log(_current);
-                Debug.Log(_index);
                 return _prev;
             }
         }
