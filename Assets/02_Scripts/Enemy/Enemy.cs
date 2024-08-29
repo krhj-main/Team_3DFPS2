@@ -292,8 +292,9 @@ public class Enemy : MonoBehaviour, IDamageAble
         anim.SetBool("isFlashbang", true);
 
         // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
-        findDis = 0.1f;
-        atkDis = 0f;
+        //findDis = 0.1f;
+        //atkDis = 0f;
+        fov.weight = 0f;
         fov.visibleTargets.Clear();
         // 이동을 멈추고 경로 초기화
         agent.isStopped = true;
@@ -303,8 +304,9 @@ public class Enemy : MonoBehaviour, IDamageAble
         {
             // 시야를 복구하고, 플레이어를 놓친 상태로 설정
             anim.SetBool("isFlashbang", false);
-            findDis = originFindDis;
-            atkDis = originAtkDis;
+            //findDis = originFindDis;
+            //atkDis = originAtkDis;
+            fov.weight = 1f;
             agent.isStopped = false;
             enemyState = missingState;
         }
@@ -356,7 +358,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             agent.destination = chasePos;
 
             // 소리난 곳까지 오고 다음 행동 지정
-            if (Vector3.Distance(transform.position, chasePos) < 1f)
+            if (Vector3.Distance(transform.position, chasePos) <= 2f)
             {
                 // Move 애니메이션 종료
                 anim.SetBool("isMove", false);
@@ -369,8 +371,10 @@ public class Enemy : MonoBehaviour, IDamageAble
                     enemyState = missingState;
                 }
             }
-            else
+            else // 소리난 곳까지 도착하지 못했다면 = 가는중이라면
             {
+                anim.SetBool("isMove", true);
+                anim.SetBool("isIdle", false);
                 currentTime = 0;
             }
         }

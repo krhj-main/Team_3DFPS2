@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class FlashGrenade
@@ -34,7 +35,6 @@ public class FlashGrenade
         GameObject go = GameObject.Instantiate(effect);
         go.transform.position = _explode.position;
         _explode.gameObject.SetActive(false);
-        Debug.Log("섬광탄 폭발");
         // 플레이어와 폭발한 곳의 거리 계산
         float _distanceToPlayer = Vector3.Distance(_explode.position, PlayerController.Instance.transform.position);
 
@@ -61,7 +61,6 @@ public class FlashGrenade
             // 거리가 범위 이내라면
             if (_distance < radius)
             {
-                
                 // Enemy가 섬광탄을 보고있다면
                 if (IsLookingAtFlash(_explode, GameManager.Instance.enemies[i].transform))
                 {// 거리별 값 판별 ( 멀어질수록 작은 값 )
@@ -87,9 +86,9 @@ public class FlashGrenade
 
         // 카메라가 바라보는 방향과, 플레이어에서 섬광탄으로의 방향 사이의 각도를 계산
         float angle = Vector3.Angle(_character.forward, _dirToFlash);
+
         // 시야각 확인 // 60 = 좌우로 60
-        
-        if (angle < 90)
+        if (angle <= 90)
         {
             // 레이캐스트로 장애물 체크
             RaycastHit hit;
