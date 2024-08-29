@@ -474,6 +474,8 @@ public class Enemy : MonoBehaviour, IDamageAble
 
         //UI 업데이트
         UIManager.Instance.RemainEnemy();
+
+        GameManager.Instance.enemyScore += 10;
     }
     #endregion
 
@@ -489,6 +491,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         if (IsHeadShot(hitpoint))
         {
             hp -= damage*2;
+            GameManager.Instance.enemyScore += 5;
         }
         else 
         {

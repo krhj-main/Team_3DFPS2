@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;  // 씬 매니저
 
 public class GameManager : Singleton<GameManager>
 {
-    ItemManager itemManager = new ItemManager();                  
+    ItemManager itemManager = new ItemManager();
     public static ItemManager ItemManager
     {
-        get {return Instance.itemManager; }
+        get { return Instance.itemManager; }
     }
 
     /*
@@ -113,7 +114,7 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region "AggroEnemy 원본"
-    
+
     public void AggroEnemy2(Vector3 _soundPos, float _radius)
     {
         foreach (Enemy enemy in enemies)
@@ -136,7 +137,7 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
-    
+
     #endregion
 
 
@@ -161,5 +162,43 @@ public class GameManager : Singleton<GameManager>
 
         return false;
     }
+    #endregion
+
+    #region 게임 클리어
+    public string[] missionNames = new string[] {"테러리스트 소탕", "인질 구출"};
+    public string[][] goals = new string[][]
+    {
+        new string[] {"모든 적 소탕", "5분 내 클리어"},
+        new string[] {"모든 적 소탕", "인질 구출","7분 내 클리어"}
+    };
+    public bool[][] clearGoals = new bool[][]
+    {
+        new bool[] {false,false},
+        new bool[] {false,false,false}
+    };
+
+    public float clearTime;
+    public float bestClearTime;
+    public int bestScore;
+    public string bestGrade;
+    public string bestColor;
+
+    public int enemyScore;
+
+    // 베스트 스코어 , 타임 텍스트를 생성하는 속성
+    public string bestScoreText => $"<color={bestColor}>{bestScore} ({bestGrade})</color>";
+    public string bestClearTimeText;
+
+    public string ClearTimeText()
+    {
+        if(clearTime != 0)
+        {
+            int _min = (int)(clearTime / 60);   // 분
+            int _sec = (int)(clearTime % 60);   // 초
+            return string.Format("{0:D2} : {1:D2}", _min, _sec); // 분 : 초 텍스트 만들어 반환
+        }
+        return "00 : 00";
+    }
+
     #endregion
 }

@@ -50,9 +50,7 @@ public class UIManager : Singleton<UIManager>
     public Image snimperZoomUI;
 
     [Header("사망 관련")]
-    public GameObject deadPanel;
-    float deadPanelAlpha;
-    public GameObject[] deadPanelUI;
+    public GameObject deadPanelObj;
 
     private void Start()
     {
@@ -111,26 +109,7 @@ public class UIManager : Singleton<UIManager>
 
     public void OnDeadPanel()
     {
-        deadPanel.SetActive(true);
-        StartCoroutine(DeadPanelFadeOut());
-    }
-
-    IEnumerator DeadPanelFadeOut()
-    {
-        // 화면알파값 올려서 검정 화면 만들어줌
-        deadPanelAlpha = 0;
-        while (deadPanelAlpha <= 1f)
-        {
-            deadPanelAlpha += Time.deltaTime;
-            deadPanel.GetComponent<Image>().color = new Color(0, 0, 0, deadPanelAlpha);
-            yield return null;
-        }
-
-        // 검정화면 끝나면 데드패널에 있는 모든 ui 켜줌
-        foreach(GameObject ui in deadPanelUI)
-        {
-            ui.SetActive(true);
-        }
+        deadPanelObj.SetActive(true);
     }
 
     // "남은 적 수 / 최대 적 수" 를 표시해주는 메서드
