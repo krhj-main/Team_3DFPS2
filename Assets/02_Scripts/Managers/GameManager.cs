@@ -38,6 +38,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public float remainEnemy;
 
+    public Canvas playerUI;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -51,6 +53,8 @@ public class GameManager : Singleton<GameManager>
             Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
             PlayerController.Instance.transform.position = _newPosition;
         }
+        
+        playerUI.gameObject.SetActive(scene.buildIndex >=2);
         AddEnemyOnNowScene();
         PlayerInit();
     }

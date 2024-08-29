@@ -83,7 +83,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     }
 
-    public event Action inputAction;
 
 
     // 플레이어 상태 리스트
@@ -136,6 +135,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     void Start()
     {
+        
         pHP = maxHP;
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
@@ -146,20 +146,12 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // Update is called once per frame
     void Update()
     {
-        if (!main.enabled) { return; }
+        //if (!main.enabled) { return; }
         InputKey();
         //LookAround();
         PlayerDir();
         ActiveCrouch();
         OpenViewer();
-
-        if (inputAction != null)
-        {
-            if (Input.anyKey)
-            {
-                inputAction.Invoke();
-            }
-        }
     }
     
     private void FixedUpdate()
@@ -371,5 +363,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         this.gameObject.layer = 0;
         OnPlayerDeath?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("사라짐!");
     }
 }
