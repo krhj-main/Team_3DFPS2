@@ -7,6 +7,7 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
+    public GameObject UI_HPPanel;
     [Header("플레이어 HP")]
     [SerializeField] Slider playerHPBar;
     [SerializeField] TextMeshProUGUI playerHP_TXT;
@@ -18,7 +19,9 @@ public class UIManager : Singleton<UIManager>
     int playerAmmo;
     int playerMaxAmmo;
 
+
     [Header("무기 이미지 / 이름")]
+    public GameObject UI_WeaponPanel;
     [SerializeField] Image weaponMain1;
     [SerializeField] TextMeshProUGUI weaponMain1_TXT;
     string weaponMain1Name;

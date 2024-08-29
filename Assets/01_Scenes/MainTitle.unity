@@ -370,11 +370,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42844678e662238408f60e13774e17dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI_HPPanel: {fileID: 1885624535}
   playerHPBar: {fileID: 494498218}
   playerHP_TXT: {fileID: 2010841889}
   playerPortrait: {fileID: 592517366}
   playerAmmo_TXT: {fileID: 505331369}
   playerMaxAmmo_TXT: {fileID: 829588866}
+  UI_WeaponPanel: {fileID: 1885624534}
   weaponMain1: {fileID: 826882362}
   weaponMain1_TXT: {fileID: 441433572}
   weaponMain2: {fileID: 2134020734}
@@ -2236,6 +2238,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 444201069}
   m_SourcePrefab: {fileID: 100100000, guid: 055d3f070e832e343955fc595e70cf36, type: 3}
+--- !u!1 &1885624534 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5463213600394007274, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1885624535 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1387851167981525076, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1899271882
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ public class ExitWeaopnEquip : MonoBehaviour
     private void Awake()
     {
         fadeImage = GetComponent<Image>();
+        whenEnterWeaponEquip[1] =UIManager.Instance.UI_HPPanel;
+        whenEnterWeaponEquip[2] = UIManager.Instance.UI_WeaponPanel;
+
     }
 
     private void OnEnable()
