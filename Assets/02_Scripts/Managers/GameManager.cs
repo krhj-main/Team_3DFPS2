@@ -172,7 +172,8 @@ public class GameManager : Singleton<GameManager>
     public int bestScore;
     public string bestGrade;
     public string bestColor;
-    
+
+    public int enemyScore;
 
     // 베스트 스코어 , 타임 텍스트를 생성하는 속성
     public string bestScoreText => $"<color={bestColor}>{bestScore} ({bestGrade})</color>";

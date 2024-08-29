@@ -10,6 +10,7 @@ public class ClearPanel : MonoBehaviour
     public TextMeshProUGUI missionName;         // 미션 이름
 
     public GameObject[] goal;                   // 목표 ( 씬의 목표 갯수에 맞게 활성화 )
+    public TextMeshProUGUI goalCount;           // 목표 갯수
     public TextMeshProUGUI[] goalName;          // 목표 이름
     public GameObject[] clearGoal;              // 클리어 여부 ( 클리어되면 빨간 밑줄 쳐짐 )
 
@@ -26,6 +27,8 @@ public class ClearPanel : MonoBehaviour
     private float emphasizeDuration = 1f;       // 글자 강조 시간
     private float emphasizeScale = 3f;          // 글자 커지는 크기
 
+    int goalScore = 0;
+
 
     private void OnEnable()
     {
@@ -34,15 +37,23 @@ public class ClearPanel : MonoBehaviour
 
     void SettingClearPanel()
     {
-        int _currentSceneNum = GameManager.Instance.selectSceneNum - 2;
+        int _currentMissionNum = GameManager.Instance.selectSceneNum - 2;       // 진행한 미션 ( 이 숫자에 맞춰 미리 작성해놓은 값들이 변경 됨 )
+        int _clearCount = 0;                                                    // 미션 클리어시 카운트 증가 ( 목표갯수 숫자 설정 )
 
-        missionName.text = GameManager.Instance.missionNames[_currentSceneNum]; // 미션 이름
-
-        for(int i = 0; i < GameManager.Instance.goals[_currentSceneNum].Length; i++)
+        missionName.text = GameManager.Instance.missionNames[_currentMissionNum]; // 미션 이름
+        
+        for (int i = 0; i < GameManager.Instance.goals[_currentMissionNum].Length; i++)
         {
-            goal[i].SetActive(true);                                                         // 게임매니저에 적어놓은 만큼 ui 활성화
-            goalName[i].text = GameManager.Instance.goals[_currentSceneNum][i];              // 게임매니저에 적어놓은 글자 활성화
-            clearGoal[i].SetActive(GameManager.Instance.clearGoals[_currentSceneNum][i]);    // 미션 클리어시 빨간 밑줄
+            goal[i].SetActive(true);                                                           // 게임매니저에 적어놓은 만큼 ui 활성화
+            goalName[i].text = GameManager.Instance.goals[_currentMissionNum][i];              // 게임매니저에 적어놓은 글자 활성화
+            clearGoal[i].SetActive(GameManager.Instance.clearGoals[_currentMissionNum][i]);    // 미션 클리어시 빨간 밑줄
+
+            if (GameManager.Instance.clearGoals[_currentMissionNum][i])                         // 클리어를 했다면
+            {
+                _clearCount++;
+                goalScore += 500; // 목표 점수 추가
+            }
+            goalCount.text = $"{_clearCount} / {GameManager.Instance.goals[_currentMissionNum].Length}";        // 목표 갯수 증가
         }
 
         scoreResultText.text = "";                                          // 초기화
@@ -84,10 +95,11 @@ public class ClearPanel : MonoBehaviour
     #region 점수 계산
     float CalculaterScore()
     {
-        // 시간 + 목표 점수 + 적 처치
-        float _score = 1000 + 500 + 500;
+        int _timeScore = 0;
 
-        return _score;
+        int _finalScore = goalScore + GameManager.Instance.enemyScore + _timeScore;
+
+        return _finalScore;
     }
     #endregion
 
