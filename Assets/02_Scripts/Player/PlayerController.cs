@@ -123,9 +123,12 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         }
     }
     */
-
-    private void Awake()
+    private void OnTransformParentChanged() {
+        Debug.Log(transform.parent);
+    }
+    protected override void Awake()
     {
+        base.Awake();
         cc = GetComponent<CharacterController>();
         main = Camera.main;
         deathCam = main.GetComponent<Animator>();
