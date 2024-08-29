@@ -49,6 +49,8 @@ public class GameManager : Singleton<GameManager>
     // 씬이 로드될 때마다 실행되는 이벤트에 넣을 함수들이나 기능 구현
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        AddEnemyOnNowScene();
+
         if (FindObjectOfType<SetPlayerPosition>() != null)
         {
             Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
@@ -56,7 +58,7 @@ public class GameManager : Singleton<GameManager>
         }
         
         playerUI.gameObject.SetActive(scene.buildIndex >=2);
-        AddEnemyOnNowScene();
+        
         PlayerInit();
     }
 
@@ -69,6 +71,8 @@ public class GameManager : Singleton<GameManager>
         enemies.AddRange(FindObjectsOfType<Enemy>());
         // 최대 에너미 수를 현재 씬에 있는 에너미 수만큼 저장
         maxEnemy = enemies.Count;
+
+        UIManager.Instance.RemainEnemy();
     }
 
     // 씬 로드시 플레이어 관련 설정 초기화
@@ -95,13 +99,11 @@ public class GameManager : Singleton<GameManager>
         {
             // 에너미와 소리난 곳의 거리 계산
             float _distance = Vector3.Distance(_soundPos, enemy.gameObject.transform.position);
-
             // 거리가 범위 이내라면
             if (_distance <= _radius)
             {
                 // 소리의 위치를 chasePos 변수에 담고
                 enemy.chasePos = _soundPos;
-
                 // 존버 상태가 아닐때만
                 if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind && enemy.enemyState != EnemyState.Attack)
                 {

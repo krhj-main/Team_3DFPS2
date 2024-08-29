@@ -25,7 +25,7 @@ public class AnimIK : MonoBehaviour
         //gunPivot.position = anim.GetIKHintPosition(AvatarIKHint.RightElbow);
 
         anim.SetLookAtPosition(PlayerController.Instance.transform.position);
-        anim.SetLookAtWeight(0.75f);
+        anim.SetLookAtWeight(0.3f);
 
         // IK를 사용하여 왼손의 위치와 회전을 총의 오른쪽 손잡이에 맞춘다
         anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1f);

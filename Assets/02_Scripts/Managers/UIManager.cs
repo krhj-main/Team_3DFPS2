@@ -54,7 +54,7 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
-        RemainEnemy();
+        //RemainEnemy();
     }
 
     private void Update()
