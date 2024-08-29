@@ -51,7 +51,8 @@ public class MouseCursorMove : MonoBehaviour
 
     //커서가 보이게 하는 메서드
     public void ShowCursor()
-    {                      
+    {
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
         cursor.gameObject.SetActive(true);
     }
@@ -59,6 +60,7 @@ public class MouseCursorMove : MonoBehaviour
     //커서를 안보이게하고 중앙에 고정하는 1인칭시 사용할 메서드
     public void HideCursor()                        
     {
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         cursor.gameObject.SetActive(false);
     }

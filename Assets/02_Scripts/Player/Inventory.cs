@@ -11,15 +11,16 @@ public class Inventory :MonoBehaviour
     private void Awake()
     {
         equipmentsSlots = new List<EquipmentsSlot>();
-        AddSlot(GameManager.ItemManager.weapon);
-        AddSlot(GameManager.ItemManager.throws);
-        AddSlot(GameManager.ItemManager.special);
+        AddSlot(GameManager.ItemManager.weapon,false);
+        AddSlot(GameManager.ItemManager.throws,true);
+        AddSlot(GameManager.ItemManager.special,false);
     }
+    /*
     public Inventory(params EquipmentsSlot[] _slots) {
         for (int i = 0; i < _slots.Length; i++) {
             AddSlot(_slots[i]);
         }
-    }
+    }*/
     public EquipmentsSlot GetSlotToIndex(int _index) {
         int _current = 0;
         for (int i = 0; i < equipmentsSlots.Count; i++)
@@ -66,10 +67,11 @@ public class Inventory :MonoBehaviour
         return null;
     }
 
-    public void AddSlot(EquipmentsSlot _slot) 
+    public void AddSlot(EquipmentsSlot _slot,bool _isLock) 
     {
         equipmentsSlots.Add(_slot);
         size += _slot.weight;
+        _slot .isLock= _isLock;
     }
 
     public EquipmentsSlot GetSlot(int _index) {

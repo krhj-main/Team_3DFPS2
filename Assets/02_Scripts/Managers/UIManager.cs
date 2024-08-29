@@ -7,16 +7,18 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
-
+    [Header("플레이어 HP")]
     [SerializeField] Slider playerHPBar;
     [SerializeField] TextMeshProUGUI playerHP_TXT;
     [SerializeField] Image playerPortrait;
 
+    [Header("장착중인 총의 탄")]
     [SerializeField] TextMeshProUGUI playerAmmo_TXT;
     [SerializeField] TextMeshProUGUI playerMaxAmmo_TXT;
     int playerAmmo;
     int playerMaxAmmo;
 
+    [Header("무기 이미지 / 이름")]
     [SerializeField] Image weaponMain1;
     [SerializeField] TextMeshProUGUI weaponMain1_TXT;
     string weaponMain1Name;
@@ -30,19 +32,28 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] TextMeshProUGUI weaponTactical_TXT;
     int weaponTacticalCount;
 
+    [Header("미션 정보")]
+    [SerializeField] public GameObject missionViewer;
     [SerializeField] TextMeshProUGUI missionTime;
     [SerializeField] TextMeshProUGUI missionEnemy;
     int missionTimeLimit;
     int missionTimeCurrent;
     int missionEnemyCount;
 
+    [Header("섬광탄 효과 (임시)")]
     public Image FlashImage;
 
-    [SerializeField] public GameObject missionViewer;
+    [Header("스나이퍼 줌 UI")]
+    public Image snimperZoomUI;
+
+    [Header("사망 관련")]
+    public GameObject deadPanel;
+    float deadPanelAlpha;
+    public GameObject[] deadPanelUI;
 
     private void Start()
     {
-
+        RemainEnemy();
     }
 
     private void Update()
@@ -93,5 +104,42 @@ public class UIManager : Singleton<UIManager>
     {
         missionTime.text = string.Format("{0}", missionTimeCurrent);
         missionEnemy.text = string.Format("{0}", missionEnemyCount);
+    }
+
+    public void OnDeadPanel()
+    {
+        deadPanel.SetActive(true);
+        StartCoroutine(DeadPanelFadeOut());
+    }
+
+    IEnumerator DeadPanelFadeOut()
+    {
+        // 화면알파값 올려서 검정 화면 만들어줌
+        deadPanelAlpha = 0;
+        while (deadPanelAlpha <= 1f)
+        {
+            deadPanelAlpha += Time.deltaTime;
+            deadPanel.GetComponent<Image>().color = new Color(0, 0, 0, deadPanelAlpha);
+            yield return null;
+        }
+
+        // 검정화면 끝나면 데드패널에 있는 모든 ui 켜줌
+        foreach(GameObject ui in deadPanelUI)
+        {
+            ui.SetActive(true);
+        }
+    }
+
+    // "남은 적 수 / 최대 적 수" 를 표시해주는 메서드
+    // 해당 메서드는 에너미가 죽었을 때 사용
+    public void RemainEnemy()
+    {
+        // 에너미가 죽을 때 남은 수를 업데이트
+        GameManager.Instance.remainEnemy = GameManager.Instance.enemies.Count;
+
+        // 남은 적 : n
+        missionEnemy.text = string.Format("남은 적 : {0}", GameManager.Instance.remainEnemy);
+        // 남은 적 : n / n
+        //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
     }
 }

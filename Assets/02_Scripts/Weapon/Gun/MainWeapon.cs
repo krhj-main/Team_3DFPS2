@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,9 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public LayerMask canAttackMask;                  // 데미지 입힐 수 있는 유닛
 
     // 반동 관련 변수
+    [field: SerializeField]
     public virtual float recoilX { get; set; }               // 좌우 반동 크기
+    [field:SerializeField]
     public virtual float recoilY { get; set; }               // 수직 반동 크기
     public virtual float recoilRecoverySpeed { get; set; }   // 반동 회복 속도
     public Vector3 currentRotation;                          // 현재 카메라 값
@@ -35,7 +38,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
     // 재장전 관련 변수
     public virtual float reloadTime { get; set; }   // 재장전 시간
-    private bool isReloading = false;               // 장전중
+    protected bool isReloading = false;               // 장전중
 
     // 정조준 관련 변수
     public virtual float adsSpeed { get; set; }     // 정조준 속도
@@ -52,7 +55,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public virtual float headRatio { get; set; }    // 머리 비율
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
-    bool isADS = false;
+    protected bool isADS = false;
     [field: SerializeField]
     public EquipType type { get; set; }
     [SerializeField] public Sprite myImage;         // 무기 이미지
@@ -62,18 +65,26 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     [SerializeField] public Transform CameraPos;
     CameraController camController;
 
+    [SerializeField] protected Animator anim;
+    // 발사 시 효과 ( 소리, 이펙트 )
+    public AudioClip shootSound;
+    public AudioClip reloadSound;
+    public AudioClip reloadFinishSound;
+    public AudioClip weaponChangeSound;
+    // 플레이어 컴포넌트
+    ParticleSystem playerEffect;
+    protected AudioSource playerSound;
+    // 에너미 컴포넌트
+    public ParticleSystem enemyEffect;
+    public AudioSource enemySound;
+
     protected virtual void Awake()
     {
-        // 시작할 때 무기없는 팔 애니메이션 가져오기 위한 초기화
-        // 어치피 OnHandEnter에서 해주니까 필요가 없나? ( 의문 )
-        //PlayerController.Instance.anim = GetComponentInChildren<Animator>();    
         cam = Camera.main;
         originBulletSpread = bulletSpread;
         headRatio = 0.3f; // 더 작게 하려면 0.125 / 더 크게하려면 0.143 / 현재는 임의로 지정
         //camController = GetComponentInChildren<CameraController>();
         adsPos = new Vector3(0, -0.25f, 0f);
-        
-        
     }
 
     // 부모가 생기면 초기화 해줌
@@ -104,9 +115,12 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             if (!_firePos.gameObject.CompareTag("Enemy"))
             {
                 camController.ApplyRecoil(recoilX, recoilY);    // 반동
+                anim.SetTrigger("doAttack");
             }
-
-            canShoot = true;                  // 슈팅 가능
+            else if (_firePos.gameObject.CompareTag("Enemy"))
+            {
+                FireBullet(_firePos);
+            }
         }
     }
     #endregion
@@ -132,7 +146,28 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             return;
         }
 
-        StartCoroutine(Reloading());
+        //StartCoroutine(Reloading());
+        anim.SetTrigger("doReload");
+    }
+
+    public void ReloadEnter()
+    {
+        canShoot = false;
+        isReloading = true;
+        Aming(false);
+        isADS = false;
+    }
+
+    public void ReloadExit()
+    {
+        int _ammoToMagazine = Mathf.Min(maxLoadedAmmo - loadedAmmo, remainAmmo);    // 둘 중 작은 값 비교하기
+        loadedAmmo += _ammoToMagazine;
+        remainAmmo -= _ammoToMagazine;
+        isReloading = false;
+        canShoot = true;
+
+        // 장전 끝나고 총알 수 UI에 반영
+        UIManager.Instance.ReloadAmmoUIUpdate(loadedAmmo, remainAmmo);
     }
 
     // 장전 코루틴
@@ -144,7 +179,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         // 이 위치에 장전 애니메이션 추가
         Aming(false);
         isADS = false;
-        PlayerController.Instance.anim.SetTrigger("doReload");
+        //anim.SetTrigger("doReload");
 
         yield return new WaitForSeconds(reloadTime);  // 장전 걸리는 시간
 
@@ -160,27 +195,29 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     #endregion
 
     #region 발사 함수
-    public virtual void FireBullet(Transform _firePos) { }    // 무조건 자식 클래스에서 재정의
+    public virtual void FireBullet(Transform _firePos) 
+    {
+
+    }
     #endregion
 
     #region 정조준 함수
 
-    public void Aming(bool _whatAim)
+    public virtual void Aming(bool _whatAim)
     {
         isAming = true;
-
         if (_whatAim)
         {
-            PlayerController.Instance.anim.SetBool("isAiming", true);
-            targetPos = adsPos;
+            anim.SetBool("isAiming", true);
+            //targetPos = adsPos;
+            PlayerController.Instance.moveSpeedScale = -0.5f;   // 줌 시 이동속도 제한
             targetFOV = adsFOV;
             bulletSpread = 0;
-        }
-
-        if (!_whatAim)
+        }else
         {
-            PlayerController.Instance.anim.SetBool("isAiming", false);
-            targetPos = shoulderPos;
+            anim.SetBool("isAiming", false);
+            //targetPos = shoulderPos;
+            PlayerController.Instance.moveSpeedScale = 0f;
             targetFOV = shoulderFOV;
             bulletSpread = originBulletSpread;
         }
@@ -188,20 +225,15 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 
     void UpdateAiming()
     {
-        if (gunSwap) 
-        { 
-            gunSwap.GunPosition.localPosition = Vector3.Lerp(gunSwap.GunPosition.localPosition, targetPos, Time.deltaTime * adsSpeed); 
-        }
-        // 무기 위치 업데이트
-        
-
-        // 카메라 FOV 업데이트
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * adsSpeed);
-
         if (cam.fieldOfView == targetFOV)
         {
             isAming = false;
+            return;
         }
+        // 카메라 FOV 업데이트
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, Time.deltaTime * adsSpeed);
+
+        
     }
     #endregion
 
@@ -228,7 +260,6 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     #endregion
 
-    
     //상호작용
     public virtual void Interaction(GameObject target)
     {
@@ -240,16 +271,19 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public void OnHandEnter()
     {
-
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
         firePos.localPosition = Vector3.zero;
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
-        
-        PlayerController.Instance.anim = GetComponentInChildren<Animator>();     // 무기마다 애니메이션이 다르니까 무기를 들 때 마다 anim을 새로 받는다
-        PlayerController.Instance.anim.enabled = true;
+        // 애니메이션, 사운드, 이펙트
+        PlayerController.Instance.anim = anim;
+        anim.enabled = true;
+        playerEffect = GetComponentInChildren<ParticleSystem>();
+        playerSound = GetComponentInChildren<AudioSource>();
+        playerSound.clip = weaponChangeSound; 
+        playerSound.Play();
     }
     //손에있을때 할 행동
     public virtual void OnHand(Transform _tr,Vector3 _offSet)
@@ -266,10 +300,13 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public virtual void OnHandExit()
     {
+        anim.enabled = false;
+
         PlayerController.Instance.moveSpeedScale = 0;
         StopCoroutine(Reloading());
         isReloading = false;
         isAming = false;
+        isADS = false;
         if (gunSwap)
         {
             gunSwap.GunPosition.localPosition = shoulderPos;
@@ -289,31 +326,76 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
 
     //키입력
-    // 여기서 애니메이션 사용하지 않고 사용된 함수 내부에서 애니메이션 재생
     public virtual void InputKey()
     {
         if (Input.GetMouseButton(0))
         {
-            PlayerController.Instance.anim.SetTrigger("doAttack");
+            anim.SetBool("isAttacking", true);
             Shoot(firePos);
-            //GameManager.Instance.AggroEnemy(firePos.position, 30f);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            anim.SetBool("isAttacking", false);
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            Aming(isADS);
             isADS = !isADS;
+            Aming(isADS);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
             Reload();
         }
-    }   
-    //무기 바꿀때 할 행동
-    
+    }
 
-    
+    #region "애니메이션 이벤트"
+
+    public virtual void EnemyFireBullet()
+    {
+        enemyEffect.Play();
+        enemySound.clip = shootSound;
+        enemySound.volume = 0.3f;
+        enemySound.Play();
+    }
+
+    public virtual void PlayerFireBullet()
+    {
+        anim.SetBool("isReloading", false);
+        playerEffect.Play();
+        playerSound.clip = shootSound;
+        playerSound.Play();
+    }
+
+    public void PlayerReloadSound()
+    {
+        playerSound.clip = reloadSound; playerSound.Play();
+    }
+    public void PlayerReloadFinishSound()
+    {
+        playerSound.clip = reloadFinishSound; playerSound.Play();
+    }
+
+    public void ReloadFinish()
+    {
+        loadedAmmo++;
+        remainAmmo--;
+    }
+
+    public void ReloadCheck()
+    {
+        if (loadedAmmo == maxLoadedAmmo - 1)
+        {
+            anim.SetBool("isReloading", false);
+        }
+        if (loadedAmmo < maxLoadedAmmo - 1)
+        {
+            anim.SetTrigger("doReload");
+        }
+    }
+
+    #endregion
 }
 
-    
+

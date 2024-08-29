@@ -5,6 +5,7 @@ using UnityEngine;
 //장비 슬롯
 public class EquipmentsSlot
 {
+    public bool isLock { get; set; }
     IEquipMent[] list;      //슬롯의 리스트
     int index = 0;             //인덱스
     int size;                   //슬롯크기
@@ -113,11 +114,16 @@ public class EquipmentsSlot
     }
 
     public void Clear() {
-        for (int i = 0; i < list.Length; i++) {
-            if (list[i]!=null) {
-                GameObject.Destroy(list[i].gameObject);
-                list[i] = null;
+        if (!isLock) {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i] != null)
+                {
+                    GameObject.Destroy(list[i].gameObject);
+                    list[i] = null;
+                }
             }
+            EquipCount = 0;
         }
     }
 }

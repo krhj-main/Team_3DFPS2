@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class SelectEquip : MonoBehaviour
 {
@@ -9,25 +10,94 @@ public class SelectEquip : MonoBehaviour
     public RectTransform selectMenuImage;       // 메뉴 이름 밑 빨간 밑줄
     public TextMeshProUGUI[] menuTxt;           // 메뉴 이름
     public GameObject[] menuPanel;              // 메뉴 패널
-    public Stack<GameObject> selectPanelStack = new Stack<GameObject>();
-    public GameObject exitWeaponEquip;
+    public GameObject exitWeaponEquip;          // 장비 장착 씬 나갈때 fadeOut 될 패널
+    public GameObject playerCharacter;          // 플레이어 캐릭터
+    AnimIKPlayer animIkPlayer;                  // 무기 장착 IK
+    LoadOut loadOut;                            // LoadOut 스크립트
+    public GameObject inventory;                // EquipmentsInit 스크립트가 붙어있는 오브젝트
+    EquipmentsInit equipmentsInit;              // EquipmentsInit 스크립트
+    public GameObject[] equipMainWeapon;        // 메인웨폰무기 ( 새로 산 에셋 무기 )
+    public Stack<GameObject> selectPanelStack = new Stack<GameObject>();        // 켜질 패널들 스택에 담아둠
+    //public Transform parentTransform;
+    //public GameObject dron;
+
+    // 마우스 커서 조작
+    public MouseCursorMove mouseCursor;
+
+    private void Awake()
+    {
+        animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
+        loadOut = GetComponent<LoadOut>();
+        equipmentsInit = inventory.GetComponent<EquipmentsInit>();
+    }
+
+
+    private void OnEnable()
+    {
+        mouseCursor.ShowCursor();               // UI 패널 켜지면 마우스 커서 보임
+        GameManager.Instance.openUI = true;     // 움직임 제한
+    }
+
+
+    private void OnDisable()
+    {
+        mouseCursor.HideCursor();                   // UI 패널 꺼지면 마우스 커서 안보임
+        GameManager.Instance.openUI = false;        // 움직임 제한
+    }
 
     private void Update()
     {
-        // ESC 누르면 패널 오프
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (this.gameObject.activeSelf == true)
         {
-            // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
-            if(selectPanelStack.Count == 0)
+            // ESC 누르면 패널 오프
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                exitWeaponEquip.SetActive(true);
-            }
-            else
-            {
-                ClosePanel();
+                // 만약 켜져있는 패널이 없으면 무기 장착 씬 나가기
+                if (selectPanelStack.Count <= 0)
+                {
+                    ApplyWeaponEquip();
+                    equipmentsInit.Init();
+                    exitWeaponEquip.SetActive(true);
+                }
+                else
+                {
+                    ClosePanel();
+                }
             }
         }
     }
+
+    void ApplyWeaponEquip()
+    {
+        ApplyMainEquip();
+        ApplyThrowingEquip();
+        //ApplySpecialEquip();
+    }
+
+    void ApplyMainEquip()
+    {
+        MainWeapon _weapon;
+        for (int i = 0; i < loadOut.equipMainWeaponList.Count; i++)
+        {
+            _weapon = Instantiate( equipMainWeapon[loadOut.equipMainWeaponList[i]].GetComponent<MainWeapon>());
+            equipmentsInit.mainWeapons[i] = _weapon;
+            //GameObject _newWeapon = Instantiate(equipMainWeapon[loadOut.equipMainWeaponList[i]], parentTransform);
+            //equipmentsInit.mainWeapons[i] = _newWeapon.GetComponent<MainWeapon>();
+        }
+    }
+
+    void ApplyThrowingEquip()
+    {
+        equipmentsInit.frag = loadOut.countThrwing[0];
+        equipmentsInit.smoke = loadOut.countThrwing[1];
+        equipmentsInit.flash = loadOut.countThrwing[2];
+    }
+
+    void ApplySpecialEquip()
+    {
+       // equipmentsInit.specialWeapons[0] = dron.GetComponent<SpecialWeapon>();
+    }
+
 
     // 스택에 추가하고 패널 켜주기
     public void PushPanel(GameObject panel)
@@ -42,6 +112,7 @@ public class SelectEquip : MonoBehaviour
         if (selectPanelStack.Count > 0)
         {
             GameObject panel = selectPanelStack.Pop();
+            
             panel.SetActive(false);
         }
     }
@@ -49,19 +120,24 @@ public class SelectEquip : MonoBehaviour
     // 메뉴 버튼에 연결
     public void SelectMenu(int _num)
     {
+        ClosePanel();
         switch (_num)
         {
             case 0:
                 titleTxt.text = "로드아웃";
                 StartCoroutine(ImageMove(_num,65,110));         // 이동할 위치값과 사이즈값은 직접 확인 후 대입함
+                animIkPlayer.currentIkIndex = loadOut.equipMainWeaponIndex;
+                loadOut.mainWeaponObject[loadOut.equipMainWeaponList[0]].SetActive(true);
                 break;
 
             case 1:
                 titleTxt.text = "커스터마이즈";
                 StartCoroutine(ImageMove(_num, 190, 160));      // 이동할 위치값과 사이즈값은 직접 확인 후 대입함
+                animIkPlayer.currentIkIndex = 4;
+                loadOut.mainWeaponObject[loadOut.equipMainWeaponList[0]].SetActive(false);
+                loadOut.mainWeaponObject[loadOut.equipMainWeaponList[1]].SetActive(false);
                 break;
         }
-        ClosePanel();
     }
 
     // 버튼 클릭시 패널 및 메뉴 이름 변경

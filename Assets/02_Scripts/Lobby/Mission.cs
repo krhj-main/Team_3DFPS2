@@ -11,8 +11,8 @@ public class Mission : MonoBehaviour
     // 미션 목록
     public Button[] missionBtn;
     public TextMeshProUGUI[] missionTxt;
-    public Image[] missionImage;
-
+    public GameObject[] missionImage;
+    public GameObject [] zoomInImage;
     // 미션UI 캔버스
     public GameObject missionCanvas;
 
@@ -40,7 +40,7 @@ public class Mission : MonoBehaviour
         mouseCursor.HideCursor();
         for (int i = 0; i < missionImage.Length; i++)
         {
-            missionImage[i].enabled = false;
+            missionImage[i].SetActive(false);
         }
         GameManager.Instance.openUI = false;
     }
@@ -50,6 +50,10 @@ public class Mission : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            foreach(GameObject go  in zoomInImage) 
+            { 
+                go.SetActive(false);
+            }
             missionCanvas.SetActive(false);
         }
     }
@@ -59,7 +63,7 @@ public class Mission : MonoBehaviour
     public void MissionBtn(int num)
     {
         GameManager.Instance.selectSceneNum = num;
-        MissionImage(num);
+        ViewMissionImage(num);
     }
 
     // 게임 시작 버튼 ( 직접 연결 해줌 )
@@ -69,19 +73,17 @@ public class Mission : MonoBehaviour
     }
 
     // 미션 이미지 켜주기
-    void MissionImage(int num)
+    void ViewMissionImage(int num)
     {
         for(int i = 0; i < missionImage.Length; i++)
         {
             if(i == num)
             {
-                //missionImage[i].enabled = true;
-                missionImage[i].gameObject.SetActive(true);
+                missionImage[i].SetActive(true);
             }
             else
             {
-                //missionImage[i].enabled = false;
-                missionImage[i].gameObject.SetActive(false);
+                missionImage[i].SetActive(false);
             }
         }
     }

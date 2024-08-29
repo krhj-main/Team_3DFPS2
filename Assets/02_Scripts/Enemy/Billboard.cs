@@ -6,7 +6,12 @@ using UnityEngine;
 // 적 체력 UI카메라에 보이게 하는 스크립트ㄴ
 public class Billboard : MonoBehaviour
 {
-    public Transform target;
+    Transform target;
+
+    private void Awake()
+    {
+        target = Camera.main.transform;
+    }
 
     void Update()
     {

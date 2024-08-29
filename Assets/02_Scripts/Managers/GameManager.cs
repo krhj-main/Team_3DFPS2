@@ -31,9 +31,12 @@ public class GameManager : Singleton<GameManager>
         get { return Instance.smokeGrenade; }
     }
     */
-    //
-
+    [HideInInspector]
     public List<Enemy> enemies = new List<Enemy>();
+    [HideInInspector]
+    public float maxEnemy;
+    [HideInInspector]
+    public float remainEnemy;
 
     private void OnEnable()
     {
@@ -44,6 +47,7 @@ public class GameManager : Singleton<GameManager>
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         AddEnemyOnNowScene();
+        PlayerInit();
     }
 
     // 씬이 로드될 때 존재하는 모든 Enemy를 List에 담는 함수 ( ScnenManager 등에서 호출 )
@@ -53,6 +57,18 @@ public class GameManager : Singleton<GameManager>
         enemies.Clear();
         // 씬에 존재하는 모든 enemy를 담는다
         enemies.AddRange(FindObjectsOfType<Enemy>());
+        // 최대 에너미 수를 현재 씬에 있는 에너미 수만큼 저장
+        maxEnemy = enemies.Count;
+    }
+
+    // 씬 로드시 플레이어 관련 설정 초기화
+    public void PlayerInit()
+    {
+        PlayerController pc = PlayerController.Instance;
+
+        pc.enabled = true;
+        pc.cc.enabled = true;
+        pc.pHP = pc.maxHP;
     }
 
     void Start()
@@ -77,7 +93,7 @@ public class GameManager : Singleton<GameManager>
                 enemy.chasePos = _soundPos;
 
                 // 존버 상태가 아닐때만
-                if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind)
+                if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind && enemy.enemyState != EnemyState.Attack)
                 {
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
                     enemy.enemyState = EnemyState.Move;
@@ -124,8 +140,8 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region "타이머"
-    float curTime;
-    public bool BlindTimer(float _targetTime)
+    public float curTime;
+    public bool Timer(float _targetTime)
     {
         curTime += Time.deltaTime;
         if (curTime > _targetTime)

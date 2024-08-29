@@ -9,10 +9,13 @@ public class DronController : SpecialWeapon
     public bool isOut = false;
     public Camera charCamera;
     public Vector3 offset=Vector3.zero;
-    Vector3 defaultPos;
     public Material phoneMat;
     public MeshRenderer phone;
     public GameObject sphere;
+    [SerializeField] Animator anim;
+    [SerializeField] GameObject arms;
+    [SerializeField] public Transform CameraPos;
+    [SerializeField] Transform dronpos;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,60 +23,84 @@ public class DronController : SpecialWeapon
     }
 
     public void DronReturn() {
-        charCamera.enabled = true;
+        isOut = false;
+        //gameObject.SetActive(false);
+        dron.transform.SetParent(dronpos);
+        anim.SetBool("isThrow", isOut);
     }
 
     public void Use() {
-        if (isOut)
-        {
-            dron.DronAwake();
-        }
-        else {
-            dron.gameObject.transform.position = Camera.main.transform.position+ Camera.main.transform.forward;
+             dron.rig.isKinematic = false;
+            dron.col.enabled = true;
             dron.gameObject.SetActive(true);
             dron.transform.SetParent(null);
-           
-            Rigidbody _rid = dron.gameObject.GetComponent<Rigidbody>();
-            if (_rid)
-            {
-                _rid.AddForce(Camera.main.transform.forward * 1, ForceMode.Impulse);
-            }
-            isOut = !isOut;
 
-        }
-           
+       
+        
+            if (dron.rig)
+            {
+            dron.rig.velocity = Vector3.zero;
+            dron.rig.AddForce(PlayerController.Instance.PlayerCamera.transform.forward * 10, ForceMode.Impulse);
+            }
+            isOut = true;
+        anim.SetBool("isThrow", isOut);
+
     }
 
     public override void OnHandEnter()
     {
-        defaultPos = Swap.GunPosition.localPosition;
-        Swap.GunPosition.localPosition = offset;
+        dron.cam.gameObject.SetActive(true);
+        anim.enabled = true;
+        anim.SetBool("isThrow", isOut);
         phone.enabled = true;
-        sphere.SetActive(false);
+        arms.SetActive(true);
+        PlayerController.Instance.PlayerCamera.transform.SetParent(CameraPos);
+        PlayerController.Instance.PlayerCamera.transform.localPosition = Vector3.zero;
+        PlayerController.Instance.PlayerCamera.transform.localRotation = Quaternion.Euler(0, 180, -0.15f);
     }
     public override void OnHandExit()
     {
-        Swap.GunPosition.localPosition = defaultPos;
+        dron.cam.gameObject.SetActive(false);
+        anim.enabled = false;
+        dron.rig.isKinematic = true;
+        if (!isOut) {
+            dron.col.enabled = false;
+        }
+        
         phone.enabled = false;
-        sphere.SetActive(true);
+        arms.SetActive(false);
+        PlayerController.Instance.PlayerCamera.transform.SetParent(null);
     }
     public override void OnHand(Transform _tr, Vector3 _offset)
     {
-        transform.position = Swap.GunPosition.position;
-        transform.rotation = Swap.GunPosition.rotation;
-        
+        transform.position = _tr.position;
+        transform.rotation = _tr.rotation;
+        if (!isOut) {
+           dron.transform.position = dronpos.position;
+           dron.transform.rotation = dronpos.rotation;
+        }
+
+
     }
 
     public override void InputKey()
     {
-        if (Input.GetMouseButton(0)) {
-            Use();
+        if (Input.GetMouseButtonDown(0)) {
+            if (isOut)
+            {
+                dron.DronAwake();
+            }
+            else
+            {
+                anim.SetTrigger("doThrow");
+                
+            }
         }
     }
     public override void Interaction(GameObject target)
     {
         base.Interaction(target);
         phone.enabled = true;
-
     }
+
 }

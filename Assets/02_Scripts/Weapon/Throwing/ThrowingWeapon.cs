@@ -19,8 +19,10 @@ public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
     protected Rigidbody rb;
     protected bool isThrow=false;
     Grenade Grenade;
+    Animator anim;
     protected virtual void Awake()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         trajectoryLine = GetComponent<LineRenderer>();
         trajectoryLine.enabled = false;
@@ -79,7 +81,10 @@ public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
         trajectoryLine.enabled = false;
     }
 
-
+    public virtual void OnHandEnter()
+    {
+        PlayerController.Instance.anim = anim;
+    }
 
     public virtual void OnHand(Transform _tr, Vector3 _offset)
     {
@@ -122,9 +127,5 @@ public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
         {
             swap.WeaponChange(this, type);
         }
-    }
-
-    public virtual void OnHandEnter()
-    {
     }
 }

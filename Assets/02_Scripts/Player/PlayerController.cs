@@ -9,7 +9,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
     
     [SerializeField] Transform arm;
-    [SerializeField] Transform waist;
+    [SerializeField] public Transform waist;
     Vector3 armPos;
     
     [SerializeField] Transform cam;
@@ -60,7 +60,12 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Space(5)]
     [Header("플레이어 체력")]
     int HP;
-    [SerializeField] public int maxHP = 100;
+    [SerializeField] public int maxHP = 10;
+
+    // 플레이어 죽었을 때
+    public bool death = false;
+    public static event Action OnPlayerDeath;
+    [HideInInspector] public Animator deathCam;
 
     public int pHP
     {
@@ -91,13 +96,16 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 캐릭터의 속도값
     Vector3 velocity;
     // 캐릭터 컨트롤러
-    CharacterController cc;
+    [HideInInspector] public CharacterController cc;
 
     Camera main;
     public Camera PlayerCamera {
         get => main;
         private set {; }
     }
+
+    public AudioSource playerSound;
+    public AudioClip walkSound;
 
     /*
     private void Awake()
@@ -116,15 +124,20 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     }
     */
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        cc = GetComponent<CharacterController>();
+        main = Camera.main;
+        deathCam = main.GetComponent<Animator>();
+    }
+
     void Start()
     {
         pHP = maxHP;
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
-        cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
-        main = Camera.main;
+        playerSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -145,11 +158,13 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             }
         }
     }
-
-
     
     private void FixedUpdate()
     {
+        if (!cc.enabled)
+        {
+            return;
+        }
         ActiveMove();
     }
 
@@ -158,17 +173,19 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         Vector3 _groundVelocity = MovingUpdate(moveInput.x, moveInput.z);
 
-        // 이동 상태가 아닐 때
+        // 이동 상태일 때
         if (pState.isMoving)
         {
-            anim.SetFloat("Speed", cc.velocity.magnitude);
+            playerSound.volume = 1;
+            anim.SetFloat("Speed", velocity.magnitude);
         }
 
         // 걷기키가 눌렸을 때
         if (pState.isWalking)
         {
             // 이동속도 및 애니메이션 속도 조절
-            _groundVelocity /= 1.5f;
+            _groundVelocity *= 0.4f;
+            playerSound.volume = 0.5f;
         }
         // 뛰기키가 눌렸을 때 / 걷기키를 누를때는 같이 동작안함 -> 키 입력에 있어 걷기키가 최우선?
         if (pState.isRunning && !pState.isWalking)
@@ -210,7 +227,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 키 입력을 받았을 때 변수 값 전달 메서드
     void InputKey()
     {
-        if (GameManager.Instance.openUI)
+        if (GameManager.Instance.openUI || pState.isDead)
         {
             return;
         }
@@ -287,33 +304,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         character.forward = _lookForward;
     }
 
-    /*
-    // 카메라 마우스조작 메서드
-    void LookAround()
-    {
-        if (GameManager.Instance.openUI)
-        {
-            return;
-        }
-
-
-        mouseDelta = new Vector2(Input.GetAxis("Mouse X"),Input.GetAxis("Mouse Y"));
-
-        Vector3 _camAngle = arm.rotation.eulerAngles;
-
-        float _limit = _camAngle.x - mouseDelta.y;
-
-        if (_limit < 180)
-        {
-            _limit = Mathf.Clamp(_limit, -1f, 60f);
-        }
-        else
-        {
-            _limit = Mathf.Clamp(_limit,320f,361f);
-        }
-        arm.rotation = Quaternion.Euler(_limit, _camAngle.y + (mouseDelta.x * mouseSensitivity) , _camAngle.z);
-    }
-    */
 
 
 
@@ -365,5 +355,18 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     public void Damaged(int _damage, Vector3 hitpoint)
     {
         pHP -= _damage;
+        if(pHP <= 0)
+        {
+            pState.isDead = true;
+            cc.enabled = false;
+            //deathCam.Play("Death");
+            deathCam.enabled = true;
+        }
+    }
+
+    public void Die()
+    {
+        this.gameObject.layer = 0;
+        OnPlayerDeath?.Invoke();
     }
 }

@@ -22,6 +22,8 @@ public class EquipmentsSwap : MonoBehaviour
 
 
     [SerializeField] GameObject playerArms;
+    [SerializeField] GrenadeFactory grenadeFactory;
+    public GrenadeFactory GrenadeFactory { get { return grenadeFactory; } }
     [SerializeField] Transform playerSight;
 
 
@@ -49,85 +51,83 @@ public class EquipmentsSwap : MonoBehaviour
 
         }
     }
-    // Start is called before the first frame update
+
     void Start()
     {
-        
         Inventory = GetComponent<Inventory>();
         firePos = Camera.main.transform;
         InputManger.Instance.keyAction += Inputkey;
+        AddWeapon(grenadeFactory, 1);
         Swap(0);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
         if (equip != null)
         {
             equip.OnHand(GunPosition, offsetPos);
         }
+
         float _wheelInput = Input.GetAxis("Mouse ScrollWheel"); //휠 입력을 받고
+
         if (_wheelInput > 0)                                    //휠 입력에 따라 후치 연산자를 통해 현재 선택된 오브젝트를 끄고
         {                                                       //Index를 증감함
             SwapNext();
         }
+
         else if (_wheelInput < 0)
         {
             SwapPrev();
         }
     }
-    private void FixedUpdate()
+
+    public void Inputkey() 
     {
-        
+        //무기가 하나이상 있으면
+        if (Input.GetKeyDown(dropKey))
+        {
+            if (index != 2)
+            {
+                DropWeapon(equip, Index);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            Swap(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Swap(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (index == 2&& equip!=null)
+            {
+            ((GrenadeFactory)equip).Changetype();
+            }
+            else 
+            {
+                Swap(2); ;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            Swap(3);
+        }
     }
 
-    public void Inputkey() {
-                                 //무기가 하나이상 있으면
-         
-            if (Input.GetKeyDown(dropKey))
-            {
-                if (index != 2)
-                {
-                    DropWeapon(equip, Index);
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha1)) {
-                Swap(0);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Swap(1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                if (index == 2&& equip!=null)
-                {
-                ((GrenadeFactory)equip).Changetype();
-                }
-                else 
-                {
-                    Swap(2); ;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                Swap(3);
-            }
-
-    }
     public void WeaponChange(IEquipMent weapon, EquipType type)//타입별 무기 스왑
     {
         
-        int _slot;
+        int _slot=-1;
         switch (type)
         {
             case EquipType.Weapon://타입별로 아이템 매니저에 정의된 크기로 슬롯을 구성
                 
                 _slot = 0;
-                break;
-            case EquipType.Throw:
-                _slot = 1;
                 break;
             case EquipType.Special:
                 _slot = 2;
@@ -136,7 +136,7 @@ public class EquipmentsSwap : MonoBehaviour
                 _slot = 3;
                 break;
         }
-        if (_slot != null)
+        if (_slot != -1)
         {//입력받은 슬롯으로 무기 추가
             
             AddWeapon(weapon, _slot);
@@ -145,38 +145,47 @@ public class EquipmentsSwap : MonoBehaviour
     }
     
     void Swap(int _setIndex)
-    {//1또는 -1으로 들고있는 무기를 전환하는 함수
+    {
+        //1또는 -1으로 들고있는 무기를 전환하는 함수
         offsetPos = Vector3.zero;
+
         //IEquipMent _equp = Inventory.Get(_setIndex);
         if (equip != null)
-        {//무기를 들고있으면 전환
+        {
+            //무기를 들고있으면 전환
             equip.gameObject.SetActive(false);
             equip.OnHandExit();
             InputManger.Instance.keyAction -= equip.InputKey;
         }
+
         Index = _setIndex;
         equip = Inventory.Get(Index);
         slot = Inventory.GetSlotToIndex(Index);
+
         if (equip != null)
         {
-            playerArms.SetActive(false);
+            playerArms.gameObject.SetActive(false);
+            // playerArms.OnHandExit();
             equip.gameObject.SetActive(true);
 
             equip.OnHandEnter();
 
             // 무기가 전환되는 부분
-
             InputManger.Instance.keyAction += equip.InputKey;
         }
-        else {
+        else 
+        {
             firePos.SetParent(playerSight);
             firePos.localPosition = Vector3.zero;
             firePos.localRotation = Quaternion.Euler(0,180,-0.15f);
-            playerArms.SetActive(true);
+            //playerArms.OnHandEnter();
+            playerArms.gameObject.SetActive(true);
         }
     }
+
     void SwapNext() { Swap(Index + 1); }
     void SwapPrev() { Swap(Index - 1); }
+
     //수류탄이랑 특수장비 예외처리해야함...
     void AddWeapon(IEquipMent _weapon, int _index)
     {
@@ -191,14 +200,14 @@ public class EquipmentsSwap : MonoBehaviour
         else if (_weapon.type == EquipType.Special) {
             ((SpecialWeapon)_weapon).Swap = this;
         }
+
         slot = Inventory.GetSlot(_index);
+
         if (slot.isFull)
         {
             IEquipMent _equip = slot.Current();
             DropWeapon(_equip, Inventory.SlotIndexToIndex(slot.Index));
         }
-        
-        
         
         _weapon.gameObject.SetActive(false);
         int _num = Inventory.SlotIndexToIndex(_index);
@@ -206,27 +215,34 @@ public class EquipmentsSwap : MonoBehaviour
         _num = Inventory.SlotIndexToIndex(_index);
         Swap(_num);
         _weapon.transform.SetParent(GunPosition);
-        
+        _weapon.transform.position = Vector3.zero;
     }
 
     public void DropWeapon(IEquipMent _equip,int _index)
     {
-        IEquipMent _go;
-        _go = _equip;
-        Inventory.Set(_index, null);
-        equip = null;
-        Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
-        if (_rid)
+        if (_index != 2) 
         {
-           _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
-            Debug.DrawRay(PlayerController.Instance.PlayerCamera.transform.position, PlayerController.Instance.PlayerCamera.transform.forward);
+            IEquipMent _go;
+            _go = _equip;
+            Inventory.Set(_index, null);
+            equip = null;
+            if (_go!= null) {
+                Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
+
+                if (_rid)
+                {
+                    _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
+                    Debug.DrawRay(PlayerController.Instance.PlayerCamera.transform.position, PlayerController.Instance.PlayerCamera.transform.forward);
+                }
+                InputManger.Instance.keyAction -= _equip.InputKey;
+                _go.OnHandExit();
+                Utill.DestroyOnLoad(_go.gameObject);
+
+                SwapNext();
+                _equip.gameObject.SetActive(true);
+            }
+            
         }
-        InputManger.Instance.keyAction -= _equip.InputKey;
-        _go.OnHandExit();
-        Utill.DestroyOnLoad(_go.gameObject);
-       
-        SwapNext();
-        _equip.gameObject.SetActive(true);
     }
 }
 

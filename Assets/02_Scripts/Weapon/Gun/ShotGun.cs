@@ -10,23 +10,27 @@ public class ShotGun : MainWeapon
     public TextMeshProUGUI ammoTxt;       // 탄약 UI 표시
     private int shell = 10;               // 발사되는 셸
     private float spreadAngle = 30f;      // 퍼지는각도
-    private bool _isReloading = false;    // 장전중
-    private bool stopReloading = false;   // 한발씩 장전
+    //private bool _isReloading = false;    // 장전중
+    //private bool stopReloading = false;   // 한발씩 장전
+
+    private float reloadEnter = 0.18f;
+    private float reloadEnd = 2.12f;
 
     protected override void Awake()
     {
         base.Awake();
         initializeAmmo = 50;             // 총기 최대 탄약
-        maxLoadedAmmo = 10;              // 장전될 수 있는 탄약
+        maxLoadedAmmo = 5;              // 장전될 수 있는 탄약
         damage = 5;                      // 데미지
         bulletRange = 5f;                // 총알 발사 거리
-        fireRate = 0.5f;                 // 총알 발사 주기
-        recoilX = 0.2f;                  // 좌우 반동
-        recoilY = 1f;                    // 수직 반동
+        fireRate = 1.26f;                 // 총알 발사 주기
+        recoilX = 0.75f;                  // 좌우 반동
+        recoilY = 25f;                    // 수직 반동
         recoilRecoverySpeed = 5f;        // 반동 회복 속도
-        reloadTime = 1f;                 // 장전 시간
+        reloadTime = 1.3f;              // 장전 시간  //0.18f + 1.12f + 0.5f+2.12f
         adsSpeed = 5;                    // 정조준 속도
         adsFOV = 45;                     // 정조준시 CameraFOV
+        bulletSpread = 0;
         ResetAmmo(initializeAmmo);       // 탄약 세팅
     }
 
@@ -47,15 +51,22 @@ public class ShotGun : MainWeapon
         if (Time.time >= nextFireTime)
         {
             nextFireTime = Time.time + fireRate;
-            base.Shoot(_firePos);                   // 이거 아이디어 물어보자.. 베이스로 들어가면 리로드 포함되어있는데 리로드는 이미 여기서 다 정의해놓음 어떻게?
-            FireBullet(_firePos);
+            base.Shoot(_firePos);
+
+            if (loadedAmmo <= 0)
+            {
+                Debug.Log("장전된 탄약 없음");
+                Reload();
+                canShoot = false;                 // 총알 없으면 슈팅 불가능
+            }
         }
 
         // 장전 중이면 장전 끝
-        if (_isReloading)
+        if (isReloading && loadedAmmo > 0)
         {
-            stopReloading = true;
-            _isReloading = false;
+            anim.SetBool("isReloading", false);
+            //stopReloading = true;
+            isReloading = false;
             return;
         }
     }
@@ -63,7 +74,7 @@ public class ShotGun : MainWeapon
     // 장전 함수
     public override void Reload()
     {
-        if (_isReloading)
+        if (isReloading)
         {
             Debug.Log("재장전중");
             return;
@@ -80,31 +91,68 @@ public class ShotGun : MainWeapon
             Debug.Log("남은 탄약 없음");
             return;
         }
-        stopReloading = false;
-        StartCoroutine(Reloading());
+        //stopReloading = false;
+        //StartCoroutine(ShotgunReloading());
+        anim.SetBool("isReloading", true);
     }
-
-    IEnumerator Reloading()
+    /*
+    IEnumerator ShotgunReloading()
     {
-        _isReloading = true;
+        anim.SetBool("isReloading", true);
+        yield return new WaitForSeconds(reloadEnter);
+
         while (loadedAmmo < maxLoadedAmmo && remainAmmo > 0 && !stopReloading)
         {
+            if (loadedAmmo == maxLoadedAmmo - 1)
+            {
+                anim.SetBool("isReloading", false);
+                break;
+            }
+            if (loadedAmmo < maxLoadedAmmo - 1)
+            {
+                anim.SetTrigger("doReload");
+            }
+            yield return new WaitForSeconds(reloadTime);
+        }
+    }
+        
+    IEnumerator ShotgunReloading()
+    {
+        _isReloading = true;
+        anim.SetBool("isReloading", true);
+        while (loadedAmmo < maxLoadedAmmo && remainAmmo > 0 && !stopReloading)
+        {
+            if (loadedAmmo < maxLoadedAmmo - 1)
+            {
+                anim.SetTrigger("doReload");
+            }
+            else if (loadedAmmo == maxLoadedAmmo - 1)
+            {
+                anim.SetBool("isReloading", false);
+            }
+
             yield return new WaitForSeconds(reloadTime);
 
             if (stopReloading)
             {
                 Debug.Log("장전 중단됨");
+                anim.SetBool("isReloading", false);
+                anim.SetTrigger("doAttack");
                 break;
             }
             loadedAmmo++;
             remainAmmo--;
         }
     }
+    */
 
+
+    #region "적 FireBullet"
     // 발사 함수
     public override void FireBullet(Transform _firePos)
     {
-        for (int i = 0; i< shell; i++)
+        base.FireBullet(firePos);
+        for (int i = 0; i < shell; i++)
         {
             Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, _firePos);
             Debug.DrawRay(_firePos.position, spreadDirection * bulletRange, Color.red, 1f);
@@ -124,74 +172,42 @@ public class ShotGun : MainWeapon
                     {
                         target.Damaged(damage, hit.point);
                     }
-                    /*
-                    CharacterController _cc = hit.collider.GetComponent<CharacterController>();
-                    if (_cc != null)
-                    {
-                        // CharacterController의 실제 높이 계산
-                        float _controllerHeight = _cc.height * hit.transform.lossyScale.y;
-
-                        // CharacterController의 하단 y 좌표 계산 ( 지면 )
-                        float _bottomY = hit.transform.position.y + _cc.center.y * hit.transform.lossyScale.y - _controllerHeight / 2;
-
-                        // hit.point의 상대적 높이 비율 계산
-                        float _relativeHeight = (hit.point.y - _bottomY) / _controllerHeight;
-
-                        // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
-                        if (_relativeHeight >= (1 - headRatio))
-                        {
-                            hit.transform.GetComponent<IDamageAble>().Damaged(damage * 2);
-                        }
-                        else
-                        {
-                            hit.transform.GetComponent<IDamageAble>().Damaged(damage);
-                        }
-                    }*/
                 }
             }
         }
-        /*
-        List<RaycastHit> allHits = new List<RaycastHit>();
-        
+    }
+    #endregion
+
+    #region "플레이어 FireBullet"
+    // 발사 함수
+    public override void PlayerFireBullet()
+    {
+        base.PlayerFireBullet();
         for (int i = 0; i < shell; i++)
         {
-            Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, _firePos);
-            Debug.DrawRay(_firePos.position, spreadDirection * bulletRange, Color.red, 1f);
+            Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, cam.transform);
+            Debug.DrawRay(cam.transform.position, spreadDirection * bulletRange, Color.red, 1f);
 
-            RaycastHit[] hits = Physics.RaycastAll(_firePos.position, spreadDirection, bulletRange, canAttackMask);
-            allHits.AddRange(hits);
-        }
-        
-        foreach (RaycastHit hit in allHits)
-        {
-            CharacterController _cc = hit.collider.GetComponent<CharacterController>();
-            if (_cc != null)
+            RaycastHit hit;
+
+            if (canShoot)
             {
-                // CharacterController의 실제 높이 계산, lossyScale은 오브젝트의 절대적인 크기
-                float _controllerHeight = _cc.height * hit.transform.lossyScale.y;
-
-                // CharacterController의 하단 y 좌표 계산 ( 지면 y좌표 계산 )
-                float _bottomY = hit.transform.position.y + _cc.center.y * hit.transform.lossyScale.y - _controllerHeight / 2;
-
-                // hit.point의 상대적 높이 비율 계산
-                float _relativeHeight = (hit.point.y - _bottomY) / _controllerHeight;
-
-                // 히트한 높이가 헤드샷 지정 높이 이상이면 헤드샷 / 아니면 바디샷
-                if (_relativeHeight >= (1 - headRatio))
+                if (Physics.Raycast(cam.transform.position, spreadDirection, out hit, bulletRange))       // 카메라 포지션에서 정면으로 총알 사거리만큼 쏨
                 {
-                    Debug.Log("헤드샷");
-                    hit.transform.GetComponent<IDamageAble>().Damaged(damage * 2);
-
-                }
-                else
-                {
-                    Debug.Log("바디샷");
-                    hit.transform.GetComponent<IDamageAble>().Damaged(damage);
+                    if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
+                    {
+                        continue;
+                    }
+                    IDamageAble target = hit.transform.GetComponent<IDamageAble>();
+                    if (target != null)
+                    {
+                        target.Damaged(damage, hit.point);
+                    }
                 }
             }
         }
-        */
     }
+    #endregion
 
     private Vector3 CalculateSpreadDirection(float _speadAngle, Transform _firePos)
     {
