@@ -95,9 +95,7 @@ public class ClearPanel : MonoBehaviour
     #region 점수 계산
     float CalculaterScore()
     {
-        int _timeScore = 0;
-
-        int _finalScore = goalScore + GameManager.Instance.enemyScore + _timeScore;
+        int _finalScore = goalScore + GameManager.Instance.enemyScore + TimeManager.timeScore;
 
         return _finalScore;
     }
