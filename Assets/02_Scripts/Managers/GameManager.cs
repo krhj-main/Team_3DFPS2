@@ -46,6 +46,11 @@ public class GameManager : Singleton<GameManager>
     // 씬이 로드될 때마다 실행되는 이벤트에 넣을 함수들이나 기능 구현
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (FindObjectOfType<SetPlayerPosition>() != null)
+        {
+            Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
+            PlayerController.Instance.transform.position = _newPosition;
+        }
         AddEnemyOnNowScene();
         PlayerInit();
     }
