@@ -140,13 +140,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         weapon = GetComponentInChildren<MainWeapon>();
     }
 
-    private void OnEnable()
-    {
-
-         
-        
-    }
-
     private void Start()
     {
         // 외부 변수 관련 초기화
@@ -295,7 +288,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     public void Blind()
     {
         // Hide(Idle) 애니메이션 재생
-        anim.SetTrigger("doFlashbang");
+        //anim.SetTrigger("doFlashbang");
+        anim.SetBool("isFlashbang", true);
 
         // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
         findDis = 0.1f;
@@ -308,6 +302,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         if (GameManager.Instance.Timer(blindTime))
         {
             // 시야를 복구하고, 플레이어를 놓친 상태로 설정
+            anim.SetBool("isFlashbang", false);
             findDis = originFindDis;
             atkDis = originAtkDis;
             agent.isStopped = false;
@@ -411,11 +406,16 @@ public class Enemy : MonoBehaviour, IDamageAble
                 Quaternion targetRotation = Quaternion.LookRotation(_dirP);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
+                float _maxHeight = 2f;
+                float _heightDif = (PlayerController.Instance.transform.position.y + PlayerController.Instance.cc.center.y) - transform.position.y;
+                float _clampHeight = Mathf.Clamp(_heightDif / _maxHeight, -1f, 0.5f);
+                anim.SetFloat("Rot", _clampHeight);
 
                 if (Timer(atkDelay))
                 {
                     // Attack 애니메이션 재생
                     anim.SetTrigger("doEnemyAttack");
+
                     weapon.Shoot(enemyFirePos);
 
                     // 무기 종류에 따라 공격 속도 설정

@@ -14,9 +14,6 @@ public class Grenade :MonoBehaviour
     FragGrenade frag;
     FlashGrenade flash;
     SmokeGrenade smoke;
-    public float _radius;
-    public float _delay;
-    public float _value;
     [SerializeField] Transform grenadeBase;
     [SerializeField] MeshFilter meshFilter;
     [SerializeField] MeshRenderer meshRenderer;

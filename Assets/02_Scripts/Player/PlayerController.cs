@@ -65,6 +65,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 플레이어 죽었을 때
     public bool death = false;
     public static event Action OnPlayerDeath;
+    [HideInInspector] public Animator deathCam;
 
     public int pHP
     {
@@ -123,16 +124,20 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     }
     */
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        cc = GetComponent<CharacterController>();
+        main = Camera.main;
+        deathCam = main.GetComponent<Animator>();
+    }
+
     void Start()
     {
         pHP = maxHP;
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
-        cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
         playerSound = GetComponent<AudioSource>();
-        main = Camera.main;
     }
 
     // Update is called once per frame
@@ -156,6 +161,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     
     private void FixedUpdate()
     {
+        if (!cc.enabled)
+        {
+            return;
+        }
         ActiveMove();
     }
 
@@ -350,6 +359,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         {
             pState.isDead = true;
             cc.enabled = false;
+            //deathCam.Play("Death");
+            deathCam.enabled = true;
         }
     }
 

@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 5
   _delay: 2
-  _value: 100
+  _value: 5
   grenadeBase: {fileID: 4749908431347478820}
   meshFilter: {fileID: 7634843075124907640}
   meshRenderer: {fileID: 834707563384366680}
