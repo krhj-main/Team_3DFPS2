@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knife : MonoBehaviour, IEquipMent, Interactable
+public class Knife : MonoBehaviour, IEquipMent
 {
     public EquipType type { get; set; }
     Transform IEquipMent.transform { get => transform; set { } }
@@ -35,12 +35,4 @@ public class Knife : MonoBehaviour, IEquipMent, Interactable
         
     }
 
-    public void Interaction(GameObject target)
-    {
-        EquipmentsSwap swap = target.GetComponent<EquipmentsSwap>();
-        if (swap != null)
-        {
-            swap.WeaponChange(this, type);
-        }
-    }
 }

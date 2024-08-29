@@ -51,7 +51,7 @@ public class FlashGrenade
                 //calduration = Mathf.RoundToInt(_effectDuration * _rangePersentToPlayer);
                 // 눈뽕
                 
-                UIManager.Instance.FlashImage.gameObject.SetActive(true);
+                UIManager.Instance.FlashImage.Duration = calDuration;
             }
         }
 
@@ -72,10 +72,11 @@ public class FlashGrenade
                 }
             }
         }
-
+        /*
         // 거리별 시간 이후 시야 복구
         yield return new WaitForSeconds(calDuration);
         UIManager.Instance.FlashImage.gameObject.SetActive(false);
+        */
     }
 
     // 캐릭터가 섬광탄을 보고있는지 판단하는 메서드
