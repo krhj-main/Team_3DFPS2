@@ -528,12 +528,13 @@ public class Enemy : MonoBehaviour, IDamageAble
     }
 
     // 연막탄에 닿았을 시 Enemy에게 끼치는 영향
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("SmokeGrenade"))
         {
-            findDis = 2f;
-            atkDis = 1f;
+            //findDis = 2f;
+            //atkDis = 1f;
+            fov.weight *= 0.2f;
         }
     }
 
@@ -541,8 +542,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     {
         if (other.gameObject.CompareTag("SmokeGrenade"))
         {
-            findDis = originFindDis;
-            atkDis = originAtkDis;
+            //findDis = originFindDis;
+            //atkDis = originAtkDis;
+            fov.weight = 1f;
         }
     }
     private bool IsHeadShot(Vector3 _hitpoint)
