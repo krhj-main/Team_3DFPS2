@@ -22,7 +22,7 @@ public class Lodding : MonoBehaviour
             GameManager.Instance.selectSceneNum = 2;
         }
         StartCoroutine(TransitionNextScene(GameManager.Instance.selectSceneNum));
-        ActiveVideo();
+        //ActiveVideo();
     }
 
     // 동영상 재생

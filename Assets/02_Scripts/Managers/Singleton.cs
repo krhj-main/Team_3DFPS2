@@ -6,30 +6,30 @@ using UnityEngine;
 
 
 
-// Á¦³×¸¯ Å¸ÀÔÀ¸·Î ½Ì±ÛÅæ ¸¸µé¾î »ó¼Ó½ÃÄÑ ¸Å´ÏÀú »ç¿ëÇÏ±â
+// ì œë„¤ë¦­ íƒ€ìž…ìœ¼ë¡œ ì‹±ê¸€í†¤ ë§Œë“¤ì–´ ìƒì†ì‹œì¼œ ë§¤ë‹ˆì € ì‚¬ìš©í•˜ê¸°
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    // ½Ì±ÛÅæ ÀÌ¸§À» °¡Áø ½ºÅ©¸³Æ®¸¦ Á¦³×¸¯ Å¸ÀÔÀ¸·Î ¼±¾ð
+    // ì‹±ê¸€í†¤ ì´ë¦„ì„ ê°€ì§„ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ì œë„¤ë¦­ íƒ€ìž…ìœ¼ë¡œ ì„ ì–¸
 
     static T instance;
-    // Á¦³×¸¯ Å¸ÀÔ ÀÎ½ºÅÏ½º º¯¼ö
+    // ì œë„¤ë¦­ íƒ€ìž… ì¸ìŠ¤í„´ìŠ¤ ë³€ìˆ˜
 
-    // Á¦³×¸¯ Å¸ÀÔ ÀÎ½ºÅÏ½º ÇÁ·ÎÆÛÆ¼
+    // ì œë„¤ë¦­ íƒ€ìž… ì¸ìŠ¤í„´ìŠ¤ í”„ë¡œí¼í‹°
     public static T Instance
     {
         get
         {
-            // ÀÎ½ºÅÏ½º º¯¼ö°¡ ³Î °ªÀÌ¶ó¸é
+            // ì¸ìŠ¤í„´ìŠ¤ ë³€ìˆ˜ê°€ ë„ ê°’ì´ë¼ë©´
             if (instance == null)
             {
-                // ÀÎ½ºÅÏ½º º¯¼ö¿¡ Á¦³×¸¯ Å¸ÀÔÀ» °¡Áø ¿ÀºêÁ§Æ®¸¦ Ã£¾Æ ´ëÀÔÇÏ°í
+                // ì¸ìŠ¤í„´ìŠ¤ ë³€ìˆ˜ì— ì œë„¤ë¦­ íƒ€ìž…ì„ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ ëŒ€ìž…í•˜ê³ 
                 instance = (T)FindObjectOfType(typeof(T));
 
-                // Á¦³×¸¯ Å¸ÀÔÀ» °¡Áø ¿ÀºêÁ§Æ®µµ ¾ø´Ù¸é
+                // ì œë„¤ë¦­ íƒ€ìž…ì„ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ë„ ì—†ë‹¤ë©´
                 if (instance == null)
                 {
-                    // »õ ¿ÀºêÁ§Æ®¸¦ »ý¼ºÇØ¼­ ÀÎ½ºÅÏ½º¿¡ ´ëÀÔÇÑ´Ù.
+                    // ìƒˆ ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•´ì„œ ì¸ìŠ¤í„´ìŠ¤ì— ëŒ€ìž…í•œë‹¤.
                     GameObject obj = new GameObject(typeof(T).Name, typeof(T));
                     instance = obj.GetComponent<T>();
                 }
@@ -38,18 +38,18 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public virtual void Awake()
     {
-        // DontDestoryOnLoad ÇÔ¼ö´Â »ó¼ÓµÈ »óÅÂÀÏ¶§ ÀÛµ¿ÇÏÁö¾Ê´Â ¹ö±×°¡ Á¸ÀçÇÔ
-        // ±×·¡¼­ ÇØ´ç ¸Å´ÏÀú°¡ ¾î´À°÷¿¡ »ó¼ÓµÇ¾îÀÖÁö ¾ÊÀºÁö È®ÀÎÇÏ°í, »ó¼ÓµÇ¾îÀÖ´Ù¸é
+        // DontDestoryOnLoad í•¨ìˆ˜ëŠ” ìƒì†ëœ ìƒíƒœì¼ë•Œ ìž‘ë™í•˜ì§€ì•ŠëŠ” ë²„ê·¸ê°€ ì¡´ìž¬í•¨
+        // ê·¸ëž˜ì„œ í•´ë‹¹ ë§¤ë‹ˆì €ê°€ ì–´ëŠê³³ì— ìƒì†ë˜ì–´ìžˆì§€ ì•Šì€ì§€ í™•ì¸í•˜ê³ , ìƒì†ë˜ì–´ìžˆë‹¤ë©´
         if (transform.parent != null && transform.root != null)
         {
-            // ±× »ó¼ÓµÇ¾îÀÖ´Â ºÎ¸ð¿ÀºêÁ§Æ®¸¦ OnLoad ÇÏ°í
+            // ê·¸ ìƒì†ë˜ì–´ìžˆëŠ” ë¶€ëª¨ì˜¤ë¸Œì íŠ¸ë¥¼ OnLoad í•˜ê³ 
             DontDestroyOnLoad(this.transform.root.gameObject);
         }
         else
         {
-            // »ó¼ÓµÇ¾îÀÖÁö ¾Ê´Ù¸é ÀÌ ¿ÀºêÁ§Æ®¸¦ OnLoad ÇÑ´Ù
+            // ìƒì†ë˜ì–´ìžˆì§€ ì•Šë‹¤ë©´ ì´ ì˜¤ë¸Œì íŠ¸ë¥¼ OnLoad í•œë‹¤
             DontDestroyOnLoad(this.gameObject);
         }
 
@@ -59,10 +59,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
     ///<summary>
-    /// »ç¿ë¹ý.
-    /// ÀÌ ½ºÅ©¸³Æ®¸¦ µû·Î ¸¸µé¾îµÎ°í
-    /// ¸Å´ÏÀú·Î »ç¿ëÇÒ ½ºÅ©¸³Æ®¸¦ º°µµ·Î »ý¼ºÇÑµÚ
-    /// ½Ì±ÛÅæ ½ºÅ©¸³Æ®¸¦ ¸Å´ÏÀú ½ºÅ©¸³Æ®¿¡¼­ »ó¼Ó¹Þ¾Æ »ç¿ë
+    /// ì‚¬ìš©ë²•.
+    /// ì´ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ë”°ë¡œ ë§Œë“¤ì–´ë‘ê³ 
+    /// ë§¤ë‹ˆì €ë¡œ ì‚¬ìš©í•  ìŠ¤í¬ë¦½íŠ¸ë¥¼ ë³„ë„ë¡œ ìƒì„±í•œë’¤
+    /// ì‹±ê¸€í†¤ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ë§¤ë‹ˆì € ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ìƒì†ë°›ì•„ ì‚¬ìš©
     ///</summary>
 
 }

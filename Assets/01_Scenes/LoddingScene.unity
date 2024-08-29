@@ -1187,7 +1187,6 @@ GameObject:
   - component: {fileID: 2026412331}
   - component: {fileID: 2026412330}
   - component: {fileID: 2026412334}
-  - component: {fileID: 2026412335}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1301,11 +1300,3 @@ MonoBehaviour:
   videoPlayers:
   - {fileID: 1994000432}
   - {fileID: 259147404}
---- !u!81 &2026412335
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026412329}
-  m_Enabled: 1
