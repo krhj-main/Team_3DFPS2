@@ -44,7 +44,7 @@ public class UIManager : Singleton<UIManager>
     int missionEnemyCount;
 
     [Header("섬광탄 효과 (임시)")]
-    public Image FlashImage;
+    public FlashEffectEnd FlashImage;
 
     [Header("스나이퍼 줌 UI")]
     public Image snimperZoomUI;

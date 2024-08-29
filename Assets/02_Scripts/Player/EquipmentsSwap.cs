@@ -21,7 +21,7 @@ public class EquipmentsSwap : MonoBehaviour
     public IEquipMent equip;
 
 
-    [SerializeField] GameObject playerArms;
+    [SerializeField] Knife playerArms;
     [SerializeField] GrenadeFactory grenadeFactory;
     public GrenadeFactory GrenadeFactory { get { return grenadeFactory; } }
     [SerializeField] Transform playerSight;
@@ -174,7 +174,7 @@ public class EquipmentsSwap : MonoBehaviour
         {
 
             playerArms.gameObject.SetActive(false);
-            // playerArms.OnHandExit();
+            playerArms.OnHandExit();
             equip.gameObject.SetActive(true);
 
             equip.OnHandEnter();
@@ -187,7 +187,7 @@ public class EquipmentsSwap : MonoBehaviour
             firePos.SetParent(playerSight);
             firePos.localPosition = Vector3.zero;
             firePos.localRotation = Quaternion.Euler(0,180,-0.15f);
-            //playerArms.OnHandEnter();
+            playerArms.OnHandEnter();
             playerArms.gameObject.SetActive(true);
         }
     }
