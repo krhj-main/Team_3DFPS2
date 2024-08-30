@@ -12,6 +12,9 @@ public class Lodding : MonoBehaviour
     public TextMeshProUGUI loadingTxt;
     public TextMeshProUGUI skipInfoTxt;
 
+    float fakeVal = 0;
+    float randTime;
+
     public VideoPlayer[] videoPlayers;
     bool videoFinished = false;
 
@@ -21,9 +24,49 @@ public class Lodding : MonoBehaviour
         {
             GameManager.Instance.selectSceneNum = 2;
         }
+        loadingTxt.text = fakeVal + "%";
+
         StartCoroutine(TransitionNextScene(GameManager.Instance.selectSceneNum));
         //ActiveVideo();
     }
+
+    // 비동기 신
+    IEnumerator TransitionNextScene(int num)
+    {
+        yield return null;
+
+        // 지정된 씬을 비동기 형식으로 로드한다
+        AsyncOperation _ao = SceneManager.LoadSceneAsync(num);
+
+        // 준비가 완료되어도 다음 씬으로 넘어가지 않게
+        // 단, 이걸 사용하면 progree는 0.9까지밖에 안됨 -> 유니티 내부 구조의 문제
+        _ao.allowSceneActivation = false;
+
+        // 로딩이 완료될 때까지 반복해서 요소들을 로드하고 진행 과정을 하면에 표시한다
+        while (!_ao.isDone)
+        {
+            // 로딩 진행률을 슬라이더 바와 텍스트로 표시한다
+            float _progress = Mathf.Clamp01(_ao.progress / 0.9f);
+            //loadingBar.value = _progress;
+            //loadingTxt.text = (_progress * 100f) + "%";
+
+            // 만일 씬 로드 진행률이 90%를 넘어가면
+            if (_ao.progress >= 0.9f)
+            {
+                loadingBar.value = _progress;
+                loadingTxt.text = (_progress * 100f) + "%";
+                skipInfoTxt.enabled = true;
+                // 비디오가 종료되거나 엔터키를 누르면 다음씬 활성화
+                if (videoFinished || Input.GetKeyDown(KeyCode.Escape))
+                {
+                    _ao.allowSceneActivation = true;
+                }
+            }
+
+            yield return null;
+        }
+    }
+
 
     // 동영상 재생
     void ActiveVideo()
@@ -38,37 +81,5 @@ public class Lodding : MonoBehaviour
     void OnVideoFinished(VideoPlayer vp)
     {
         videoFinished = true;
-    }
-
-    // 비동기 신
-    IEnumerator TransitionNextScene(int num)
-    {
-        // 지정된 씬을 비동기 형식으로 로드한다
-        AsyncOperation _ao = SceneManager.LoadSceneAsync(num);
-
-        // 로드되는 씬의 모습이 화면에 보이지 않게 한다
-        _ao.allowSceneActivation = false;
-
-        // 로딩이 완료될 때까지 반복해서 요소들을 로드하고 진행 과정을 하면에 표시한다
-        while (!_ao.isDone)
-        {
-            // 로딩 진행률을 슬라이더 바와 텍스트로 표시한다
-            float _progress = Mathf.Clamp01(_ao.progress / 0.9f);
-            loadingBar.value = _progress;
-            loadingTxt.text = (_progress * 100f).ToString("F0") + "%";
-
-            // 만일 씬 로드 진행률이 90%를 넘어가면
-            if (_ao.progress >= 0.9f)
-            {
-                skipInfoTxt.enabled = true;
-                // 비디오가 종료되거나 엔터키를 누르면 다음씬 활성화
-                if (videoFinished || Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _ao.allowSceneActivation = true;
-                }
-            }
-
-            yield return null;
-        }
     }
 }
