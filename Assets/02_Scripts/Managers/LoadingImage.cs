@@ -17,19 +17,34 @@ public class LoadingImage : MonoBehaviour
     [TextArea]
     [SerializeField] string[] loadingSceanario;
 
-    TMP_Text text;
+    public TextMeshProUGUI scenario;
     public Image backgroundImage;
 
     private void Start()
     {
-        
-        
-        backgroundImage.sprite = loadingImage[0];
+        Debug.Log(GameManager.Instance.selectSceneNum);
+        backgroundImage.sprite = loadingImage[GameManager.Instance.selectSceneNum];
+        scenario.text = loadingSceanario[GameManager.Instance.selectSceneNum];
+        scenario.rectTransform.anchoredPosition = new Vector2(0,-scenario.preferredHeight);
+        StartCoroutine(ScrollScript());
     }
 
     private void Update()
     {
         
+    }
+
+    IEnumerator ScrollScript()
+    {
+        float _preferHeight = scenario.preferredHeight;        
+
+        while (scenario.rectTransform.rect.top > -_preferHeight)
+        {
+            
+            scenario.rectTransform.anchoredPosition = new Vector2(scenario.rectTransform.anchoredPosition.x, 
+                                                        scenario.rectTransform.anchoredPosition.y + 1f);
+            yield return null;
+        }        
     }
 
 
