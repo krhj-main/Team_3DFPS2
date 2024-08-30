@@ -1734,9 +1734,9 @@ MonoBehaviour:
   grenades: []
   prefab: {fileID: -994648074451216294, guid: e4067a069498d344299f330819737fe5, type: 3}
   objectSIze: 3
-  fragCount: 23
-  flashCount: 23
-  smokeCount: 23
+  fragCount: 0
+  flashCount: 0
+  smokeCount: 0
   hand: {fileID: 7423509506181938032}
   arms: {fileID: 2886214526506252571}
   CameraPos: {fileID: 2889362937698714171}

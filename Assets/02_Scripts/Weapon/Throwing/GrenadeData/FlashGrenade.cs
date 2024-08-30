@@ -56,7 +56,6 @@ public class FlashGrenade
                 //float _rangePersentToPlayer = 1 - (_distanceToPlayer / _radius);
                 //calduration = Mathf.RoundToInt(_effectDuration * _rangePersentToPlayer);
                 // 눈뽕
-                Debug.Log(calDuration);
                 UIManager.Instance.FlashImage.Duration = calDuration;
             }
         }

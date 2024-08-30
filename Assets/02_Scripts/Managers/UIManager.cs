@@ -81,7 +81,6 @@ public class UIManager : Singleton<UIManager>
     }
 
     public void ThrowUIUpdate(Sprite _throw,int _count) {
-        Debug.Log("수류탄");
         weaponThrow_TXT.text = _count.ToString();
         weaponThrow.sprite = _throw;
     }
