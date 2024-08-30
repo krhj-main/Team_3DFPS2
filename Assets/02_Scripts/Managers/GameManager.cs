@@ -91,8 +91,9 @@ public class GameManager : Singleton<GameManager>
         pc.cc.enabled = true;
         pc.pHP = pc.maxHP;
     }
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         defaultGravity = PlayerController.Instance.gravityAcc;
     }
 
