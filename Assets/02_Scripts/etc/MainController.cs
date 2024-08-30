@@ -6,20 +6,10 @@ using UnityEngine.SceneManagement;
 public class MainController : MonoBehaviour
 {
     [SerializeField] GameObject creditPanel;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void OnPlayClick()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadSceneAsync(1);
     }
     public void OnCreditClick()
     {

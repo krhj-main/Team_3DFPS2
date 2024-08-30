@@ -6,6 +6,8 @@ using UnityEditor;
 
 // FOV 범위 표시를 위한 스크립트
 
+
+#if UNITY_EDITOR
 [CustomEditor (typeof (FieldOfView))]
 public class FOVEditor : Editor
 {
@@ -27,3 +29,6 @@ public class FOVEditor : Editor
         }
     }
 }
+#endif
+
+

@@ -55,11 +55,7 @@ public class GameManager : Singleton<GameManager>
 
         if (FindObjectOfType<SetPlayerPosition>() != null)
         {
-            Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
-
             StartCoroutine(LoopTimer(1));
-            PlayerController.Instance.transform.position = _newPosition;
-            PlayerController.Instance.gravityAcc = defaultGravity;
         }
         else
         {
@@ -74,6 +70,9 @@ public class GameManager : Singleton<GameManager>
     IEnumerator LoopTimer(float _time)
     {
         yield return new WaitForSeconds(_time);
+        Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
+        PlayerController.Instance.transform.position = _newPosition;
+        PlayerController.Instance.gravityAcc = defaultGravity;
     }
 
     // 씬이 로드될 때 존재하는 모든 Enemy를 List에 담는 함수 ( ScnenManager 등에서 호출 )

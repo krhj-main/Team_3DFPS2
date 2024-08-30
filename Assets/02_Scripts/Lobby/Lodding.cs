@@ -54,7 +54,7 @@ public class Lodding : MonoBehaviour
             // 로딩 진행률을 슬라이더 바와 텍스트로 표시한다
             float _progress = Mathf.Clamp01(_ao.progress / 0.9f);
             loadingBar.value = _progress;
-            loadingTxt.text = (_progress * 100f) + "%";
+            loadingTxt.text = (_progress * 100f).ToString("F0") + "%";
 
             // 만일 씬 로드 진행률이 90%를 넘어가면
             if (_ao.progress >= 0.9f)
