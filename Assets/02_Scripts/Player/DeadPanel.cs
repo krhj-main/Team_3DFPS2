@@ -9,8 +9,6 @@ public class DeadPanel : MonoBehaviour
     float deadPanelAlpha;
     public GameObject[] deadPanelInUI;
 
-    public MouseCursorMove mouseCursor;
-
     public void OnEnable()
     {
         deadPanelAlpha = 0;

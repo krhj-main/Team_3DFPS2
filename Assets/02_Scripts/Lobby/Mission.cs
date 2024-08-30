@@ -17,7 +17,6 @@ public class Mission : MonoBehaviour
     public GameObject missionCanvas;
 
     // 마우스 커서 조작
-    public MouseCursorMove mouseCursor;
 
     // UI 화면 켜지면 클리어 조건에 따라 버튼 클릭 가능
     private void OnEnable()
