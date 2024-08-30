@@ -1123,7 +1123,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerArms
       value: 
-      objectReference: {fileID: 474145436}
+      objectReference: {fileID: 1846349576}
     - target: {fileID: 7698680938946738350, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
       propertyPath: deadPanel
@@ -1814,6 +1814,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822572560}
   m_CullTransparentMesh: 1
+--- !u!114 &1846349576 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4623180547277140984, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d3c877aaaaf5d40ad206958a1dee80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1883634923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3093526620249778692, guid: 055d3f070e832e343955fc595e70cf36,
