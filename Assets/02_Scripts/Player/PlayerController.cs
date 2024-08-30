@@ -225,6 +225,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         if (GameManager.Instance.openUI || pState.isDead)
         {
+            moveInput = Vector3.zero;
             return;
         }
 
