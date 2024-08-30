@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
-    
+    public bool active = true;
     [SerializeField] Transform arm;
     [SerializeField] public Transform waist;
     Vector3 armPos;
@@ -145,9 +145,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     void Update()
     {
-        //if (!main.enabled) { return; }
+        if (!main.enabled|| !active) { return; }
         InputKey();
-        //LookAround();
         PlayerDir();
         ActiveCrouch();
         OpenViewer();
@@ -155,7 +154,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     
     private void FixedUpdate()
     {
-        if (!cc.enabled)
+        if (!cc.enabled || !active)
         {
             return;
         }
@@ -199,7 +198,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         velocity = new Vector3(_groundVelocity.x, _yVelocity, _groundVelocity.z);
 
         //transform.position += velocity * Time.fixedDeltaTime;
-        cc.Move(velocity * Time.fixedDeltaTime);
+        cc.Move(velocity * Time.deltaTime);
     }
 
     // 땅과 닿아있는지 체크

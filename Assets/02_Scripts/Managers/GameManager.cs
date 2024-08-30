@@ -52,14 +52,13 @@ public class GameManager : Singleton<GameManager>
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         AddEnemyOnNowScene();
-
+        
         if (FindObjectOfType<SetPlayerPosition>() != null)
         {
-            Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
+            
 
-            StartCoroutine(LoopTimer(1));
-            PlayerController.Instance.transform.position = _newPosition;
-            PlayerController.Instance.gravityAcc = defaultGravity;
+            StartCoroutine(LoopTimer(0.1f));
+            
         }
         else
         {
@@ -73,7 +72,15 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator LoopTimer(float _time)
     {
+        PlayerController.Instance.active = false;
         yield return new WaitForSeconds(_time);
+        Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
+        PlayerController.Instance.transform.position = _newPosition;
+        Debug.Log(_newPosition);
+        Debug.Log(PlayerController.Instance.transform.position);
+        PlayerController.Instance.gravityAcc = defaultGravity;
+        yield return new WaitForSeconds(_time);
+        PlayerController.Instance.active = true;
     }
 
     // 씬이 로드될 때 존재하는 모든 Enemy를 List에 담는 함수 ( ScnenManager 등에서 호출 )
@@ -93,7 +100,7 @@ public class GameManager : Singleton<GameManager>
     public void PlayerInit()
     {
         PlayerController pc = PlayerController.Instance;
-
+       
         pc.enabled = true;
         pc.cc.enabled = true;
         pc.pHP = pc.maxHP;

@@ -869,6 +869,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1885624533}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1065414621 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3374480167159034577, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1078359706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,6 +1162,11 @@ PrefabInstance:
       propertyPath: lootImage
       value: 
       objectReference: {fileID: 1050864370}
+    - target: {fileID: 7219203899329603481, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+        type: 3}
+      propertyPath: arm
+      value: 
+      objectReference: {fileID: 1065414621}
     - target: {fileID: 7521539623650865909, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
       propertyPath: playerArms
@@ -1166,6 +1177,11 @@ PrefabInstance:
       propertyPath: deadPanel
       value: 
       objectReference: {fileID: 444201067}
+    - target: {fileID: 7698680938946738350, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

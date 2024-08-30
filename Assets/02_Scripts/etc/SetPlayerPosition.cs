@@ -7,7 +7,7 @@ public class SetPlayerPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerController.Instance.transform.position = transform.position;
     }
 
     // Update is called once per frame
