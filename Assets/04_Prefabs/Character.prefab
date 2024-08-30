@@ -275,6 +275,7 @@ MonoBehaviour:
   HP: 0
   maxHP: 100
   death: 0
+  deadPanel: {fileID: 0}
   deathCam: {fileID: 0}
   pState: {fileID: 0}
   cc: {fileID: 0}
