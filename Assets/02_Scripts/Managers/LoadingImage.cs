@@ -44,7 +44,7 @@ public class LoadingImage : MonoBehaviour
             
             scenario.rectTransform.anchoredPosition = new Vector2(scenario.rectTransform.anchoredPosition.x, 
                                                         scenario.rectTransform.anchoredPosition.y + 1f);
-            yield return null;
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
         }        
     }
 
