@@ -11,6 +11,7 @@ public class DeadPanelButton : MonoBehaviour
 
     private void Awake()
     {
+        charcter = PlayerController.Instance.gameObject;
         pState = charcter.GetComponent<PlayerStateList>();
         
     }
