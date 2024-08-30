@@ -93,7 +93,6 @@ public class GameManager : Singleton<GameManager>
     public void PlayerInit()
     {
         PlayerController pc = PlayerController.Instance;
-
         pc.enabled = true;
         pc.cc.enabled = true;
         pc.pHP = pc.maxHP;

@@ -33,14 +33,17 @@ public class DeadPanelButton : MonoBehaviour
 
     void offUI()
     {
+        // 데드 패널 UI 꺼줌
         foreach(GameObject go in deadPanelUI)
         {
             go.SetActive(false);
         }
-        PlayerController.Instance.pHP = 100;
-        pState.isDead = false;
-        Time.timeScale = 1;
-        deathCam.enabled = false;
-    }
 
+
+        PlayerController.Instance.pHP = 100;    // 플레이어 HP 복구
+        pState.isDead = false;                  // 플레이어 상태 복구
+        Time.timeScale = 1;                     // 시간 복구
+        deathCam.Play("Nothing");               // 카메라 복구
+
+    }
 }
