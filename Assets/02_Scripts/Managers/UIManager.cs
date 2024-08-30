@@ -112,11 +112,6 @@ public class UIManager : Singleton<UIManager>
         missionEnemy.text = string.Format("{0}", missionEnemyCount);
     }
 
-    public void OnDeadPanel()
-    {
-        deadPanelObj.SetActive(true);
-    }
-
     // "남은 적 수 / 최대 적 수" 를 표시해주는 메서드
     // 해당 메서드는 에너미가 죽었을 때 사용
     public void RemainEnemy()
