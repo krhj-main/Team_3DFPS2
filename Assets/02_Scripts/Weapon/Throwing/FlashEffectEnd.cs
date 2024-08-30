@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FlashEffectEnd : MonoBehaviour
 {
     [SerializeField] AudioSource flashSound;
-
+    [SerializeField] Image flash;
     public float duration;
     public float Duration {
         set {
@@ -19,7 +19,7 @@ public class FlashEffectEnd : MonoBehaviour
         }
         get => duration;
     }
-    Image flash;
+    
 
     private void Awake()
     {

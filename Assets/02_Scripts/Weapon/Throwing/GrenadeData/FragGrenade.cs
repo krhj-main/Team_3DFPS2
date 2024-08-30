@@ -8,6 +8,7 @@ public class FragGrenade
     public static Vector3 midle=new Vector3 (0,0,0);
     public static Vector3 scale= new Vector3(1f, 1f, 1f);
     public static GameObject effect;
+    public static Sprite sprite;
     float radius=5;
     float delay=2;
     float damage=100;
@@ -23,8 +24,12 @@ public class FragGrenade
         if (effect == null) {
             effect = Resources.Load<GameObject>("GranadeGunExplosion");
         }
+        if (sprite == null)
+        {
+            Sprite[] spriteAll = Resources.LoadAll<Sprite>("Light theme spritesheet 1");
+            sprite = spriteAll[8];
+        }
 
-        
     }
     #region "수류탄 효과"
     // 수류탄 효과 ( 데미지 )

@@ -65,6 +65,7 @@ public class GrenadeFactory : ThrowingWeapon
         base.Awake();
         col = GetComponent<Collider>();
         SpawnGrenade();
+        UdateUI();
     }
     void Start()
     {
@@ -155,8 +156,25 @@ public class GrenadeFactory : ThrowingWeapon
         }
         
     }
+    public void UdateUI() {
+        switch (grenadeType)
+        {
+            case GrenadeType.FragGrenade:
+                UIManager.Instance.ThrowUIUpdate(FragGrenade.sprite, FragCount );
+                break;
+            case GrenadeType.FlashGrenade:
+                UIManager.Instance.ThrowUIUpdate(FlashGrenade.sprite, FlashCount);
+                break;
+            case GrenadeType.SmokeGrenade:
+                UIManager.Instance.ThrowUIUpdate(SmokeGrenade.sprite, SmokeCount);
+                break;
+        }
+        
+    }
+
     public void Changetype()
     {
+        
         switch (grenadeType)
         {
             case GrenadeType.FragGrenade:
@@ -169,6 +187,7 @@ public class GrenadeFactory : ThrowingWeapon
                 grenadeType = GrenadeType.FragGrenade;
                 break;
         }
+        UdateUI();
         if (grenades.Count > 0)
         {
             grenades[0].gameObject.SetActive(false);
@@ -202,6 +221,7 @@ public class GrenadeFactory : ThrowingWeapon
                 SmokeCount += _num;
                 break;
         }
+        UdateUI();
     }
     public void DecreaseGrenade(GrenadeType _type, int _num)
     {

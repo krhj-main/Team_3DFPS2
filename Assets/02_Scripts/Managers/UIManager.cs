@@ -80,6 +80,12 @@ public class UIManager : Singleton<UIManager>
         playerMaxAmmo_TXT.text = _maxAmmo.ToString();
     }
 
+    public void ThrowUIUpdate(Sprite _throw,int _count) {
+        Debug.Log("수류탄");
+        weaponThrow_TXT.text = _count.ToString();
+        weaponThrow.sprite = _throw;
+    }
+
     // 무기교체시 UI 업데이트 임시 변수
     public void ChangeWeaponUIUpdate(Sprite _weapon1, int _throwCount, int _tacticalCount)
     {

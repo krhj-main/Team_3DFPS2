@@ -7,6 +7,7 @@ public class FlashGrenade
     float calDuration;
     public static Mesh mesh;
     public static Material material;
+    public static Sprite sprite;
     public static Vector3 midle = new Vector3(0, -0.0052f, 0);
     public static Vector3 scale = new Vector3(0.75f, 0.75f, 0.75f);
     public static GameObject effect;
@@ -25,6 +26,11 @@ public class FlashGrenade
         {
             effect = Resources.Load<GameObject>("FlashGranadeEffect");
         }
+        if (sprite == null) {
+            Sprite[] spriteAll = Resources.LoadAll<Sprite>("Light theme spritesheet 1");
+            sprite = spriteAll[27];
+        }
+        
     }
 
     #region "섬광탄"

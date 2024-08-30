@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashSound: {fileID: 1767634629301600331}
+  flash: {fileID: 3976617879560735139}
   duration: 0
 --- !u!82 &1767634629301600331
 AudioSource:
