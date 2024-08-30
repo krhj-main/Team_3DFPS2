@@ -56,7 +56,7 @@ public class FlashGrenade
                 //float _rangePersentToPlayer = 1 - (_distanceToPlayer / _radius);
                 //calduration = Mathf.RoundToInt(_effectDuration * _rangePersentToPlayer);
                 // 눈뽕
-                
+                Debug.Log(calDuration);
                 UIManager.Instance.FlashImage.Duration = calDuration;
             }
         }
@@ -100,6 +100,7 @@ public class FlashGrenade
             RaycastHit hit;
             if (Physics.Raycast(_flash.position, _dirToFlash*-1, out hit))
             {
+                Debug.DrawRay(_flash.position, _dirToFlash * -1, Color.black, 10f);
                 // 레이캐스트가 섬광탄에 먼저 닿았는지 확인
                 if (hit.collider.CompareTag(_character.tag))
                 {

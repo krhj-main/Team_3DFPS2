@@ -237,7 +237,7 @@ Transform:
   - {fileID: 8209080203666209703}
   - {fileID: 4684105913192532447}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7698680938946738350
 MonoBehaviour:
@@ -272,6 +272,7 @@ MonoBehaviour:
   crouchCenter: {x: 0, y: 0.5, z: 0}
   normalCenter: {x: 0, y: 1, z: 0}
   anim: {fileID: 0}
+  HP: 0
   maxHP: 100
   death: 0
   deathCam: {fileID: 0}
@@ -374,7 +375,7 @@ MonoBehaviour:
   offsetPos: {x: 0, y: 0, z: 0}
   firePos: {fileID: 5144152026695066058}
   Inventory: {fileID: 0}
-  playerArms: {fileID: 4574037466558872730}
+  playerArms: {fileID: 4623180547277140984}
   grenadeFactory: {fileID: 3792411485017226648}
   playerSight: {fileID: 3374480167159034577}
 --- !u!82 &534498356256635649
@@ -3315,6 +3316,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7667916348078235301}
+    - targetCorrespondingSourceObject: {fileID: 1965702313203224, guid: 99516a1148a29804db1f5224a01f835f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4623180547277140984}
   m_SourcePrefab: {fileID: 100100000, guid: 99516a1148a29804db1f5224a01f835f, type: 3}
 --- !u!4 &4570567718568335534 stripped
 Transform:
@@ -3341,3 +3346,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
+--- !u!114 &4623180547277140984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4574037466558872730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d3c877aaaaf5d40ad206958a1dee80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

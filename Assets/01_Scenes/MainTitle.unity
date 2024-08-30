@@ -289,6 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940438cead97c7941951e6f0e32b363b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadPanelUI: []
+  charcter: {fileID: 0}
 --- !u!114 &444201070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc92432f02c17340b010f041d02b051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouse: {fileID: 0}
 --- !u!114 &462365169 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 988362574365631771, guid: 055d3f070e832e343955fc595e70cf36,
@@ -406,15 +407,9 @@ MonoBehaviour:
   missionViewer: {fileID: 762825774}
   missionTime: {fileID: 0}
   missionEnemy: {fileID: 832942336}
-  FlashImage: {fileID: 5327663366953573857, guid: b6aa13665c699294da33c1cd1b426a23,
-    type: 3}
+  FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
-  deadPanel: {fileID: 444201067}
-  deadPanelUI:
-  - {fileID: 2027548748}
-  - {fileID: 2057933347}
-  - {fileID: 715726185}
-  - {fileID: 1674966255}
+  deadPanelObj: {fileID: 0}
 --- !u!1 &505304170
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,6 +615,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3976617879560735139, guid: b6aa13665c699294da33c1cd1b426a23,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5327663366953573857, guid: b6aa13665c699294da33c1cd1b426a23,
         type: 3}
       propertyPath: duration
@@ -635,12 +635,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6aa13665c699294da33c1cd1b426a23, type: 3}
---- !u!1 &715726185 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8462846477390687252, guid: 055d3f070e832e343955fc595e70cf36,
-    type: 3}
-  m_PrefabInstance: {fileID: 1885624533}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &751095717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,7 +1820,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 580.46313, y: -168.43729}
+  m_AnchoredPosition: {x: 580, y: -168.5}
   m_SizeDelta: {x: -1320.148, y: -536.8745}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1572690933
@@ -1903,12 +1897,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1674966255 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8038466667539022956, guid: 055d3f070e832e343955fc595e70cf36,
+--- !u!114 &1636997206 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5327663366953573857, guid: b6aa13665c699294da33c1cd1b426a23,
     type: 3}
-  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabInstance: {fileID: 625855970}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb55b6ba6eb8a408da63c7dc0c156b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1696386463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,6 +2544,16 @@ MonoBehaviour:
   openUI: 0
   selectSceneNum: 0
   curTime: 0
+  missionNames:
+  - "\uD14C\uB7EC\uB9AC\uC2A4\uD2B8 \uC18C\uD0D5"
+  - "\uC778\uC9C8 \uAD6C\uCD9C"
+  clearTime: 0
+  bestClearTime: 0
+  bestScore: 0
+  bestGrade: 
+  bestColor: 
+  enemyScore: 0
+  bestClearTimeText: 
 --- !u!1 &1999188444
 GameObject:
   m_ObjectHideFlags: 0
@@ -2662,18 +2672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &2027548748 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5070839726520541865, guid: 055d3f070e832e343955fc595e70cf36,
-    type: 3}
-  m_PrefabInstance: {fileID: 1885624533}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2057933347 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 893053578974846706, guid: 055d3f070e832e343955fc595e70cf36,
-    type: 3}
-  m_PrefabInstance: {fileID: 1885624533}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2080904541
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ public class AnimIK : MonoBehaviour
     {
 
         //Offset= chest.localRotation.eulerAngles;
-        Debug.Log(chest.localRotation.eulerAngles);
+        //Debug.Log(chest.localRotation.eulerAngles);
         if (trigger) {
             chest.LookAt(PlayerController.Instance.waist.position);
             chest.localRotation = Quaternion.Euler(Offset+ chest.localRotation.eulerAngles);
