@@ -17,12 +17,11 @@ public class Mission : MonoBehaviour
     public GameObject missionCanvas;
 
     // 마우스 커서 조작
-    public MouseCursorMove mouseCursor;
 
     // UI 화면 켜지면 클리어 조건에 따라 버튼 클릭 가능
     private void OnEnable()
     {
-        mouseCursor.ShowCursor();
+        MouseCursorMove.ShowCursor();
         for (int i = 0; i < missionBtn.Length; i++)
         {
             if (i <= GameManager.Instance.canMissionChoice)
@@ -37,7 +36,7 @@ public class Mission : MonoBehaviour
     // UI 화면 꺼지면 이미지 다 끄기
     private void OnDisable()
     {
-        mouseCursor.HideCursor();
+        MouseCursorMove.HideCursor();
         for (int i = 0; i < missionImage.Length; i++)
         {
             missionImage[i].SetActive(false);
