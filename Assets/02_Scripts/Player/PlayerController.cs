@@ -354,7 +354,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         {
             pState.isDead = true;
             cc.enabled = false;
-            deathCam.enabled = true;
+            deathCam.Play("Death");
             deadPanel.SetActive(true);
         }
     }
