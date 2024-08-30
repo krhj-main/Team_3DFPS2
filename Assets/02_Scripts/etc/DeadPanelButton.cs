@@ -45,5 +45,6 @@ public class DeadPanelButton : MonoBehaviour
         Time.timeScale = 1;                     // 시간 복구
         deathCam.Play("Nothing");               // 카메라 복구
 
+        // 이큅먼트 스왑 겟 접근해서 탄약 교체해주기
     }
 }
