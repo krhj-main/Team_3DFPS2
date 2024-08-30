@@ -550,6 +550,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676247493}
   m_CullTransparentMesh: 1
+--- !u!4 &746059681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3374480167159034577, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &751095717
 GameObject:
   m_ObjectHideFlags: 0
@@ -3201,6 +3207,11 @@ PrefabInstance:
       propertyPath: lootImage
       value: 
       objectReference: {fileID: 1050864370}
+    - target: {fileID: 7219203899329603481, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+        type: 3}
+      propertyPath: arm
+      value: 
+      objectReference: {fileID: 746059681}
     - target: {fileID: 7521539623650865909, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
       propertyPath: playerArms
