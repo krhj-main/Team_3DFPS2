@@ -373,8 +373,8 @@ MonoBehaviour:
   weaponTactical: {fileID: 462365169}
   weaponTactical_TXT: {fileID: 1883634923}
   missionViewer: {fileID: 762825774}
-  missionTime: {fileID: 0}
-  missionEnemy: {fileID: 832942336}
+  missionTime: {fileID: 1877930341}
+  missionEnemy: {fileID: 1880015928}
   FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
   deadPanelObj: {fileID: 0}
@@ -842,18 +842,6 @@ MonoBehaviour:
 --- !u!114 &829588866 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5546890925639369150, guid: 055d3f070e832e343955fc595e70cf36,
-    type: 3}
-  m_PrefabInstance: {fileID: 1885624533}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &832942336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2099914404127060659, guid: 055d3f070e832e343955fc595e70cf36,
     type: 3}
   m_PrefabInstance: {fileID: 1885624533}
   m_PrefabAsset: {fileID: 0}
@@ -2283,6 +2271,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822572560}
   m_CullTransparentMesh: 1
+--- !u!114 &1877930341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1589280508613135489, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1880015928 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6590169067929641249, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1883634923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3093526620249778692, guid: 055d3f070e832e343955fc595e70cf36,
@@ -2449,7 +2461,8 @@ PrefabInstance:
       value: PlayerUICanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5802726849267488825, guid: 055d3f070e832e343955fc595e70cf36, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 055d3f070e832e343955fc595e70cf36, type: 3}
