@@ -126,7 +126,7 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.remainEnemy = GameManager.Instance.enemies.Count;
 
         // 남은 적 : n
-        missionEnemy.text = string.Format("남은 적 : {0}", GameManager.Instance.remainEnemy);
+        missionEnemy.text = string.Format("남은 테러리스트 : {0} 명", GameManager.Instance.remainEnemy);
         // 남은 적 : n / n
         //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
     }

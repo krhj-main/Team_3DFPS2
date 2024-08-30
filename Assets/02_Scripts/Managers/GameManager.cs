@@ -39,6 +39,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public float remainEnemy;
 
+    float defaultGravity;
+
     public Canvas playerUI;
 
     private void OnEnable()
@@ -55,6 +57,11 @@ public class GameManager : Singleton<GameManager>
         {
             Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
             PlayerController.Instance.transform.position = _newPosition;
+            PlayerController.Instance.gravityAcc = defaultGravity;
+        }
+        else
+        {
+            PlayerController.Instance.gravityAcc = 0;
         }
         
         playerUI.gameObject.SetActive(scene.buildIndex >=2);
@@ -84,9 +91,15 @@ public class GameManager : Singleton<GameManager>
         pc.cc.enabled = true;
         pc.pHP = pc.maxHP;
     }
+    protected override void Awake()
+    {
+        base.Awake();
+        defaultGravity = PlayerController.Instance.gravityAcc;
+    }
 
     void Start()
     {
+        
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }

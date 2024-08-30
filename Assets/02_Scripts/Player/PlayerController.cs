@@ -39,7 +39,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Tooltip("점프력")]
     [SerializeField] float jumpForce;
     [Tooltip("중력 속도")]
-    [SerializeField] float gravityAcc;
+    [SerializeField] public float gravityAcc;
 
     [Space(5)]
     [Header("앉기 관련")]
