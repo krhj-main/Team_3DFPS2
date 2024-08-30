@@ -22,12 +22,8 @@ public class LoadingImage : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(GameManager.Instance.selectSceneNum);
-        int _sceneNum = Mathf.Clamp( GameManager.Instance.selectSceneNum - 2,0,100);
-        backgroundImage.sprite = loadingImage[_sceneNum];
-        scenario.text = loadingSceanario[_sceneNum];
-        scenario.rectTransform.anchoredPosition = new Vector2(0,-scenario.preferredHeight);
-        StartCoroutine(ScrollScript());
+        //LoadingInit();
+
     }
 
     private void Update()
@@ -35,7 +31,16 @@ public class LoadingImage : MonoBehaviour
         
     }
 
-    IEnumerator ScrollScript()
+    public void LoadingInit()
+    {
+        int _sceneNum = Mathf.Clamp(GameManager.Instance.selectSceneNum - 2, 0, 100);
+        backgroundImage.sprite = loadingImage[_sceneNum];
+        scenario.text = loadingSceanario[_sceneNum];
+        scenario.rectTransform.anchoredPosition = new Vector2(0, -scenario.preferredHeight);
+        StartCoroutine(ScrollScript());
+    }
+
+    public IEnumerator ScrollScript()
     {
         float _preferHeight = scenario.preferredHeight;        
 
