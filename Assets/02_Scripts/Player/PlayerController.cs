@@ -193,13 +193,16 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             _groundVelocity /= 1.8f;
         }
 
-        _groundVelocity *= (1+moveSpeedScale);
+        _groundVelocity *= (1 + moveSpeedScale);
 
         float _yVelocity = JumpingUpdate();
         velocity = new Vector3(_groundVelocity.x, _yVelocity, _groundVelocity.z);
 
         //transform.position += velocity * Time.fixedDeltaTime;
-        cc.Move(velocity * Time.fixedDeltaTime);
+        if (cc.enabled) 
+        { 
+            cc.Move(velocity * Time.fixedDeltaTime);
+        }
     }
 
     // 땅과 닿아있는지 체크

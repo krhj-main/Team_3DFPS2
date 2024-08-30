@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager>
 
         if (FindObjectOfType<SetPlayerPosition>() != null)
         {
-            StartCoroutine(LoopTimer(1));
+            StartCoroutine(LoopTimer(0));
         }
         else
         {
