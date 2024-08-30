@@ -64,7 +64,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     // 플레이어 죽었을 때
     public bool death = false;
-    public static event Action OnPlayerDeath;
+    public GameObject deadPanel;
     [HideInInspector] public Animator deathCam;
 
     public int pHP
@@ -98,7 +98,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [HideInInspector] public CharacterController cc;
 
     Camera main;
-    public Camera PlayerCamera {
+    public Camera PlayerCamera 
+    {
         get => main;
         private set {; }
     }
@@ -354,15 +355,9 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         {
             pState.isDead = true;
             cc.enabled = false;
-            //deathCam.Play("Death");
             deathCam.enabled = true;
+            deadPanel.SetActive(true);
         }
-    }
-
-    public void Die()
-    {
-        this.gameObject.layer = 0;
-        OnPlayerDeath?.Invoke();
     }
 
     private void OnDisable()
