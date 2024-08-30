@@ -136,7 +136,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     void Start()
     {
-        
         pHP = maxHP;
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
@@ -144,7 +143,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         playerSound = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //if (!main.enabled) { return; }
@@ -225,6 +223,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         if (GameManager.Instance.openUI || pState.isDead)
         {
+            moveInput = Vector3.zero;
             return;
         }
 

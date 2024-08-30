@@ -74,6 +74,7 @@ public class Lodding : MonoBehaviour
                 if (videoFinished || Input.GetKeyDown(KeyCode.Escape))
                 {
                     _ao.allowSceneActivation = true;
+                    MouseCursorMove.HideCursor();
                 }
             }
 
