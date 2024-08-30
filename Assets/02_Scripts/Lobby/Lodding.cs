@@ -20,10 +20,14 @@ public class Lodding : MonoBehaviour
 
     void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex < 2)
+        /*if (SceneManager.GetActiveScene().buildIndex < 2)
         {
             GameManager.Instance.selectSceneNum = 2;
+        }*/
+        if (GameManager.Instance.selectSceneNum < 2) {
+            GameManager.Instance.selectSceneNum = 2;
         }
+
         loadingTxt.text = fakeVal + "%";
 
         StartCoroutine(TransitionNextScene(GameManager.Instance.selectSceneNum));
@@ -33,6 +37,7 @@ public class Lodding : MonoBehaviour
     // 비동기 신
     IEnumerator TransitionNextScene(int num)
     {
+
         yield return null;
 
         // 지정된 씬을 비동기 형식으로 로드한다
@@ -40,6 +45,7 @@ public class Lodding : MonoBehaviour
 
         // 준비가 완료되어도 다음 씬으로 넘어가지 않게
         // 단, 이걸 사용하면 progree는 0.9까지밖에 안됨 -> 유니티 내부 구조의 문제
+
         _ao.allowSceneActivation = false;
 
         // 로딩이 완료될 때까지 반복해서 요소들을 로드하고 진행 과정을 하면에 표시한다

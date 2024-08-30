@@ -23,8 +23,9 @@ public class LoadingImage : MonoBehaviour
     private void Start()
     {
         Debug.Log(GameManager.Instance.selectSceneNum);
-        backgroundImage.sprite = loadingImage[GameManager.Instance.selectSceneNum];
-        scenario.text = loadingSceanario[GameManager.Instance.selectSceneNum];
+        int _sceneNum = Mathf.Clamp( GameManager.Instance.selectSceneNum - 2,0,100);
+        backgroundImage.sprite = loadingImage[_sceneNum];
+        scenario.text = loadingSceanario[_sceneNum];
         scenario.rectTransform.anchoredPosition = new Vector2(0,-scenario.preferredHeight);
         StartCoroutine(ScrollScript());
     }
