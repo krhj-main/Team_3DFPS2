@@ -33,6 +33,8 @@ public class FieldOfView : MonoBehaviour
 
     Enemy enemy;
 
+    [HideInInspector] public float weight = 1f;
+
     void Start()
     {
         enemy = GetComponent<Enemy>();
@@ -48,7 +50,8 @@ public class FieldOfView : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(delay);
-            viewRadius = enemy.findDis;
+            viewRadius = enemy.findDis * weight;
+            weight = 1f;
             viewAngle = enemy.viewAngle;
             FindVisibleTargets();
         }

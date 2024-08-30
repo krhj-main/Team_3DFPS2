@@ -21,7 +21,7 @@ public class EquipmentsSwap : MonoBehaviour
     public IEquipMent equip;
 
 
-    [SerializeField] GameObject playerArms;
+    [SerializeField] Knife playerArms;
     [SerializeField] GrenadeFactory grenadeFactory;
     public GrenadeFactory GrenadeFactory { get { return grenadeFactory; } }
     [SerializeField] Transform playerSight;
@@ -146,7 +146,7 @@ public class EquipmentsSwap : MonoBehaviour
     
     void Swap(int _setIndex)
     {
-        //1또는 -1으로 들고있는 무기를 전환하는 함수
+        
         offsetPos = Vector3.zero;
 
         //IEquipMent _equp = Inventory.Get(_setIndex);
@@ -157,15 +157,24 @@ public class EquipmentsSwap : MonoBehaviour
             equip.OnHandExit();
             InputManger.Instance.keyAction -= equip.InputKey;
         }
+        if (_setIndex == -1)
+        {
+            equip = playerArms.gameObject.GetComponent<IEquipMent>();
 
-        Index = _setIndex;
-        equip = Inventory.Get(Index);
-        slot = Inventory.GetSlotToIndex(Index);
+        }
+        else
+        {
+            Index = _setIndex;
+            equip = Inventory.Get(Index);
+            slot = Inventory.GetSlotToIndex(Index);
+        }
+        
 
         if (equip != null)
         {
+
             playerArms.gameObject.SetActive(false);
-            // playerArms.OnHandExit();
+            playerArms.OnHandExit();
             equip.gameObject.SetActive(true);
 
             equip.OnHandEnter();
@@ -178,7 +187,7 @@ public class EquipmentsSwap : MonoBehaviour
             firePos.SetParent(playerSight);
             firePos.localPosition = Vector3.zero;
             firePos.localRotation = Quaternion.Euler(0,180,-0.15f);
-            //playerArms.OnHandEnter();
+            playerArms.OnHandEnter();
             playerArms.gameObject.SetActive(true);
         }
     }

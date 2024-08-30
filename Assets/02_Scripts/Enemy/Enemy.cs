@@ -140,7 +140,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         weapon = GetComponentInChildren<MainWeapon>();
     }
 
-
     private void Start()
     {
         // 외부 변수 관련 초기화
@@ -289,11 +288,13 @@ public class Enemy : MonoBehaviour, IDamageAble
     public void Blind()
     {
         // Hide(Idle) 애니메이션 재생
-        anim.SetTrigger("doFlashbang");
+        //anim.SetTrigger("doFlashbang");
+        anim.SetBool("isFlashbang", true);
 
         // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
-        findDis = 0.1f;
-        atkDis = 0f;
+        //findDis = 0.1f;
+        //atkDis = 0f;
+        fov.weight = 0f;
         fov.visibleTargets.Clear();
         // 이동을 멈추고 경로 초기화
         agent.isStopped = true;
@@ -302,8 +303,10 @@ public class Enemy : MonoBehaviour, IDamageAble
         if (GameManager.Instance.Timer(blindTime))
         {
             // 시야를 복구하고, 플레이어를 놓친 상태로 설정
-            findDis = originFindDis;
-            atkDis = originAtkDis;
+            anim.SetBool("isFlashbang", false);
+            //findDis = originFindDis;
+            //atkDis = originAtkDis;
+            fov.weight = 1f;
             agent.isStopped = false;
             enemyState = missingState;
         }
@@ -355,7 +358,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             agent.destination = chasePos;
 
             // 소리난 곳까지 오고 다음 행동 지정
-            if (Vector3.Distance(transform.position, chasePos) < 1f)
+            if (Vector3.Distance(transform.position, chasePos) <= 2f)
             {
                 // Move 애니메이션 종료
                 anim.SetBool("isMove", false);
@@ -368,8 +371,10 @@ public class Enemy : MonoBehaviour, IDamageAble
                     enemyState = missingState;
                 }
             }
-            else
+            else // 소리난 곳까지 도착하지 못했다면 = 가는중이라면
             {
+                anim.SetBool("isMove", true);
+                anim.SetBool("isIdle", false);
                 currentTime = 0;
             }
         }
@@ -405,11 +410,16 @@ public class Enemy : MonoBehaviour, IDamageAble
                 Quaternion targetRotation = Quaternion.LookRotation(_dirP);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
+                float _maxHeight = 2f;
+                float _heightDif = (PlayerController.Instance.transform.position.y + PlayerController.Instance.cc.center.y) - transform.position.y;
+                float _clampHeight = Mathf.Clamp(_heightDif / _maxHeight, -1f, 0.5f);
+                anim.SetFloat("Rot", _clampHeight);
 
                 if (Timer(atkDelay))
                 {
                     // Attack 애니메이션 재생
                     anim.SetTrigger("doEnemyAttack");
+
                     weapon.Shoot(enemyFirePos);
 
                     // 무기 종류에 따라 공격 속도 설정
@@ -468,6 +478,8 @@ public class Enemy : MonoBehaviour, IDamageAble
 
         //UI 업데이트
         UIManager.Instance.RemainEnemy();
+
+        GameManager.Instance.enemyScore += 10;
     }
     #endregion
 
@@ -483,6 +495,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         if (IsHeadShot(hitpoint))
         {
             hp -= damage*2;
+            GameManager.Instance.enemyScore += 5;
         }
         else 
         {
@@ -522,12 +535,13 @@ public class Enemy : MonoBehaviour, IDamageAble
     }
 
     // 연막탄에 닿았을 시 Enemy에게 끼치는 영향
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("SmokeGrenade"))
         {
-            findDis = 2f;
-            atkDis = 1f;
+            //findDis = 2f;
+            //atkDis = 1f;
+            fov.weight *= 0.2f;
         }
     }
 
@@ -535,8 +549,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     {
         if (other.gameObject.CompareTag("SmokeGrenade"))
         {
-            findDis = originFindDis;
-            atkDis = originAtkDis;
+            //findDis = originFindDis;
+            //atkDis = originAtkDis;
+            fov.weight = 1f;
         }
     }
     private bool IsHeadShot(Vector3 _hitpoint)

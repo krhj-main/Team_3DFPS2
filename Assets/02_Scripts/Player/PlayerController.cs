@@ -65,6 +65,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 플레이어 죽었을 때
     public bool death = false;
     public static event Action OnPlayerDeath;
+    [HideInInspector] public Animator deathCam;
 
     public int pHP
     {
@@ -82,7 +83,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     }
 
-    public event Action inputAction;
 
 
     // 플레이어 상태 리스트
@@ -122,40 +122,44 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         }
     }
     */
+    private void OnTransformParentChanged() {
+        Debug.Log(transform.parent);
+    }
+    protected override void Awake()
+    {
+        base.Awake();
+        cc = GetComponent<CharacterController>();
+        main = Camera.main;
+        deathCam = main.GetComponent<Animator>();
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
+        
         pHP = maxHP;
         //armPos = arm.transform.position;        // 사용되고 있지 않는듯함
         pState = GetComponent<PlayerStateList>();
-        cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
         playerSound = GetComponent<AudioSource>();
-        main = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!main.enabled) { return; }
+        //if (!main.enabled) { return; }
         InputKey();
         //LookAround();
         PlayerDir();
         ActiveCrouch();
         OpenViewer();
-
-        if (inputAction != null)
-        {
-            if (Input.anyKey)
-            {
-                inputAction.Invoke();
-            }
-        }
     }
     
     private void FixedUpdate()
     {
+        if (!cc.enabled)
+        {
+            return;
+        }
         ActiveMove();
     }
 
@@ -350,6 +354,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         {
             pState.isDead = true;
             cc.enabled = false;
+            //deathCam.Play("Death");
+            deathCam.enabled = true;
         }
     }
 
@@ -357,5 +363,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         this.gameObject.layer = 0;
         OnPlayerDeath?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("사라짐!");
     }
 }
