@@ -24,16 +24,6 @@ public class CamAttatch : MonoBehaviour
         transform.SetParent(arm);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (pState.isDead)
-        {
-            anim.Play("Death");
-            UIManager.Instance.OnDeadPanel();
-        }
-    }
-
     public void ChangeParent(Transform parent) 
     {
         transform.SetParent(parent);

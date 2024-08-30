@@ -1911,6 +1911,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bb55b6ba6eb8a408da63c7dc0c156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!20 &1645215980 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1508216466373979570, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1696386463
 GameObject:
   m_ObjectHideFlags: 0
@@ -2412,6 +2418,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3245245718739435108, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1645215980}
     - target: {fileID: 3245245718739435108, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: charcter
