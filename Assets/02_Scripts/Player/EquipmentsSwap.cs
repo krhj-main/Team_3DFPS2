@@ -83,6 +83,8 @@ public class EquipmentsSwap : MonoBehaviour
 
     public void Inputkey() 
     {
+        if (GameManager.Instance.openUI) { return; }
+
         //무기가 하나이상 있으면
         if (Input.GetKeyDown(dropKey))
         {
