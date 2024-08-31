@@ -144,7 +144,7 @@ public class EquipmentsSwap : MonoBehaviour
 
     }
     
-    void Swap(int _setIndex)
+    public void Swap(int _setIndex)
     {
         
         offsetPos = Vector3.zero;

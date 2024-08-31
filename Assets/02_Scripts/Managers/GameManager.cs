@@ -43,6 +43,8 @@ public class GameManager : Singleton<GameManager>
 
     public Canvas playerUI;
 
+    public GameObject inventory;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
