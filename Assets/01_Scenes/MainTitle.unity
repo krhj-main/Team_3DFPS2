@@ -373,8 +373,8 @@ MonoBehaviour:
   weaponTactical: {fileID: 462365169}
   weaponTactical_TXT: {fileID: 1883634923}
   missionViewer: {fileID: 762825774}
-  missionTime: {fileID: 0}
-  missionEnemy: {fileID: 832942336}
+  missionTime: {fileID: 975441145}
+  missionEnemy: {fileID: 1580233354}
   FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
   deadPanelObj: {fileID: 0}
@@ -851,9 +851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &832942336 stripped
+--- !u!114 &975441145 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2099914404127060659, guid: 055d3f070e832e343955fc595e70cf36,
+  m_CorrespondingSourceObject: {fileID: 8682985657440716136, guid: 055d3f070e832e343955fc595e70cf36,
     type: 3}
   m_PrefabInstance: {fileID: 1885624533}
   m_PrefabAsset: {fileID: 0}
@@ -3947,6 +3947,18 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1580233354 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6590169067929641249, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1611524620 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2752170849915691944, guid: 055d3f070e832e343955fc595e70cf36,
@@ -4623,11 +4635,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerUICanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8887808291632458095, guid: 055d3f070e832e343955fc595e70cf36,
-        type: 3}
-      propertyPath: mouseCursor
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
