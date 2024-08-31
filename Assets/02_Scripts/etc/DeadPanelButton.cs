@@ -10,15 +10,16 @@ public class DeadPanelButton : MonoBehaviour
     PlayerStateList pState;
     public Camera cam;
     Animator deathCam;
-    public GameObject inventory;
     EquipmentsInit equipmentsInit;
+    MainWeapon mainWeapon;
 
     private void Awake()
     {
         character = PlayerController.Instance.gameObject;
         pState = character.GetComponent<PlayerStateList>();
         deathCam = cam.GetComponent<Animator>();
-        equipmentsInit = inventory.GetComponent<EquipmentsInit>();
+        equipmentsInit = GameManager.Instance.inventory.GetComponent<EquipmentsInit>();
+        mainWeapon = character.GetComponentInChildren<MainWeapon>();
     }
 
     public void RestartMission()
@@ -46,7 +47,25 @@ public class DeadPanelButton : MonoBehaviour
         Time.timeScale = 1;                     // 시간 복구
         deathCam.Play("Nothing");               // 카메라 복구
         deathCam.enabled = false;
-        //equipmentsInit.Init();
+        WeaponAmmuReset();
 
+    }
+
+    void WeaponAmmuReset()
+    {
+        // 투척무기 초기화
+        if(character.GetComponentInChildren<ThrowingWeapon>() != null)
+        {
+            equipmentsInit.frag = LoadOut.originThrowingCount[0];
+            equipmentsInit.smoke = LoadOut.originThrowingCount[1];
+            equipmentsInit.flash = LoadOut.originThrowingCount[2];
+        }
+
+        // 메인웨폰 초기화
+        if (character.GetComponentInChildren<MainWeapon>() != null )
+        {
+            mainWeapon.loadedAmmo = mainWeapon.maxLoadedAmmo;
+            mainWeapon.remainAmmo = mainWeapon.initializeAmmo - mainWeapon.maxLoadedAmmo;
+        }
     }
 }
