@@ -4,10 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Recorder;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("플레이어 HUD")]
     public GameObject UI_HPPanel;
+    public Image playerHUD;
+    public Sprite playerStand;
+    public Sprite playerCrouch;
+
     [Header("플레이어 HP")]
     [SerializeField] Slider playerHPBar;
     [SerializeField] TextMeshProUGUI playerHP_TXT;
@@ -60,6 +66,14 @@ public class UIManager : Singleton<UIManager>
     private void Update()
     {
         StatUIUpdate();
+    }
+
+    public void PlayerHUDChange()
+    {
+        if (PlayerController.Instance.pState.isCrouch)
+        {
+
+        }
     }
 
     // 플레이어 체력관련 UI 업데이트
