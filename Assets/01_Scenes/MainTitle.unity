@@ -123,6 +123,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &65370302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8682985657440716136, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &376770794
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +370,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI_HPPanel: {fileID: 1885624535}
+  playerHUD: {fileID: 592517366}
+  playerStand: {fileID: 21300000, guid: 2bd59817cbd8056409162de64bac1612, type: 3}
+  playerCrouch: {fileID: 21300000, guid: 5ce433b2baecaf348aac169aa6bf9843, type: 3}
   playerHPBar: {fileID: 494498218}
   playerHP_TXT: {fileID: 2010841889}
   playerPortrait: {fileID: 592517366}
@@ -373,8 +388,8 @@ MonoBehaviour:
   weaponTactical: {fileID: 462365169}
   weaponTactical_TXT: {fileID: 1883634923}
   missionViewer: {fileID: 762825774}
-  missionTime: {fileID: 0}
-  missionEnemy: {fileID: 832942336}
+  missionTime: {fileID: 65370302}
+  missionEnemy: {fileID: 677651639}
   FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
   deadPanelObj: {fileID: 0}
@@ -550,6 +565,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 676247493}
   m_CullTransparentMesh: 1
+--- !u!114 &677651639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6590169067929641249, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &751095717
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,18 +869,6 @@ MonoBehaviour:
 --- !u!114 &829588866 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5546890925639369150, guid: 055d3f070e832e343955fc595e70cf36,
-    type: 3}
-  m_PrefabInstance: {fileID: 1885624533}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &832942336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2099914404127060659, guid: 055d3f070e832e343955fc595e70cf36,
     type: 3}
   m_PrefabInstance: {fileID: 1885624533}
   m_PrefabAsset: {fileID: 0}
@@ -2533,6 +2548,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2650366387694445932, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2bd59817cbd8056409162de64bac1612,
+        type: 3}
     - target: {fileID: 3245245718739435108, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: cam
@@ -2562,6 +2583,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373507852439449414, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373507852439449414, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373507852439449414, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373507852439449414, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7658737753808371047, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
@@ -2715,7 +2756,7 @@ MonoBehaviour:
   remainEnemy: 0
   playerUI: {fileID: 2137463161}
   inventory: {fileID: 1135908506}
-  canMissionChoice: 1
+  canMissionChoice: 0
   openUI: 0
   selectSceneNum: 0
   curTime: 0
