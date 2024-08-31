@@ -4777,7 +4777,8 @@ MonoBehaviour:
   maxEnemy: 0
   remainEnemy: 0
   playerUI: {fileID: 2137463161}
-  canMissionChoice: 1
+  inventory: {fileID: 0}
+  canMissionChoice: 0
   openUI: 0
   selectSceneNum: 0
   curTime: 0
