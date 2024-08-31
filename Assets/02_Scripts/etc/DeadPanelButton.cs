@@ -9,13 +9,13 @@ public class DeadPanelButton : MonoBehaviour
     public GameObject charcter;
     PlayerStateList pState;
     public Camera cam;
-    Animator deathCam;
+    
 
     private void Awake()
     {
         charcter = PlayerController.Instance.gameObject;
         pState = charcter.GetComponent<PlayerStateList>();
-        deathCam = cam.GetComponent<Animator>();
+        
 
     }
 
@@ -43,7 +43,7 @@ public class DeadPanelButton : MonoBehaviour
         PlayerController.Instance.pHP = 100;    // 플레이어 HP 복구
         pState.isDead = false;                  // 플레이어 상태 복구
         Time.timeScale = 1;                     // 시간 복구
-        deathCam.Play("Nothing");               // 카메라 복구
+        
 
     }
 }
