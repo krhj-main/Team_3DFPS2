@@ -58,6 +58,7 @@ public class SelectEquip : MonoBehaviour
                     ApplyWeaponEquip();
                     equipmentsInit.Init();
                     exitWeaponEquip.SetActive(true);
+                    GameManager.Instance.openUI = false;
                 }
                 else
                 {

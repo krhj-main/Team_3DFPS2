@@ -22,7 +22,7 @@ public class LoadingImage : MonoBehaviour
 
     private void Start()
     {
-        //LoadingInit();
+        LoadingInit();
 
     }
 
