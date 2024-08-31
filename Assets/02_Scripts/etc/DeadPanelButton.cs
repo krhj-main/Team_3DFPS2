@@ -44,9 +44,7 @@ public class DeadPanelButton : MonoBehaviour
         PlayerController.Instance.pHP = 100;    // 플레이어 HP 복구
         pState.isDead = false;                  // 플레이어 상태 복구
         Time.timeScale = 1;                     // 시간 복구
-        deathCam.Play("Nothing");               // 카메라 복구
         deathCam.enabled = false;
         //equipmentsInit.Init();
-
     }
 }
