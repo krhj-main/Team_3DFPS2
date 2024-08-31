@@ -6,17 +6,19 @@ using UnityEngine.SceneManagement;
 public class DeadPanelButton : MonoBehaviour
 {
     public GameObject[] deadPanelUI;
-    public GameObject charcter;
+    public GameObject character;
     PlayerStateList pState;
     public Camera cam;
     Animator deathCam;
+    public GameObject inventory;
+    EquipmentsInit equipmentsInit;
 
     private void Awake()
     {
-        charcter = PlayerController.Instance.gameObject;
-        pState = charcter.GetComponent<PlayerStateList>();
+        character = PlayerController.Instance.gameObject;
+        pState = character.GetComponent<PlayerStateList>();
         deathCam = cam.GetComponent<Animator>();
-
+        equipmentsInit = inventory.GetComponent<EquipmentsInit>();
     }
 
     public void RestartMission()
@@ -39,11 +41,12 @@ public class DeadPanelButton : MonoBehaviour
             go.SetActive(false);
         }
 
-
         PlayerController.Instance.pHP = 100;    // 플레이어 HP 복구
         pState.isDead = false;                  // 플레이어 상태 복구
         Time.timeScale = 1;                     // 시간 복구
         deathCam.Play("Nothing");               // 카메라 복구
+        deathCam.enabled = false;
+        //equipmentsInit.Init();
 
     }
 }

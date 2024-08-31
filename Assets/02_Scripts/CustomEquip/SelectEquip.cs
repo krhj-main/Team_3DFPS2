@@ -14,7 +14,6 @@ public class SelectEquip : MonoBehaviour
     public GameObject playerCharacter;          // 플레이어 캐릭터
     AnimIKPlayer animIkPlayer;                  // 무기 장착 IK
     LoadOut loadOut;                            // LoadOut 스크립트
-    public GameObject inventory;                // EquipmentsInit 스크립트가 붙어있는 오브젝트
     EquipmentsInit equipmentsInit;              // EquipmentsInit 스크립트
     public GameObject[] equipMainWeapon;        // 메인웨폰무기 ( 새로 산 에셋 무기 )
     public Stack<GameObject> selectPanelStack = new Stack<GameObject>();        // 켜질 패널들 스택에 담아둠
@@ -28,7 +27,7 @@ public class SelectEquip : MonoBehaviour
     {
         animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
         loadOut = GetComponent<LoadOut>();
-        equipmentsInit = inventory.GetComponent<EquipmentsInit>();
+        equipmentsInit = GameManager.Instance.inventory.GetComponent<EquipmentsInit>();
     }
 
 
