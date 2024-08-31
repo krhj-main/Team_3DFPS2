@@ -27,17 +27,17 @@ RectTransform:
   m_GameObject: {fileID: 108350305688235200}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.53584826, y: 0.53584826, z: 0.53584826}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5612346310145017588}
+  m_Father: {fileID: 5028960412038478963}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -213.90161, y: 70.602356}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 30, y: -45}
   m_SizeDelta: {x: 128.9, y: 50}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5114092067161669694
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -94,8 +94,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.89
-  m_fontSizeBase: 53.89
+  m_fontSize: 72
+  m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -167,12 +167,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 508643668132508400}
+  - {fileID: 2613850486544646383}
+  - {fileID: 8710779901244581909}
   m_Father: {fileID: 5612346310145017588}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -327.4, y: 103.2}
+  m_AnchoredPosition: {x: -270, y: 100}
   m_SizeDelta: {x: 130, y: 60}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &309577078593820927
@@ -385,7 +387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -11.6, y: 84.1}
+  m_AnchoredPosition: {x: -30, y: 85}
   m_SizeDelta: {x: 80.6774, y: 100.7137}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &6697016278935708958
@@ -735,7 +737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1821579578529081746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1800,7 +1802,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -110.34392, y: 84.1}
+  m_AnchoredPosition: {x: -150, y: 85}
   m_SizeDelta: {x: 80.6774, y: 100.7137}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &4788813274696109413
@@ -1858,7 +1860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &508643668132508400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2148,8 +2150,6 @@ RectTransform:
   - {fileID: 1821579578529081746}
   - {fileID: 2987541055209014288}
   - {fileID: 5028960412038478963}
-  - {fileID: 2613850486544646383}
-  - {fileID: 8710779901244581909}
   m_Father: {fileID: 1745040632359349398}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2223,17 +2223,17 @@ RectTransform:
   m_GameObject: {fileID: 5603445388994233948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.53584826, y: 0.53584826, z: 0.53584826}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5612346310145017588}
+  m_Father: {fileID: 5028960412038478963}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -211.8, y: 111.2}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -30, y: -45}
   m_SizeDelta: {x: 128.9, y: 50}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5859290615354402294
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2290,8 +2290,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.89
-  m_fontSizeBase: 53.89
+  m_fontSize: 72
+  m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3529,6 +3529,7 @@ MonoBehaviour:
   - {fileID: 8462846477390687252}
   - {fileID: 6365648371806283620}
   charcter: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!114 &8887808291632458095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3547,7 +3548,6 @@ MonoBehaviour:
   - {fileID: 8038466667539022956}
   - {fileID: 893053578974846706}
   - {fileID: 8462846477390687252}
-  mouseCursor: {fileID: 0}
 --- !u!1 &8038466667539022956 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4564487751760471049, guid: 83077ed5c0c69c64f8795061335fe24d,
