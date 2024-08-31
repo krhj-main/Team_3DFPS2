@@ -358,6 +358,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI_HPPanel: {fileID: 1885624535}
+  playerHUD: {fileID: 592517366}
+  playerStand: {fileID: 21300000, guid: 2bd59817cbd8056409162de64bac1612, type: 3}
+  playerCrouch: {fileID: 21300000, guid: 5ce433b2baecaf348aac169aa6bf9843, type: 3}
   playerHPBar: {fileID: 494498218}
   playerHP_TXT: {fileID: 2010841889}
   playerPortrait: {fileID: 592517366}
@@ -4611,6 +4614,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2650366387694445932, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2bd59817cbd8056409162de64bac1612,
+        type: 3}
     - target: {fileID: 3245245718739435108, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: charcter
@@ -4630,6 +4639,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373507852439449414, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373507852439449414, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373507852439449414, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7658737753808371047, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
