@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Recorder;
 
 public class UIManager : Singleton<UIManager>
 {
     [Header("플레이어 HUD")]
+    public GameObject playerUI;
     public GameObject UI_HPPanel;
     public Image playerHUD;
     public Sprite playerStand;
@@ -71,13 +71,6 @@ public class UIManager : Singleton<UIManager>
         StatUIUpdate();
     }
 
-    public void PlayerHUDChange()
-    {
-        if (PlayerController.Instance.pState.isCrouch)
-        {
-
-        }
-    }
 
     // 플레이어 체력관련 UI 업데이트
     public void StatUIUpdate()
@@ -122,6 +115,12 @@ public class UIManager : Singleton<UIManager>
         //weaponTactical_TXT.text = string.Format("{0}", weaponTactical);
     }
 
+    public void ChangeSpecialWeaponUIUpdate(Sprite _specialWeaponImage)
+    {
+        weaponTactical.sprite = _specialWeaponImage;
+    }
+
+
     // 미션 정보에서의 적 수, 시간 등에 관한 UI업데이트 임시
     public void MissionInfoUIUpdate()
     {
@@ -145,6 +144,8 @@ public class UIManager : Singleton<UIManager>
     public void SceneTransition(string _sceneName)
     {
         SceneManager.LoadScene($"{_sceneName}");
+        GameManager.Instance.openUI = PlayerController.Instance.pState.isOnViewer = PlayerController.Instance.pState.isOnESCMenu = false;
+        GameManager.Instance.selectSceneNum = 0;
     }
     public void OnExitClick()
     {
@@ -158,5 +159,17 @@ public class UIManager : Singleton<UIManager>
     public void CrossHair(bool _onoff)
     {
         crosshair.enabled = _onoff;
+    }
+
+
+    public void OpenUIMenu()
+    {
+        CrossHair(false);
+        
+    }
+    public void CloseUIMenu()
+    {
+        CrossHair(true);
+        
     }
 }

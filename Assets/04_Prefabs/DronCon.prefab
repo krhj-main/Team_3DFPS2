@@ -1731,6 +1731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <type>k__BackingField: 2
+  myImage: {fileID: 21300000, guid: 46a0029f194411a40a912f65271a0ece, type: 3}
   dron: {fileID: 7706442653079426420}
   isOut: 0
   charCamera: {fileID: 0}

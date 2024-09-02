@@ -76,6 +76,7 @@ public class DronController : SpecialWeapon
     }
     public override void OnHand(Transform _tr, Vector3 _offset)
     {
+        base.OnHand(_tr, _offset);
         transform.position = _tr.position;
         transform.rotation = _tr.rotation;
         if (!isOut) {

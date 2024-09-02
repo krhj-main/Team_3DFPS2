@@ -147,15 +147,14 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     {
         if (!main.enabled) { return; }
         InputKey();
-        OpenMenu();
-        if (GameManager.Instance.openUI || pState.isDead || pState.isOnViewer || pState.isOnESCMenu)
+        UIStateInteract(UIState());
+        if (UIState() || pState.isDead)
         {
             moveInput = Vector3.zero;
             return;
         }
         PlayerDir();
         ActiveCrouch();
-        
     }
     
     private void FixedUpdate()
@@ -165,6 +164,37 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             return;
         }
         ActiveMove();
+    }
+
+    bool UIState()
+    {
+        bool _openUI = (GameManager.Instance.openUI || pState.isOnViewer || pState.isOnESCMenu);
+
+        return _openUI;
+    }
+    void UIStateInteract(bool _uiState)
+    {
+        OpenMenu();
+        if (GameManager.Instance.selectSceneNum == 0)
+        {
+            MouseCursorMove.ShowCursor();
+            UIManager.Instance.CloseUIMenu();
+            return;
+        }
+        else
+        {
+            switch (_uiState)
+            {
+                case true:
+                    UIManager.Instance.OpenUIMenu();
+                    MouseCursorMove.ShowCursor();
+                    break;
+                case false:
+                    UIManager.Instance.CloseUIMenu();
+                    MouseCursorMove.HideCursor();
+                    break;
+            }
+        }
     }
 
     // 속도를 사용해 실제로 움직이는 부분
