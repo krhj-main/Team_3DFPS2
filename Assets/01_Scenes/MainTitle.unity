@@ -1131,6 +1131,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1135908504}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135908507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4542436876608409542, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135908508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4542436876608409560, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135908509 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4542436876608409562, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1239975677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2995,6 +3013,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 055d3f070e832e343955fc595e70cf36, type: 3}
+--- !u!1 &1705401890535657144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7658737753808371047, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1705401890535657143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2114405660834085061
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,6 +3086,10 @@ MonoBehaviour:
   remainEnemy: 0
   playerUI: {fileID: 2137463161}
   inventory: {fileID: 1135908506}
+  applyCustomCharacter:
+  - {fileID: 1135908509}
+  - {fileID: 1135908508}
+  - {fileID: 1135908507}
   canMissionChoice: 0
   openUI: 0
   selectSceneNum: 0
@@ -3111,7 +3139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42844678e662238408f60e13774e17dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUI: {fileID: 0}
+  playerUI: {fileID: 1705401890535657144}
   UI_HPPanel: {fileID: 1885624535}
   playerHUD: {fileID: 592517366}
   playerStand: {fileID: 21300000, guid: 2bd59817cbd8056409162de64bac1612, type: 3}
