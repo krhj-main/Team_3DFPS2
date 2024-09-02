@@ -66,7 +66,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     public bool death = false;
     public GameObject deadPanel;
     [HideInInspector] public Animator deathCam;
-
+    public Action deadAction;
     public int pHP
     {
         get
@@ -393,6 +393,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         pHP -= _damage;
         if(pHP <= 0)
         {
+            deadAction.Invoke();
             pState.isDead = true;
             cc.enabled = false;
             deathCam.enabled = true;
