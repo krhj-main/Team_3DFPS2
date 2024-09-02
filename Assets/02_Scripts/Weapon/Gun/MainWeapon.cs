@@ -71,6 +71,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public AudioClip reloadSound;
     public AudioClip reloadFinishSound;
     public AudioClip weaponChangeSound;
+    public Light effectLight;
     // 플레이어 컴포넌트
     ParticleSystem playerEffect;
     protected AudioSource playerSound;
@@ -274,6 +275,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public void OnHandEnter()
     {
+        
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
@@ -305,6 +307,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public virtual void OnHandExit()
     {
+        effectLight.enabled = false;
         anim.enabled = false;
         GetComponentInChildren<BoxCollider>().enabled = true;
 
@@ -374,6 +377,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public virtual void PlayerFireBullet()
     {
         anim.SetBool("isReloading", false);
+        effectLight.enabled = true;
         playerEffect.Play();
         playerSound.clip = shootSound;
         playerSound.Play();
