@@ -49,6 +49,9 @@ public class UIManager : Singleton<UIManager>
     int missionTimeCurrent;
     int missionEnemyCount;
 
+    [Header("ESC 메뉴")]
+    public GameObject escMenu;
+
     [Header("섬광탄 효과 (임시)")]
     public FlashEffectEnd FlashImage;
 
@@ -139,6 +142,18 @@ public class UIManager : Singleton<UIManager>
         //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
     }
 
+    public void SceneTransition(string _sceneName)
+    {
+        SceneManager.LoadScene($"{_sceneName}");
+    }
+    public void OnExitClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE_WIN
+            Application.Quit();
+#endif
+    }
     // 크로스헤어의 OnOff를 담당하는 메서드
     public void CrossHair(bool _onoff)
     {

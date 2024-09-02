@@ -21,7 +21,7 @@ public class EquipmentsInit : MonoBehaviour
     {
         swap.Inventory.Clear();
         swap.GrenadeFactory.SetGrenadeCount(frag, smoke, flash);
-        //InitInventory(specialWeapons);
+        InitInventory(specialWeapons);
         InitInventory(mainWeapons);
     }
 

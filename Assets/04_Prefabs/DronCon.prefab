@@ -417,7 +417,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273801c6cc642a7478fd736469385d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rig: {fileID: 0}
+  rig: {fileID: 6520406363943382473}
+  dronCam: {fileID: 7427911291779619778}
   dronUI: {fileID: 2870663948199954734}
   cam: {fileID: 88594334185940884}
   jumpeForce: 20
@@ -428,13 +429,14 @@ MonoBehaviour:
   col: {fileID: 4232813331201987245}
   dronController: {fileID: 5293780662825668694}
   returnKey: 27
+  isActive: 0
   boxSize: {x: 0.1, y: 0, z: 0.1}
   maxDistance: 0.15
   groundLayer:
     serializedVersion: 2
     m_Bits: 32768
   mouseSensitivity: 2
-  cooltime: {fileID: 0}
+  cooltime: {fileID: 3273659144202092346}
   anim: {fileID: 4686071875237573140}
   IsGround: 0
   jumpAble: 1
