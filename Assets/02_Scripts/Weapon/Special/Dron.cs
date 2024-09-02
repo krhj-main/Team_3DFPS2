@@ -131,6 +131,7 @@ public class Dron : MonoBehaviour,Interactable
         
         cam.enabled = false;
         dronUI.SetActive(true);
+        UIManager.Instance.playerUI.SetActive(false);
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
@@ -142,6 +143,7 @@ public class Dron : MonoBehaviour,Interactable
     {
         cam.enabled = true;
         dronUI.SetActive(false);
+        UIManager.Instance.playerUI.SetActive(true);
         dronCam.enabled = false;
         dronController.charCamera.enabled = true;
         anim.SetBool("Open_Anim", false);
