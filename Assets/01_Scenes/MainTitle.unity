@@ -390,6 +390,7 @@ MonoBehaviour:
   missionViewer: {fileID: 762825774}
   missionTime: {fileID: 65370302}
   missionEnemy: {fileID: 677651639}
+  escMenu: {fileID: 0}
   FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
   crosshair: {fileID: 1805634791}
@@ -1660,6 +1661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creditPanel: {fileID: 1085220863}
+  optionPanel: {fileID: 0}
 --- !u!4 &1556652081
 Transform:
   m_ObjectHideFlags: 0
