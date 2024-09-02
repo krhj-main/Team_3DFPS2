@@ -6,7 +6,7 @@ public class SpecialWeapon : MonoBehaviour, IEquipMent, Interactable
 {
     Transform IEquipMent.transform { get => transform; set { } }
     GameObject IEquipMent.gameObject { get => gameObject; set { } }
-    [field: SerializeField]
+    [field: SerializeField] 
     public EquipType type { get; set; }
     public EquipmentsSwap Swap { get; set; }
     private void Awake()

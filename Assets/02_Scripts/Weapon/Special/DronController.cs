@@ -62,7 +62,10 @@ public class DronController : SpecialWeapon
     {
         dron.cam.gameObject.SetActive(false);
         anim.enabled = false;
-        dron.rig.isKinematic = true;
+        if (dron.isActive == false) {
+            dron.rig.isKinematic = true;
+        }
+        
         if (!isOut) {
             dron.col.enabled = false;
         }
