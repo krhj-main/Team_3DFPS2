@@ -213,11 +213,10 @@ public class EquipmentsSwap : MonoBehaviour
         }
 
         slot = Inventory.GetSlot(_index);
-
         if (slot.isFull)
         {
             IEquipMent _equip = slot.Current();
-            DropWeapon(_equip, Inventory.SlotIndexToIndex(slot.Index));
+            DropWeapon(_equip, Inventory.SlotIndexToIndex(_index));
         }
         
         _weapon.gameObject.SetActive(false);
@@ -235,7 +234,8 @@ public class EquipmentsSwap : MonoBehaviour
         {
             IEquipMent _go;
             _go = _equip;
-            Inventory.Set(_index, null);
+            Inventory.Set(_index, null,true);
+            Debug.Log( Inventory.Get(_index));
             equip = null;
             if (_go!= null) {
                 Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();

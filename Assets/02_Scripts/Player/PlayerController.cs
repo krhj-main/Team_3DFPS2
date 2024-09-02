@@ -145,7 +145,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     void Update()
     {
-        //if (!main.enabled) { return; }
+        if (!main.enabled) { return; }
         InputKey();
         UIStateInteract(UIState());
         if (UIState() || pState.isDead)
@@ -166,7 +166,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         ActiveMove();
     }
 
-    bool UIState()
+    public bool UIState()
     {
         bool _openUI = (GameManager.Instance.openUI || pState.isOnViewer || pState.isOnESCMenu);
 

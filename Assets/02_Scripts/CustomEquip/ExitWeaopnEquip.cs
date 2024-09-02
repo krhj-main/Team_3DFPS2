@@ -62,7 +62,10 @@ public class ExitWeaopnEquip : MonoBehaviour
     IEnumerator FadeIn()
     {
         canvasAlpha = 1;
-
+        foreach (GameObject _uiPanel in whenEnterWeaponEquip)       // 알파값이 0이 되면 패널들 켜고 꺼줌
+        {
+            _uiPanel.SetActive(!_uiPanel.activeSelf);
+        }
         while (canvasAlpha >= 0.1f)                                   // 알파값이 1이 될때까지 알파값을 더해줌
         {
             canvasAlpha -= Time.deltaTime;
@@ -70,10 +73,7 @@ public class ExitWeaopnEquip : MonoBehaviour
             yield return null;
         }
 
-        foreach (GameObject _uiPanel in whenEnterWeaponEquip)       // 알파값이 0이 되면 패널들 켜고 꺼줌
-        {
-            _uiPanel.SetActive(!_uiPanel.activeSelf);
-        }
+        
 
         fadeOutCanvas.gameObject.SetActive(false);                  // 페이드아웃 패널 꺼줌
     }

@@ -15,7 +15,7 @@ public class Dron : MonoBehaviour,Interactable
     //-> 돌아올 카메라를 담고있어야 한다,카메라에 따라 조작이 달라져야 한다
 
     public Rigidbody rig;
-    Camera dronCam;
+    [SerializeField] Camera dronCam;
     [SerializeField] GameObject dronUI;
     public RawImage cam;
     [SerializeField] float jumpeForce = 20f;
@@ -45,8 +45,6 @@ public class Dron : MonoBehaviour,Interactable
     // Start is called before the first frame update
     void Start()
     {
-        rig = GetComponent<Rigidbody>();
-        dronCam = GetComponentInChildren<Camera>();
         InputManger.Instance.keyAction+= Inputkey;
     }
     private void FixedUpdate()
@@ -133,6 +131,7 @@ public class Dron : MonoBehaviour,Interactable
         
         cam.enabled = false;
         dronUI.SetActive(true);
+        UIManager.Instance.playerUI.SetActive(false);
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
@@ -144,6 +143,7 @@ public class Dron : MonoBehaviour,Interactable
     {
         cam.enabled = true;
         dronUI.SetActive(false);
+        UIManager.Instance.playerUI.SetActive(true);
         dronCam.enabled = false;
         dronController.charCamera.enabled = true;
         anim.SetBool("Open_Anim", false);

@@ -3,7 +3,16 @@ guid: 273801c6cc642a7478fd736469385d9e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - rig: {instanceID: 0}
+  - dronCam: {instanceID: 0}
+  - dronUI: {instanceID: 0}
+  - playerUI: {instanceID: 0}
+  - cam: {instanceID: 0}
+  - col: {instanceID: 0}
+  - dronController: {instanceID: 0}
+  - cooltime: {instanceID: 0}
+  - anim: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

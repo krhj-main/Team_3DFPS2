@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Recorder;
 
 public class UIManager : Singleton<UIManager>
 {
     [Header("플레이어 HUD")]
+    public GameObject playerUI;
     public GameObject UI_HPPanel;
     public Image playerHUD;
     public Sprite playerStand;
@@ -114,6 +114,12 @@ public class UIManager : Singleton<UIManager>
         //weaponTactical = ;
         //weaponTactical_TXT.text = string.Format("{0}", weaponTactical);
     }
+
+    public void ChangeSpecialWeaponUIUpdate(Sprite _specialWeaponImage)
+    {
+        weaponTactical.sprite = _specialWeaponImage;
+    }
+
 
     // 미션 정보에서의 적 수, 시간 등에 관한 UI업데이트 임시
     public void MissionInfoUIUpdate()

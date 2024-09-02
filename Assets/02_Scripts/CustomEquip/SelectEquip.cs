@@ -16,12 +16,14 @@ public class SelectEquip : MonoBehaviour
     LoadOut loadOut;                            // LoadOut 스크립트
     EquipmentsInit equipmentsInit;              // EquipmentsInit 스크립트
     public GameObject[] equipMainWeapon;        // 메인웨폰무기 ( 새로 산 에셋 무기 )
+    public GameObject equipSpecialWeapon;
     public Stack<GameObject> selectPanelStack = new Stack<GameObject>();        // 켜질 패널들 스택에 담아둠
     //public Transform parentTransform;
     //public GameObject dron;
 
     // 마우스 커서 조작
     public MouseCursorMove mouseCursor;
+    
 
     private void Awake()
     {
@@ -71,7 +73,7 @@ public class SelectEquip : MonoBehaviour
     {
         ApplyMainEquip();
         ApplyThrowingEquip();
-        //ApplySpecialEquip();
+        ApplySpecialEquip();
     }
 
     void ApplyMainEquip()
@@ -94,8 +96,12 @@ public class SelectEquip : MonoBehaviour
     }
 
     void ApplySpecialEquip()
-    {
-       // equipmentsInit.specialWeapons[0] = dron.GetComponent<SpecialWeapon>();
+    {   
+        SpecialWeapon _weapon;
+        _weapon = Instantiate(equipSpecialWeapon.GetComponent<SpecialWeapon>());
+        equipmentsInit.specialWeapons[0] = _weapon;
+
+        // equipmentsInit.specialWeapons[0] = .GetComponent<SpecialWeapon>();
     }
 
 

@@ -62,7 +62,10 @@ public class DronController : SpecialWeapon
     {
         dron.cam.gameObject.SetActive(false);
         anim.enabled = false;
-        dron.rig.isKinematic = true;
+        if (dron.isActive == false) {
+            dron.rig.isKinematic = true;
+        }
+        
         if (!isOut) {
             dron.col.enabled = false;
         }
@@ -73,6 +76,7 @@ public class DronController : SpecialWeapon
     }
     public override void OnHand(Transform _tr, Vector3 _offset)
     {
+        base.OnHand(_tr, _offset);
         transform.position = _tr.position;
         transform.rotation = _tr.rotation;
         if (!isOut) {

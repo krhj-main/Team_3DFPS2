@@ -48,7 +48,7 @@ public class Inventory :MonoBehaviour
         }
         return null;
     }
-    public IEquipMent Set(int _index, IEquipMent _equip)
+    public IEquipMent Set(int _index, IEquipMent _equip,bool _chagne=false)
     {
         IEquipMent _prev;
         int _current = 0;
@@ -57,8 +57,13 @@ public class Inventory :MonoBehaviour
             _current += equipmentsSlots[i].weight;
             if (_current > _index)
             {
+                
                 int _num = _index - (_current - equipmentsSlots[i].weight);
-                _prev = equipmentsSlots[i].Insert(_equip, _num);
+                if (_chagne) { _prev = equipmentsSlots[i].SetEquip(_equip, _num); }
+                else{ 
+                    _prev = equipmentsSlots[i].Insert(_equip, _num);
+                }
+                    
                 return _prev;
             }
         }
