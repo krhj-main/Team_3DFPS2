@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Recorder;
 
 public class UIManager : Singleton<UIManager>
 {
     [Header("플레이어 HUD")]
+    public GameObject playerUI;
     public GameObject UI_HPPanel;
     public Image playerHUD;
     public Sprite playerStand;
