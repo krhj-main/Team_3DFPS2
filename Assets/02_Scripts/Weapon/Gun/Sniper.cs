@@ -16,6 +16,7 @@ public class Sniper : MainWeapon
 
     protected override void Awake()
     {
+        PlayerController.Instance.deadAction += playerDead;
         bulletSpread = 10f;
         spentBullet = 1;
         maxSpread = 10f;
@@ -165,8 +166,8 @@ public class Sniper : MainWeapon
     {
         base.OnHand(_tr, _offSet);
 
-        UIManager.Instance.snimperZoomUI.enabled = isADS;
-        scope.SetActive(!isADS);
+        //UIManager.Instance.snimperZoomUI.enabled = isADS;
+        //scope.SetActive(!isADS);
     }
 
     public override void OnHandExit()
@@ -193,5 +194,10 @@ public class Sniper : MainWeapon
         UIManager.Instance.crosshair.color = color;
         UIManager.Instance.snimperZoomUI.enabled = _whatAim;
         scope.SetActive(!_whatAim);
+    }
+    public void playerDead()
+    {
+        UIManager.Instance.snimperZoomUI.enabled = false;
+        scope.SetActive(false);
     }
 }

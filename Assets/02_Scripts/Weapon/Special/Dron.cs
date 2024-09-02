@@ -204,4 +204,6 @@ public class Dron : MonoBehaviour,Interactable
         
         jumpAble = true;
     }
+
+    
 }
