@@ -10,7 +10,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 {
     // 실험
     protected float originBulletSpread;
-    protected float bulletSpread = 1f;           // 탄 퍼짐
+    [HideInInspector] public float bulletSpread = 1f;           // 탄 퍼짐
     protected float maxSpread = 1f;
 
     // 탄약 관련 변수

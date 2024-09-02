@@ -80,6 +80,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     // 공격 관련 변수
     [Header("발사 위치")]
     public Transform enemyFirePos;
+    [Header("에너미 탄 퍼짐")]
+    public float enemySpread;
     [HideInInspector]
     public float atkDelay = 2f;
     [HideInInspector]
@@ -114,10 +116,10 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public NavMeshAgent agent;
     MainWeapon weapon;
-    
+
 
     [Header("머리 비율 설정")]
-    public float headRatio =0.3f;
+    public float headRatio = 0.3f;
 
 
     void Awake()
@@ -147,6 +149,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         atkDis = weapon.bulletRange;
         weapon.fireRate = 1.5f;
         atkDelay = weapon.fireRate;
+        weapon.bulletSpread = enemySpread;
 
         hp = maxHp;
         originFindDis = findDis;
@@ -411,7 +414,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
                 float _maxHeight = 2f;
-                float _heightDif = (PlayerController.Instance.transform.position.y + PlayerController.Instance.cc.center.y) - transform.position.y;
+                float _heightDif = (PlayerController.Instance.transform.position.y + (PlayerController.Instance.cc.center.y*0.5f)) - transform.position.y;
                 float _clampHeight = Mathf.Clamp(_heightDif / _maxHeight, -1f, 0.5f);
                 anim.SetFloat("Rot", _clampHeight);
 
