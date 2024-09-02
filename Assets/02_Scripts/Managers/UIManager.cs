@@ -4,10 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Recorder;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("플레이어 HUD")]
     public GameObject UI_HPPanel;
+    public Image playerHUD;
+    public Sprite playerStand;
+    public Sprite playerCrouch;
+
     [Header("플레이어 HP")]
     [SerializeField] Slider playerHPBar;
     [SerializeField] TextMeshProUGUI playerHP_TXT;
@@ -49,20 +55,28 @@ public class UIManager : Singleton<UIManager>
     [Header("섬광탄 효과 (임시)")]
     public FlashEffectEnd FlashImage;
 
-    [Header("스나이퍼 줌 UI")]
+    [Header("줌 UI")]
     public Image snimperZoomUI;
+    public Image crosshair;
 
     [Header("사망 관련")]
     public GameObject deadPanelObj;
 
     private void Start()
     {
-        //RemainEnemy();
     }
 
     private void Update()
     {
         StatUIUpdate();
+    }
+
+    public void PlayerHUDChange()
+    {
+        if (PlayerController.Instance.pState.isCrouch)
+        {
+
+        }
     }
 
     // 플레이어 체력관련 UI 업데이트
@@ -139,5 +153,10 @@ public class UIManager : Singleton<UIManager>
 #elif UNITY_STANDALONE_WIN
             Application.Quit();
 #endif
+    }
+    // 크로스헤어의 OnOff를 담당하는 메서드
+    public void CrossHair(bool _onoff)
+    {
+        crosshair.enabled = _onoff;
     }
 }

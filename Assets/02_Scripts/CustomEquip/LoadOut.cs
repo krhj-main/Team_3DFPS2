@@ -34,6 +34,8 @@ public class LoadOut : MonoBehaviour
 
     [Tooltip("투척무기 설명 텍스트")]
     public InfomationText throwingWeaponInfoText;
+
+    public InfomationText specialWeaponInfoText;
     #endregion
 
     #region 주무기 관련 변수
@@ -79,7 +81,16 @@ public class LoadOut : MonoBehaviour
 
     int getThrowing;
     int maxGetThrowing = 5;
+
+    public static int[] originThrowingCount = new int[3];    // 저장되는 투척무기 갯수
     #endregion
+
+    #region 특수무기 관련 변수
+    [Space(5)]
+    [Header("특수무기 세팅 부분")]
+    public GameObject drone;
+    #endregion
+
 
     #region Awake
     SelectEquip selectEquip;
@@ -199,6 +210,7 @@ public class LoadOut : MonoBehaviour
         loadoutPanelThrowCount[_index].text = throwingPcs[_index].text;
         CalculateGetThrowing();
         UpdateButtonActive();
+        ApplyThrowingCount();
     }
 
     // 투척무기 최대갯수 계산
@@ -222,14 +234,25 @@ public class LoadOut : MonoBehaviour
         }
     }
 
-    // 투척무기 갯수 플러스 버튼
+    // 투척무기 저장
+    void ApplyThrowingCount()
+    {
+        originThrowingCount[0] = countThrwing[0];
+        originThrowingCount[1] = countThrwing[1];
+        originThrowingCount[2] = countThrwing[2];
+        Debug.Log(originThrowingCount[0]);
+        Debug.Log(originThrowingCount[1]);
+        Debug.Log(originThrowingCount[2]);
+    }
+
+    // 투척무기 갯수 플러스 ( 버튼 연결 )
     public void PlusThrowingWeapon(int _index)
     {
         UpdateThrowingWeapon(_index, 1);
         throwingMiusBtn[_index].interactable = true;
     }
 
-    // 투척무기 갯수 마이너스 버튼
+    // 투척무기 갯수 마이너스 ( 버튼 연결 )
     public void MiusThrowingWeapon(int _index)
     {
         UpdateThrowingWeapon(_index, -1);
@@ -256,4 +279,19 @@ public class LoadOut : MonoBehaviour
         throwingWeaponInfoText.ChangeText("섬광탄", "M84", "직접적인 살상력 없이\n적을 무력화할 수 있다");
     }
     #endregion
+
+    #region 특수무기 세팅
+    public void SpecialChangeText1()
+    {
+        specialWeaponInfoText.ChangeText("드론", "Dororone", "적진에 침투하기 전\n거미 드론으로 적을 은밀하게\n탐지할 수 있다");
+        drone.SetActive(true);
+    }
+
+    public void FalseDrone()
+    {
+        specialWeaponInfoText.ChangeText("","","");
+        drone.SetActive(false);
+    }
+    #endregion
+
 }

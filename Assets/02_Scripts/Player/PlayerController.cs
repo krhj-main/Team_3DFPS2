@@ -321,7 +321,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         if (pState.isCrouch == true)
         {
             cc.height = cc.height - crouchSpeed * Time.deltaTime;
-
+            UIManager.Instance.playerHUD.sprite = UIManager.Instance.playerCrouch;
 
             arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter + Vector3.up * 0.5f, 0.03f);
 
@@ -337,7 +337,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         if (pState.isCrouch == false)
         {
             cc.height = cc.height + crouchSpeed * Time.deltaTime;
-
+            UIManager.Instance.playerHUD.sprite = UIManager.Instance.playerStand;
 
             arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter +Vector3.up*0.5f, 0.03f);
 
@@ -365,6 +365,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         {
             pState.isDead = true;
             cc.enabled = false;
+            deathCam.enabled = true;
             deathCam.Play("Death");
             deadPanel.SetActive(true);
         }
