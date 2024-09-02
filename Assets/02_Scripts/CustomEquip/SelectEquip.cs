@@ -18,8 +18,7 @@ public class SelectEquip : MonoBehaviour
     public GameObject[] equipMainWeapon;        // 메인웨폰무기 ( 새로 산 에셋 무기 )
     public GameObject equipSpecialWeapon;
     public Stack<GameObject> selectPanelStack = new Stack<GameObject>();        // 켜질 패널들 스택에 담아둠
-    //public Transform parentTransform;
-    //public GameObject dron;
+    Customize customize;
 
     // 마우스 커서 조작
     public MouseCursorMove mouseCursor;
@@ -30,6 +29,7 @@ public class SelectEquip : MonoBehaviour
         animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
         loadOut = GetComponent<LoadOut>();
         equipmentsInit = GameManager.Instance.inventory.GetComponent<EquipmentsInit>();
+        customize = GetComponent<Customize>();
     }
 
 
@@ -57,6 +57,7 @@ public class SelectEquip : MonoBehaviour
                 if (selectPanelStack.Count <= 0)
                 {
                     ApplyWeaponEquip();
+                    customize.ApplyCustomize();
                     equipmentsInit.Init();
                     exitWeaponEquip.SetActive(true);
                     GameManager.Instance.openUI = false;
