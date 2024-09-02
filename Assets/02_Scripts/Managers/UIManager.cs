@@ -71,13 +71,6 @@ public class UIManager : Singleton<UIManager>
         StatUIUpdate();
     }
 
-    public void PlayerHUDChange()
-    {
-        if (PlayerController.Instance.pState.isCrouch)
-        {
-
-        }
-    }
 
     // 플레이어 체력관련 UI 업데이트
     public void StatUIUpdate()
@@ -145,6 +138,8 @@ public class UIManager : Singleton<UIManager>
     public void SceneTransition(string _sceneName)
     {
         SceneManager.LoadScene($"{_sceneName}");
+        GameManager.Instance.openUI = PlayerController.Instance.pState.isOnViewer = PlayerController.Instance.pState.isOnESCMenu = false;
+        GameManager.Instance.selectSceneNum = 0;
     }
     public void OnExitClick()
     {
@@ -158,5 +153,17 @@ public class UIManager : Singleton<UIManager>
     public void CrossHair(bool _onoff)
     {
         crosshair.enabled = _onoff;
+    }
+
+
+    public void OpenUIMenu()
+    {
+        CrossHair(false);
+        
+    }
+    public void CloseUIMenu()
+    {
+        CrossHair(true);
+        
     }
 }
