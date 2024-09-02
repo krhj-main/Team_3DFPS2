@@ -177,6 +177,7 @@ public class UIManager : Singleton<UIManager>
     public void playerDead()
     {
         snimperZoomUI.enabled = false;
+        escMenu.SetActive(false);
         CrossHair(false);
     }
 }

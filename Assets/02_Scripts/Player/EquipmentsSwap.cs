@@ -63,6 +63,9 @@ public class EquipmentsSwap : MonoBehaviour
 
     void Update()
     {
+        if (PlayerController.Instance.pState.isDead) {
+            return;
+        }
         if (equip != null)
         {
             equip.OnHand(GunPosition, offsetPos);

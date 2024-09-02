@@ -13,7 +13,7 @@ public class InputManger : Singleton<InputManger>
     // Update is called once per frame
     void Update()
     {
-        if (keyAction!=null)
+        if (keyAction!=null&&!PlayerController.Instance.pState.isDead)
         {
             if (isPress && !Input.anyKey)
             {
