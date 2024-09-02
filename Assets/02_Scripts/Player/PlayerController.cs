@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
@@ -107,22 +108,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     public AudioSource playerSound;
     public AudioClip walkSound;
 
-    /*
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            if (instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-        }
-    }
-    */
     private void OnTransformParentChanged() {
         Debug.Log(transform.parent);
     }
@@ -141,6 +126,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         pState = GetComponent<PlayerStateList>();
         anim = GetComponentInChildren<Animator>();
         playerSound = GetComponent<AudioSource>();
+        //InputManger.Instance.keyAction += InputKey;
     }
 
     void Update()
@@ -288,7 +274,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         
 
         // ESC 메뉴 키기
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.openUI && SceneManager.GetActiveScene().buildIndex > 1)
         {
             pState.isOnESCMenu = !pState.isOnESCMenu;
         }

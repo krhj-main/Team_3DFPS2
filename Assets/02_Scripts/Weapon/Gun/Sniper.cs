@@ -180,7 +180,17 @@ public class Sniper : MainWeapon
     public override void Aming(bool _whatAim)
     {
         base.Aming(_whatAim);
-        UIManager.Instance.CrossHair(!_whatAim);
+        //UIManager.Instance.CrossHair(!_whatAim);
+        Color color = UIManager.Instance.crosshair.color;
+        if (_whatAim)
+        {
+            color.a = 0;
+        }
+        else {
+            color.a = 1;
+        }
+
+        UIManager.Instance.crosshair.color = color;
         UIManager.Instance.snimperZoomUI.enabled = _whatAim;
         scope.SetActive(!_whatAim);
     }
