@@ -337,7 +337,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     //키입력
     public virtual void InputKey()
     {
-        if (PlayerController.Instance.UIState())
+        if (GameManager.Instance.openUI)
         {
             return;
         }
