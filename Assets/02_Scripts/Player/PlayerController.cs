@@ -166,7 +166,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         ActiveMove();
     }
 
-    bool UIState()
+    public bool UIState()
     {
         bool _openUI = (GameManager.Instance.openUI || pState.isOnViewer || pState.isOnESCMenu);
 

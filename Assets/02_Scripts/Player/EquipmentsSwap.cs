@@ -216,7 +216,7 @@ public class EquipmentsSwap : MonoBehaviour
         if (slot.isFull)
         {
             IEquipMent _equip = slot.Current();
-            DropWeapon(_equip, Inventory.SlotIndexToIndex(slot.Index));
+            DropWeapon(_equip, Inventory.SlotIndexToIndex(_index));
         }
         
         _weapon.gameObject.SetActive(false);
