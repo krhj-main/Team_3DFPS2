@@ -89,6 +89,7 @@ public class LoadOut : MonoBehaviour
     [Space(5)]
     [Header("특수무기 세팅 부분")]
     public GameObject drone;
+    public GameObject specialWeaponPanel;
     #endregion
 
 
@@ -283,14 +284,19 @@ public class LoadOut : MonoBehaviour
     #region 특수무기 세팅
     public void SpecialChangeText1()
     {
-        specialWeaponInfoText.ChangeText("드론", "Dororone", "적진에 침투하기 전\n거미 드론으로 적을 은밀하게\n탐지할 수 있다");
-        drone.SetActive(true);
+        if(selectEquip.selectPanelStack.Count <= 0)
+        {
+            specialWeaponInfoText.ChangeText("드론", "Dororone", "적진에 침투하기 전\n거미 드론으로 적을 은밀하게\n탐지할 수 있다");
+            drone.SetActive(true);
+            specialWeaponPanel.SetActive(true);
+        }
     }
 
     public void FalseDrone()
     {
         specialWeaponInfoText.ChangeText("","","");
         drone.SetActive(false);
+        specialWeaponPanel.SetActive(false);
     }
     #endregion
 
