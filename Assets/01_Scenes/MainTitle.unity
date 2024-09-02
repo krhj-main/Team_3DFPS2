@@ -649,6 +649,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI_HPPanel: {fileID: 1885624535}
+  playerHUD: {fileID: 592517366}
+  playerStand: {fileID: 21300000, guid: 2bd59817cbd8056409162de64bac1612, type: 3}
+  playerCrouch: {fileID: 21300000, guid: 5ce433b2baecaf348aac169aa6bf9843, type: 3}
   playerHPBar: {fileID: 494498218}
   playerHP_TXT: {fileID: 2010841889}
   playerPortrait: {fileID: 592517366}
@@ -665,10 +668,11 @@ MonoBehaviour:
   weaponTactical_TXT: {fileID: 1883634923}
   missionViewer: {fileID: 762825774}
   missionTime: {fileID: 0}
-  missionEnemy: {fileID: 832942336}
+  missionEnemy: {fileID: 1671681131}
   escMenu: {fileID: 1885624536}
   FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
+  crosshair: {fileID: 0}
   deadPanelObj: {fileID: 444201067}
 --- !u!1 &505304170
 GameObject:
@@ -1271,18 +1275,6 @@ MonoBehaviour:
 --- !u!114 &829588866 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5546890925639369150, guid: 055d3f070e832e343955fc595e70cf36,
-    type: 3}
-  m_PrefabInstance: {fileID: 1885624533}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &832942336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2099914404127060659, guid: 055d3f070e832e343955fc595e70cf36,
     type: 3}
   m_PrefabInstance: {fileID: 1885624533}
   m_PrefabAsset: {fileID: 0}
@@ -5166,6 +5158,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bb55b6ba6eb8a408da63c7dc0c156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1671681131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6590169067929641249, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1689390071
 GameObject:
   m_ObjectHideFlags: 0
@@ -6598,6 +6602,7 @@ MonoBehaviour:
   maxEnemy: 0
   remainEnemy: 0
   playerUI: {fileID: 2137463161}
+  inventory: {fileID: 0}
   canMissionChoice: 1
   openUI: 0
   selectSceneNum: 0
