@@ -54,4 +54,12 @@ public class Customize : MonoBehaviour
             }
         }
     }
+
+    public void ApplyCustomize()
+    {
+        foreach(GameObject go in GameManager.Instance.applyCustomCharacter)
+        {
+            go.GetComponent<SkinnedMeshRenderer>().material = uniformMat[selectedUniformIndex];
+        }
+    }
 }
