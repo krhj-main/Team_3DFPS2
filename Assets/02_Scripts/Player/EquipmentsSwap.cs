@@ -83,6 +83,8 @@ public class EquipmentsSwap : MonoBehaviour
 
     public void Inputkey() 
     {
+        if (GameManager.Instance.openUI) { return; }
+
         //무기가 하나이상 있으면
         if (Input.GetKeyDown(dropKey))
         {
@@ -144,7 +146,7 @@ public class EquipmentsSwap : MonoBehaviour
 
     }
     
-    void Swap(int _setIndex)
+    public void Swap(int _setIndex)
     {
         
         offsetPos = Vector3.zero;

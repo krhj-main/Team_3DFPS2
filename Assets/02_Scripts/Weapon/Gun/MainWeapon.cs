@@ -277,6 +277,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         firePos.localPosition = Vector3.zero;
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
+        GetComponentInChildren<BoxCollider>().enabled = false;
+
         // 애니메이션, 사운드, 이펙트
         PlayerController.Instance.anim = anim;
         anim.enabled = true;
@@ -301,6 +303,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public virtual void OnHandExit()
     {
         anim.enabled = false;
+        GetComponentInChildren<BoxCollider>().enabled = true;
 
         PlayerController.Instance.moveSpeedScale = 0;
         StopCoroutine(Reloading());
@@ -328,6 +331,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     //키입력
     public virtual void InputKey()
     {
+        if (GameManager.Instance.openUI)
+        {
+            return;
+        }
+
         if (Input.GetMouseButton(0))
         {
             anim.SetBool("isAttacking", true);
@@ -338,7 +346,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             anim.SetBool("isAttacking", false);
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !isReloading)
         {
             isADS = !isADS;
             Aming(isADS);

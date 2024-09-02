@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
-    public bool active = true;
+    
     [SerializeField] Transform arm;
     [SerializeField] public Transform waist;
     Vector3 armPos;
@@ -145,8 +145,9 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     void Update()
     {
-        if (!main.enabled|| !active) { return; }
+        //if (!main.enabled) { return; }
         InputKey();
+        //LookAround();
         PlayerDir();
         ActiveCrouch();
         OpenViewer();
@@ -154,7 +155,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     
     private void FixedUpdate()
     {
-        if (!cc.enabled || !active)
+        if (!cc.enabled)
         {
             return;
         }
@@ -192,13 +193,16 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             _groundVelocity /= 1.8f;
         }
 
-        _groundVelocity *= (1+moveSpeedScale);
+        _groundVelocity *= (1 + moveSpeedScale);
 
         float _yVelocity = JumpingUpdate();
         velocity = new Vector3(_groundVelocity.x, _yVelocity, _groundVelocity.z);
 
         //transform.position += velocity * Time.fixedDeltaTime;
-        cc.Move(velocity * Time.deltaTime);
+        if (cc.enabled) 
+        { 
+            cc.Move(velocity * Time.fixedDeltaTime);
+        }
     }
 
     // 땅과 닿아있는지 체크
@@ -308,7 +312,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         if (pState.isCrouch == true)
         {
             cc.height = cc.height - crouchSpeed * Time.deltaTime;
-
+            UIManager.Instance.playerHUD.sprite = UIManager.Instance.playerCrouch;
 
             arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter + Vector3.up * 0.5f, 0.03f);
 
@@ -324,7 +328,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         if (pState.isCrouch == false)
         {
             cc.height = cc.height + crouchSpeed * Time.deltaTime;
-
+            UIManager.Instance.playerHUD.sprite = UIManager.Instance.playerStand;
 
             arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter +Vector3.up*0.5f, 0.03f);
 
@@ -354,6 +358,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             pState.isDead = true;
             cc.enabled = false;
             deathCam.enabled = true;
+            deathCam.Play("Death");
             deadPanel.SetActive(true);
         }
     }

@@ -52,6 +52,7 @@ public class Mission : MonoBehaviour
             foreach(GameObject go  in zoomInImage) 
             { 
                 go.SetActive(false);
+                GameManager.Instance.openUI = false;
             }
             missionCanvas.SetActive(false);
         }

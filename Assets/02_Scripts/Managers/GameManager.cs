@@ -43,6 +43,8 @@ public class GameManager : Singleton<GameManager>
 
     public Canvas playerUI;
 
+    public GameObject inventory;
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -52,35 +54,10 @@ public class GameManager : Singleton<GameManager>
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         AddEnemyOnNowScene();
-        
-        if (FindObjectOfType<SetPlayerPosition>() != null)
-        {
-            
 
-            StartCoroutine(LoopTimer(0.1f));
-            
-        }
-        else
-        {
-            PlayerController.Instance.gravityAcc = 0;
-        }
-        
-        playerUI.gameObject.SetActive(scene.buildIndex >=2);
-        
         PlayerInit();
-    }
 
-    IEnumerator LoopTimer(float _time)
-    {
-        PlayerController.Instance.active = false;
-        yield return new WaitForSeconds(_time);
-        Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
-        PlayerController.Instance.transform.position = _newPosition;
-        Debug.Log(_newPosition);
-        Debug.Log(PlayerController.Instance.transform.position);
-        PlayerController.Instance.gravityAcc = defaultGravity;
-        yield return new WaitForSeconds(_time);
-        PlayerController.Instance.active = true;
+        playerUI.gameObject.SetActive(scene.buildIndex >=2);
     }
 
     // 씬이 로드될 때 존재하는 모든 Enemy를 List에 담는 함수 ( ScnenManager 등에서 호출 )
@@ -99,12 +76,26 @@ public class GameManager : Singleton<GameManager>
     // 씬 로드시 플레이어 관련 설정 초기화
     public void PlayerInit()
     {
-        PlayerController pc = PlayerController.Instance;
-       
-        pc.enabled = true;
-        pc.cc.enabled = true;
-        pc.pHP = pc.maxHP;
+        PlayerController _pc = PlayerController.Instance;
+
+        _pc.cc.enabled = false;
+
+        if (FindObjectOfType<SetPlayerPosition>() != null)
+        {
+            Vector3 _newPosition = FindObjectOfType<SetPlayerPosition>().transform.position;
+            PlayerController.Instance.transform.position = _newPosition;
+            PlayerController.Instance.gravityAcc = defaultGravity;
+        }
+        else
+        {
+            PlayerController.Instance.gravityAcc = 0;
+        }
+
+        _pc.enabled = true;
+        _pc.cc.enabled = true;
+        _pc.pHP = _pc.maxHP;
     }
+
     protected override void Awake()
     {
         base.Awake();
@@ -172,7 +163,7 @@ public class GameManager : Singleton<GameManager>
 
     #region 로비 미션 UI 관련 ( 미션선택, 움직임 제한 )
 
-    public int canMissionChoice = 1;        // 게임 클리어 시 미션 목록에서 다음 미션 선택 가능하게 해줌
+    public int canMissionChoice = 0;        // 게임 클리어 시 미션 목록에서 다음 미션 선택 가능하게 해줌
     public bool openUI = false;             // UI 열리면 움직임 제한
     public int selectSceneNum = 0;
 
