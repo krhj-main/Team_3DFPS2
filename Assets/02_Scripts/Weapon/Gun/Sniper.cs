@@ -164,18 +164,6 @@ public class Sniper : MainWeapon
     public override void OnHand(Transform _tr, Vector3 _offSet)
     {
         base.OnHand(_tr, _offSet);
-        /*
-        if (isADS)
-        {
-            UIManager.Instance.snimperZoomUI.enabled = true;
-            scope.SetActive(false);
-        }
-        else
-        {
-            UIManager.Instance.snimperZoomUI.enabled = false;
-            scope.SetActive(true);
-        }
-        */
 
         UIManager.Instance.snimperZoomUI.enabled = isADS;
         scope.SetActive(!isADS);
@@ -192,6 +180,7 @@ public class Sniper : MainWeapon
     public override void Aming(bool _whatAim)
     {
         base.Aming(_whatAim);
+        UIManager.Instance.CrossHair(!_whatAim);
         UIManager.Instance.snimperZoomUI.enabled = _whatAim;
         scope.SetActive(!_whatAim);
     }

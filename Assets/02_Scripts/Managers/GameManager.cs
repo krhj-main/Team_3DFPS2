@@ -55,6 +55,8 @@ public class GameManager : Singleton<GameManager>
     {
         AddEnemyOnNowScene();
 
+        SceneToInit();
+
         PlayerInit();
 
         playerUI.gameObject.SetActive(scene.buildIndex >=2);
@@ -94,6 +96,24 @@ public class GameManager : Singleton<GameManager>
         _pc.enabled = true;
         _pc.cc.enabled = true;
         _pc.pHP = _pc.maxHP;
+    }
+
+    public void SceneToInit()
+    {
+        string _nowScene = SceneManager.GetActiveScene().name;
+
+        if (_nowScene.Contains("Title"))
+        {
+            UIManager.Instance.CrossHair(false);
+        }
+        else if (_nowScene.Contains("Lodding"))
+        {
+            UIManager.Instance.CrossHair(false);
+        }
+        else
+        {
+            UIManager.Instance.CrossHair(true);
+        }
     }
 
     protected override void Awake()
