@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpecialWeapon : MonoBehaviour, IEquipMent, Interactable
 {
@@ -9,6 +10,7 @@ public class SpecialWeapon : MonoBehaviour, IEquipMent, Interactable
     [field: SerializeField]
     public EquipType type { get; set; }
     public EquipmentsSwap Swap { get; set; }
+    public Sprite myImage;
     private void Awake()
     {
         type = EquipType.Special;
@@ -20,6 +22,7 @@ public class SpecialWeapon : MonoBehaviour, IEquipMent, Interactable
 
     public virtual void OnHand(Transform _tr, Vector3 _offset)
     {
+        UIManager.Instance.ChangeSpecialWeaponUIUpdate(myImage);
     }
 
     public virtual void OnHandEnter()
