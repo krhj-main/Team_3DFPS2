@@ -20,6 +20,7 @@ public class DronController : SpecialWeapon
     void Start()
     {
         charCamera = Camera.main;
+        PlayerController.Instance.deadAction += PlayerDead;
     }
 
     public void DronReturn() {
@@ -106,5 +107,11 @@ public class DronController : SpecialWeapon
         base.Interaction(target);
         phone.enabled = true;
     }
-
+    public void PlayerDead()
+    {
+        dron.DronDisable();
+        dron.cam.enabled = false;
+        dron.isActive = false;
+        DronReturn();
+    }
 }

@@ -64,6 +64,7 @@ public class UIManager : Singleton<UIManager>
 
     private void Start()
     {
+        PlayerController.Instance.deadAction += playerDead;
     }
 
     private void Update()
@@ -171,5 +172,11 @@ public class UIManager : Singleton<UIManager>
     {
         CrossHair(true);
         
+    }
+
+    public void playerDead()
+    {
+        snimperZoomUI.enabled = false;
+        CrossHair(false);
     }
 }
