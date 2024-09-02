@@ -16,9 +16,10 @@ public class SelectEquip : MonoBehaviour
     LoadOut loadOut;                            // LoadOut 스크립트
     EquipmentsInit equipmentsInit;              // EquipmentsInit 스크립트
     public GameObject[] equipMainWeapon;        // 메인웨폰무기 ( 새로 산 에셋 무기 )
-    public GameObject equipSpecialWeapon;       // 스페셜무기
+    public GameObject equipSpecialWeapon;
     public Stack<GameObject> selectPanelStack = new Stack<GameObject>();        // 켜질 패널들 스택에 담아둠
-    Customize customize;
+    //public Transform parentTransform;
+    //public GameObject dron;
 
     // 마우스 커서 조작
     public MouseCursorMove mouseCursor;
@@ -29,8 +30,8 @@ public class SelectEquip : MonoBehaviour
         animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
         loadOut = GetComponent<LoadOut>();
         equipmentsInit = GameManager.Instance.inventory.GetComponent<EquipmentsInit>();
-        customize = GetComponent<Customize>();
     }
+
 
     private void OnEnable()
     {
@@ -56,7 +57,6 @@ public class SelectEquip : MonoBehaviour
                 if (selectPanelStack.Count <= 0)
                 {
                     ApplyWeaponEquip();
-                    customize.ApplyCustom();
                     equipmentsInit.Init();
                     exitWeaponEquip.SetActive(true);
                     GameManager.Instance.openUI = false;
@@ -69,8 +69,6 @@ public class SelectEquip : MonoBehaviour
         }
     }
 
-
-    #region 무기 실제 장착
     void ApplyWeaponEquip()
     {
         ApplyMainEquip();
@@ -85,6 +83,8 @@ public class SelectEquip : MonoBehaviour
         {
             _weapon = Instantiate( equipMainWeapon[loadOut.equipMainWeaponList[i]].GetComponent<MainWeapon>());
             equipmentsInit.mainWeapons[i] = _weapon;
+            //GameObject _newWeapon = Instantiate(equipMainWeapon[loadOut.equipMainWeaponList[i]], parentTransform);
+            //equipmentsInit.mainWeapons[i] = _newWeapon.GetComponent<MainWeapon>();
         }
     }
 
@@ -100,8 +100,9 @@ public class SelectEquip : MonoBehaviour
         SpecialWeapon _weapon;
         _weapon = Instantiate(equipSpecialWeapon.GetComponent<SpecialWeapon>());
         equipmentsInit.specialWeapons[0] = _weapon;
+
+        // equipmentsInit.specialWeapons[0] = .GetComponent<SpecialWeapon>();
     }
-    #endregion
 
 
     // 스택에 추가하고 패널 켜주기
@@ -122,8 +123,7 @@ public class SelectEquip : MonoBehaviour
         }
     }
 
-    #region 메뉴 버튼
-    // 메뉴 버튼에 OnClick 연결
+    // 메뉴 버튼에 연결
     public void SelectMenu(int _num)
     {
         ClosePanel();
@@ -146,7 +146,26 @@ public class SelectEquip : MonoBehaviour
         }
     }
 
-    // 빨간 밑줄 이동
+    // 버튼 클릭시 패널 및 메뉴 이름 변경
+    void ChangeMenu(int _num)
+    {
+        for(int i = 0; i < menuPanel.Length; i++)
+        {
+            if(i == _num)
+            {
+                menuPanel[i].SetActive(true);                                       // 클릭된 버튼에 맞는 패널 오픈
+                menuTxt[i].GetComponent<TextMeshProUGUI>().color = Color.white;     // 메뉴 이름 텍스트는 하얀색
+            }
+            else
+            {
+                menuPanel[i].SetActive(false);                                      // 다른 버튼은 패널 오프
+                menuTxt[i].GetComponent<TextMeshProUGUI>().color = Color.gray;      // 메뉴 이름 텍스트는 회색
+
+            }
+        }
+    }
+
+    // 버튼 클릭시 빨간 밑줄 이동
     IEnumerator ImageMove(int _num, float _posX, int _width)
     {
         Vector2 _originPos = selectMenuImage.anchoredPosition;          // 빨간 밑줄 원래 포지션
@@ -172,25 +191,4 @@ public class SelectEquip : MonoBehaviour
         selectMenuImage.sizeDelta = _targetWidth;               // 근사치에 도달하면 지정 값으로 변경
         ChangeMenu(_num);                                       // 패널 및 이름 색 변경
     }
-
-    // 버튼 클릭시 패널 및 메뉴 이름 변경
-    void ChangeMenu(int _num)
-    {
-        for (int i = 0; i < menuPanel.Length; i++)
-        {
-            if (i == _num)
-            {
-                menuPanel[i].SetActive(true);                                       // 클릭된 버튼에 맞는 패널 오픈
-                menuTxt[i].GetComponent<TextMeshProUGUI>().color = Color.white;     // 메뉴 이름 텍스트는 하얀색
-            }
-            else
-            {
-                menuPanel[i].SetActive(false);                                      // 다른 버튼은 패널 오프
-                menuTxt[i].GetComponent<TextMeshProUGUI>().color = Color.gray;      // 메뉴 이름 텍스트는 회색
-
-            }
-        }
-    }
-    #endregion
-
 }
