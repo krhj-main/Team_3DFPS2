@@ -1202,6 +1202,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1135908504}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135908507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4542436876608409542, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135908508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4542436876608409560, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135908509 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4542436876608409562, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1135908504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1239975677
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,6 +3080,10 @@ MonoBehaviour:
   bestColor: 
   enemyScore: 0
   bestClearTimeText: 
+  customCharacterToApply:
+  - {fileID: 1135908509}
+  - {fileID: 1135908508}
+  - {fileID: 1135908507}
 --- !u!1 &1999188444
 GameObject:
   m_ObjectHideFlags: 0

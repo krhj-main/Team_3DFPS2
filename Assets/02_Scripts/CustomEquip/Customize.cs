@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 public class Customize : MonoBehaviour
 {
-    public GameObject[] character;          // 캐릭터
+    public GameObject[] customCharacter;    // 커스텀 되는 캐릭터
     public GameObject[] unifromPanel;       // 상의 선택 패널
     public Material[] uniformMat;           // 캐릭터 유니폼
     public Button[] uniformSelectButton;
     int selectedUniformIndex = 2;
     SelectEquip selectEquip;
+
 
     private void Awake()
     {
@@ -27,10 +28,10 @@ public class Customize : MonoBehaviour
 
     public void SelectUnifrom(int _num)
     {
-        for(int i = 0; i < character.Length; i++)
+        for(int i = 0; i < customCharacter.Length; i++)
         {
             selectedUniformIndex = _num;
-            character[i].GetComponent<SkinnedMeshRenderer>().material = uniformMat[_num];
+            customCharacter[i].GetComponent<SkinnedMeshRenderer>().material = uniformMat[_num];
             UpdateCustomButtonColor();
         }
     }
@@ -54,4 +55,13 @@ public class Customize : MonoBehaviour
             }
         }
     }
+
+    public void ApplyCustom()
+    {
+        foreach(GameObject go in GameManager.Instance.customCharacterToApply)
+        {
+            go.GetComponent<SkinnedMeshRenderer>().material = uniformMat[selectedUniformIndex];
+        }
+    }
+
 }

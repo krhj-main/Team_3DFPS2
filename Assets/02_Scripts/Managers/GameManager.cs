@@ -180,7 +180,6 @@ public class GameManager : Singleton<GameManager>
 
     #endregion
 
-
     #region 로비 미션 UI 관련 ( 미션선택, 움직임 제한 )
 
     public int canMissionChoice = 0;        // 게임 클리어 시 미션 목록에서 다음 미션 선택 가능하게 해줌
@@ -239,6 +238,12 @@ public class GameManager : Singleton<GameManager>
         }
         return "00 : 00";
     }
+
+    #endregion
+
+    #region 캐릭터 커스터마이징 적용
+    public GameObject[] customCharacterToApply;
+
 
     #endregion
 }
