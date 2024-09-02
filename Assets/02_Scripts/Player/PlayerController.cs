@@ -145,12 +145,17 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     void Update()
     {
-        //if (!main.enabled) { return; }
+        if (!main.enabled) { return; }
         InputKey();
-        //LookAround();
+        OpenMenu();
+        if (GameManager.Instance.openUI || pState.isDead || pState.isOnViewer || pState.isOnESCMenu)
+        {
+            moveInput = Vector3.zero;
+            return;
+        }
         PlayerDir();
         ActiveCrouch();
-        OpenViewer();
+        
     }
     
     private void FixedUpdate()
@@ -224,13 +229,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 키 입력을 받았을 때 변수 값 전달 메서드
     void InputKey()
     {
-        if (GameManager.Instance.openUI || pState.isDead)
-        {
-            moveInput = Vector3.zero;
-            return;
-        }
-
-
         // WASD 이동키
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         pState.isMoving = moveInput.magnitude != 0;
@@ -252,7 +250,18 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         pState.isTiltingL = Input.GetKey(KeyCode.Q);
         pState.isTiltingR = Input.GetKey(KeyCode.E);
 
-        pState.isOnViewer = Input.GetKey(KeyCode.Tab);
+        // 탭 뷰어키기
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            pState.isOnViewer = !pState.isOnViewer;
+        }
+        
+
+        // ESC 메뉴 키기
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            pState.isOnESCMenu = !pState.isOnESCMenu;
+        }
 
 
         //if (Input.GetKeyDown(KeyCode.LeftControl)) pState.isWalking = true;
@@ -342,11 +351,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         }
     }
 
-    void OpenViewer()
+    void OpenMenu()
     {
-        
         UIManager.Instance.missionViewer.SetActive(pState.isOnViewer);
-        
+        UIManager.Instance.escMenu.SetActive(pState.isOnESCMenu);
     }
 
     // 데미지 관련 임시 메서드

@@ -213,13 +213,16 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             PlayerController.Instance.moveSpeedScale = -0.5f;   // 줌 시 이동속도 제한
             targetFOV = adsFOV;
             bulletSpread = 0;
-        }else
+            //UIManager.Instance.CrossHair(false);
+        }
+        else
         {
             anim.SetBool("isAiming", false);
             //targetPos = shoulderPos;
             PlayerController.Instance.moveSpeedScale = 0f;
             targetFOV = shoulderFOV;
             bulletSpread = originBulletSpread;
+            //UIManager.Instance.CrossHair(true);
         }
     }
 

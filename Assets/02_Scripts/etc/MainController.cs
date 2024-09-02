@@ -6,10 +6,19 @@ using UnityEngine.SceneManagement;
 public class MainController : MonoBehaviour
 {
     [SerializeField] GameObject creditPanel;
+    [SerializeField] GameObject optionPanel;
 
     public void OnPlayClick()
     {
         SceneManager.LoadSceneAsync(1);
+    }
+    public void OnOptionClick()
+    {
+        optionPanel.SetActive(true);
+    }
+    public void OnTitleClick()
+    {
+        SceneManager.LoadScene(0);
     }
     public void OnCreditClick()
     {

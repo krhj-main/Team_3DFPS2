@@ -85,10 +85,12 @@ MonoBehaviour:
   canAttackMask:
     serializedVersion: 2
     m_Bits: 4096
+  <recoilX>k__BackingField: 0
+  <recoilY>k__BackingField: 0
   currentRotation: {x: 0, y: 0, z: 0}
   firePos: {fileID: 0}
   <type>k__BackingField: 0
-  myImage: {fileID: 1851779761, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
+  myImage: {fileID: 21300000, guid: cc96a2b507ed76d4baa15e54fd025382, type: 3}
   speedDownForce: 0
   arms: {fileID: 1784311423006781934}
   CameraPos: {fileID: 1786509193980662896}
