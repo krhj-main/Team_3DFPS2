@@ -145,7 +145,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     void Update()
     {
-        //if (!main.enabled) { return; }
+        if (!main.enabled) { return; }
         InputKey();
         OpenMenu();
         if (GameManager.Instance.openUI || pState.isDead || pState.isOnViewer || pState.isOnESCMenu)
