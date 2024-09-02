@@ -45,6 +45,8 @@ public class GameManager : Singleton<GameManager>
 
     public GameObject inventory;
 
+    public GameObject[] applyCustomCharacter;
+     
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
