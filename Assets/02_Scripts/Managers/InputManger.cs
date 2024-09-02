@@ -9,9 +9,6 @@ public class InputManger : Singleton<InputManger>
     public Action keyAction;
 
     bool isPress=false;
-    void Start()
-    {
-    }
 
     // Update is called once per frame
     void Update()
