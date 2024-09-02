@@ -5,7 +5,7 @@ using System;
 
 public class TestRoomItem : MonoBehaviour,Interactable
 {
-    GameObject weaponPrefab;
+    [SerializeField] GameObject weaponPrefab;
     public void Interaction(GameObject target)
     {
         MainWeapon weapon = Instantiate(weaponPrefab).GetComponent<MainWeapon>();
