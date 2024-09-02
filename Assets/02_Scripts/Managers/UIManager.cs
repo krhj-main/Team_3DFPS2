@@ -43,6 +43,9 @@ public class UIManager : Singleton<UIManager>
     int missionTimeCurrent;
     int missionEnemyCount;
 
+    [Header("ESC 메뉴")]
+    public GameObject escMenu;
+
     [Header("섬광탄 효과 (임시)")]
     public FlashEffectEnd FlashImage;
 
@@ -123,5 +126,18 @@ public class UIManager : Singleton<UIManager>
         missionEnemy.text = string.Format("남은 테러리스트 : {0} 명", GameManager.Instance.remainEnemy);
         // 남은 적 : n / n
         //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
+    }
+
+    public void SceneTransition(string _sceneName)
+    {
+        SceneManager.LoadScene($"{_sceneName}");
+    }
+    public void OnExitClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE_WIN
+            Application.Quit();
+#endif
     }
 }

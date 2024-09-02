@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour
     }
     void LookAround()
     {
-        if (GameManager.Instance.openUI)
+        if (GameManager.Instance.openUI || PlayerController.Instance.pState.isOnViewer || PlayerController.Instance.pState.isOnESCMenu)
         {
             return;
         }
