@@ -82,9 +82,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44d85940da48d0d4fa93d6cc3c626746, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSpread: 1
   canAttackMask:
     serializedVersion: 2
     m_Bits: 4096
+  <recoilX>k__BackingField: 0
+  <recoilY>k__BackingField: 0
   currentRotation: {x: 0, y: 0, z: 0}
   firePos: {fileID: 0}
   <type>k__BackingField: 0
@@ -97,6 +100,7 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: cc988050393583047ad560d1ce931d72, type: 3}
   reloadFinishSound: {fileID: 0}
   weaponChangeSound: {fileID: 8300000, guid: eac936d6299766c4f9b6acbd4f957f91, type: 3}
+  effectLight: {fileID: 5063044608180194260}
   enemyEffect: {fileID: 0}
   enemySound: {fileID: 0}
   ammoTxt: {fileID: 0}
@@ -862,6 +866,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fn_Scar
       objectReference: {fileID: 0}
+    - target: {fileID: 1569246640813692, guid: 43ab0ca5d42daf04a99c67697d0e9414, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4381512026794152, guid: 43ab0ca5d42daf04a99c67697d0e9414, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -911,11 +919,22 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: eac936d6299766c4f9b6acbd4f957f91, type: 3}
+    - target: {fileID: 108782378198323682, guid: 43ab0ca5d42daf04a99c67697d0e9414,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43ab0ca5d42daf04a99c67697d0e9414, type: 3}
+--- !u!108 &5063044608180194260 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108782378198323682, guid: 43ab0ca5d42daf04a99c67697d0e9414,
+    type: 3}
+  m_PrefabInstance: {fileID: 5170682960635812406}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5174183211851543198 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4381512026794152, guid: 43ab0ca5d42daf04a99c67697d0e9414,

@@ -233,6 +233,7 @@ MonoBehaviour:
     m_Bits: 16384
   currentTime: 0
   enemyFirePos: {fileID: 2872328396609939654}
+  enemyAccuracy: 0.2
   atkDelay: 2
   reloadTime: 2
   patrolState: 0
@@ -268,6 +269,7 @@ MonoBehaviour:
     m_Bits: 16384
   visibleTargets: []
   targetsInViewRadius: []
+  weight: 1
 --- !u!1 &2939697610688387132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1504,7 @@ MonoBehaviour:
   gunPivot: {fileID: 1827240439362138215}
   leftHand: {fileID: 1240562615113361973}
   rightHand: {fileID: 8309352719008492440}
+  lookOffset: 1.5
 --- !u!114 &3706633252660776237
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -114,9 +114,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002f43a290f6ded4aa511580e48d8f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSpread: 1
   canAttackMask:
     serializedVersion: 2
     m_Bits: 4096
+  <recoilX>k__BackingField: 0
+  <recoilY>k__BackingField: 0
   currentRotation: {x: 0, y: 0, z: 0}
   firePos: {fileID: 0}
   <type>k__BackingField: 0
@@ -129,6 +132,7 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: ccd89f9433f4489478c3b6421fd95e9f, type: 3}
   reloadFinishSound: {fileID: 8300000, guid: 876e49cd4a9864f44b4ca4e0d110c281, type: 3}
   weaponChangeSound: {fileID: 8300000, guid: eac936d6299766c4f9b6acbd4f957f91, type: 3}
+  effectLight: {fileID: 6961525867744380310}
   enemyEffect: {fileID: 0}
   enemySound: {fileID: 0}
   ammoTxt: {fileID: 0}
@@ -1091,6 +1095,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26fe161b92f34854fb8a3e4cbfdc5b34, type: 3}
+--- !u!108 &6961525867744380310 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108034912019378966, guid: 26fe161b92f34854fb8a3e4cbfdc5b34,
+    type: 3}
+  m_PrefabInstance: {fileID: 7053657133536622208}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7056222124303595666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4261056189271570, guid: 26fe161b92f34854fb8a3e4cbfdc5b34,

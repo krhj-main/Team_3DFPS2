@@ -20,7 +20,7 @@ public class Rifle : MainWeapon
         maxLoadedAmmo = 30;               // 장전될 수 있는 탄약
         initializeAmmo = 180;             // 총기 최대 탄약
         damage = 5;                       // 데미지
-        bulletRange = 10f;                // 총알 발사 거리
+        bulletRange = 50f;                // 총알 발사 거리
         fireRate = 0.06f;                 // 총알 발사 주기
         recoilX = 0.5f;                  // 좌우 반동
         recoilY = 10f;                   // 수직 반동
