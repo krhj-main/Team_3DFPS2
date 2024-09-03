@@ -155,6 +155,8 @@ public class Enemy : MonoBehaviour, IDamageAble
         originFindDis = findDis;
         originAtkDis = atkDis;
         enemyState = firstState;
+
+        agent.avoidancePriority = Random.Range(0, 100);
     }
 
     void Update()
@@ -321,6 +323,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     {
         // Move 애니메이션 재생
         anim.SetBool("isMove", true);
+        agent.updateRotation = true;
 
         // 플레이어가 Enemy 시야안에 들어왔을 경우
         if (fov.visibleTargets.Count > 0)
@@ -353,15 +356,17 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
             agent.isStopped = false;
             agent.ResetPath();
+            agent.speed = trackingSpd;
 
             // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
             agent.stoppingDistance = 0;
 
             // 내이게이션의 목적지를 소리난 위치로 지정
-            agent.destination = chasePos;
+            //agent.destination = chasePos;
+            agent.SetDestination(chasePos);
 
             // 소리난 곳까지 오고 다음 행동 지정
-            if (Vector3.Distance(transform.position, chasePos) <= 2f)
+            if (Vector3.Distance(transform.position, chasePos) <= 1f)
             {
                 // Move 애니메이션 종료
                 anim.SetBool("isMove", false);
@@ -376,7 +381,6 @@ public class Enemy : MonoBehaviour, IDamageAble
             }
             else // 소리난 곳까지 도착하지 못했다면 = 가는중이라면
             {
-                anim.SetBool("isMove", true);
                 anim.SetBool("isIdle", false);
                 currentTime = 0;
             }
