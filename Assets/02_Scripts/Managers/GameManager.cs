@@ -153,11 +153,16 @@ public class GameManager : Singleton<GameManager>
             // 거리가 범위 이내라면
             if (_distance <= _radius)
             {
-                // 소리의 위치를 chasePos 변수에 담고
-                enemy.chasePos = _soundPos;
                 // 존버 상태가 아닐때만
                 if (enemy.enemyState != EnemyState.Hide && enemy.enemyState != EnemyState.Blind && enemy.enemyState != EnemyState.Attack)
                 {
+                    enemy.curTrackTime = 0;
+                    enemy.curTrackingTime = 0;
+                    // 소리의 위치를 chasePos 변수에 담고
+                    enemy.chasePos = _soundPos;
+                    enemy.agent.stoppingDistance = 0;
+                    enemy.agent.speed = enemy.trackingSpd;
+                    enemy.agent.SetDestination(enemy.chasePos);
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
                     enemy.enemyState = EnemyState.Move;
                 }
