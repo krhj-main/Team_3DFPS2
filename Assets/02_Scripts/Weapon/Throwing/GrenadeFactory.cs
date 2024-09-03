@@ -242,7 +242,7 @@ public class GrenadeFactory : ThrowingWeapon
         FragCount = _frag;
         FlashCount = _flash;
         SmokeCount = _smoke;
-
+        UdateUI();
 
     }
 

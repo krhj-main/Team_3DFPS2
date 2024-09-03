@@ -76,6 +76,6 @@ public class DeadPanelButton : MonoBehaviour
             }
         }
         // 메인웨폰 초기화
-        
+        swap.Swap(swap.Index);
     }
 }
