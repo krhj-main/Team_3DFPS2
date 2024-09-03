@@ -217,7 +217,7 @@ MonoBehaviour:
   currentRotation: {x: 0, y: 0, z: 0}
   firePos: {fileID: 0}
   <type>k__BackingField: 0
-  myImage: {fileID: 0}
+  myImage: {fileID: -1788781494, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
   speedDownForce: 0
   arms: {fileID: 8912100586728831669}
   CameraPos: {fileID: 8909424574215986923}
