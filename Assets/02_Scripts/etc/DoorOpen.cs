@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class DoorOpen : MonoBehaviour, Interactable
 {
+    
     bool doorOpen = false;
+    
     Animator anim;
 
 
@@ -17,7 +19,7 @@ public class DoorOpen : MonoBehaviour, Interactable
     
 
     public void Interaction(GameObject target)
-    {
+    {        
         Debug.Log($"문 {doorOpen}");
         doorOpen = !doorOpen;
         anim.SetBool("DoorOpen", doorOpen);
