@@ -78,19 +78,6 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
-                    //visibleObjects.Add(target);
-                    /*
-                    // 공격 범위 안에 플레이어가 들어오면
-                    if (Vector3.Distance(transform.position, visibleTargets[0].position) <= enemy.atkDis)
-                    {
-                        if (enemy.enemyState != EnemyState.Attack && enemy.enemyState != EnemyState.Dead) 
-                        {
-                            // 공격 상태로 전환
-                            enemy.enemyState = EnemyState.Attack;
-                            enemy.currentTime = enemy.atkDelay;
-                        }
-                    }
-                    */
                 }
             }
         }

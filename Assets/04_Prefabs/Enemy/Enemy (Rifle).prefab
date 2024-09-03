@@ -130,7 +130,7 @@ Transform:
   - {fileID: 4120630347590685485}
   - {fileID: 558987377330223096}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3467054901165826011
 MeshFilter:
@@ -260,10 +260,10 @@ MonoBehaviour:
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 49152
   currentTime: 0
   enemyFirePos: {fileID: 4203833982897513660}
-  enemyAccuracy: 0.2
+  enemySpread: 0
   atkDelay: 2
   reloadTime: 2
   patrolState: 1

@@ -230,10 +230,10 @@ MonoBehaviour:
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 49152
   currentTime: 0
   enemyFirePos: {fileID: 2872328396609939654}
-  enemyAccuracy: 0.2
+  enemySpread: 0
   atkDelay: 2
   reloadTime: 2
   patrolState: 0
