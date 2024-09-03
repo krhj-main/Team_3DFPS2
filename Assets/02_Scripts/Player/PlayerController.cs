@@ -269,6 +269,10 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         // 탭 뷰어키기
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            if(SceneManager.GetActiveScene().buildIndex <= 2)                // 2번이 로비씬
+            {
+                return;
+            }
             pState.isOnViewer = !pState.isOnViewer;
         }
         

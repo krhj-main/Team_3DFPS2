@@ -21,6 +21,7 @@ public class CamMove : MonoBehaviour
         CharacterRotation();
     }
 
+    // 주석 수정
     void CharacterRotation()
     {
         if (Input.GetMouseButton(0))
