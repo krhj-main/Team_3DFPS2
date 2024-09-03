@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -35,6 +36,8 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public List<Enemy> enemies = new List<Enemy>();
     [HideInInspector]
+    public List<IDamageAble> attackables = new List<IDamageAble>();
+    [HideInInspector]
     public float maxEnemy;
     [HideInInspector]
     public float remainEnemy;
@@ -56,6 +59,7 @@ public class GameManager : Singleton<GameManager>
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         AddEnemyOnNowScene();
+        AddAttackableOnNowScene();
 
         SceneToInit();
 
@@ -75,6 +79,13 @@ public class GameManager : Singleton<GameManager>
         maxEnemy = enemies.Count;
 
         UIManager.Instance.RemainEnemy();
+    }
+
+    public void AddAttackableOnNowScene()
+    {
+        attackables.Clear();
+
+        attackables.AddRange(FindObjectsOfType<MonoBehaviour>().OfType<IDamageAble>());
     }
 
     // 씬 로드시 플레이어 관련 설정 초기화
