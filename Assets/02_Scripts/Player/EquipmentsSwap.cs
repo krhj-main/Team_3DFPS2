@@ -94,6 +94,7 @@ public class EquipmentsSwap : MonoBehaviour
             if (index != 2)
             {
                 DropWeapon(equip, Index);
+                Swap(-1);
             }
         }
 
@@ -153,7 +154,7 @@ public class EquipmentsSwap : MonoBehaviour
     {
         
         offsetPos = Vector3.zero;
-
+        Debug.Log(equip);
         //IEquipMent _equp = Inventory.Get(_setIndex);
         if (equip != null)
         {
@@ -164,7 +165,7 @@ public class EquipmentsSwap : MonoBehaviour
         }
         if (_setIndex == -1)
         {
-            equip = playerArms.gameObject.GetComponent<IEquipMent>();
+            equip = null;
 
         }
         else
@@ -238,8 +239,9 @@ public class EquipmentsSwap : MonoBehaviour
             IEquipMent _go;
             _go = _equip;
             Inventory.Set(_index, null,true);
-            Debug.Log( Inventory.Get(_index));
-            equip = null;
+            if (_equip == equip) {
+                equip = null;
+            }
             if (_go!= null) {
                 Rigidbody _rid = _go.gameObject.GetComponent<Rigidbody>();
 
@@ -252,7 +254,7 @@ public class EquipmentsSwap : MonoBehaviour
                 _go.OnHandExit();
                 Utill.DestroyOnLoad(_go.gameObject);
 
-                SwapNext();
+                //SwapNext();
                 _equip.gameObject.SetActive(true);
             }
             

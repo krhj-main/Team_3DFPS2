@@ -175,7 +175,10 @@ public class Sniper : MainWeapon
         base.OnHandExit();
 
         UIManager.Instance.snimperZoomUI.enabled = false;
-        scope.SetActive(false);
+        scope.SetActive(true); 
+        Color color = UIManager.Instance.crosshair.color;
+        color.a = 1;
+        UIManager.Instance.crosshair.color = color;
     }
 
     public override void Aming(bool _whatAim)
@@ -187,7 +190,8 @@ public class Sniper : MainWeapon
         {
             color.a = 0;
         }
-        else {
+        else
+        {
             color.a = 1;
         }
 
