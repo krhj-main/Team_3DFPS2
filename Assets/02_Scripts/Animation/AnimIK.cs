@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class AnimIK : MonoBehaviour
 {
@@ -11,14 +12,14 @@ public class AnimIK : MonoBehaviour
     public Transform rightHand;
 
     public float lookOffset = 1.5f;
+    [Range(0f, 1f)]
+    public float lookWeight = 0.5f;
 
     Animator anim;
-    Transform parentsOb;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        parentsOb = GetComponentInParent<Transform>();
     }
 
     // 애니메이터의 IK 갱신
@@ -26,9 +27,9 @@ public class AnimIK : MonoBehaviour
     {
         // 총의 기준점 gunPivot을 3D 모델의 오른쪽 팔꿈치 위치로 이동
         //gunPivot.position = anim.GetIKHintPosition(AvatarIKHint.RightElbow);
-        
+
         anim.SetLookAtPosition(PlayerController.Instance.transform.position + new Vector3(0, lookOffset, 0));
-        anim.SetLookAtWeight(1f);
+        anim.SetLookAtWeight(lookWeight);
 
         if (leftHand != null)
         {
