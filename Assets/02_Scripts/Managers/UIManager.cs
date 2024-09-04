@@ -62,6 +62,9 @@ public class UIManager : Singleton<UIManager>
     [Header("사망 관련")]
     public GameObject deadPanelObj;
 
+    [Header("ESC 메뉴")]
+    public Button titleBtn;
+
 
     public enum SceneName
     {
@@ -71,10 +74,12 @@ public class UIManager : Singleton<UIManager>
         Mission1,
     }
 
+    [HideInInspector]
     public SceneName sName;
     private void Start()
     {
         PlayerController.Instance.deadAction += playerDead;
+        titleBtn.onClick.AddListener( ()=> SceneTransition(SceneName.MainTitle));
     }
 
     private void Update()

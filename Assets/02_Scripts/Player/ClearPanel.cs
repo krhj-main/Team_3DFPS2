@@ -90,7 +90,8 @@ public class ClearPanel : MonoBehaviour
         UpdateBestScore();
         UpdateBestClearTime();
         yield return new WaitForSeconds(1f);
-        UIManager.Instance.SceneTransition("Lobby",1);
+        this.gameObject.SetActive(false);
+        UIManager.Instance.SceneTransition(UIManager.SceneName.Lobby);
     }
     #endregion
 
