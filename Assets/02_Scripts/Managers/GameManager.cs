@@ -49,6 +49,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject inventory;
 
     public GameObject[] applyCustomCharacter;
+
+    public ClearPanel clearpanel;
      
     private void OnEnable()
     {
