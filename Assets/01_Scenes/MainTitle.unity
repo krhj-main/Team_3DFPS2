@@ -3313,7 +3313,7 @@ MonoBehaviour:
   FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
   crosshair: {fileID: 1805634791}
-  deadPanelObj: {fileID: 0}
+  deadPanelObj: {fileID: 444201067}
 --- !u!114 &5829416479704106784
 MonoBehaviour:
   m_ObjectHideFlags: 0

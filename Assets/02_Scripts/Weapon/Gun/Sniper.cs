@@ -24,12 +24,12 @@ public class Sniper : MainWeapon
         base.Awake();
         initializeAmmo = 50;              // 총기 최대 탄약
         maxLoadedAmmo = 5;                // 장전될 수 있는 탄약
-        damage = 60;                      // 데미지
+        damage = 75;                      // 데미지
         bulletRange = 200f;               // 총알 발사 거리
         fireRate = 2.5f;                  // 총알 발사 주기
-        recoilX = 1f;                   // 좌우 반동
+        recoilX = 0.5f;                   // 좌우 반동
         recoilY = 10f;                     // 수직 반동
-        recoilRecoverySpeed = 5f;         // 반동 회복 속도
+        recoilRecoverySpeed = 3.5f;         // 반동 회복 속도
         reloadTime = 4.5f;                  // 장전 시간
         adsSpeed = 4;                     // 정조준 속도
         adsFOV = 10;                      // 정조준시 CameraFOV
