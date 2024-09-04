@@ -89,6 +89,8 @@ public class ClearPanel : MonoBehaviour
         yield return new WaitForSeconds(1f);
         UpdateBestScore();
         UpdateBestClearTime();
+        yield return new WaitForSeconds(1f);
+        //UIManager.Instance.SceneTransition("Lobby",1);
     }
     #endregion
 
