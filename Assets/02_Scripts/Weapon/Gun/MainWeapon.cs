@@ -273,6 +273,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             swap.WeaponChange(this, EquipType.Weapon);
         }
     }
+
+    #region 장비 인터페이스
     public void OnHandEnter()
     {
         
@@ -363,6 +365,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             Reload();
         }
     }
+    #endregion
 
     #region "애니메이션 이벤트"
 
@@ -411,6 +414,10 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
 
     #endregion
+
+    public void AddAmmo(float _persent) {
+        remainAmmo = (int)MathF.Min(remainAmmo + initializeAmmo * _persent, initializeAmmo-loadedAmmo);
+    }
 }
 
 
