@@ -62,6 +62,16 @@ public class UIManager : Singleton<UIManager>
     [Header("사망 관련")]
     public GameObject deadPanelObj;
 
+
+    public enum SceneName
+    {
+        MainTitle,
+        LoddingScene,
+        Lobby,
+        Mission1,
+    }
+
+    public SceneName sName;
     private void Start()
     {
         PlayerController.Instance.deadAction += playerDead;
@@ -142,11 +152,11 @@ public class UIManager : Singleton<UIManager>
         //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
     }
 
-    public void SceneTransition(string _sceneName)
+    public void SceneTransition(SceneName _sceneName)
     {
         SceneManager.LoadScene($"{_sceneName}");
         GameManager.Instance.openUI = PlayerController.Instance.pState.isOnViewer = PlayerController.Instance.pState.isOnESCMenu = false;
-        GameManager.Instance.selectSceneNum = 0;
+        GameManager.Instance.selectSceneNum = (int)_sceneName;
     }
     public void OnExitClick()
     {
