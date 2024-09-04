@@ -122,6 +122,11 @@ public class GrenadeFactory : ThrowingWeapon
     
     public override void InputKey()
     {
+        if (PlayerController.Instance.UIState())
+        {
+            return;
+        }
+
         if (!isThrow&& !isEmpty())
         {
             if (Input.GetMouseButton(0))
