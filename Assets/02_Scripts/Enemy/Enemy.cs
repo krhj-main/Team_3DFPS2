@@ -56,6 +56,10 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public float atkDis = 5f;
 
+    [Header("이동 제한 ( 남은 거리 )")]
+    // 플레이어까지의 이동 거리 제한
+    public float remainDis = 10f;
+
     // 기존에 가지고 있는 시야
     [HideInInspector]
     public float originFindDis;
