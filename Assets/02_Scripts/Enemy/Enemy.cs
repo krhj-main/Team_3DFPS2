@@ -483,6 +483,11 @@ public class Enemy : MonoBehaviour, IDamageAble
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
 
+        if (GameManager.Instance.enemies.Count <= 0)
+        {
+            Debug.Log("게임 클리어");
+        }
+
         //UI 업데이트
         UIManager.Instance.RemainEnemy();
 
