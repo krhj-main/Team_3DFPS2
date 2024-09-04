@@ -91,7 +91,7 @@ public class ClearPanel : MonoBehaviour
         UpdateBestClearTime();
         yield return new WaitForSeconds(1f);
         this.gameObject.SetActive(false);
-        UIManager.Instance.SceneTransition(UIManager.SceneName.Lobby);
+        //UIManager.Instance.SceneTransition(UIManager.SceneName.Lobby);
     }
     #endregion
 

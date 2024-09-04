@@ -79,7 +79,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         PlayerController.Instance.deadAction += playerDead;
-        titleBtn.onClick.AddListener( ()=> SceneTransition(SceneName.MainTitle));
+        titleBtn.onClick.AddListener( ()=> SceneTransition((int)SceneName.MainTitle));
     }
 
     private void Update()
