@@ -56,6 +56,10 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public float atkDis = 5f;
 
+    [Header("이동 제한 ( 남은 거리 )")]
+    // 플레이어까지의 이동 거리 제한
+    public float remainDis = 10f;
+
     // 기존에 가지고 있는 시야
     [HideInInspector]
     public float originFindDis;
@@ -469,6 +473,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "사망"
     void Die()
     {
+        int _enemyCnt = GameManager.Instance.enemies.Count;
         // 진행 중인 피격 코루틴을 중지
         StopAllCoroutines();
 
@@ -478,6 +483,12 @@ public class Enemy : MonoBehaviour, IDamageAble
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
+
+        if (GameManager.Instance.enemies.Count < 31)
+        {
+            Debug.Log("게임 클리어");
+            GameManager.Instance.clearpanel.gameObject.SetActive(true);
+        }
 
         //UI 업데이트
         UIManager.Instance.RemainEnemy();

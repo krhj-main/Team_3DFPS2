@@ -63,13 +63,14 @@ public class EquipmentsSwap : MonoBehaviour
 
     void Update()
     {
-        if (PlayerController.Instance.pState.isDead) {
-            return;
-        }
         if (equip != null)
         {
             equip.OnHand(GunPosition, offsetPos);
         }
+        if (PlayerController.Instance.pState.isDead) {
+            return;
+        }
+        
 
         float _wheelInput = Input.GetAxis("Mouse ScrollWheel"); //휠 입력을 받고
 

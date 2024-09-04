@@ -49,6 +49,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject inventory;
 
     public GameObject[] applyCustomCharacter;
+
+    public ClearPanel clearpanel;
      
     private void OnEnable()
     {
@@ -148,6 +150,13 @@ public class GameManager : Singleton<GameManager>
     {
         foreach (Enemy enemy in enemies)
         {
+            /*
+            if (Mathf.Abs( _soundPos.y - enemy.gameObject.transform.position.y) >= 3)
+            {
+                return;
+            }
+            */
+
             // 에너미와 소리난 곳의 거리 계산
             float _distance = Vector3.Distance(_soundPos, enemy.gameObject.transform.position);
             // 거리가 범위 이내라면
@@ -163,6 +172,11 @@ public class GameManager : Singleton<GameManager>
                     enemy.agent.stoppingDistance = 0;
                     enemy.agent.speed = enemy.trackingSpd;
                     enemy.agent.SetDestination(enemy.chasePos);
+
+                    if (enemy.agent.remainingDistance >= enemy.remainDis)
+                    {
+                        return;
+                    }
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
                     enemy.enemyState = EnemyState.Move;
                 }
