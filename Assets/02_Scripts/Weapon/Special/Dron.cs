@@ -124,7 +124,13 @@ public class Dron : MonoBehaviour,Interactable
     {
         Vector3 vel = transform.forward * v + transform.right * h;
         vel = vel.normalized * moveSpeed;
-        vel.y = rig.velocity.y;
+        if (vel.y<-maxDistance) {
+            vel.y = -maxDistance*0.9f;
+        }
+        else {
+            vel.y = rig.velocity.y;
+        }
+        
         rig.velocity = vel;
     }
     public void DronAwake() {
