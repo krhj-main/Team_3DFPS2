@@ -19,12 +19,12 @@ public class Pistol : MainWeapon
         base.Awake();
         initializeAmmo = 80;             // 총기 최대 탄약
         maxLoadedAmmo = 20;              // 장전될 수 있는 탄약
-        damage = 10;                     // 데미지
+        damage = 8;                     // 데미지
         bulletRange = 10f;               // 총알 발사 거리
         fireRate = 0.6f;                 // 총알 발사 주기
-        recoilX = 0.25f;                    // 좌우 반동
-        recoilY = 5f;                   // 수직 반동
-        recoilRecoverySpeed = 5f;        // 반동 회복 속도
+        recoilX = 0.1f;                    // 좌우 반동
+        recoilY = 0.5f;                   // 수직 반동
+        recoilRecoverySpeed = 1f;        // 반동 회복 속도
         reloadTime = 1.5f;               // 장전 시간
         adsSpeed = 8;                    // 정조준 속도
         adsFOV = 50;                     // 정조준시 CameraFOV
