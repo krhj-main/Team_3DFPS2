@@ -27,9 +27,9 @@ public class ClearPanel : MonoBehaviour
     private float emphasizeDuration = 1f;       // 글자 강조 시간
     private float emphasizeScale = 3f;          // 글자 커지는 크기
 
-    int goalScore = 0;
+    int goalScore = 0;                          // 미션 점수
 
-
+    // 화면이 켜지면 실행
     private void OnEnable()
     {
         SettingClearPanel();
@@ -37,23 +37,24 @@ public class ClearPanel : MonoBehaviour
 
     void SettingClearPanel()
     {
-        int _currentMissionNum = GameManager.Instance.selectSceneNum - 2;       // 진행한 미션 ( 이 숫자에 맞춰 미리 작성해놓은 값들이 변경 됨 )
-        int _clearCount = 0;                                                    // 미션 클리어시 카운트 증가 ( 목표갯수 숫자 설정 )
+        int _sceneGoal = GameManager.Instance.sceneGoal;
+        int _currentMissionNum = GameManager.Instance.selectSceneNum - 2;              // 진행한 미션 ( 이 숫자에 맞춰 미리 작성해놓은 값들이 변경 됨 )
+        int _clearCount = 0;                                                           // 미션 클리어시 카운트 증가 ( 목표갯수 숫자 설정 )
 
-        missionName.text = GameManager.Instance.missionNames[_currentMissionNum]; // 미션 이름
+        missionName.text = GameManager.Instance.missionNames[_sceneGoal];              // 미션 이름
         
-        for (int i = 0; i < GameManager.Instance.goals[_currentMissionNum].Length; i++)
+        for (int i = 0; i < GameManager.Instance.goals[_sceneGoal].Length; i++)
         {
-            goal[i].SetActive(true);                                                           // 게임매니저에 적어놓은 만큼 ui 활성화
-            goalName[i].text = GameManager.Instance.goals[_currentMissionNum][i];              // 게임매니저에 적어놓은 글자 활성화
-            clearGoal[i].SetActive(GameManager.Instance.clearGoals[_currentMissionNum][i]);    // 미션 클리어시 빨간 밑줄
+            goal[i].SetActive(true);                                                   // 게임매니저에 적어놓은 만큼 ui 활성화
+            goalName[i].text = GameManager.Instance.goals[_sceneGoal][i];              // 게임매니저에 적어놓은 글자 활성화
+            clearGoal[i].SetActive(GameManager.Instance.clearGoals[_sceneGoal][i]);    // 미션 클리어시 빨간 밑줄
 
-            if (GameManager.Instance.clearGoals[_currentMissionNum][i])                         // 클리어를 했다면
+            if (GameManager.Instance.clearGoals[_sceneGoal][i])                        // 게임 클리어가 되면
             {
-                _clearCount++;
+                _clearCount++;      // 목표 갯수 증가
                 goalScore += 500; // 목표 점수 추가
             }
-            goalCount.text = $"{_clearCount} / {GameManager.Instance.goals[_currentMissionNum].Length}";        // 목표 갯수 증가
+            goalCount.text = $"{_clearCount} / {GameManager.Instance.goals[_currentMissionNum].Length}";        // 목표 갯수 출력
         }
 
         scoreResultText.text = "";                                          // 초기화
@@ -67,9 +68,9 @@ public class ClearPanel : MonoBehaviour
     }
 
     #region 점수 올라가는 코루틴
-    IEnumerator CountScore(float _target, float _current)   // _target : 최종점수 _current : 현재 점수
+    IEnumerator CountScore(float _target, float _current)    // _target : 최종점수 _current : 현재 점수
     {
-        yield return new WaitForSeconds(2f);      // 2초 후에 시작
+        yield return new WaitForSeconds(2f);                 // 2초 후에 시작
         // 카운팅에 걸리는 시간
         float _duration = 2f;
         float _offset = (_target - _current) / _duration;
@@ -101,7 +102,7 @@ public class ClearPanel : MonoBehaviour
     }
     #endregion
 
-    #region 글자 변경 및 효과
+    #region 점수 글자 변경 및 효과
     void UpdateScoreResult()
     {
         // 등급과 색상을 정의한 배열

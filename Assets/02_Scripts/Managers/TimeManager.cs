@@ -7,7 +7,7 @@ public class TimeManager : MonoBehaviour
     public bool clear = false;          // 게임 클리어 되면 true로 변경해줘야함
     float missionTime;
     int clearTime;
-    public static int timeScore = 500;                
+    public static int timeScore = 500;
 
     private void Start()
     {
@@ -16,6 +16,14 @@ public class TimeManager : MonoBehaviour
         StartCoroutine(CalculateTimeScore());
     }
 
+    private void Update()
+    {
+        if (GameManager.Instance.enemies.Count <= 0)
+        {
+            GameManager.Instance.clearGoals[0][0] = true;
+            // GameManager.Instance.clearpanel.gameObject.SetActive(true);     완성되면 에너미 사망 부분에 같은 문구 삭제할 것.
+        }
+    }
 
     IEnumerator OverTime()
     {
@@ -30,7 +38,11 @@ public class TimeManager : MonoBehaviour
 
     IEnumerator CalculateTimeScore()
     {
+        GameManager.Instance.clearGoals[0][1] = true;
+
         yield return new WaitForSeconds(300);
+
+        GameManager.Instance.clearGoals[0][1] = false;
 
         while (true)
         {
