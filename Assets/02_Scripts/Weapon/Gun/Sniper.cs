@@ -17,9 +17,9 @@ public class Sniper : MainWeapon
     protected override void Awake()
     {
         PlayerController.Instance.deadAction += playerDead;
-        bulletSpread = 10f;
+        bulletSpread = 2f;
         spentBullet = 1;
-        maxSpread = 10f;
+        maxSpread = 4f;
 
         base.Awake();
         initializeAmmo = 50;              // 총기 최대 탄약
@@ -35,8 +35,6 @@ public class Sniper : MainWeapon
         adsFOV = 10;                      // 정조준시 CameraFOV
         ResetAmmo(initializeAmmo);        // 탄약 세팅
         adsPos = new Vector3(0, -0.17f, 0.5f); // 스나만 다른 위치로 정조준 ( 조준경 때문에 )
-        // 실험
-        bulletSpread = 2;
     }
 
     private void Update()
