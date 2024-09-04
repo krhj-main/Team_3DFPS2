@@ -42,6 +42,7 @@ public class Dron : MonoBehaviour,Interactable
     Vector2 mouseDelta;
     public bool IsGround;
     public bool jumpAble = true;
+    RaycastHit hit;
     // Start is called before the first frame update
     void Start()
     {
@@ -108,7 +109,7 @@ public class Dron : MonoBehaviour,Interactable
 
     bool Grounded()
     {
-        bool _isGrounded = Physics.BoxCast(transform.position, boxSize, -transform.up, transform.rotation, maxDistance, groundLayer);
+        bool _isGrounded = Physics.BoxCast(transform.position, boxSize, -transform.up, out hit, transform.rotation, maxDistance, groundLayer);
         return _isGrounded;
     }
     void PlayerDir()
@@ -124,7 +125,14 @@ public class Dron : MonoBehaviour,Interactable
     {
         Vector3 vel = transform.forward * v + transform.right * h;
         vel = vel.normalized * moveSpeed;
-        vel.y = rig.velocity.y;
+        
+        if (vel.y<-maxDistance) {
+            vel.y = -hit.distance;
+        }
+        else {
+            vel.y = rig.velocity.y;
+        }
+        
         rig.velocity = vel;
     }
     public void DronAwake() {
