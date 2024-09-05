@@ -10,6 +10,7 @@ public class ShootingTarget : MonoBehaviour, IDamageAble
         Down,
     }
     public TargetState tState;
+    public float targetUpTime;
     Quaternion upRot;
     Quaternion downRot;
     Quaternion currentRot;
@@ -49,7 +50,7 @@ public class ShootingTarget : MonoBehaviour, IDamageAble
         currentRot = Quaternion.Lerp(currentRot, downRot, 0.05f);
         transform.rotation = currentRot;
 
-        if (upDelayCount + 2f < Time.time)
+        if (upDelayCount + targetUpTime < Time.time)
         {
             tState = TargetState.Up;
         }

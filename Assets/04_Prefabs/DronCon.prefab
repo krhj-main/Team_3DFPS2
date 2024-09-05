@@ -195,6 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5118906526144574359}
   - component: {fileID: 1040621450117408028}
+  - component: {fileID: 3758373969951251352}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -268,6 +269,66 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &3758373969951251352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556641559443014925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 2022270642766074874}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 33554432
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
 --- !u!1 &1886044146589191306
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,7 +478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 273801c6cc642a7478fd736469385d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rig: {fileID: 0}
+  rig: {fileID: 6520406363943382473}
+  dronCam: {fileID: 7427911291779619778}
   dronUI: {fileID: 2870663948199954734}
   cam: {fileID: 88594334185940884}
   jumpeForce: 20
@@ -428,13 +490,14 @@ MonoBehaviour:
   col: {fileID: 4232813331201987245}
   dronController: {fileID: 5293780662825668694}
   returnKey: 27
+  isActive: 0
   boxSize: {x: 0.1, y: 0, z: 0.1}
   maxDistance: 0.15
   groundLayer:
     serializedVersion: 2
     m_Bits: 32768
   mouseSensitivity: 2
-  cooltime: {fileID: 0}
+  cooltime: {fileID: 3273659144202092346}
   anim: {fileID: 4686071875237573140}
   IsGround: 0
   jumpAble: 1
@@ -1729,6 +1792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <type>k__BackingField: 2
+  myImage: {fileID: 21300000, guid: 46a0029f194411a40a912f65271a0ece, type: 3}
   dron: {fileID: 7706442653079426420}
   isOut: 0
   charCamera: {fileID: 0}
@@ -2282,6 +2346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2022270642766074874}
   - component: {fileID: 7427911291779619778}
+  - component: {fileID: 6334448971659508899}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -2356,6 +2421,66 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &6334448971659508899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8202475558368642703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 2022270642766074874}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 33554432
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
 --- !u!1 &8823754289447004724
 GameObject:
   m_ObjectHideFlags: 0

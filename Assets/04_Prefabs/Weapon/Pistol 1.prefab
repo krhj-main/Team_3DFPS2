@@ -208,13 +208,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04fd1bfb703f5bb4ea64d1ae32b20896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSpread: 1
   canAttackMask:
     serializedVersion: 2
     m_Bits: 4096
+  <recoilX>k__BackingField: 0
+  <recoilY>k__BackingField: 0
   currentRotation: {x: 0, y: 0, z: 0}
   firePos: {fileID: 0}
   <type>k__BackingField: 0
-  myImage: {fileID: 0}
+  myImage: {fileID: -1788781494, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
   speedDownForce: 0
   arms: {fileID: 8912100586728831669}
   CameraPos: {fileID: 8909424574215986923}
@@ -223,6 +226,7 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: 2f3c4232bb55a984490dd4eb0be7a0f6, type: 3}
   reloadFinishSound: {fileID: 0}
   weaponChangeSound: {fileID: 8300000, guid: eac936d6299766c4f9b6acbd4f957f91, type: 3}
+  effectLight: {fileID: 4021214043421953954}
   enemyEffect: {fileID: 0}
   enemySound: {fileID: 0}
   ammoTxt: {fileID: 0}
@@ -501,6 +505,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 108904934738931892, guid: 49aa1d4c5624e66418cbfbe9784d6f23,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -509,6 +518,12 @@ PrefabInstance:
 --- !u!4 &3910217264540517522 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4276316217375620, guid: 49aa1d4c5624e66418cbfbe9784d6f23,
+    type: 3}
+  m_PrefabInstance: {fileID: 3912731613206478614}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &4021214043421953954 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 108904934738931892, guid: 49aa1d4c5624e66418cbfbe9784d6f23,
     type: 3}
   m_PrefabInstance: {fileID: 3912731613206478614}
   m_PrefabAsset: {fileID: 0}

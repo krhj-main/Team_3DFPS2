@@ -187,7 +187,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2249715124850740754}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -196,7 +196,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.5
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -230,11 +230,14 @@ MonoBehaviour:
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 49152
   currentTime: 0
   enemyFirePos: {fileID: 2872328396609939654}
+  enemySpread: 0
   atkDelay: 2
   reloadTime: 2
+  curTrackTime: 0
+  curTrackingTime: 0
   patrolState: 0
   wayPoints:
   - {fileID: 0}
@@ -268,6 +271,7 @@ MonoBehaviour:
     m_Bits: 16384
   visibleTargets: []
   targetsInViewRadius: []
+  weight: 1
 --- !u!1 &2939697610688387132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1506,7 @@ MonoBehaviour:
   gunPivot: {fileID: 1827240439362138215}
   leftHand: {fileID: 1240562615113361973}
   rightHand: {fileID: 8309352719008492440}
+  lookOffset: 1.5
 --- !u!114 &3706633252660776237
 MonoBehaviour:
   m_ObjectHideFlags: 0

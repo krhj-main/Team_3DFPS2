@@ -16,26 +16,25 @@ public class Sniper : MainWeapon
 
     protected override void Awake()
     {
-        bulletSpread = 10f;
+        PlayerController.Instance.deadAction += playerDead;
+        bulletSpread = 2f;
         spentBullet = 1;
-        maxSpread = 10f;
+        maxSpread = 4f;
 
         base.Awake();
         initializeAmmo = 50;              // 총기 최대 탄약
         maxLoadedAmmo = 5;                // 장전될 수 있는 탄약
-        damage = 60;                      // 데미지
+        damage = 75;                      // 데미지
         bulletRange = 200f;               // 총알 발사 거리
         fireRate = 2.5f;                  // 총알 발사 주기
-        recoilX = 1f;                   // 좌우 반동
+        recoilX = 0.5f;                   // 좌우 반동
         recoilY = 10f;                     // 수직 반동
-        recoilRecoverySpeed = 5f;         // 반동 회복 속도
+        recoilRecoverySpeed = 3.5f;         // 반동 회복 속도
         reloadTime = 4.5f;                  // 장전 시간
         adsSpeed = 4;                     // 정조준 속도
         adsFOV = 10;                      // 정조준시 CameraFOV
         ResetAmmo(initializeAmmo);        // 탄약 세팅
         adsPos = new Vector3(0, -0.17f, 0.5f); // 스나만 다른 위치로 정조준 ( 조준경 때문에 )
-        // 실험
-        bulletSpread = 2;
     }
 
     private void Update()
@@ -164,21 +163,9 @@ public class Sniper : MainWeapon
     public override void OnHand(Transform _tr, Vector3 _offSet)
     {
         base.OnHand(_tr, _offSet);
-        /*
-        if (isADS)
-        {
-            UIManager.Instance.snimperZoomUI.enabled = true;
-            scope.SetActive(false);
-        }
-        else
-        {
-            UIManager.Instance.snimperZoomUI.enabled = false;
-            scope.SetActive(true);
-        }
-        */
 
-        UIManager.Instance.snimperZoomUI.enabled = isADS;
-        scope.SetActive(!isADS);
+        //UIManager.Instance.snimperZoomUI.enabled = isADS;
+        //scope.SetActive(!isADS);
     }
 
     public override void OnHandExit()
@@ -186,13 +173,33 @@ public class Sniper : MainWeapon
         base.OnHandExit();
 
         UIManager.Instance.snimperZoomUI.enabled = false;
-        scope.SetActive(false);
+        scope.SetActive(true); 
+        Color color = UIManager.Instance.crosshair.color;
+        color.a = 1;
+        UIManager.Instance.crosshair.color = color;
     }
 
     public override void Aming(bool _whatAim)
     {
         base.Aming(_whatAim);
+        //UIManager.Instance.CrossHair(!_whatAim);
+        Color color = UIManager.Instance.crosshair.color;
+        if (_whatAim)
+        {
+            color.a = 0;
+        }
+        else
+        {
+            color.a = 1;
+        }
+
+        UIManager.Instance.crosshair.color = color;
         UIManager.Instance.snimperZoomUI.enabled = _whatAim;
         scope.SetActive(!_whatAim);
+    }
+    public void playerDead()
+    {
+        UIManager.Instance.snimperZoomUI.enabled = false;
+        scope.SetActive(false);
     }
 }

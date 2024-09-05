@@ -21,11 +21,11 @@ public class ShotGun : MainWeapon
         base.Awake();
         initializeAmmo = 50;             // 총기 최대 탄약
         maxLoadedAmmo = 5;              // 장전될 수 있는 탄약
-        damage = 5;                      // 데미지
+        damage = 4;                      // 데미지
         bulletRange = 5f;                // 총알 발사 거리
         fireRate = 1.26f;                 // 총알 발사 주기
-        recoilX = 0.75f;                  // 좌우 반동
-        recoilY = 25f;                    // 수직 반동
+        recoilX = 0.5f;                  // 좌우 반동
+        recoilY = 10f;                    // 수직 반동
         recoilRecoverySpeed = 5f;        // 반동 회복 속도
         reloadTime = 1.3f;              // 장전 시간  //0.18f + 1.12f + 0.5f+2.12f
         adsSpeed = 5;                    // 정조준 속도

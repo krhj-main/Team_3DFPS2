@@ -5,19 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class MainController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject creditPanel;
+    [SerializeField] GameObject optionPanel;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void OnPlayClick()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadSceneAsync(1);
+    }
+    public void OnOptionClick()
+    {
+        optionPanel.SetActive(true);
+    }
+    public void OnTitleClick()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void OnCreditClick()
+    {
+        creditPanel.SetActive(true);
+    }
+    public void OnExitClick()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #elif UNITY_STANDALONE_WIN
+            Application.Quit();
+        #endif
     }
 }

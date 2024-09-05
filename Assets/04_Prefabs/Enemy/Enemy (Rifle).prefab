@@ -130,7 +130,7 @@ Transform:
   - {fileID: 4120630347590685485}
   - {fileID: 558987377330223096}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3467054901165826011
 MeshFilter:
@@ -217,7 +217,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8184113464905604741}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -226,7 +226,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.5
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -260,11 +260,14 @@ MonoBehaviour:
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 49152
   currentTime: 0
   enemyFirePos: {fileID: 4203833982897513660}
+  enemySpread: 0
   atkDelay: 2
   reloadTime: 2
+  curTrackTime: 0
+  curTrackingTime: 0
   patrolState: 1
   wayPoints:
   - {fileID: 0}
@@ -296,6 +299,7 @@ MonoBehaviour:
     m_Bits: 16384
   visibleTargets: []
   targetsInViewRadius: []
+  weight: 1
 --- !u!1 &8330179817864058105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,6 +1498,7 @@ MonoBehaviour:
   gunPivot: {fileID: 7807121493850302496}
   leftHand: {fileID: 8614466694638932742}
   rightHand: {fileID: 2950827052218860243}
+  lookOffset: 1.5
 --- !u!114 &8524837898205965599
 MonoBehaviour:
   m_ObjectHideFlags: 0

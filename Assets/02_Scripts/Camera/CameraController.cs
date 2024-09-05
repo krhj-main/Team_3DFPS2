@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour
     }
     void LookAround()
     {
-        if (GameManager.Instance.openUI)
+        if (GameManager.Instance.openUI || PlayerController.Instance.pState.isOnViewer || PlayerController.Instance.pState.isOnESCMenu)
         {
             return;
         }
@@ -116,10 +116,10 @@ public class CameraController : MonoBehaviour
 
         // 반동을 서서히 0으로 줄임
         if (Vector3.Distance(recoilRotation, targetRotation) < 0.5f) {
-            if (Time.time - lastRecoilTime > recoilRecoveryDelay)
+           /* if (Time.time - lastRecoilTime > recoilRecoveryDelay)
             {
                 
-            }
+            }*/
             recoilRotation = Vector3.Lerp(recoilRotation, Vector3.zero, Time.deltaTime * recoilRecoverySpeed);
             recoilAmount += (Vector3.zero - recoilRotation) * Time.deltaTime * recoilRecoverySpeed;
             targetRotation = recoilRotation;

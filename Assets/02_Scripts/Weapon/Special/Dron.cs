@@ -15,7 +15,7 @@ public class Dron : MonoBehaviour,Interactable
     //-> 돌아올 카메라를 담고있어야 한다,카메라에 따라 조작이 달라져야 한다
 
     public Rigidbody rig;
-    Camera dronCam;
+    [SerializeField] Camera dronCam;
     [SerializeField] GameObject dronUI;
     public RawImage cam;
     [SerializeField] float jumpeForce = 20f;
@@ -42,11 +42,10 @@ public class Dron : MonoBehaviour,Interactable
     Vector2 mouseDelta;
     public bool IsGround;
     public bool jumpAble = true;
+    RaycastHit hit;
     // Start is called before the first frame update
     void Start()
     {
-        rig = GetComponent<Rigidbody>();
-        dronCam = GetComponentInChildren<Camera>();
         InputManger.Instance.keyAction+= Inputkey;
     }
     private void FixedUpdate()
@@ -110,7 +109,7 @@ public class Dron : MonoBehaviour,Interactable
 
     bool Grounded()
     {
-        bool _isGrounded = Physics.BoxCast(transform.position, boxSize, -transform.up, transform.rotation, maxDistance, groundLayer);
+        bool _isGrounded = Physics.BoxCast(transform.position, boxSize, -transform.up, out hit, transform.rotation, maxDistance, groundLayer);
         return _isGrounded;
     }
     void PlayerDir()
@@ -126,13 +125,21 @@ public class Dron : MonoBehaviour,Interactable
     {
         Vector3 vel = transform.forward * v + transform.right * h;
         vel = vel.normalized * moveSpeed;
-        vel.y = rig.velocity.y;
+        
+        if (vel.y<-maxDistance) {
+            vel.y = -hit.distance;
+        }
+        else {
+            vel.y = rig.velocity.y;
+        }
+        
         rig.velocity = vel;
     }
     public void DronAwake() {
         
         cam.enabled = false;
         dronUI.SetActive(true);
+        UIManager.Instance.playerUI.SetActive(false);
         dronCam.enabled = true;
         dronController.charCamera.enabled = false;
         transform.rotation = Quaternion.Euler(0,0,0);
@@ -144,6 +151,7 @@ public class Dron : MonoBehaviour,Interactable
     {
         cam.enabled = true;
         dronUI.SetActive(false);
+        UIManager.Instance.playerUI.SetActive(true);
         dronCam.enabled = false;
         dronController.charCamera.enabled = true;
         anim.SetBool("Open_Anim", false);
@@ -204,4 +212,6 @@ public class Dron : MonoBehaviour,Interactable
         
         jumpAble = true;
     }
+
+    
 }

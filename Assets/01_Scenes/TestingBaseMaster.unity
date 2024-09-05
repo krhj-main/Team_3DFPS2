@@ -1228,6 +1228,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &500095747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4574037466558872730, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8366977842067901599}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &500095751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500095747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d3c877aaaaf5d40ad206958a1dee80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &502154530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3059,7 +3077,7 @@ MonoBehaviour:
   missionViewer: {fileID: 374243488}
   missionTime: {fileID: 0}
   missionEnemy: {fileID: 0}
-  FlashImage: {fileID: 1369721490}
+  FlashImage: {fileID: 0}
   snimperZoomUI: {fileID: 0}
   deadPanel: {fileID: 0}
   deadPanelUI: []
@@ -3378,18 +3396,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 478d922849e48f74abc1776cb62854e1, type: 3}
---- !u!114 &1369721490 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 869324489266265001, guid: 478d922849e48f74abc1776cb62854e1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1321798492}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1389793902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4015,6 +4021,7 @@ MonoBehaviour:
   enemies: []
   maxEnemy: 0
   remainEnemy: 0
+  playerUI: {fileID: 0}
   canMissionChoice: 1
   openUI: 0
   selectSceneNum: 0
@@ -4645,6 +4652,11 @@ PrefabInstance:
       propertyPath: lootImage
       value: 
       objectReference: {fileID: 252135989}
+    - target: {fileID: 7521539623650865909, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+        type: 3}
+      propertyPath: playerArms
+      value: 
+      objectReference: {fileID: 500095751}
     - target: {fileID: 7698680938946738350, guid: 2a9992a71536b0d428fadabf33fd9c3b,
         type: 3}
       propertyPath: maxHP
@@ -4653,5 +4665,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4574037466558872730, guid: 2a9992a71536b0d428fadabf33fd9c3b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 500095751}
   m_SourcePrefab: {fileID: 100100000, guid: 2a9992a71536b0d428fadabf33fd9c3b, type: 3}

@@ -20,6 +20,7 @@ public class DronController : SpecialWeapon
     void Start()
     {
         charCamera = Camera.main;
+        PlayerController.Instance.deadAction += PlayerDead;
     }
 
     public void DronReturn() {
@@ -62,7 +63,10 @@ public class DronController : SpecialWeapon
     {
         dron.cam.gameObject.SetActive(false);
         anim.enabled = false;
-        dron.rig.isKinematic = true;
+        if (dron.isActive == false) {
+            dron.rig.isKinematic = true;
+        }
+        
         if (!isOut) {
             dron.col.enabled = false;
         }
@@ -73,6 +77,7 @@ public class DronController : SpecialWeapon
     }
     public override void OnHand(Transform _tr, Vector3 _offset)
     {
+        base.OnHand(_tr, _offset);
         transform.position = _tr.position;
         transform.rotation = _tr.rotation;
         if (!isOut) {
@@ -102,5 +107,11 @@ public class DronController : SpecialWeapon
         base.Interaction(target);
         phone.enabled = true;
     }
-
+    public void PlayerDead()
+    {
+        dron.DronDisable();
+        dron.cam.enabled = false;
+        dron.isActive = false;
+        DronReturn();
+    }
 }

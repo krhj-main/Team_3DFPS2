@@ -7,6 +7,13 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("플레이어 HUD")]
+    public GameObject playerUI;
+    public GameObject UI_HPPanel;
+    public Image playerHUD;
+    public Sprite playerStand;
+    public Sprite playerCrouch;
+
     [Header("플레이어 HP")]
     [SerializeField] Slider playerHPBar;
     [SerializeField] TextMeshProUGUI playerHP_TXT;
@@ -18,7 +25,9 @@ public class UIManager : Singleton<UIManager>
     int playerAmmo;
     int playerMaxAmmo;
 
+
     [Header("무기 이미지 / 이름")]
+    public GameObject UI_WeaponPanel;
     [SerializeField] Image weaponMain1;
     [SerializeField] TextMeshProUGUI weaponMain1_TXT;
     string weaponMain1Name;
@@ -34,32 +43,59 @@ public class UIManager : Singleton<UIManager>
 
     [Header("미션 정보")]
     [SerializeField] public GameObject missionViewer;
+    [SerializeField] TextMeshProUGUI missionTitle;
+    [SerializeField] TextMeshProUGUI missionDetail;
+    [SerializeField] TextMeshProUGUI missionMapName;
+    [SerializeField] Image missionMapImg;
     [SerializeField] TextMeshProUGUI missionTime;
     [SerializeField] TextMeshProUGUI missionEnemy;
+
+    [SerializeField] string[] currentTitle;
+    [TextArea] [SerializeField] string[] currentDetail;
+    [SerializeField] string[] currentMapName;
+    [SerializeField] Sprite[] currentMapImages;
     int missionTimeLimit;
     int missionTimeCurrent;
     int missionEnemyCount;
 
-    [Header("섬광탄 효과 (임시)")]
-    public Image FlashImage;
+    [Header("ESC 메뉴")]
+    public GameObject escMenu;
 
-    [Header("스나이퍼 줌 UI")]
+    [Header("섬광탄 효과 (임시)")]
+    public FlashEffectEnd FlashImage;
+
+    [Header("줌 UI")]
     public Image snimperZoomUI;
+    public Image crosshair;
 
     [Header("사망 관련")]
-    public GameObject deadPanel;
-    float deadPanelAlpha;
-    public GameObject[] deadPanelUI;
+    public GameObject deadPanelObj;
 
+    [Header("ESC 메뉴")]
+    public Button titleBtn;
+
+
+    public enum SceneName
+    {
+        MainTitle,
+        LoddingScene,
+        Lobby,
+        Mission1,
+    }
+
+    [HideInInspector]
+    public SceneName sName;
     private void Start()
     {
-        RemainEnemy();
+        PlayerController.Instance.deadAction += playerDead;
+        titleBtn.onClick.AddListener( ()=> SceneTransition((int)SceneName.MainTitle));
     }
 
     private void Update()
     {
         StatUIUpdate();
     }
+
 
     // 플레이어 체력관련 UI 업데이트
     public void StatUIUpdate()
@@ -77,6 +113,11 @@ public class UIManager : Singleton<UIManager>
     {
         playerAmmo_TXT.text = _ammo.ToString();
         playerMaxAmmo_TXT.text = _maxAmmo.ToString();
+    }
+
+    public void ThrowUIUpdate(Sprite _throw,int _count) {
+        weaponThrow_TXT.text = _count.ToString();
+        weaponThrow.sprite = _throw;
     }
 
     // 무기교체시 UI 업데이트 임시 변수
@@ -99,35 +140,17 @@ public class UIManager : Singleton<UIManager>
         //weaponTactical_TXT.text = string.Format("{0}", weaponTactical);
     }
 
+    public void ChangeSpecialWeaponUIUpdate(Sprite _specialWeaponImage)
+    {
+        weaponTactical.sprite = _specialWeaponImage;
+    }
+
+
     // 미션 정보에서의 적 수, 시간 등에 관한 UI업데이트 임시
     public void MissionInfoUIUpdate()
     {
         missionTime.text = string.Format("{0}", missionTimeCurrent);
         missionEnemy.text = string.Format("{0}", missionEnemyCount);
-    }
-
-    public void OnDeadPanel()
-    {
-        deadPanel.SetActive(true);
-        StartCoroutine(DeadPanelFadeOut());
-    }
-
-    IEnumerator DeadPanelFadeOut()
-    {
-        // 화면알파값 올려서 검정 화면 만들어줌
-        deadPanelAlpha = 0;
-        while (deadPanelAlpha <= 1f)
-        {
-            deadPanelAlpha += Time.deltaTime;
-            deadPanel.GetComponent<Image>().color = new Color(0, 0, 0, deadPanelAlpha);
-            yield return null;
-        }
-
-        // 검정화면 끝나면 데드패널에 있는 모든 ui 켜줌
-        foreach(GameObject ui in deadPanelUI)
-        {
-            ui.SetActive(true);
-        }
     }
 
     // "남은 적 수 / 최대 적 수" 를 표시해주는 메서드
@@ -138,8 +161,60 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.remainEnemy = GameManager.Instance.enemies.Count;
 
         // 남은 적 : n
-        missionEnemy.text = string.Format("남은 적 : {0}", GameManager.Instance.remainEnemy);
+        missionEnemy.text = string.Format("남은 테러리스트 : {0} 명", GameManager.Instance.remainEnemy);
         // 남은 적 : n / n
         //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
+    }
+
+    public void SceneTransition(int _sceneName)
+    {
+        SceneManager.LoadScene($"{(SceneName)_sceneName}");
+        GameManager.Instance.openUI = PlayerController.Instance.pState.isOnViewer = PlayerController.Instance.pState.isOnESCMenu = false;
+        GameManager.Instance.selectSceneNum = _sceneName;
+    }
+    public void OnExitClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE_WIN
+            Application.Quit();
+#endif
+    }
+    // 크로스헤어의 OnOff를 담당하는 메서드
+    public void CrossHair(bool _onoff)
+    {
+        crosshair.enabled = _onoff;
+    }
+
+
+    public void OpenUIMenu()
+    {
+        CrossHair(false);
+        
+    }
+    public void CloseUIMenu()
+    {
+        CrossHair(true);
+        
+    }
+    public void ViewMenuInit(int _sceneIdx)
+    {
+        missionTitle.text = currentTitle[_sceneIdx];
+        missionDetail.text = currentDetail[_sceneIdx];
+        missionMapName.text = currentMapName[_sceneIdx];
+        missionMapImg.sprite = currentMapImages[_sceneIdx];
+        
+    }
+
+    public void playerDead()
+    {
+        if (PlayerController.Instance.pState.gameClear == false)
+        {
+            snimperZoomUI.enabled = false;
+            PlayerController.Instance.pState.isOnESCMenu = false;
+            escMenu.SetActive(false);
+            Debug.Log(escMenu.activeSelf);
+            CrossHair(false);
+        }
     }
 }

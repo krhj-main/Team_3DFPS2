@@ -17,12 +17,11 @@ public class Mission : MonoBehaviour
     public GameObject missionCanvas;
 
     // 마우스 커서 조작
-    public MouseCursorMove mouseCursor;
 
     // UI 화면 켜지면 클리어 조건에 따라 버튼 클릭 가능
     private void OnEnable()
     {
-        mouseCursor.ShowCursor();
+        MouseCursorMove.ShowCursor();
         for (int i = 0; i < missionBtn.Length; i++)
         {
             if (i <= GameManager.Instance.canMissionChoice)
@@ -37,7 +36,7 @@ public class Mission : MonoBehaviour
     // UI 화면 꺼지면 이미지 다 끄기
     private void OnDisable()
     {
-        mouseCursor.HideCursor();
+        MouseCursorMove.HideCursor();
         for (int i = 0; i < missionImage.Length; i++)
         {
             missionImage[i].SetActive(false);
@@ -53,6 +52,7 @@ public class Mission : MonoBehaviour
             foreach(GameObject go  in zoomInImage) 
             { 
                 go.SetActive(false);
+                GameManager.Instance.openUI = false;
             }
             missionCanvas.SetActive(false);
         }
@@ -60,10 +60,11 @@ public class Mission : MonoBehaviour
 
 
     // 미션 버튼 클릭 시 할 행동 ( 직접 연결 해줌 )
-    public void MissionBtn(int num)
+    public void MissionBtn(int _num)
     {
-        GameManager.Instance.selectSceneNum = num;
-        ViewMissionImage(num);
+        GameManager.Instance.selectSceneNum = _num + 3;
+        GameManager.Instance.sceneGoal = _num;
+        ViewMissionImage(_num);
     }
 
     // 게임 시작 버튼 ( 직접 연결 해줌 )

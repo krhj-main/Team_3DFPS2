@@ -14,34 +14,35 @@ public class SelectEquip : MonoBehaviour
     public GameObject playerCharacter;          // 플레이어 캐릭터
     AnimIKPlayer animIkPlayer;                  // 무기 장착 IK
     LoadOut loadOut;                            // LoadOut 스크립트
-    public GameObject inventory;                // EquipmentsInit 스크립트가 붙어있는 오브젝트
     EquipmentsInit equipmentsInit;              // EquipmentsInit 스크립트
     public GameObject[] equipMainWeapon;        // 메인웨폰무기 ( 새로 산 에셋 무기 )
+    public GameObject equipSpecialWeapon;
     public Stack<GameObject> selectPanelStack = new Stack<GameObject>();        // 켜질 패널들 스택에 담아둠
-    //public Transform parentTransform;
-    //public GameObject dron;
+    Customize customize;
 
     // 마우스 커서 조작
     public MouseCursorMove mouseCursor;
+    
 
     private void Awake()
     {
         animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
         loadOut = GetComponent<LoadOut>();
-        equipmentsInit = inventory.GetComponent<EquipmentsInit>();
+        equipmentsInit = GameManager.Instance.inventory.GetComponent<EquipmentsInit>();
+        customize = GetComponent<Customize>();
     }
 
 
     private void OnEnable()
     {
-        mouseCursor.ShowCursor();               // UI 패널 켜지면 마우스 커서 보임
+        MouseCursorMove.ShowCursor();           // UI 패널 켜지면 마우스 커서 보임
         GameManager.Instance.openUI = true;     // 움직임 제한
     }
 
 
     private void OnDisable()
     {
-        mouseCursor.HideCursor();                   // UI 패널 꺼지면 마우스 커서 안보임
+        MouseCursorMove.HideCursor();               // UI 패널 꺼지면 마우스 커서 안보임
         GameManager.Instance.openUI = false;        // 움직임 제한
     }
 
@@ -56,8 +57,10 @@ public class SelectEquip : MonoBehaviour
                 if (selectPanelStack.Count <= 0)
                 {
                     ApplyWeaponEquip();
+                    customize.ApplyCustomize();
                     equipmentsInit.Init();
                     exitWeaponEquip.SetActive(true);
+                    GameManager.Instance.openUI = false;
                 }
                 else
                 {
@@ -71,7 +74,7 @@ public class SelectEquip : MonoBehaviour
     {
         ApplyMainEquip();
         ApplyThrowingEquip();
-        //ApplySpecialEquip();
+        ApplySpecialEquip();
     }
 
     void ApplyMainEquip()
@@ -94,8 +97,12 @@ public class SelectEquip : MonoBehaviour
     }
 
     void ApplySpecialEquip()
-    {
-       // equipmentsInit.specialWeapons[0] = dron.GetComponent<SpecialWeapon>();
+    {   
+        SpecialWeapon _weapon;
+        _weapon = Instantiate(equipSpecialWeapon.GetComponent<SpecialWeapon>());
+        equipmentsInit.specialWeapons[0] = _weapon;
+
+        // equipmentsInit.specialWeapons[0] = .GetComponent<SpecialWeapon>();
     }
 
 

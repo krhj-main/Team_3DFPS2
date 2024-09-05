@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Singleton<PlayerController>, IDamageAble
 {
@@ -39,7 +40,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [Tooltip("점프력")]
     [SerializeField] float jumpForce;
     [Tooltip("중력 속도")]
-    [SerializeField] float gravityAcc;
+    [SerializeField] public float gravityAcc;
 
     [Space(5)]
     [Header("앉기 관련")]
@@ -59,14 +60,14 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     [Space(5)]
     [Header("플레이어 체력")]
-    int HP;
+    [SerializeField] int HP;
     [SerializeField] public int maxHP = 10;
 
     // 플레이어 죽었을 때
     public bool death = false;
-    public static event Action OnPlayerDeath;
+    public GameObject deadPanel;
     [HideInInspector] public Animator deathCam;
-
+    public Action deadAction;
     public int pHP
     {
         get
@@ -83,7 +84,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     }
 
-    public event Action inputAction;
 
 
     // 플레이어 상태 리스트
@@ -99,7 +99,8 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     [HideInInspector] public CharacterController cc;
 
     Camera main;
-    public Camera PlayerCamera {
+    public Camera PlayerCamera 
+    {
         get => main;
         private set {; }
     }
@@ -107,25 +108,12 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     public AudioSource playerSound;
     public AudioClip walkSound;
 
-    /*
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            if (instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-        }
+    private void OnTransformParentChanged() {
+        Debug.Log(transform.parent);
     }
-    */
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         cc = GetComponent<CharacterController>();
         main = Camera.main;
         deathCam = main.GetComponent<Animator>();
@@ -138,25 +126,21 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         pState = GetComponent<PlayerStateList>();
         anim = GetComponentInChildren<Animator>();
         playerSound = GetComponent<AudioSource>();
+        //InputManger.Instance.keyAction += InputKey;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!main.enabled) { return; }
         InputKey();
-        //LookAround();
+        UIStateInteract(UIState());
+        if (UIState() || pState.isDead)
+        {
+            moveInput = Vector3.zero;
+            return;
+        }
         PlayerDir();
         ActiveCrouch();
-        OpenViewer();
-
-        if (inputAction != null)
-        {
-            if (Input.anyKey)
-            {
-                inputAction.Invoke();
-            }
-        }
     }
     
     private void FixedUpdate()
@@ -166,6 +150,37 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             return;
         }
         ActiveMove();
+    }
+
+    public bool UIState()
+    {
+        bool _openUI = (GameManager.Instance.openUI || pState.isOnViewer || pState.isOnESCMenu);
+
+        return _openUI;
+    }
+    void UIStateInteract(bool _uiState)
+    {
+        OpenMenu();
+        if (GameManager.Instance.selectSceneNum == 0)
+        {
+            MouseCursorMove.ShowCursor();
+            UIManager.Instance.CloseUIMenu();
+            return;
+        }
+        else
+        {
+            switch (_uiState)
+            {
+                case true:
+                    UIManager.Instance.OpenUIMenu();
+                    MouseCursorMove.ShowCursor();
+                    break;
+                case false:
+                    UIManager.Instance.CloseUIMenu();
+                    MouseCursorMove.HideCursor();
+                    break;
+            }
+        }
     }
 
     // 속도를 사용해 실제로 움직이는 부분
@@ -199,13 +214,16 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
             _groundVelocity /= 1.8f;
         }
 
-        _groundVelocity *= (1+moveSpeedScale);
+        _groundVelocity *= (1 + moveSpeedScale);
 
         float _yVelocity = JumpingUpdate();
         velocity = new Vector3(_groundVelocity.x, _yVelocity, _groundVelocity.z);
 
         //transform.position += velocity * Time.fixedDeltaTime;
-        cc.Move(velocity * Time.fixedDeltaTime);
+        if (cc.enabled) 
+        { 
+            cc.Move(velocity * Time.fixedDeltaTime);
+        }
     }
 
     // 땅과 닿아있는지 체크
@@ -227,12 +245,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     // 키 입력을 받았을 때 변수 값 전달 메서드
     void InputKey()
     {
-        if (GameManager.Instance.openUI || pState.isDead)
-        {
-            return;
-        }
-
-
         // WASD 이동키
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         pState.isMoving = moveInput.magnitude != 0;
@@ -254,7 +266,22 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         pState.isTiltingL = Input.GetKey(KeyCode.Q);
         pState.isTiltingR = Input.GetKey(KeyCode.E);
 
-        pState.isOnViewer = Input.GetKey(KeyCode.Tab);
+        // 탭 뷰어키기
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if(SceneManager.GetActiveScene().buildIndex <= 1)                // 2번이 로비씬
+            {
+                return;
+            }
+            pState.isOnViewer = !pState.isOnViewer;
+        }
+        
+
+        // ESC 메뉴 키기
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.openUI && SceneManager.GetActiveScene().buildIndex > 1)
+        {
+            pState.isOnESCMenu = !pState.isOnESCMenu;
+        }
 
 
         //if (Input.GetKeyDown(KeyCode.LeftControl)) pState.isWalking = true;
@@ -314,7 +341,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         if (pState.isCrouch == true)
         {
             cc.height = cc.height - crouchSpeed * Time.deltaTime;
-
+            UIManager.Instance.playerHUD.sprite = UIManager.Instance.playerCrouch;
 
             arm.localPosition = Vector3.Lerp(arm.localPosition, crouchCenter + Vector3.up * 0.5f, 0.03f);
 
@@ -330,7 +357,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         if (pState.isCrouch == false)
         {
             cc.height = cc.height + crouchSpeed * Time.deltaTime;
-
+            UIManager.Instance.playerHUD.sprite = UIManager.Instance.playerStand;
 
             arm.localPosition = Vector3.Lerp(arm.localPosition, normalCenter +Vector3.up*0.5f, 0.03f);
 
@@ -344,29 +371,32 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         }
     }
 
-    void OpenViewer()
+    void OpenMenu()
     {
-        
         UIManager.Instance.missionViewer.SetActive(pState.isOnViewer);
-        
+        UIManager.Instance.ViewMenuInit(SceneManager.GetActiveScene().buildIndex);
+
+        UIManager.Instance.escMenu.SetActive(pState.isOnESCMenu);
     }
 
     // 데미지 관련 임시 메서드
     public void Damaged(int _damage, Vector3 hitpoint)
     {
+        if (pState.gameClear) return;
         pHP -= _damage;
         if(pHP <= 0)
         {
+            deadAction.Invoke();
             pState.isDead = true;
             cc.enabled = false;
-            //deathCam.Play("Death");
             deathCam.enabled = true;
+            deathCam.Play("Death");
+            deadPanel.SetActive(true);
         }
     }
 
-    public void Die()
+    private void OnDisable()
     {
-        this.gameObject.layer = 0;
-        OnPlayerDeath?.Invoke();
+        
     }
 }

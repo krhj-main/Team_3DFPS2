@@ -56,6 +56,10 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public float atkDis = 5f;
 
+    [Header("이동 제한 ( 남은 거리 )")]
+    // 플레이어까지의 이동 거리 제한
+    public float remainDis = 10f;
+
     // 기존에 가지고 있는 시야
     [HideInInspector]
     public float originFindDis;
@@ -80,15 +84,19 @@ public class Enemy : MonoBehaviour, IDamageAble
     // 공격 관련 변수
     [Header("발사 위치")]
     public Transform enemyFirePos;
+    [Header("에너미 탄 퍼짐")]
+    public float enemySpread;
     [HideInInspector]
     public float atkDelay = 2f;
     [HideInInspector]
     public float reloadTime = 2f;
 
     // 추적중 시간
-    float curTrackTime;
+    [HideInInspector] public float curTrackTime;
+    [HideInInspector] public float curTrackingTime;
     // 추적 리턴 시간
     float trackTime = 5f;
+    float trackingTime = 10f;
 
     // Patrol 관련 변수
     [Header("순찰 방식(일정/랜덤)")]
@@ -114,10 +122,10 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public NavMeshAgent agent;
     MainWeapon weapon;
-    
+
 
     [Header("머리 비율 설정")]
-    public float headRatio =0.3f;
+    public float headRatio = 0.3f;
 
 
     void Awake()
@@ -147,11 +155,14 @@ public class Enemy : MonoBehaviour, IDamageAble
         atkDis = weapon.bulletRange;
         weapon.fireRate = 1.5f;
         atkDelay = weapon.fireRate;
+        weapon.bulletSpread = enemySpread;
 
         hp = maxHp;
         originFindDis = findDis;
         originAtkDis = atkDis;
         enemyState = firstState;
+
+        agent.avoidancePriority = Random.Range(0, 100);
     }
 
     void Update()
@@ -204,6 +215,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         {
             // Idle 애니메이션 재생
             anim.SetBool("isIdle", true);
+            anim.SetBool("isMove", false);
 
             agent.isStopped = true;
             agent.ResetPath();
@@ -219,6 +231,14 @@ public class Enemy : MonoBehaviour, IDamageAble
             // Patrol 애니메이션 종료
             anim.SetBool("isPatrol", false);
 
+            // 쫓아갈 위치 대입
+            chasePos = PlayerController.Instance.transform.position;
+            agent.speed = trackingSpd;
+            // 내비게이션으로 접근하는 최소 거리를 공격 가능 범위로 지정
+            agent.stoppingDistance = 0;
+            // 내비게이션의 목적지를 플레이어의 위치로 지정
+            agent.SetDestination(chasePos);
+
             // 상태를 Move로 변경
             enemyState = EnemyState.Move;
         }
@@ -227,9 +247,11 @@ public class Enemy : MonoBehaviour, IDamageAble
         {
             // Patrol 애니메이션 재생
             anim.SetBool("isPatrol", true);
+            anim.SetBool("isMove", false);
 
             // 지정된 위치를 왕복 이동
             agent.stoppingDistance = 0;
+            agent.speed = patrolSpd;
 
             // CharacterController의 실제 높이 계산
             float _controllerHeight = cc.height * transform.lossyScale.y;
@@ -252,7 +274,6 @@ public class Enemy : MonoBehaviour, IDamageAble
                         index = Random.Range(0, wayPoints.Count);
                         break;
                 }
-                agent.speed = patrolSpd;
             }
             agent.SetDestination(wayPoints[index].position);
         }
@@ -264,6 +285,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     {
         // Hide(Idle) 애니메이션 재생
         anim.SetBool("isIdle", true);
+        anim.SetBool("isMove", false);
         // 만약 시야범위가 아닌 공격범위로 할 경우 아래 코드나 Hide 실행부분을 주석처리하면 됨 //
 
         if (fov.targetsInViewRadius.Length > 0)
@@ -276,6 +298,8 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 // 쫓아갈 위치 대입
                 chasePos = PlayerController.Instance.transform.position;
+                agent.stoppingDistance = 0;
+                agent.SetDestination(chasePos);
 
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
@@ -292,8 +316,9 @@ public class Enemy : MonoBehaviour, IDamageAble
         anim.SetBool("isFlashbang", true);
 
         // 시야가 좁아지고 움직임을 멈추고 타겟을 놓친다
-        findDis = 0.1f;
-        atkDis = 0f;
+        //findDis = 0.1f;
+        //atkDis = 0f;
+        fov.weight = 0f;
         fov.visibleTargets.Clear();
         // 이동을 멈추고 경로 초기화
         agent.isStopped = true;
@@ -303,8 +328,9 @@ public class Enemy : MonoBehaviour, IDamageAble
         {
             // 시야를 복구하고, 플레이어를 놓친 상태로 설정
             anim.SetBool("isFlashbang", false);
-            findDis = originFindDis;
-            atkDis = originAtkDis;
+            //findDis = originFindDis;
+            //atkDis = originAtkDis;
+            fov.weight = 1f;
             agent.isStopped = false;
             enemyState = missingState;
         }
@@ -316,62 +342,54 @@ public class Enemy : MonoBehaviour, IDamageAble
     {
         // Move 애니메이션 재생
         anim.SetBool("isMove", true);
+        anim.SetBool("isPatrol", false);
+        anim.SetBool("isIdle", false);
 
         // 플레이어가 Enemy 시야안에 들어왔을 경우
         if (fov.visibleTargets.Count > 0)
         {
-            // 쫓아갈 위치 대입
-            chasePos = PlayerController.Instance.transform.position;
-
-            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
-            agent.isStopped = true;
-            agent.ResetPath();
-            agent.speed = trackingSpd;
-
-            // 내비게이션으로 접근하는 최소 거리를 공격 가능 범위로 지정
-            agent.stoppingDistance = 0;
-
-            // 내이게이션의 목적지를 플레이어의 위치로 지정
-            agent.destination = chasePos;
-
             // 거리가 atkDis보다 크다면 플레이어를 추적
             if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) <= atkDis)
             {
                 anim.SetBool("isMove", false);
                 currentTime = atkDelay;
+
+                // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
+                agent.stoppingDistance = atkDis;
+                // 내비게이션 위치를 확인한 플레이어 위치까지 지정
+                agent.SetDestination(fov.visibleTargets[0].position);
+
                 enemyState = EnemyState.Attack;
             }
         }
         // 플레이어가 Enemy 시야에 없을 경우
         else
         {
-            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
-            agent.isStopped = false;
-            agent.ResetPath();
-
-            // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
-            agent.stoppingDistance = 0;
-
-            // 내이게이션의 목적지를 소리난 위치로 지정
-            agent.destination = chasePos;
-
             // 소리난 곳까지 오고 다음 행동 지정
-            if (Vector3.Distance(transform.position, chasePos) < 1f)
+            if (Vector3.Distance(transform.position, chasePos) <= 1f)
             {
                 // Move 애니메이션 종료
                 anim.SetBool("isMove", false);
                 anim.SetBool("isIdle", true);
 
                 // 일정 시간 후 상태 전환
-                if (Timer(trackTime))
+                if (TrackTimer(trackTime))
                 {
                     anim.SetBool("isIdle", false);
                     enemyState = missingState;
                 }
             }
-            else
+            else // 소리난 곳까지 도착하지 못했다면 = 가는중이라면
             {
-                currentTime = 0;
+                agent.stoppingDistance = 0;
+                agent.SetDestination(chasePos);
+
+                // 일정 시간 후 상태 전환
+                if (TrackTimer(trackingTime))
+                {
+                    anim.SetBool("isIdle", false);
+                    enemyState = missingState;
+                }
             }
         }
     }
@@ -385,16 +403,6 @@ public class Enemy : MonoBehaviour, IDamageAble
 
         if (fov.visibleTargets.Count > 0)
         {
-            // 내비게이션 에이전트의 이동을 멈추고 경로를 초기화
-            agent.isStopped = true;
-            agent.ResetPath();
-
-            // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
-            agent.stoppingDistance = atkDis;
-
-            // 내비게이션 위치를 확인한 플레이어 위치까지 지정
-            agent.destination = fov.visibleTargets[0].position;
-
             // 공격범위 이내라면
             if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) <= atkDis)
             {
@@ -407,7 +415,7 @@ public class Enemy : MonoBehaviour, IDamageAble
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
                 float _maxHeight = 2f;
-                float _heightDif = (PlayerController.Instance.transform.position.y + PlayerController.Instance.cc.center.y) - transform.position.y;
+                float _heightDif = (PlayerController.Instance.transform.position.y + (PlayerController.Instance.cc.center.y*0.5f)) - transform.position.y;
                 float _clampHeight = Mathf.Clamp(_heightDif / _maxHeight, -1f, 0.5f);
                 anim.SetFloat("Rot", _clampHeight);
 
@@ -436,6 +444,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             else
             {
                 chasePos = PlayerController.Instance.transform.position;
+                agent.SetDestination(chasePos);
                 enemyState = EnemyState.Move;
                 currentTime = 0;
             }
@@ -444,6 +453,8 @@ public class Enemy : MonoBehaviour, IDamageAble
         else
         {
             chasePos = PlayerController.Instance.transform.position;
+            agent.stoppingDistance = 0;
+            agent.SetDestination(chasePos);
             enemyState = EnemyState.Move;
         }
     }
@@ -462,6 +473,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "사망"
     void Die()
     {
+        int _enemyCnt = GameManager.Instance.enemies.Count;
         // 진행 중인 피격 코루틴을 중지
         StopAllCoroutines();
 
@@ -472,8 +484,13 @@ public class Enemy : MonoBehaviour, IDamageAble
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
 
+        
+
         //UI 업데이트
         UIManager.Instance.RemainEnemy();
+
+        // 점수 증가
+        GameManager.Instance.enemyScore += 10;
     }
     #endregion
 
@@ -489,6 +506,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         if (IsHeadShot(hitpoint))
         {
             hp -= damage*2;
+            GameManager.Instance.enemyScore += 5;
         }
         else 
         {
@@ -528,12 +546,13 @@ public class Enemy : MonoBehaviour, IDamageAble
     }
 
     // 연막탄에 닿았을 시 Enemy에게 끼치는 영향
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("SmokeGrenade"))
         {
-            findDis = 2f;
-            atkDis = 1f;
+            //findDis = 2f;
+            //atkDis = 1f;
+            fov.weight *= 0.2f;
         }
     }
 
@@ -541,8 +560,9 @@ public class Enemy : MonoBehaviour, IDamageAble
     {
         if (other.gameObject.CompareTag("SmokeGrenade"))
         {
-            findDis = originFindDis;
-            atkDis = originAtkDis;
+            //findDis = originFindDis;
+            //atkDis = originAtkDis;
+            fov.weight = 1f;
         }
     }
     private bool IsHeadShot(Vector3 _hitpoint)
@@ -565,6 +585,30 @@ public class Enemy : MonoBehaviour, IDamageAble
         if (currentTime > _targetTime)
         {
             currentTime = 0;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TrackTimer(float _targetTime)
+    {
+        curTrackTime += Time.deltaTime;
+        if (curTrackTime > _targetTime)
+        {
+            curTrackTime = 0;
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TrackingTimer(float _targetTime)
+    {
+        curTrackingTime += Time.deltaTime;
+        if (curTrackingTime > _targetTime)
+        {
+            curTrackingTime = 0;
             return true;
         }
 

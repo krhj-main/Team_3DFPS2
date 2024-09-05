@@ -9,14 +9,11 @@ public class InputManger : Singleton<InputManger>
     public Action keyAction;
 
     bool isPress=false;
-    void Start()
-    {
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (keyAction!=null)
+        if (keyAction!=null&&!PlayerController.Instance.pState.isDead)
         {
             if (isPress && !Input.anyKey)
             {

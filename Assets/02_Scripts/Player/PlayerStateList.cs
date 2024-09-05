@@ -14,4 +14,6 @@ public class PlayerStateList : MonoBehaviour
     public bool isDead;             // 플레이어가 죽었는지
     
     public bool isOnViewer;         // 뷰어를 켰는지
+    public bool isOnESCMenu;        // ESC메뉴 키고끔
+    public bool gameClear;
 }

@@ -10,7 +10,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
 {
     // 실험
     protected float originBulletSpread;
-    protected float bulletSpread = 1f;           // 탄 퍼짐
+    [HideInInspector] public float bulletSpread = 1f;           // 탄 퍼짐
     protected float maxSpread = 1f;
 
     // 탄약 관련 변수
@@ -71,6 +71,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public AudioClip reloadSound;
     public AudioClip reloadFinishSound;
     public AudioClip weaponChangeSound;
+    public Light effectLight;
     // 플레이어 컴포넌트
     ParticleSystem playerEffect;
     protected AudioSource playerSound;
@@ -213,13 +214,16 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             PlayerController.Instance.moveSpeedScale = -0.5f;   // 줌 시 이동속도 제한
             targetFOV = adsFOV;
             bulletSpread = 0;
-        }else
+            //UIManager.Instance.CrossHair(false);
+        }
+        else
         {
             anim.SetBool("isAiming", false);
             //targetPos = shoulderPos;
             PlayerController.Instance.moveSpeedScale = 0f;
             targetFOV = shoulderFOV;
             bulletSpread = originBulletSpread;
+            //UIManager.Instance.CrossHair(true);
         }
     }
 
@@ -269,13 +273,18 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             swap.WeaponChange(this, EquipType.Weapon);
         }
     }
+
+    #region 장비 인터페이스
     public void OnHandEnter()
     {
+        
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
         firePos.localPosition = Vector3.zero;
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
+
+        GetComponentInChildren<BoxCollider>().enabled = false;
 
         // 애니메이션, 사운드, 이펙트
         PlayerController.Instance.anim = anim;
@@ -300,7 +309,9 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
     public virtual void OnHandExit()
     {
+        effectLight.enabled = false;
         anim.enabled = false;
+        GetComponentInChildren<BoxCollider>().enabled = true;
 
         PlayerController.Instance.moveSpeedScale = 0;
         StopCoroutine(Reloading());
@@ -328,6 +339,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     //키입력
     public virtual void InputKey()
     {
+        if (PlayerController.Instance.UIState())
+        {
+            return;
+        }
+
         if (Input.GetMouseButton(0))
         {
             anim.SetBool("isAttacking", true);
@@ -338,7 +354,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             anim.SetBool("isAttacking", false);
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !isReloading)
         {
             isADS = !isADS;
             Aming(isADS);
@@ -349,6 +365,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
             Reload();
         }
     }
+    #endregion
 
     #region "애니메이션 이벤트"
 
@@ -363,6 +380,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public virtual void PlayerFireBullet()
     {
         anim.SetBool("isReloading", false);
+        effectLight.enabled = true;
         playerEffect.Play();
         playerSound.clip = shootSound;
         playerSound.Play();
@@ -396,6 +414,10 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     }
 
     #endregion
+
+    public void AddAmmo(float _persent) {
+        remainAmmo = (int)MathF.Min(remainAmmo + initializeAmmo * _persent, initializeAmmo-loadedAmmo);
+    }
 }
 
 
