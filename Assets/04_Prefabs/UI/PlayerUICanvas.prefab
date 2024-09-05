@@ -445,7 +445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3746388721144457699
 RectTransform:
   m_ObjectHideFlags: 0
@@ -959,7 +959,7 @@ GameObject:
   m_Component:
   - component: {fileID: 938575850741401924}
   - component: {fileID: 1235959984116288464}
-  - component: {fileID: 2238238769886531905}
+  - component: {fileID: 3516950455071723986}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -996,7 +996,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2533287984533992702}
   m_CullTransparentMesh: 1
---- !u!114 &2238238769886531905
+--- !u!114 &3516950455071723986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2533287984533992702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1016,13 +1016,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2760313363323045667
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,7 +1423,7 @@ GameObject:
   - component: {fileID: 6998804806771953371}
   - component: {fileID: 1589280508613135489}
   m_Layer: 5
-  m_Name: TimeLimit
+  m_Name: ElapsedTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1474,7 +1477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB0A8\uC740 \uC2DC\uAC04 : \uCD08"
+  m_text: "\uACBD\uACFC \uC2DC\uAC04 : "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c742a81417fda6b4d8edfe027a82d1f8, type: 2}
   m_sharedMaterial: {fileID: -2409927212178105272, guid: c742a81417fda6b4d8edfe027a82d1f8,
@@ -3586,7 +3589,7 @@ PrefabInstance:
     - target: {fileID: 9082423838670096498, guid: 3e64c55260586934c84dca86f699537f,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9082423838670096498, guid: 3e64c55260586934c84dca86f699537f,
         type: 3}
@@ -3928,6 +3931,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SniperZoomUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572785068616819222, guid: 27094aa2e1d28b140a8ad0490abce94f,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3692f8f6c65d4054d8811d3ff80caa82,
+        type: 3}
+    - target: {fileID: 1572785068616819222, guid: 27094aa2e1d28b140a8ad0490abce94f,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2522602963959094176, guid: 27094aa2e1d28b140a8ad0490abce94f,
         type: 3}

@@ -269,7 +269,7 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
         // 탭 뷰어키기
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if(SceneManager.GetActiveScene().buildIndex <= 2)                // 2번이 로비씬
+            if(SceneManager.GetActiveScene().buildIndex <= 1)                // 2번이 로비씬
             {
                 return;
             }
@@ -374,12 +374,16 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     void OpenMenu()
     {
         UIManager.Instance.missionViewer.SetActive(pState.isOnViewer);
+        Debug.Log(pState.isOnViewer);
+        UIManager.Instance.ViewMenuInit(SceneManager.GetActiveScene().buildIndex);
+
         UIManager.Instance.escMenu.SetActive(pState.isOnESCMenu);
     }
 
     // 데미지 관련 임시 메서드
     public void Damaged(int _damage, Vector3 hitpoint)
     {
+        if (pState.gameClear) return;
         pHP -= _damage;
         if(pHP <= 0)
         {

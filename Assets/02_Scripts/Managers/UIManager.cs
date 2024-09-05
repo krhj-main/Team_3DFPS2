@@ -43,8 +43,17 @@ public class UIManager : Singleton<UIManager>
 
     [Header("미션 정보")]
     [SerializeField] public GameObject missionViewer;
+    [SerializeField] TextMeshProUGUI missionTitle;
+    [SerializeField] TextMeshProUGUI missionDetail;
+    [SerializeField] TextMeshProUGUI missionMapName;
+    [SerializeField] Image missionMapImg;
     [SerializeField] TextMeshProUGUI missionTime;
     [SerializeField] TextMeshProUGUI missionEnemy;
+
+    [SerializeField] string[] currentTitle;
+    [TextArea] [SerializeField] string[] currentDetail;
+    [SerializeField] string[] currentMapName;
+    [SerializeField] Sprite[] currentMapImages;
     int missionTimeLimit;
     int missionTimeCurrent;
     int missionEnemyCount;
@@ -188,13 +197,24 @@ public class UIManager : Singleton<UIManager>
         CrossHair(true);
         
     }
+    public void ViewMenuInit(int _sceneIdx)
+    {
+        missionTitle.text = currentTitle[_sceneIdx];
+        missionDetail.text = currentDetail[_sceneIdx];
+        missionMapName.text = currentMapName[_sceneIdx];
+        missionMapImg.sprite = currentMapImages[_sceneIdx];
+        
+    }
 
     public void playerDead()
     {
-        snimperZoomUI.enabled = false;
-        PlayerController.Instance.pState.isOnESCMenu = false;
-        escMenu.SetActive(false);
-        Debug.Log(escMenu.activeSelf);
-        CrossHair(false);
+        if (PlayerController.Instance.pState.gameClear == false)
+        {
+            snimperZoomUI.enabled = false;
+            PlayerController.Instance.pState.isOnESCMenu = false;
+            escMenu.SetActive(false);
+            Debug.Log(escMenu.activeSelf);
+            CrossHair(false);
+        }
     }
 }

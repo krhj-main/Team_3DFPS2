@@ -8,6 +8,7 @@ public class SetPlayerPosition : MonoBehaviour
     void Start()
     {
         PlayerController.Instance.transform.position = transform.position;
+        PlayerController.Instance.transform.rotation = transform.rotation;
     }
 
     // Update is called once per frame

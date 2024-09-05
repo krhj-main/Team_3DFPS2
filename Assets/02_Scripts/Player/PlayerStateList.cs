@@ -15,4 +15,5 @@ public class PlayerStateList : MonoBehaviour
     
     public bool isOnViewer;         // 뷰어를 켰는지
     public bool isOnESCMenu;        // ESC메뉴 키고끔
+    public bool gameClear;
 }
