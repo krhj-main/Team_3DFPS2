@@ -170,7 +170,7 @@ public class UIManager : Singleton<UIManager>
     {
         SceneManager.LoadScene($"{(SceneName)_sceneName}");
         GameManager.Instance.openUI = PlayerController.Instance.pState.isOnViewer = PlayerController.Instance.pState.isOnESCMenu = false;
-        GameManager.Instance.selectSceneNum = (int)_sceneName;
+        GameManager.Instance.selectSceneNum = _sceneName;
     }
     public void OnExitClick()
     {

@@ -374,7 +374,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
     void OpenMenu()
     {
         UIManager.Instance.missionViewer.SetActive(pState.isOnViewer);
-        Debug.Log(pState.isOnViewer);
         UIManager.Instance.ViewMenuInit(SceneManager.GetActiveScene().buildIndex);
 
         UIManager.Instance.escMenu.SetActive(pState.isOnESCMenu);
@@ -398,6 +397,6 @@ public class PlayerController : Singleton<PlayerController>, IDamageAble
 
     private void OnDisable()
     {
-        Debug.Log("사라짐!");
+        
     }
 }
