@@ -60,10 +60,11 @@ public class Mission : MonoBehaviour
 
 
     // 미션 버튼 클릭 시 할 행동 ( 직접 연결 해줌 )
-    public void MissionBtn(int num)
+    public void MissionBtn(int _num)
     {
-        GameManager.Instance.selectSceneNum = num+3;
-        ViewMissionImage(num);
+        GameManager.Instance.selectSceneNum = _num + 3;
+        GameManager.Instance.sceneGoal = _num;
+        ViewMissionImage(_num);
     }
 
     // 게임 시작 버튼 ( 직접 연결 해줌 )
