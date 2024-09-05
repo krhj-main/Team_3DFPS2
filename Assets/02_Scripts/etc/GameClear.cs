@@ -21,7 +21,7 @@ public class GameClear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.enemies.Count < 32)
+        if (GameManager.Instance.enemies.Count < 1)
         {
             PlayerController.Instance.pState.gameClear = true;
             GameManager.Instance.clearGoals[0][0] = true;               //  퀘스트 모든 적 섬멸 클리어
@@ -54,7 +54,7 @@ public class GameClear : MonoBehaviour
             */
 
             // 테스트용
-            if (GameManager.Instance.enemies.Count < 32)
+            if (GameManager.Instance.enemies.Count < 1)
             {
                 ClearCondition();
                 timeManager.clear = true;                   // 게임 클리어 되면 시간 멈춤
