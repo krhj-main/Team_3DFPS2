@@ -250,8 +250,8 @@ public class GameManager : Singleton<GameManager>
     };
 
     public float clearTime;
-    public float bestClearTime;
-    public int bestScore;
+    public float bestClearTime = 100000;
+    public int bestScore = 1;
     public string bestGrade;
     public string bestColor;
 
@@ -262,20 +262,17 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
-            return string.Format("<color=#{0}>{1} ({2})</color>", bestColor, bestScore, bestGrade);
+            //return string.Format("<color=#{0}>{1}</color>", bestColor, bestGrade);
+            return $"<color={bestColor}>{bestGrade}</color>";
         }
     }
     public string bestClearTimeText;
 
     public string ClearTimeText()
     {
-        if(clearTime != 0)
-        {
-            int _min = (int)(clearTime / 60);   // 분
-            int _sec = (int)(clearTime % 60);   // 초
-            return string.Format("{0:D2} : {1:D2}", _min, _sec); // 분 : 초 텍스트 만들어 반환
-        }
-        return "00 : 00";
+        int _min = Mathf.FloorToInt(clearTime / 60f);   // 분
+        int _sec = Mathf.FloorToInt(clearTime % 60f);   // 초
+        return string.Format("{0:D2} : {1:D2}", _min, _sec); // 분 : 초 텍스트 만들어 반환
     }
 
     #endregion

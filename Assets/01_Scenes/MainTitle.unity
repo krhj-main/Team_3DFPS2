@@ -310,14 +310,29 @@ PrefabInstance:
       objectReference: {fileID: 1880133335}
     - target: {fileID: 6982306610332028778, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6982306610332028778, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4,
         type: 2}
     - target: {fileID: 6982306610332028778, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+    - target: {fileID: 6982306610332028778, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7235834080922214786, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 00:00
       objectReference: {fileID: 0}
     - target: {fileID: 7253114661069654150, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
@@ -332,6 +347,16 @@ PrefabInstance:
     - target: {fileID: 7889995478182641417, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8291389821389068145, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 00:00
+      objectReference: {fileID: 0}
+    - target: {fileID: 8291389821389068145, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_enableWordWrapping
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3494,8 +3519,8 @@ MonoBehaviour:
   - "\uD14C\uB7EC\uB9AC\uC2A4\uD2B8 \uC18C\uD0D5"
   - "\uC778\uC9C8 \uAD6C\uCD9C"
   clearTime: 0
-  bestClearTime: 0
-  bestScore: 0
+  bestClearTime: 1000000
+  bestScore: 1
   bestGrade: 
   bestColor: 
   enemyScore: 0

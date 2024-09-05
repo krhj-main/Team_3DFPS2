@@ -11,6 +11,7 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
+        clear = false;
         missionTime = 0;
         StartCoroutine(OverTime());
         StartCoroutine(CalculateTimeScore());
@@ -21,7 +22,8 @@ public class TimeManager : MonoBehaviour
         if (GameManager.Instance.enemies.Count <= 0)
         {
             GameManager.Instance.clearGoals[0][0] = true;
-            // GameManager.Instance.clearpanel.gameObject.SetActive(true);     완성되면 에너미 사망 부분에 같은 문구 삭제할 것.
+            clear = true;
+            GameManager.Instance.clearpanel.gameObject.SetActive(true);
         }
     }
 
