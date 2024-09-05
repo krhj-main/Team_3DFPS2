@@ -281,7 +281,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         PlayerController.Instance.moveSpeedScale = speedDownForce/100;
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
-        firePos.localPosition = Vector3.zero;
+        firePos.localPosition= new Vector3(0,0,-0.1f);
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
         GetComponentInChildren<BoxCollider>().enabled = false;

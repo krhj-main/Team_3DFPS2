@@ -230,7 +230,7 @@ public class EquipmentsSwap : MonoBehaviour
         _num = Inventory.SlotIndexToIndex(_index);
         Swap(_num);
         _weapon.transform.SetParent(GunPosition);
-        _weapon.transform.position = Vector3.zero;
+        _weapon.transform.position = new Vector3(0, 0, -0.1f);
     }
 
     public void DropWeapon(IEquipMent _equip,int _index)
