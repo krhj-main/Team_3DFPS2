@@ -489,6 +489,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         //UI 업데이트
         UIManager.Instance.RemainEnemy();
 
+        // 점수 증가
         GameManager.Instance.enemyScore += 10;
     }
     #endregion

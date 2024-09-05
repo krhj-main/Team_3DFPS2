@@ -88,7 +88,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         PlayerController.Instance.deadAction += playerDead;
-        titleBtn.onClick.AddListener( ()=> SceneTransition(SceneName.MainTitle));
+        titleBtn.onClick.AddListener( ()=> SceneTransition((int)SceneName.MainTitle));
     }
 
     private void Update()
@@ -166,9 +166,9 @@ public class UIManager : Singleton<UIManager>
         //missionEnemy.text = $"남은 적 : {GameManager.Instance.remainEnemy} / {GameManager.Instance.maxEnemy}";
     }
 
-    public void SceneTransition(SceneName _sceneName)
+    public void SceneTransition(int _sceneName)
     {
-        SceneManager.LoadScene($"{_sceneName}");
+        SceneManager.LoadScene($"{(SceneName)_sceneName}");
         GameManager.Instance.openUI = PlayerController.Instance.pState.isOnViewer = PlayerController.Instance.pState.isOnESCMenu = false;
         GameManager.Instance.selectSceneNum = (int)_sceneName;
     }
