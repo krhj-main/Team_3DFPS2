@@ -56,7 +56,7 @@ public class DronController : SpecialWeapon
         phone.enabled = true;
         arms.SetActive(true);
         PlayerController.Instance.PlayerCamera.transform.SetParent(CameraPos);
-        PlayerController.Instance.PlayerCamera.transform.localPosition = Vector3.zero;
+        PlayerController.Instance.PlayerCamera.transform.localPosition = new Vector3(0, 0, -0.1f);
         PlayerController.Instance.PlayerCamera.transform.localRotation = Quaternion.Euler(0, 180, -0.15f);
     }
     public override void OnHandExit()
