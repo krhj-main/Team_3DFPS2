@@ -6,7 +6,8 @@ using TMPro;
 public class GameClear : MonoBehaviour
 {
     [SerializeField] TMP_Text clearGuideText;
-    // Start is called before the first frame update
+    public TimeManager timeManager;
+
     void Start()
     {
         
@@ -23,6 +24,7 @@ public class GameClear : MonoBehaviour
         if (GameManager.Instance.enemies.Count < 32)
         {
             PlayerController.Instance.pState.gameClear = true;
+            GameManager.Instance.clearGoals[0][0] = true;               //  퀘스트 모든 적 섬멸 클리어
         }
 
         if (PlayerController.Instance.pState.gameClear)
@@ -55,6 +57,7 @@ public class GameClear : MonoBehaviour
             if (GameManager.Instance.enemies.Count < 32)
             {
                 ClearCondition();
+                timeManager.clear = true;                   // 게임 클리어 되면 시간 멈춤
             }
         }
     }

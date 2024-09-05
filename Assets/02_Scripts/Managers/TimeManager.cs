@@ -17,16 +17,6 @@ public class TimeManager : MonoBehaviour
         StartCoroutine(CalculateTimeScore());
     }
 
-    private void Update()
-    {
-        if (GameManager.Instance.enemies.Count <= 0)
-        {
-            GameManager.Instance.clearGoals[0][0] = true;
-            clear = true;
-            GameManager.Instance.clearpanel.gameObject.SetActive(true);
-        }
-    }
-
     IEnumerator OverTime()
     {
         while (!clear)
