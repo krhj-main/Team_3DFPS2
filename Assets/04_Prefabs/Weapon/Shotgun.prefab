@@ -145,6 +145,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1694148824334815987}
     m_Modifications:
     - target: {fileID: 1221850809722018, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1221850809722018, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -155,6 +159,14 @@ PrefabInstance:
     - target: {fileID: 1409424844601486, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
       propertyPath: m_Name
       value: Hands_Shotgun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1501928512940408, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857433973980250, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4018699793840038, guid: 3f43a9c20d605da49979b66a5273f3df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -823,6 +835,46 @@ PrefabInstance:
     - target: {fileID: 95288805602224650, guid: 3f43a9c20d605da49979b66a5273f3df,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137201538647438068, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137257571315795702, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137330805705629504, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137415754630143088, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137529617058828660, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137537162489745712, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137596751472079676, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137885982763151464, guid: 3f43a9c20d605da49979b66a5273f3df,
+        type: 3}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
