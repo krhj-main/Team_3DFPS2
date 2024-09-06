@@ -76,7 +76,6 @@ public class Enemy : MonoBehaviour, IDamageAble
     [Header("장애물로 인식할 레이어")]
     public LayerMask obstacleMask;
 
-
     // 누적 시간
     [HideInInspector]
     public float currentTime = 0;
@@ -118,15 +117,16 @@ public class Enemy : MonoBehaviour, IDamageAble
     CharacterController cc;
     Animator anim;
     [HideInInspector]
-    public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
-    [HideInInspector]
     public NavMeshAgent agent;
     MainWeapon weapon;
 
+    [HideInInspector]
+    public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
+    [HideInInspector]
+    Vector3 originPos;
 
     [Header("머리 비율 설정")]
     public float headRatio = 0.3f;
-
 
     void Awake()
     {
@@ -160,6 +160,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         hp = maxHp;
         originFindDis = findDis;
         originAtkDis = atkDis;
+        originPos = transform.position;
         enemyState = firstState;
 
         agent.avoidancePriority = Random.Range(0, 100);
@@ -494,8 +495,8 @@ public class Enemy : MonoBehaviour, IDamageAble
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
-
-        
+        // HP 슬라이더 비활성화
+        hpSlider.gameObject.SetActive(false);
 
         //UI 업데이트
         UIManager.Instance.RemainEnemy();

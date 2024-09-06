@@ -150,13 +150,6 @@ public class GameManager : Singleton<GameManager>
     {
         foreach (Enemy enemy in enemies)
         {
-            /*
-            if (Mathf.Abs( _soundPos.y - enemy.gameObject.transform.position.y) >= 3)
-            {
-                return;
-            }
-            */
-
             // 에너미와 소리난 곳의 거리 계산
             float _distance = Vector3.Distance(_soundPos, enemy.gameObject.transform.position);
             // 거리가 범위 이내라면
@@ -173,16 +166,18 @@ public class GameManager : Singleton<GameManager>
                     enemy.agent.speed = enemy.trackingSpd;
                     enemy.agent.SetDestination(enemy.chasePos);
 
+                    
                     if (!enemy.agent.hasPath)
                     {
                         Debug.Log(enemy.agent.hasPath + gameObject.name);
                         enemy.agent.isStopped = true;
-                        //enemy.enemyState = enemy.missingState;
+                        enemy.enemyState = enemy.missingState;
                         return;
                     }
-
+                    
                     if (enemy.agent.remainingDistance >= enemy.remainDis)
                     {
+                        Debug.Log("너무 멀다");
                         return;
                     }
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
