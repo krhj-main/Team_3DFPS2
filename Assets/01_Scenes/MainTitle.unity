@@ -4816,16 +4816,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 896051525310304140, guid: 055d3f070e832e343955fc595e70cf36,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1589280508613135489, guid: 055d3f070e832e343955fc595e70cf36,
-        type: 3}
-      propertyPath: m_text
-      value: "\uACBD\uACFC \uC2DC\uAC04  00 : 00"
-      objectReference: {fileID: 0}
     - target: {fileID: 1745040632359349398, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_Pivot.x
