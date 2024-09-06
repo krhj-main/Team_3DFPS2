@@ -32,6 +32,7 @@ public class ClearPanel : MonoBehaviour
     // 화면이 켜지면 실행
     private void OnEnable()
     {
+        GameManager.Instance.stopTime = true;
         SettingClearPanel();
         if(GameManager.Instance.bestClearTimeText != null)
         {
@@ -44,7 +45,6 @@ public class ClearPanel : MonoBehaviour
         int _sceneGoal = GameManager.Instance.sceneGoal;
         int _currentMissionNum = GameManager.Instance.selectSceneNum - 3;              // 진행한 미션 ( 이 숫자에 맞춰 미리 작성해놓은 값들이 변경 됨 )
         int _clearCount = 0;                                                           // 미션 클리어시 카운트 증가 ( 목표갯수 숫자 설정 )
-
         missionName.text = GameManager.Instance.missionNames[_sceneGoal];              // 미션 이름
         
         for (int i = 0; i < GameManager.Instance.goals[_sceneGoal].Length; i++)
@@ -64,16 +64,18 @@ public class ClearPanel : MonoBehaviour
         Debug.Log(GameManager.Instance.goals[_currentMissionNum].Length);
         scoreResultText.text = "";                                          // 초기화
         scoreResultNum.text = "0";                                          // 초기화
-        //bestScoreText.text = GameManager.Instance.bestScoreText;            // 베스트스코어 텍스트
+        scoreResultText.transform.localScale = new Vector3(1,1,1);          // 글자 크기 초기화
 
         StartCoroutine(CountScore(CalculaterScore(), 0));
     }
 
-
     #region 점수 올라가는 코루틴
     IEnumerator CountScore(float _target, float _current)       // _target : 최종점수 _current : 현재 점수
     {
-
+        Debug.Log("퀘스트 점수"+ goalScore);
+        Debug.Log("킬 점수" + GameManager.Instance.enemyScore);
+        Debug.Log("시간 점수" + TimeManager.timeScore);
+ 
         yield return new WaitForSeconds(1f);                    // 1초 후에 시작
 
         timeText.text = GameManager.Instance.ClearTimeText();   // 게임매니저에서 시간 텍스트 가져옴
@@ -110,6 +112,8 @@ public class ClearPanel : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
         UIManager.Instance.SceneTransition(1);
+        GameManager.Instance.missionTime = 0;
+        ResetScore();
         this.gameObject.SetActive(false);
     }
     #endregion
@@ -121,6 +125,16 @@ public class ClearPanel : MonoBehaviour
 
         return _finalScore;
     }
+    #endregion
+
+    #region 점수 초기화
+    void ResetScore()
+    {
+        goalScore = 0;
+        GameManager.Instance.enemyScore = 0;
+        TimeManager.timeScore = 500;
+    }
+
     #endregion
 
     #region 점수 글자 변경 및 효과
@@ -215,11 +229,6 @@ public class ClearPanel : MonoBehaviour
             }
             bestScoreText.text = GameManager.Instance.bestScoreText;
         }
-    }
-
-    void UpdateBestScoreUI()
-    {
-        bestScoreText.text = GameManager.Instance.bestScoreText;
     }
 
     void UpdateBestClearTime()

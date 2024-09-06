@@ -6,11 +6,9 @@ using TMPro;
 public class GameClear : MonoBehaviour
 {
     [SerializeField] TMP_Text clearGuideText;
-    public TimeManager timeManager;
 
     void Start()
     {
-        
         PlayerController.Instance.pState.gameClear = false;
         if (clearGuideText != null)
         {
@@ -57,7 +55,6 @@ public class GameClear : MonoBehaviour
             if (GameManager.Instance.enemies.Count < 1)
             {
                 ClearCondition();
-                timeManager.clear = true;                   // 게임 클리어 되면 시간 멈춤
             }
         }
     }

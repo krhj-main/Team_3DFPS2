@@ -289,6 +289,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3964577645276054514, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5998500562944322843, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
       propertyPath: m_Pivot.x
@@ -394,10 +399,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6982306610332028778, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7235834080922214786, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 00:00
+      objectReference: {fileID: 0}
     - target: {fileID: 7253114661069654150, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
       propertyPath: m_ScreenMatchMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8291389821389068145, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 00:00
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1703,6 +1723,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890965431}
   m_CullTransparentMesh: 1
+--- !u!114 &945789594 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1589280508613135489, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1705401890535657143}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1050864370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9026745354012454586, guid: 055d3f070e832e343955fc595e70cf36,
@@ -4784,6 +4816,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 896051525310304140, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589280508613135489, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_text
+      value: "\uACBD\uACFC \uC2DC\uAC04  00 : 00"
+      objectReference: {fileID: 0}
     - target: {fileID: 1745040632359349398, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_Pivot.x
@@ -5028,12 +5070,14 @@ MonoBehaviour:
   - "\uD14C\uB7EC\uB9AC\uC2A4\uD2B8 \uC18C\uD0D5"
   - "\uC778\uC9C8 \uAD6C\uCD9C"
   clearTime: 0
-  bestClearTime: 0
+  bestClearTime: 10000
   bestScore: 0
   bestGrade: 
   bestColor: 
   enemyScore: 0
   bestClearTimeText: 
+  stopTime: 0
+  missionTime: 0
 --- !u!223 &4479569052710149116
 Canvas:
   m_ObjectHideFlags: 0
@@ -5093,7 +5137,7 @@ MonoBehaviour:
   missionDetail: {fileID: 729044075}
   missionMapName: {fileID: 715978219}
   missionMapImg: {fileID: 1705401890535657145}
-  missionTime: {fileID: 65370302}
+  missionTimeText: {fileID: 945789594}
   missionEnemy: {fileID: 677651639}
   currentTitle:
   - "\uBA54\uC778\uD0C0\uC774\uD2C0"
@@ -5128,6 +5172,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 21300000, guid: 49906127932059d44bb38927566902b9, type: 3}
   - {fileID: 21300000, guid: fc70f22e5d8ac5646ad57084738d2ff3, type: 3}
+  missionTimeCurrent: 0
   escMenu: {fileID: 1492938206}
   FlashImage: {fileID: 1636997206}
   snimperZoomUI: {fileID: 1290223125}
