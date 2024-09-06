@@ -381,8 +381,9 @@ public class Enemy : MonoBehaviour, IDamageAble
             }
             else // 소리난 곳까지 도착하지 못했다면 = 가는중이라면
             {
-                agent.stoppingDistance = 0;
-                agent.SetDestination(chasePos);
+                //agent.stoppingDistance = 0;
+                //agent.SetDestination(chasePos);
+
 
                 // 일정 시간 후 상태 전환
                 if (TrackTimer(trackingTime))
