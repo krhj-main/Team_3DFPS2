@@ -173,6 +173,14 @@ public class GameManager : Singleton<GameManager>
                     enemy.agent.speed = enemy.trackingSpd;
                     enemy.agent.SetDestination(enemy.chasePos);
 
+                    if (!enemy.agent.hasPath)
+                    {
+                        Debug.Log(enemy.agent.hasPath + gameObject.name);
+                        enemy.agent.isStopped = true;
+                        //enemy.enemyState = enemy.missingState;
+                        return;
+                    }
+
                     if (enemy.agent.remainingDistance >= enemy.remainDis)
                     {
                         return;
