@@ -15,7 +15,7 @@ public class Dron : MonoBehaviour,Interactable
     //-> 돌아올 카메라를 담고있어야 한다,카메라에 따라 조작이 달라져야 한다
 
     public Rigidbody rig;
-    [SerializeField] Camera dronCam;
+    public Camera dronCam;
     [SerializeField] GameObject dronUI;
     public RawImage cam;
     [SerializeField] float jumpeForce = 20f;

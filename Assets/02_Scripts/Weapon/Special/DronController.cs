@@ -102,7 +102,7 @@ public class DronController : SpecialWeapon
     public override void InputKey()
     {
         if (Input.GetMouseButtonDown(0)) {
-            if (isOut&& !dron.isActive)
+            if (isOut&& !dron.dronCam.enabled)
             {
                 dron.DronAwake();
                 guide.SetActive(false);
