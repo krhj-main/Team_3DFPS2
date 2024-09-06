@@ -12,7 +12,7 @@ public class EquipmentsSwap : MonoBehaviour
     [SerializeField] KeyCode dropKey;                       //들고있는 총 버리기 키
     int index = 0;                                          //선택된 항목의 인덱스
     
-    float dropForce = 3;
+    float dropForce = 5;
     public Vector3 offsetPos;
     public Transform firePos;
     public Inventory Inventory;
@@ -248,7 +248,8 @@ public class EquipmentsSwap : MonoBehaviour
 
                 if (_rid)
                 {
-                    _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
+                    _rid.velocity = Vector3.zero;
+                    _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward) * dropForce, ForceMode.Impulse);
                     Debug.DrawRay(PlayerController.Instance.PlayerCamera.transform.position, PlayerController.Instance.PlayerCamera.transform.forward);
                 }
                 InputManger.Instance.keyAction -= _equip.InputKey;
