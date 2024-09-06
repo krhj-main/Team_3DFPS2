@@ -108,7 +108,7 @@ public class ClearPanel : MonoBehaviour
             GameManager.Instance.canMissionChoice = GameManager.Instance.selectSceneNum - 3;
         }
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(5f);
         UIManager.Instance.SceneTransition(1);
         this.gameObject.SetActive(false);
     }
