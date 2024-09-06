@@ -399,6 +399,8 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     {
         loadedAmmo++;
         remainAmmo--;
+        canShoot = true;
+
     }
 
     public void ReloadCheck()
