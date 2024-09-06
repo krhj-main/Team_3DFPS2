@@ -262,7 +262,6 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
-            //return string.Format("<color=#{0}>{1}</color>", bestColor, bestGrade);
             return $"<color={bestColor}>{bestGrade}</color>";
         }
     }
@@ -274,6 +273,22 @@ public class GameManager : Singleton<GameManager>
         int _sec = Mathf.FloorToInt(clearTime % 60f);   // 초
         return string.Format("{0:D2} : {1:D2}", _min, _sec); // 분 : 초 텍스트 만들어 반환
     }
+    #endregion
 
+    #region 게임 시간
+
+    public bool stopTime = false;
+    public float missionTime;
+
+    public void OverTime()
+    {
+        missionTime += Time.deltaTime;
+    }
+    public string CurrentTime()
+    {
+        int _min = Mathf.FloorToInt(missionTime / 60);
+        int _sec = Mathf.FloorToInt(missionTime % 60);
+        return string.Format("경과 시간 {0:D2} : {1:D2}", _min, _sec);
+    }
     #endregion
 }

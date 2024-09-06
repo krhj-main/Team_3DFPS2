@@ -1,30 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TimeManager : MonoBehaviour
 {
-    public bool stopTime = false;          // 게임 클리어 되면 true로 변경해줘야함
-    float missionTime;
     int clearTime;
     public static int timeScore = 500;
 
     private void Start()
     {
-        stopTime = false;
-        missionTime = 0;
+        GameManager.Instance.stopTime = false;
         StartCoroutine(OverTime());
         StartCoroutine(CalculateTimeScore());
     }
 
     IEnumerator OverTime()
     {
-        while (!stopTime)
+        while (!GameManager.Instance.stopTime)
         {
-            missionTime += Time.deltaTime;
+            GameManager.Instance.OverTime();
             yield return null;
         }
-        clearTime = Mathf.RoundToInt(missionTime);
+        clearTime = Mathf.RoundToInt(GameManager.Instance.missionTime);
         GameManager.Instance.clearTime = clearTime;
         // ui 매니저에 연결
     }
