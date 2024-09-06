@@ -92,7 +92,7 @@ public class EquipmentsSwap : MonoBehaviour
         //무기가 하나이상 있으면
         if (Input.GetKeyDown(dropKey))
         {
-            if (index != 2)
+            if (index != 2&& index != 3)
             {
                 DropWeapon(equip, Index);
                 Swap(-1);
@@ -235,7 +235,7 @@ public class EquipmentsSwap : MonoBehaviour
 
     public void DropWeapon(IEquipMent _equip,int _index)
     {
-        if (_index != 2) 
+        if (_index != 2&& _index !=3) 
         {
             IEquipMent _go;
             _go = _equip;

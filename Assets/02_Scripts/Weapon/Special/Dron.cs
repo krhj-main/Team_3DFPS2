@@ -150,16 +150,18 @@ public class Dron : MonoBehaviour,Interactable
     public void DronDisable()
     {
         cam.enabled = true;
+
         dronUI.SetActive(false);
         UIManager.Instance.playerUI.SetActive(true);
         dronCam.enabled = false;
         dronController.charCamera.enabled = true;
+        dronController.guide.SetActive(true);
         anim.SetBool("Open_Anim", false);
         v = 0;
         h = 0;
     }
 
-        public void Interaction(GameObject target)
+    public void Interaction(GameObject target)
     {
         cam.enabled = false;
         isActive = false;

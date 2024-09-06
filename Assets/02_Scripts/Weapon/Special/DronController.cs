@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DronController : SpecialWeapon
 {
     public Dron dron;
 
     public bool isOut = false;
+    public bool isThrowing = false;
     public Camera charCamera;
     public Vector3 offset=Vector3.zero;
     public Material phoneMat;
@@ -16,6 +18,7 @@ public class DronController : SpecialWeapon
     [SerializeField] GameObject arms;
     [SerializeField] public Transform CameraPos;
     [SerializeField] Transform dronpos;
+    public GameObject guide;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,7 @@ public class DronController : SpecialWeapon
         //gameObject.SetActive(false);
         dron.transform.SetParent(dronpos);
         anim.SetBool("isThrow", isOut);
+        guide.SetActive(false);
     }
 
     public void Use() {
@@ -44,12 +48,16 @@ public class DronController : SpecialWeapon
             dron.rig.AddForce(PlayerController.Instance.PlayerCamera.transform.forward * 10, ForceMode.Impulse);
             }
             isOut = true;
+        isThrowing = false;
+        guide.SetActive(true);
         anim.SetBool("isThrow", isOut);
 
     }
 
     public override void OnHandEnter()
     {
+        UIManager.Instance.ChangeSpecialWeaponUIUpdate(myImage);
+        guide.SetActive(isOut);
         dron.cam.gameObject.SetActive(true);
         anim.enabled = true;
         anim.SetBool("isThrow", isOut);
@@ -61,7 +69,8 @@ public class DronController : SpecialWeapon
     }
     public override void OnHandExit()
     {
-        dron.cam.gameObject.SetActive(false);
+        dron.cam.gameObject.SetActive(false); 
+        guide.SetActive(false);
         anim.enabled = false;
         if (dron.isActive == false) {
             dron.rig.isKinematic = true;
@@ -69,6 +78,8 @@ public class DronController : SpecialWeapon
         
         if (!isOut) {
             dron.col.enabled = false;
+            dron.transform.position = transform.position;
+            dron.transform.rotation = transform.rotation;
         }
         
         phone.enabled = false;
@@ -91,14 +102,15 @@ public class DronController : SpecialWeapon
     public override void InputKey()
     {
         if (Input.GetMouseButtonDown(0)) {
-            if (isOut)
+            if (isOut&& !dron.isActive)
             {
                 dron.DronAwake();
+                guide.SetActive(false);
             }
-            else
+            else if(!isThrowing)
             {
-                anim.SetTrigger("doThrow");
-                
+                isThrowing = true;
+                anim.SetTrigger("doThrow"); 
             }
         }
     }
