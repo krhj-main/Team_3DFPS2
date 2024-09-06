@@ -105,9 +105,9 @@ public class ClearPanel : MonoBehaviour
 
         // 다음 스테이지 선택 가능
         int _canMission = GameManager.Instance.canMissionChoice;
-        if (GameManager.Instance.selectSceneNum - 3 >= _canMission)
+        if (GameManager.Instance.selectSceneNum - 2 >= _canMission)
         {
-            GameManager.Instance.canMissionChoice = GameManager.Instance.selectSceneNum - 3;
+            GameManager.Instance.canMissionChoice = GameManager.Instance.selectSceneNum - 2;
         }
 
         yield return new WaitForSeconds(5f);
