@@ -289,6 +289,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3964577645276054514, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5998500562944322843, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
       propertyPath: m_Pivot.x
@@ -394,10 +399,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6982306610332028778, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7235834080922214786, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 00:00
+      objectReference: {fileID: 0}
     - target: {fileID: 7253114661069654150, guid: fb9c8fcf0a988c24097e5f4e44684676,
         type: 3}
       propertyPath: m_ScreenMatchMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8291389821389068145, guid: fb9c8fcf0a988c24097e5f4e44684676,
+        type: 3}
+      propertyPath: m_text
+      value: 00:00
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

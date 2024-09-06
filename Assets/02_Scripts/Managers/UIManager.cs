@@ -55,7 +55,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] string[] currentMapName;
     [SerializeField] Sprite[] currentMapImages;
     int missionTimeLimit;
-    int missionTimeCurrent;
+    public int missionTimeCurrent;
     int missionEnemyCount;
 
     [Header("ESC 메뉴")]
@@ -203,7 +203,7 @@ public class UIManager : Singleton<UIManager>
         missionDetail.text = currentDetail[_sceneIdx];
         missionMapName.text = currentMapName[_sceneIdx];
         missionMapImg.sprite = currentMapImages[_sceneIdx];
-        
+        // missionTime.text = 
     }
 
     public void playerDead()

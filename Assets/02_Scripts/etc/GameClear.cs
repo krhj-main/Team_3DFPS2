@@ -6,7 +6,14 @@ using TMPro;
 public class GameClear : MonoBehaviour
 {
     [SerializeField] TMP_Text clearGuideText;
-    public TimeManager timeManager;
+    public GameObject missionManager;
+    TimeManager timeManager;
+
+
+    private void Awake()
+    {
+        timeManager = missionManager.GetComponent<TimeManager>();
+    }
 
     void Start()
     {
@@ -21,7 +28,7 @@ public class GameClear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.enemies.Count < 1)
+        if (GameManager.Instance.enemies.Count < 32)
         {
             PlayerController.Instance.pState.gameClear = true;
             GameManager.Instance.clearGoals[0][0] = true;               //  퀘스트 모든 적 섬멸 클리어
@@ -39,6 +46,7 @@ public class GameClear : MonoBehaviour
     {
         // 메서드 실행 조건 GameManager.Instance.enemies.Count <= 0
         // 문 트리거에 도착했을 때
+        timeManager.stopTime = true;                   // 게임 클리어 되면 시간 멈춤
         GameManager.Instance.clearpanel.gameObject.SetActive(true);
     }
 
@@ -54,10 +62,9 @@ public class GameClear : MonoBehaviour
             */
 
             // 테스트용
-            if (GameManager.Instance.enemies.Count < 1)
+            if (GameManager.Instance.enemies.Count < 32)
             {
                 ClearCondition();
-                timeManager.clear = true;                   // 게임 클리어 되면 시간 멈춤
             }
         }
     }
