@@ -145,7 +145,6 @@ public class Dron : MonoBehaviour,Interactable
         transform.rotation = Quaternion.Euler(0,0,0);
         anim.enabled = true;
         anim.SetBool("Open_Anim", true);
-        dronController.phoneMat.color = Color.white;
     }
     public void DronDisable()
     {
@@ -165,7 +164,6 @@ public class Dron : MonoBehaviour,Interactable
     {
         cam.enabled = false;
         isActive = false;
-        dronController.phoneMat.color = Color.black;
         dronController.DronReturn();
     }
 

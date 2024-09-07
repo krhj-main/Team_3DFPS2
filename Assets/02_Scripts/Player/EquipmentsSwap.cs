@@ -95,7 +95,7 @@ public class EquipmentsSwap : MonoBehaviour
             if (index != 2&& index != 3)
             {
                 DropWeapon(equip, Index);
-                Swap(-1);
+                Swap(-2);
             }
         }
 
@@ -155,7 +155,7 @@ public class EquipmentsSwap : MonoBehaviour
     {
         
         offsetPos = Vector3.zero;
-        Debug.Log(equip);
+        Debug.Log(_setIndex);
         //IEquipMent _equp = Inventory.Get(_setIndex);
         if (equip != null)
         {
@@ -164,7 +164,7 @@ public class EquipmentsSwap : MonoBehaviour
             equip.OnHandExit();
             InputManger.Instance.keyAction -= equip.InputKey;
         }
-        if (_setIndex == -1)
+        if (_setIndex == -2)
         {
             equip = null;
 

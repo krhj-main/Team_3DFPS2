@@ -11,8 +11,6 @@ public class DronController : SpecialWeapon
     public bool isThrowing = false;
     public Camera charCamera;
     public Vector3 offset=Vector3.zero;
-    public Material phoneMat;
-    public MeshRenderer phone;
     public GameObject sphere;
     [SerializeField] Animator anim;
     [SerializeField] GameObject arms;
@@ -29,7 +27,9 @@ public class DronController : SpecialWeapon
     public void DronReturn() {
         isOut = false;
         //gameObject.SetActive(false);
-        dron.transform.SetParent(dronpos);
+        dron.transform.SetParent(transform);
+        dron.gameObject.SetActive(false);
+        sphere.SetActive(true);
         anim.SetBool("isThrow", isOut);
         guide.SetActive(false);
     }
@@ -40,8 +40,9 @@ public class DronController : SpecialWeapon
             dron.gameObject.SetActive(true);
             dron.transform.SetParent(null);
 
-       
-        
+        dron.transform.position= sphere.transform.position;
+        dron.transform.rotation= sphere.transform.rotation; 
+            sphere.SetActive(false);
             if (dron.rig)
             {
             dron.rig.velocity = Vector3.zero;
@@ -56,12 +57,12 @@ public class DronController : SpecialWeapon
 
     public override void OnHandEnter()
     {
+        sphere.SetActive(isOut);
         UIManager.Instance.ChangeSpecialWeaponUIUpdate(myImage);
         guide.SetActive(isOut);
         dron.cam.gameObject.SetActive(true);
         anim.enabled = true;
         anim.SetBool("isThrow", isOut);
-        phone.enabled = true;
         arms.SetActive(true);
         PlayerController.Instance.PlayerCamera.transform.SetParent(CameraPos);
         PlayerController.Instance.PlayerCamera.transform.localPosition = new Vector3(0, 0, -0.1f);
@@ -69,6 +70,7 @@ public class DronController : SpecialWeapon
     }
     public override void OnHandExit()
     {
+        sphere.SetActive(true);
         dron.cam.gameObject.SetActive(false); 
         guide.SetActive(false);
         anim.enabled = false;
@@ -78,11 +80,8 @@ public class DronController : SpecialWeapon
         
         if (!isOut) {
             dron.col.enabled = false;
-            dron.transform.position = transform.position;
-            dron.transform.rotation = transform.rotation;
+            dron.gameObject.SetActive(false);
         }
-        
-        phone.enabled = false;
         arms.SetActive(false);
         PlayerController.Instance.PlayerCamera.transform.SetParent(null);
     }
@@ -91,17 +90,14 @@ public class DronController : SpecialWeapon
         base.OnHand(_tr, _offset);
         transform.position = _tr.position;
         transform.rotation = _tr.rotation;
-        if (!isOut) {
-           dron.transform.position = dronpos.position;
-           dron.transform.rotation = dronpos.rotation;
-        }
+
 
 
     }
 
     public override void InputKey()
     {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0)&&!PlayerController.Instance.UIState()) {
             if (isOut&& !dron.dronCam.enabled)
             {
                 dron.DronAwake();
@@ -117,7 +113,6 @@ public class DronController : SpecialWeapon
     public override void Interaction(GameObject target)
     {
         base.Interaction(target);
-        phone.enabled = true;
     }
     public void PlayerDead()
     {
