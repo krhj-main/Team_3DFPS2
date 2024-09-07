@@ -57,7 +57,7 @@ public class DronController : SpecialWeapon
 
     public override void OnHandEnter()
     {
-        sphere.SetActive(isOut);
+        sphere.SetActive(!isOut);
         UIManager.Instance.ChangeSpecialWeaponUIUpdate(myImage);
         guide.SetActive(isOut);
         dron.cam.gameObject.SetActive(true);
