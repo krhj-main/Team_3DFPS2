@@ -35,20 +35,18 @@ public class DronController : SpecialWeapon
     }
 
     public void Use() {
-             dron.rig.isKinematic = false;
-            dron.col.enabled = true;
-            dron.gameObject.SetActive(true);
-            dron.transform.SetParent(null);
-
+        dron.col.enabled = true;   
+        dron.transform.SetParent(null);
         dron.transform.position= sphere.transform.position;
-        dron.transform.rotation= sphere.transform.rotation; 
-            sphere.SetActive(false);
-            if (dron.rig)
-            {
+        dron.transform.rotation= sphere.transform.rotation;
+        dron.gameObject.SetActive(true);
+        sphere.SetActive(false);
+        if (dron.rig)
+        {
             dron.rig.velocity = Vector3.zero;
             dron.rig.AddForce(PlayerController.Instance.PlayerCamera.transform.forward * 10, ForceMode.Impulse);
-            }
-            isOut = true;
+        }
+        isOut = true;
         isThrowing = false;
         guide.SetActive(true);
         anim.SetBool("isThrow", isOut);
@@ -74,10 +72,6 @@ public class DronController : SpecialWeapon
         dron.cam.gameObject.SetActive(false); 
         guide.SetActive(false);
         anim.enabled = false;
-        if (dron.isActive == false) {
-            dron.rig.isKinematic = true;
-        }
-        
         if (!isOut) {
             dron.col.enabled = false;
             dron.gameObject.SetActive(false);

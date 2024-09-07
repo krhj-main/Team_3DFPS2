@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,39 +14,54 @@ public class Interaction : MonoBehaviour
     [SerializeField] LayerMask hitLayer;                    //상호작용이 일어나는 레이어
     [Space(5)] [Header("UI")] 
     [SerializeField] Image lootImage;                  //상호작용이 가능하다고 알려줄 UI
-
+    RaycastHit hit;
+    GameObject selectedObj;
     Camera main;
+    int count=0;
     void Start()
     {
         main = Camera.main;
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(selectKey)&& selectedObj!=null)
+        {
+            //첫번째로 hit 한 오브젝트의 Interectable컴포넌트롤 가져오는걸 시도
+            selected = hit.collider.GetComponent<Interactable>();
+            //컴포넌트가 있으면 상호작용기능 메서드 실행
+            if (selected != null)
+            {
+                selected.Interaction(gameObject);
+            }
+        }
+    }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //레이캐스트를 카메라를 기준으로 특정 레이어로 실시
         Ray ray = new Ray(main.transform.position, main.transform.forward);
 
-        RaycastHit hit;
+        
         //Debug.DrawRay(main.transform.position, main.transform.forward,Color.black, distace);
         if (Physics.Raycast(ray, out hit, distace, hitLayer))
         {
-            lootImage.enabled=true;
-            if (Input.GetKeyDown(selectKey))
-            {
-                //첫번째로 hit 한 오브젝트의 Interectable컴포넌트롤 가져오는걸 시도
-                selected = hit.collider.GetComponent<Interactable>();
-                //컴포넌트가 있으면 상호작용기능 메서드 실행
-                if (selected != null) 
-                {
-                    selected.Interaction(gameObject);
-                }
+            count = Mathf.Max(1, count + 1);
+            if (count > 2) {
+                selectedObj = hit.collider.gameObject;
+                lootImage.enabled = true;
             }
+            
+            
         }
         //상호작용이 가능한 오브젝트가 검출되지 않았다면 UI 꺼짐
         else
         {
-            lootImage.enabled = false;
+            count = Mathf.Min(-1, count - 1);
+            if (count < -2) {
+                selectedObj = null;
+                lootImage.enabled = false;
+            }
+            
         }
     }
 }
