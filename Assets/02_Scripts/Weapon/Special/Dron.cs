@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Dron : MonoBehaviour,Interactable
@@ -47,6 +48,7 @@ public class Dron : MonoBehaviour,Interactable
     void Start()
     {
         InputManger.Instance.keyAction+= Inputkey;
+        
     }
     private void FixedUpdate()
     {
@@ -162,14 +164,13 @@ public class Dron : MonoBehaviour,Interactable
 
     public void Interaction(GameObject target)
     {
-        cam.enabled = false;
-        isActive = false;
         dronController.DronReturn();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (!isActive) {
+            dronController.guide.SetActive(true);
             Quaternion rot = Quaternion.Euler(0, 0, 0);
             rot.y = transform.rotation.y;
             transform.rotation = rot;

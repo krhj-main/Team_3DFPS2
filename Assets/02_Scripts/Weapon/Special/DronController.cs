@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DronController : SpecialWeapon
@@ -22,9 +23,12 @@ public class DronController : SpecialWeapon
     {
         charCamera = Camera.main;
         PlayerController.Instance.deadAction += PlayerDead;
+        GameManager.Instance.sconeLoaded += Init;
     }
 
     public void DronReturn() {
+        dron.cam.enabled = false;
+        dron.isActive = false;
         isOut = false;
         //gameObject.SetActive(false);
         dron.transform.SetParent(transform);
@@ -48,7 +52,6 @@ public class DronController : SpecialWeapon
         }
         isOut = true;
         isThrowing = false;
-        guide.SetActive(true);
         anim.SetBool("isThrow", isOut);
 
     }
@@ -84,15 +87,12 @@ public class DronController : SpecialWeapon
         base.OnHand(_tr, _offset);
         transform.position = _tr.position;
         transform.rotation = _tr.rotation;
-
-
-
     }
 
     public override void InputKey()
     {
         if (Input.GetMouseButtonDown(0)&&!PlayerController.Instance.UIState()) {
-            if (isOut&& !dron.dronCam.enabled)
+            if (isOut&&dron.isActive)
             {
                 dron.DronAwake();
                 guide.SetActive(false);
@@ -110,9 +110,16 @@ public class DronController : SpecialWeapon
     }
     public void PlayerDead()
     {
+        Init();
+    }
+    public void Init() 
+    {
         dron.DronDisable();
-        dron.cam.enabled = false;
-        dron.isActive = false;
         DronReturn();
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(dron);
     }
 }

@@ -27,7 +27,7 @@ public class Interaction : MonoBehaviour
         if (Input.GetKeyDown(selectKey)&& selectedObj!=null)
         {
             //첫번째로 hit 한 오브젝트의 Interectable컴포넌트롤 가져오는걸 시도
-            selected = hit.collider.GetComponent<Interactable>();
+            selected = selectedObj.GetComponent<Interactable>();
             //컴포넌트가 있으면 상호작용기능 메서드 실행
             if (selected != null)
             {

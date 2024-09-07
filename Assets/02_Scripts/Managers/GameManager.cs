@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -51,7 +52,9 @@ public class GameManager : Singleton<GameManager>
     public GameObject[] applyCustomCharacter;
 
     public ClearPanel clearpanel;
-     
+
+    [HideInInspector] public Action sconeLoaded; //외부에서 씬 로드할때 할 행동 액션
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -68,6 +71,9 @@ public class GameManager : Singleton<GameManager>
         PlayerInit();
 
         playerUI.gameObject.SetActive(scene.buildIndex >=2);
+        if (sconeLoaded != null) {
+            sconeLoaded.Invoke();
+        }
     }
 
     // 씬이 로드될 때 존재하는 모든 Enemy를 List에 담는 함수 ( ScnenManager 등에서 호출 )
