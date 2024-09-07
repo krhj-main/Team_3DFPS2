@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Interaction : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Interaction : MonoBehaviour
     [SerializeField] float distace = 3;                     //상호작용이 가능한 최대 거리
     [SerializeField] LayerMask hitLayer;                    //상호작용이 일어나는 레이어
     [Space(5)] [Header("UI")] 
-    [SerializeField] GameObject lootImage;                  //상호작용이 가능하다고 알려줄 UI
+    [SerializeField] Image lootImage;                  //상호작용이 가능하다고 알려줄 UI
 
     Camera main;
     void Start()
@@ -29,7 +30,7 @@ public class Interaction : MonoBehaviour
         //Debug.DrawRay(main.transform.position, main.transform.forward,Color.black, distace);
         if (Physics.Raycast(ray, out hit, distace, hitLayer))
         {
-            lootImage.SetActive(true);
+            lootImage.enabled=true;
             if (Input.GetKeyDown(selectKey))
             {
                 //첫번째로 hit 한 오브젝트의 Interectable컴포넌트롤 가져오는걸 시도
@@ -44,7 +45,7 @@ public class Interaction : MonoBehaviour
         //상호작용이 가능한 오브젝트가 검출되지 않았다면 UI 꺼짐
         else
         {
-            lootImage.SetActive(false);
+            lootImage.enabled = false;
         }
     }
 }
