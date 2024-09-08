@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System.Net.Sockets;
 
 public enum EnemyState
 {
@@ -216,12 +217,15 @@ public class Enemy : MonoBehaviour, IDamageAble
         }
         else
         {
-            // Idle 애니메이션 재생
-            anim.SetBool("isIdle", true);
-            anim.SetBool("isMove", false);
+            if (agent.remainingDistance < 0.1f)
+            {
+                // Idle 애니메이션 재생
+                anim.SetBool("isIdle", true);
+                anim.SetBool("isMove", false);
 
-            agent.isStopped = true;
-            agent.ResetPath();
+                agent.isStopped = true;
+                agent.ResetPath();
+            }
         }
     }
     #endregion
@@ -229,6 +233,8 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "순찰"
     void Patrol()
     {
+        agent.isStopped = false;
+
         if (fov.visibleTargets.Count > 0)
         {
             // Patrol 애니메이션 종료
@@ -254,16 +260,17 @@ public class Enemy : MonoBehaviour, IDamageAble
             agent.stoppingDistance = 0;
             agent.speed = patrolSpd;
 
+            /*
             // CharacterController의 실제 높이 계산
             float _controllerHeight = cc.height * transform.lossyScale.y;
             // CharacterController의 하단 y 좌표 계산 ( 지면 )
             float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
             // 지면을 기준으로 거리 판단
             Vector3 _enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
-
             patrolDis = Vector3.Distance(_enemyPos, wayPoints[index].position);
+            */
 
-            if (patrolDis < 0.5f)
+            if (agent.remainingDistance < 0.5f)
             {
                 switch (patrolState)
                 {
@@ -304,6 +311,18 @@ public class Enemy : MonoBehaviour, IDamageAble
                 enemyState = EnemyState.Move;
             }
         }
+        else
+        {
+            if (agent.remainingDistance < 0.1f)
+            {
+                // Idle 애니메이션 재생
+                anim.SetBool("isIdle", true);
+                anim.SetBool("isMove", false);
+
+                agent.isStopped = true;
+                agent.ResetPath();
+            }
+        }
     }
     #endregion
 
@@ -337,16 +356,58 @@ public class Enemy : MonoBehaviour, IDamageAble
     #endregion
 
     #region "이동"
+    void WallCheck()
+    {
+        RaycastHit _hit;
+
+        if (Physics.Raycast(transform.position, transform.forward, out _hit, 1f))
+        {
+            Debug.DrawRay(transform.position, transform.forward, Color.red, 1f);
+            if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall") ||
+                _hit.collider.gameObject.layer == LayerMask.NameToLayer("Interectalbe"))
+            {
+                if (TrackTimer(1f))
+                {
+                    agent.stoppingDistance = 0f;
+                    agent.SetDestination(originPos);
+                    enemyState = missingState;
+                    Debug.Log("벽 화인 후 정지");
+                    return;
+                }
+            }
+        }
+    }
+
     void Move()
     {
+        WallCheck();
+
         // Move 애니메이션 재생
         anim.SetBool("isMove", true);
         anim.SetBool("isPatrol", false);
         anim.SetBool("isIdle", false);
 
+        agent.isStopped = false;
+
         // 플레이어가 Enemy 시야안에 들어왔을 경우
         if (fov.visibleTargets.Count > 0)
         {
+            // 거리가 atkDis보다 크다면 플레이어를 추적
+            if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) > atkDis)
+            {
+                // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
+                agent.stoppingDistance = 0f;
+                // 내비게이션 위치를 확인한 플레이어 위치까지 지정
+                agent.SetDestination(fov.visibleTargets[0].position);
+            }
+            else
+            {
+                anim.SetBool("isMove", false);
+                currentTime = atkDelay;
+                agent.stoppingDistance = atkDis;
+                enemyState = EnemyState.Attack;
+            }
+            /*
             // 거리가 atkDis보다 크다면 플레이어를 추적
             if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) <= atkDis)
             {
@@ -360,6 +421,11 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 enemyState = EnemyState.Attack;
             }
+            else
+            {
+                agent.stoppingDistance = 0f;
+            }
+            */
         }
         // 플레이어가 Enemy 시야에 없을 경우
         else
@@ -380,10 +446,6 @@ public class Enemy : MonoBehaviour, IDamageAble
             }
             else // 소리난 곳까지 도착하지 못했다면 = 가는중이라면
             {
-                //agent.stoppingDistance = 0;
-                //agent.SetDestination(chasePos);
-
-
                 // 일정 시간 후 상태 전환
                 if (TrackTimer(trackingTime))
                 {

@@ -172,20 +172,13 @@ public class GameManager : Singleton<GameManager>
                     enemy.agent.speed = enemy.trackingSpd;
                     enemy.agent.SetDestination(enemy.chasePos);
 
-                    
-                    if (!enemy.agent.hasPath)
+                    if (!enemy.agent.hasPath || enemy.agent.remainingDistance >= enemy.remainDis)
                     {
-                        Debug.Log(enemy.agent.hasPath + gameObject.name);
                         enemy.agent.isStopped = true;
                         enemy.enemyState = enemy.missingState;
                         return;
                     }
-                    
-                    if (enemy.agent.remainingDistance >= enemy.remainDis)
-                    {
-                        Debug.Log("너무 멀다");
-                        return;
-                    }
+
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
                     enemy.enemyState = EnemyState.Move;
                 }
