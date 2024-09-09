@@ -217,7 +217,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8184113464905604741}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -252,6 +252,7 @@ MonoBehaviour:
   patrolSpd: 3.5
   findDis: 10
   atkDis: 2
+  remainDis: 10
   originFindDis: 0
   originAtkDis: 0
   viewAngle: 160
@@ -260,7 +261,7 @@ MonoBehaviour:
     m_Bits: 1024
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 49152
+    m_Bits: 114688
   currentTime: 0
   enemyFirePos: {fileID: 4203833982897513660}
   enemySpread: 0
@@ -298,7 +299,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   visibleTargets: []
-  targetsInViewRadius: []
   weight: 1
 --- !u!1 &8330179817864058105
 GameObject:
@@ -1499,6 +1499,7 @@ MonoBehaviour:
   leftHand: {fileID: 8614466694638932742}
   rightHand: {fileID: 2950827052218860243}
   lookOffset: 1.5
+  lookWeight: 0.5
 --- !u!114 &8524837898205965599
 MonoBehaviour:
   m_ObjectHideFlags: 0

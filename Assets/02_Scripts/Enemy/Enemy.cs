@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using System.Net.Sockets;
 
 public enum EnemyState
 {
@@ -76,7 +77,6 @@ public class Enemy : MonoBehaviour, IDamageAble
     [Header("장애물로 인식할 레이어")]
     public LayerMask obstacleMask;
 
-
     // 누적 시간
     [HideInInspector]
     public float currentTime = 0;
@@ -118,15 +118,16 @@ public class Enemy : MonoBehaviour, IDamageAble
     CharacterController cc;
     Animator anim;
     [HideInInspector]
-    public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
-    [HideInInspector]
     public NavMeshAgent agent;
     MainWeapon weapon;
 
+    [HideInInspector]
+    public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
+    [HideInInspector]
+    Vector3 originPos;
 
     [Header("머리 비율 설정")]
     public float headRatio = 0.3f;
-
 
     void Awake()
     {
@@ -160,6 +161,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         hp = maxHp;
         originFindDis = findDis;
         originAtkDis = atkDis;
+        originPos = transform.position;
         enemyState = firstState;
 
         agent.avoidancePriority = Random.Range(0, 100);
@@ -208,17 +210,22 @@ public class Enemy : MonoBehaviour, IDamageAble
             // Idle 애니메이션 종료
             anim.SetBool("isIdle", false);
 
+            agent.SetDestination(fov.visibleTargets[0].position);
+
             // 상태를 Move로 변경
             enemyState = EnemyState.Move;
         }
         else
         {
-            // Idle 애니메이션 재생
-            anim.SetBool("isIdle", true);
-            anim.SetBool("isMove", false);
+            if (agent.remainingDistance < 0.1f)
+            {
+                // Idle 애니메이션 재생
+                anim.SetBool("isIdle", true);
+                anim.SetBool("isMove", false);
 
-            agent.isStopped = true;
-            agent.ResetPath();
+                agent.isStopped = true;
+                agent.ResetPath();
+            }
         }
     }
     #endregion
@@ -226,18 +233,18 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "순찰"
     void Patrol()
     {
+        agent.isStopped = false;
+
         if (fov.visibleTargets.Count > 0)
         {
             // Patrol 애니메이션 종료
             anim.SetBool("isPatrol", false);
 
-            // 쫓아갈 위치 대입
-            chasePos = PlayerController.Instance.transform.position;
             agent.speed = trackingSpd;
             // 내비게이션으로 접근하는 최소 거리를 공격 가능 범위로 지정
             agent.stoppingDistance = 0;
             // 내비게이션의 목적지를 플레이어의 위치로 지정
-            agent.SetDestination(chasePos);
+            agent.SetDestination(fov.visibleTargets[0].position);
 
             // 상태를 Move로 변경
             enemyState = EnemyState.Move;
@@ -253,16 +260,17 @@ public class Enemy : MonoBehaviour, IDamageAble
             agent.stoppingDistance = 0;
             agent.speed = patrolSpd;
 
+            /*
             // CharacterController의 실제 높이 계산
             float _controllerHeight = cc.height * transform.lossyScale.y;
             // CharacterController의 하단 y 좌표 계산 ( 지면 )
             float _bottomY = transform.position.y + cc.center.y * transform.lossyScale.y - _controllerHeight / 2;
             // 지면을 기준으로 거리 판단
             Vector3 _enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
-
             patrolDis = Vector3.Distance(_enemyPos, wayPoints[index].position);
+            */
 
-            if (patrolDis < 0.5f)
+            if (agent.remainingDistance < 0.5f)
             {
                 switch (patrolState)
                 {
@@ -286,23 +294,33 @@ public class Enemy : MonoBehaviour, IDamageAble
         // Hide(Idle) 애니메이션 재생
         anim.SetBool("isIdle", true);
         anim.SetBool("isMove", false);
-        // 만약 시야범위가 아닌 공격범위로 할 경우 아래 코드나 Hide 실행부분을 주석처리하면 됨 //
 
-        if (fov.targetsInViewRadius.Length > 0)
+        if (fov.visibleTargets.Count > 0)
         {
             // Enemy 범위에 플레이어가 들어왔다면 
-            if (Vector3.Distance(transform.position, fov.targetsInViewRadius[0].transform.position) < atkDis)
+            if (Vector3.Distance(transform.position, fov.visibleTargets[0].transform.position) < atkDis)
             {
                 // Hide(Idle) 애니메이션 종료
                 anim.SetBool("isIdle", false);
 
                 // 쫓아갈 위치 대입
-                chasePos = PlayerController.Instance.transform.position;
                 agent.stoppingDistance = 0;
-                agent.SetDestination(chasePos);
+                agent.SetDestination(fov.visibleTargets[0].position);
 
                 // 상태를 Move로 변경
                 enemyState = EnemyState.Move;
+            }
+        }
+        else
+        {
+            if (agent.remainingDistance < 0.1f)
+            {
+                // Idle 애니메이션 재생
+                anim.SetBool("isIdle", true);
+                anim.SetBool("isMove", false);
+
+                agent.isStopped = true;
+                agent.ResetPath();
             }
         }
     }
@@ -338,16 +356,58 @@ public class Enemy : MonoBehaviour, IDamageAble
     #endregion
 
     #region "이동"
+    void WallCheck()
+    {
+        RaycastHit _hit;
+
+        if (Physics.Raycast(transform.position, transform.forward, out _hit, 1f))
+        {
+            Debug.DrawRay(transform.position, transform.forward, Color.red, 1f);
+            if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall") ||
+                _hit.collider.gameObject.layer == LayerMask.NameToLayer("Interectalbe"))
+            {
+                if (TrackTimer(1f))
+                {
+                    agent.stoppingDistance = 0f;
+                    agent.SetDestination(originPos);
+                    enemyState = missingState;
+                    Debug.Log("벽 화인 후 정지");
+                    return;
+                }
+            }
+        }
+    }
+
     void Move()
     {
+        WallCheck();
+
         // Move 애니메이션 재생
         anim.SetBool("isMove", true);
         anim.SetBool("isPatrol", false);
         anim.SetBool("isIdle", false);
 
+        agent.isStopped = false;
+
         // 플레이어가 Enemy 시야안에 들어왔을 경우
         if (fov.visibleTargets.Count > 0)
         {
+            // 거리가 atkDis보다 크다면 플레이어를 추적
+            if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) > atkDis)
+            {
+                // 내비게이션으로 접근하는 최소 거리를 해당 자리까지
+                agent.stoppingDistance = 0f;
+                // 내비게이션 위치를 확인한 플레이어 위치까지 지정
+                agent.SetDestination(fov.visibleTargets[0].position);
+            }
+            else
+            {
+                anim.SetBool("isMove", false);
+                currentTime = atkDelay;
+                agent.stoppingDistance = atkDis;
+                enemyState = EnemyState.Attack;
+            }
+            /*
             // 거리가 atkDis보다 크다면 플레이어를 추적
             if (Vector3.Distance(transform.position, fov.visibleTargets[0].position) <= atkDis)
             {
@@ -361,6 +421,11 @@ public class Enemy : MonoBehaviour, IDamageAble
 
                 enemyState = EnemyState.Attack;
             }
+            else
+            {
+                agent.stoppingDistance = 0f;
+            }
+            */
         }
         // 플레이어가 Enemy 시야에 없을 경우
         else
@@ -381,9 +446,6 @@ public class Enemy : MonoBehaviour, IDamageAble
             }
             else // 소리난 곳까지 도착하지 못했다면 = 가는중이라면
             {
-                agent.stoppingDistance = 0;
-                agent.SetDestination(chasePos);
-
                 // 일정 시간 후 상태 전환
                 if (TrackTimer(trackingTime))
                 {
@@ -444,6 +506,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             else
             {
                 chasePos = PlayerController.Instance.transform.position;
+                agent.stoppingDistance = 0;
                 agent.SetDestination(chasePos);
                 enemyState = EnemyState.Move;
                 currentTime = 0;
@@ -463,8 +526,19 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "피격 행동"
     void DamagedAction()
     {
+        // 플레이어를 바라봄
+        Vector3 _dirP = (PlayerController.Instance.transform.position - agent.transform.position).normalized;
+        _dirP.y = 0;    // 이걸 뺼 경우 몸통이 같이 위를 향함, 추후 모델 넣고 수정
+                        //transform.forward = _dirP;
+
+        // 현재 방향에서 목표 방향으로 부드럽게 회전
+        Quaternion targetRotation = Quaternion.LookRotation(_dirP);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+
         if (enemyState != EnemyState.Attack)
         {
+            chasePos = PlayerController.Instance.transform.position;
+            agent.SetDestination(chasePos);
             enemyState = EnemyState.Move;
         }
     }
@@ -483,8 +557,8 @@ public class Enemy : MonoBehaviour, IDamageAble
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
-
-        
+        // HP 슬라이더 비활성화
+        hpSlider.gameObject.SetActive(false);
 
         //UI 업데이트
         UIManager.Instance.RemainEnemy();
@@ -523,17 +597,6 @@ public class Enemy : MonoBehaviour, IDamageAble
             {
                 enemyState = EnemyState.Damaged;
             }
-
-            // 플레이어를 바라봄
-            Vector3 _dirP = (PlayerController.Instance.transform.position - agent.transform.position).normalized;
-            _dirP.y = 0;    // 이걸 뺼 경우 몸통이 같이 위를 향함, 추후 모델 넣고 수정
-            //transform.forward = _dirP;
-
-            // 현재 방향에서 목표 방향으로 부드럽게 회전
-            Quaternion targetRotation = Quaternion.LookRotation(_dirP);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
-            // 목표지점 (플레이어) 지정
-            chasePos = PlayerController.Instance.transform.position;
 
             DamagedAction();
         }

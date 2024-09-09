@@ -267,7 +267,7 @@ public class LoadOut : MonoBehaviour
 
     public void ThrowChangeText1()
     {
-        throwingWeaponInfoText.ChangeText("수류탄", "MK.2", "나치 놈들과 쪽바리들에게\n강력한 폭발력을 자랑한다");
+        throwingWeaponInfoText.ChangeText("수류탄", "MK.2", "폭발 시 외피가 잘게 쪼개져\n더욱 큰 살상력을 기대할 수 있다");
     }
 
     public void ThrowChangeText2()

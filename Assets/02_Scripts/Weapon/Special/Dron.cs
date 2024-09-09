@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Dron : MonoBehaviour,Interactable
@@ -15,7 +16,7 @@ public class Dron : MonoBehaviour,Interactable
     //-> 돌아올 카메라를 담고있어야 한다,카메라에 따라 조작이 달라져야 한다
 
     public Rigidbody rig;
-    [SerializeField] Camera dronCam;
+    public Camera dronCam;
     [SerializeField] GameObject dronUI;
     public RawImage cam;
     [SerializeField] float jumpeForce = 20f;
@@ -47,6 +48,7 @@ public class Dron : MonoBehaviour,Interactable
     void Start()
     {
         InputManger.Instance.keyAction+= Inputkey;
+        
     }
     private void FixedUpdate()
     {
@@ -145,31 +147,30 @@ public class Dron : MonoBehaviour,Interactable
         transform.rotation = Quaternion.Euler(0,0,0);
         anim.enabled = true;
         anim.SetBool("Open_Anim", true);
-        dronController.phoneMat.color = Color.white;
     }
     public void DronDisable()
     {
         cam.enabled = true;
+
         dronUI.SetActive(false);
         UIManager.Instance.playerUI.SetActive(true);
         dronCam.enabled = false;
         dronController.charCamera.enabled = true;
+        dronController.guide.SetActive(true);
         anim.SetBool("Open_Anim", false);
         v = 0;
         h = 0;
     }
 
-        public void Interaction(GameObject target)
+    public void Interaction(GameObject target)
     {
-        cam.enabled = false;
-        isActive = false;
-        dronController.phoneMat.color = Color.black;
         dronController.DronReturn();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (!isActive) {
+            dronController.guide.SetActive(true);
             Quaternion rot = Quaternion.Euler(0, 0, 0);
             rot.y = transform.rotation.y;
             transform.rotation = rot;

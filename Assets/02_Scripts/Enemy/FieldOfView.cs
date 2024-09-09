@@ -29,7 +29,7 @@ public class FieldOfView : MonoBehaviour
     //public List<Transform> visibleObjects = new List<Transform>();
 
     [HideInInspector]
-    public Collider[] targetsInViewRadius;  // Hide 상태에서 사용
+    Collider[] targetsInViewRadius;  // Hide 상태에서 사용
 
     Enemy enemy;
 
