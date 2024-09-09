@@ -260,7 +260,6 @@ public class Enemy : MonoBehaviour, IDamageAble
             agent.stoppingDistance = 0;
             agent.speed = patrolSpd;
 
-            /*
             // CharacterController의 실제 높이 계산
             float _controllerHeight = cc.height * transform.lossyScale.y;
             // CharacterController의 하단 y 좌표 계산 ( 지면 )
@@ -268,9 +267,8 @@ public class Enemy : MonoBehaviour, IDamageAble
             // 지면을 기준으로 거리 판단
             Vector3 _enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
             patrolDis = Vector3.Distance(_enemyPos, wayPoints[index].position);
-            */
 
-            if (agent.remainingDistance < 0.5f)
+            if (patrolDis <= 1f)
             {
                 switch (patrolState)
                 {
