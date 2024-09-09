@@ -268,7 +268,7 @@ public class Enemy : MonoBehaviour, IDamageAble
             Vector3 _enemyPos = new Vector3(transform.position.x, _bottomY, transform.position.z);
             patrolDis = Vector3.Distance(_enemyPos, wayPoints[index].position);
 
-            if (patrolDis < 1f)
+            if (patrolDis <= 1f)
             {
                 switch (patrolState)
                 {
