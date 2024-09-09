@@ -37,7 +37,7 @@ public class GameClear : MonoBehaviour
     {
         // 메서드 실행 조건 GameManager.Instance.enemies.Count <= 0
         // 문 트리거에 도착했을 때
-        GameManager.Instance.clearpanel.gameObject.SetActive(true);
+        GameManager.Instance.clearpanel.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider _col)
