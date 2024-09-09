@@ -77,7 +77,7 @@ public class GrenadeFactory : ThrowingWeapon
         col.enabled = false;
         arms.SetActive(true);
         firePos.SetParent(CameraPos);
-        firePos.localPosition = Vector3.zero;
+        firePos.localPosition = new Vector3(0, 0, -0.1f);
         firePos.localRotation = Quaternion.Euler(0, 180, -0.15f);
 
     }

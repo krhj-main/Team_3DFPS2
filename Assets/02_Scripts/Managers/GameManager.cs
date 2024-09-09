@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -50,8 +51,10 @@ public class GameManager : Singleton<GameManager>
 
     public GameObject[] applyCustomCharacter;
 
-    public ClearPanel clearpanel;
-     
+    public GameObject clearpanel;
+
+    [HideInInspector] public Action sconeLoaded; //외부에서 씬 로드할때 할 행동 액션
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -68,6 +71,9 @@ public class GameManager : Singleton<GameManager>
         PlayerInit();
 
         playerUI.gameObject.SetActive(scene.buildIndex >=2);
+        if (sconeLoaded != null) {
+            sconeLoaded.Invoke();
+        }
     }
 
     // 씬이 로드될 때 존재하는 모든 Enemy를 List에 담는 함수 ( ScnenManager 등에서 호출 )
@@ -150,13 +156,6 @@ public class GameManager : Singleton<GameManager>
     {
         foreach (Enemy enemy in enemies)
         {
-            /*
-            if (Mathf.Abs( _soundPos.y - enemy.gameObject.transform.position.y) >= 3)
-            {
-                return;
-            }
-            */
-
             // 에너미와 소리난 곳의 거리 계산
             float _distance = Vector3.Distance(_soundPos, enemy.gameObject.transform.position);
             // 거리가 범위 이내라면
@@ -173,10 +172,13 @@ public class GameManager : Singleton<GameManager>
                     enemy.agent.speed = enemy.trackingSpd;
                     enemy.agent.SetDestination(enemy.chasePos);
 
-                    if (enemy.agent.remainingDistance >= enemy.remainDis)
+                    if (!enemy.agent.hasPath || enemy.agent.remainingDistance >= enemy.remainDis)
                     {
+                        enemy.agent.isStopped = true;
+                        enemy.enemyState = enemy.missingState;
                         return;
                     }
+
                     // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
                     enemy.enemyState = EnemyState.Move;
                 }
@@ -262,7 +264,6 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
-            //return string.Format("<color=#{0}>{1}</color>", bestColor, bestGrade);
             return $"<color={bestColor}>{bestGrade}</color>";
         }
     }
@@ -274,6 +275,22 @@ public class GameManager : Singleton<GameManager>
         int _sec = Mathf.FloorToInt(clearTime % 60f);   // 초
         return string.Format("{0:D2} : {1:D2}", _min, _sec); // 분 : 초 텍스트 만들어 반환
     }
+    #endregion
 
+    #region 게임 시간
+
+    public bool stopTime = false;
+    public float missionTime;
+
+    public void OverTime()
+    {
+        missionTime += Time.deltaTime;
+    }
+    public string CurrentTime()
+    {
+        int _min = Mathf.FloorToInt(missionTime / 60);
+        int _sec = Mathf.FloorToInt(missionTime % 60);
+        return string.Format("경과 시간 {0:D2} : {1:D2}", _min, _sec);
+    }
     #endregion
 }

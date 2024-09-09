@@ -47,7 +47,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] TextMeshProUGUI missionDetail;
     [SerializeField] TextMeshProUGUI missionMapName;
     [SerializeField] Image missionMapImg;
-    [SerializeField] TextMeshProUGUI missionTime;
+    [SerializeField] TextMeshProUGUI missionTimeText;
     [SerializeField] TextMeshProUGUI missionEnemy;
 
     [SerializeField] string[] currentTitle;
@@ -55,7 +55,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] string[] currentMapName;
     [SerializeField] Sprite[] currentMapImages;
     int missionTimeLimit;
-    int missionTimeCurrent;
+    public int missionTimeCurrent;
     int missionEnemyCount;
 
     [Header("ESC 메뉴")]
@@ -89,6 +89,7 @@ public class UIManager : Singleton<UIManager>
     {
         PlayerController.Instance.deadAction += playerDead;
         titleBtn.onClick.AddListener( ()=> SceneTransition((int)SceneName.MainTitle));
+        
     }
 
     private void Update()
@@ -149,7 +150,7 @@ public class UIManager : Singleton<UIManager>
     // 미션 정보에서의 적 수, 시간 등에 관한 UI업데이트 임시
     public void MissionInfoUIUpdate()
     {
-        missionTime.text = string.Format("{0}", missionTimeCurrent);
+        missionTimeText.text = string.Format("{0}", missionTimeCurrent);
         missionEnemy.text = string.Format("{0}", missionEnemyCount);
     }
 
@@ -203,7 +204,7 @@ public class UIManager : Singleton<UIManager>
         missionDetail.text = currentDetail[_sceneIdx];
         missionMapName.text = currentMapName[_sceneIdx];
         missionMapImg.sprite = currentMapImages[_sceneIdx];
-        
+        missionTimeText.text = GameManager.Instance.CurrentTime();
     }
 
     public void playerDead()

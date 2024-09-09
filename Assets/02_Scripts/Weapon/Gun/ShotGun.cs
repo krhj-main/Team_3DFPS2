@@ -186,14 +186,16 @@ public class ShotGun : MainWeapon
         for (int i = 0; i < shell; i++)
         {
             Vector3 spreadDirection = CalculateSpreadDirection(spreadAngle, cam.transform);
-            Debug.DrawRay(cam.transform.position, spreadDirection * bulletRange, Color.red, 1f);
+            
 
             RaycastHit hit;
 
             if (canShoot)
             {
+                Debug.DrawRay(cam.transform.position, spreadDirection * bulletRange, Color.red, 1f);
                 if (Physics.Raycast(cam.transform.position, spreadDirection, out hit, bulletRange))       // 카메라 포지션에서 정면으로 총알 사거리만큼 쏨
                 {
+                    
                     if ((canAttackMask.value & (1 << hit.transform.gameObject.layer)) == 0)
                     {
                         continue;

@@ -12,7 +12,7 @@ public class EquipmentsSwap : MonoBehaviour
     [SerializeField] KeyCode dropKey;                       //들고있는 총 버리기 키
     int index = 0;                                          //선택된 항목의 인덱스
     
-    float dropForce = 3;
+    float dropForce = 5;
     public Vector3 offsetPos;
     public Transform firePos;
     public Inventory Inventory;
@@ -92,10 +92,10 @@ public class EquipmentsSwap : MonoBehaviour
         //무기가 하나이상 있으면
         if (Input.GetKeyDown(dropKey))
         {
-            if (index != 2)
+            if (index != 2&& index != 3)
             {
                 DropWeapon(equip, Index);
-                Swap(-1);
+                Swap(-2);
             }
         }
 
@@ -155,7 +155,7 @@ public class EquipmentsSwap : MonoBehaviour
     {
         
         offsetPos = Vector3.zero;
-        Debug.Log(equip);
+        Debug.Log(_setIndex);
         //IEquipMent _equp = Inventory.Get(_setIndex);
         if (equip != null)
         {
@@ -164,7 +164,7 @@ public class EquipmentsSwap : MonoBehaviour
             equip.OnHandExit();
             InputManger.Instance.keyAction -= equip.InputKey;
         }
-        if (_setIndex == -1)
+        if (_setIndex == -2)
         {
             equip = null;
 
@@ -230,12 +230,12 @@ public class EquipmentsSwap : MonoBehaviour
         _num = Inventory.SlotIndexToIndex(_index);
         Swap(_num);
         _weapon.transform.SetParent(GunPosition);
-        _weapon.transform.position = Vector3.zero;
+        _weapon.transform.position = new Vector3(0, 0, -0.1f);
     }
 
     public void DropWeapon(IEquipMent _equip,int _index)
     {
-        if (_index != 2) 
+        if (_index != 2&& _index !=3) 
         {
             IEquipMent _go;
             _go = _equip;
@@ -248,7 +248,8 @@ public class EquipmentsSwap : MonoBehaviour
 
                 if (_rid)
                 {
-                    _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward + Vector3.up) * dropForce, ForceMode.Impulse);
+                    _rid.velocity = Vector3.zero;
+                    _rid.AddForce((PlayerController.Instance.PlayerCamera.transform.forward) * dropForce, ForceMode.Impulse);
                     Debug.DrawRay(PlayerController.Instance.PlayerCamera.transform.position, PlayerController.Instance.PlayerCamera.transform.forward);
                 }
                 InputManger.Instance.keyAction -= _equip.InputKey;

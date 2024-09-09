@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
 {
@@ -14,7 +15,7 @@ public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
     [Tooltip("던지는 힘")]
     public float throwForce = 10f;                  // 던지는 힘
     [HideInInspector] public LineRenderer trajectoryLine;             // 궤적 라인
-    int trajectoryLinePoint = 30;                   // 궤적 포인트 갯수
+    int trajectoryLinePoint = 60;                   // 궤적 포인트 갯수
     [HideInInspector] public Transform firePos;                       // 던지는 방향
     protected Rigidbody rb;
     protected bool isThrow=false;
@@ -45,7 +46,7 @@ public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
     protected (Vector3 velocity, Vector3 position) CalculateTrajectoryVector(Transform _firePos)
     {
         Vector3 _velocity = _firePos.forward * throwForce;
-        Vector3 _localStartPos = new Vector3(0.5f, 0, 1f);      // 카메라 기준으로 궤적 시작 위치 설정
+        Vector3 _localStartPos = new Vector3(0.2f, -0.1f, 0.1f);      // 카메라 기준으로 궤적 시작 위치 설정
         Vector3 _position = _firePos.TransformPoint(_localStartPos);
 
         return (_velocity,_position);
@@ -59,15 +60,29 @@ public class ThrowingWeapon : MonoBehaviour,IEquipMent,Interactable
 
         var(_velocity, _position) = CalculateTrajectoryVector(_firePos);
 
-        float _timeStpe = 1f/30f; // 등가속도 운동 값
+        _velocity.y *= 1.2f;
+
+        float _timeStep = 1f/30f; // 등가속도 운동 값
+        int _actualPoints = 0;
 
         // 속도와 중력에 의해 변화를 계산해서 점 찍기
         for (int i = 0; i < trajectoryLinePoint; i++)
         {
             trajectoryLine.SetPosition(i, _position);
-            _velocity += Physics.gravity * _timeStpe;
-            _position += _velocity * _timeStpe;
+            _actualPoints++;
+
+            if (Physics.Raycast(_position, _velocity.normalized, out RaycastHit hit, _velocity.magnitude * _timeStep))
+            {
+                // 충돌 지점을 마지막 점으로 설정
+                trajectoryLine.SetPosition(i + 1, hit.point);
+                _actualPoints++;
+                break; // 루프 종료
+            }
+
+            _velocity += Physics.gravity * _timeStep;
+            _position += _velocity * _timeStep;
         }
+        trajectoryLine.positionCount = _actualPoints;
         trajectoryLine.enabled = true;      // 궤적 활성화
     }
 

@@ -6,11 +6,9 @@ using TMPro;
 public class GameClear : MonoBehaviour
 {
     [SerializeField] TMP_Text clearGuideText;
-    public TimeManager timeManager;
 
     void Start()
     {
-        
         PlayerController.Instance.pState.gameClear = false;
         if (clearGuideText != null)
         {
@@ -39,7 +37,7 @@ public class GameClear : MonoBehaviour
     {
         // 메서드 실행 조건 GameManager.Instance.enemies.Count <= 0
         // 문 트리거에 도착했을 때
-        GameManager.Instance.clearpanel.gameObject.SetActive(true);
+        GameManager.Instance.clearpanel.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider _col)
@@ -57,7 +55,6 @@ public class GameClear : MonoBehaviour
             if (GameManager.Instance.enemies.Count < 1)
             {
                 ClearCondition();
-                timeManager.clear = true;                   // 게임 클리어 되면 시간 멈춤
             }
         }
     }
