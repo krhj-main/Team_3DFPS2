@@ -31,7 +31,7 @@ Transform:
   - {fileID: 8301144478892213307}
   - {fileID: 9096108500540386525}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8258000330975730625
 GameObject:
@@ -78,7 +78,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1.2
-  m_Range: 15
+  m_Range: 20
   m_SpotAngle: 61.940193
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
