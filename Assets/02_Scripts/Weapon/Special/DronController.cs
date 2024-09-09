@@ -92,7 +92,7 @@ public class DronController : SpecialWeapon
     public override void InputKey()
     {
         if (Input.GetMouseButtonDown(0)&&!PlayerController.Instance.UIState()) {
-            if (isOut&&dron.isActive)
+            if (isOut&&dron.isActive&&!dron.dronCam.enabled)
             {
                 dron.DronAwake();
                 guide.SetActive(false);
@@ -121,5 +121,7 @@ public class DronController : SpecialWeapon
     private void OnDestroy()
     {
         Destroy(dron);
+        PlayerController.Instance.deadAction -= PlayerDead;
+        GameManager.Instance.sconeLoaded -= Init;
     }
 }
