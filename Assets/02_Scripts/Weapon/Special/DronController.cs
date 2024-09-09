@@ -114,6 +114,7 @@ public class DronController : SpecialWeapon
     }
     public void Init() 
     {
+        isThrowing = false;
         dron.DronDisable();
         DronReturn();
     }
