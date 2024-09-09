@@ -185,6 +185,33 @@ public class GameManager : Singleton<GameManager>
             }
         }
     }
+
+    public void AggroEnemyFoot(Vector3 _soundPos, float _radius)
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            // 에너미와 소리난 곳의 거리 계산
+            float _distance = Vector3.Distance(_soundPos, enemy.gameObject.transform.position);
+            // 거리가 범위 이내라면
+            if (_distance <= _radius)
+            {
+                // 존버 상태가 아닐때만
+                if (enemy.enemyState != EnemyState.Blind && enemy.enemyState != EnemyState.Attack)
+                {
+                    enemy.curTrackTime = 0;
+                    enemy.curTrackingTime = 0;
+                    // 소리의 위치를 chasePos 변수에 담고
+                    enemy.chasePos = _soundPos;
+                    enemy.agent.stoppingDistance = 0;
+                    enemy.agent.speed = enemy.trackingSpd;
+                    enemy.agent.SetDestination(enemy.chasePos);
+
+                    // enemy의 상태를 Move로 변경해 소리가 난 곳으로 이동
+                    enemy.enemyState = EnemyState.Move;
+                }
+            }
+        }
+    }
     #endregion
 
     #region "AggroEnemy 원본"

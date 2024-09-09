@@ -122468,20 +122468,6 @@ AnimationClip:
     functionName: PlayerWalkSound
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: PlayerAggroEnemy
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 5
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.26666668
-    functionName: PlayerAggroEnemy
-    data: 
-    objectReferenceParameter: {fileID: 0}
     floatParameter: 5
     intParameter: 0
     messageOptions: 0
@@ -122489,6 +122475,6 @@ AnimationClip:
     functionName: PlayerWalkSound
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
+    floatParameter: 5
     intParameter: 0
     messageOptions: 0
