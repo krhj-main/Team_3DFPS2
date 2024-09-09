@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &66806259 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 146687412266232205, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &71493423
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,7 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42844678e662238408f60e13774e17dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUI: {fileID: 0}
+  playerUI: {fileID: 513870894}
   UI_HPPanel: {fileID: 1885624535}
   playerHUD: {fileID: 592517366}
   playerStand: {fileID: 21300000, guid: 2bd59817cbd8056409162de64bac1612, type: 3}
@@ -668,11 +674,11 @@ MonoBehaviour:
   weaponTactical: {fileID: 462365169}
   weaponTactical_TXT: {fileID: 1883634923}
   missionViewer: {fileID: 762825774}
-  missionTitle: {fileID: 0}
-  missionDetail: {fileID: 0}
-  missionMapName: {fileID: 0}
-  missionMapImg: {fileID: 0}
-  missionTimeText: {fileID: 0}
+  missionTitle: {fileID: 513870892}
+  missionDetail: {fileID: 513870891}
+  missionMapName: {fileID: 513870890}
+  missionMapImg: {fileID: 513870889}
+  missionTimeText: {fileID: 513870888}
   missionEnemy: {fileID: 1671681131}
   currentTitle:
   - "\uBA54\uC778"
@@ -796,6 +802,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &513870888 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1589280508613135489, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &513870889 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3516950455071723986, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &513870890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1095080472331044304, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &513870891 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3603317111819895468, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &513870892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8682985657440716136, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &513870893 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3372725410175620830, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5316267ac02400c4c959ca7028da9e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &513870894 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7658737753808371047, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &592517366 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2650366387694445932, guid: 055d3f070e832e343955fc595e70cf36,
@@ -4605,7 +4689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creditPanel: {fileID: 1085220863}
-  optionPanel: {fileID: 0}
+  optionPanel: {fileID: 66806259}
 --- !u!4 &1556652081
 Transform:
   m_ObjectHideFlags: 0
@@ -6041,6 +6125,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 678378970073583408, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1745040632359349398, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6361,8 +6450,8 @@ MonoBehaviour:
   playerUI: {fileID: 2137463161}
   inventory: {fileID: 0}
   applyCustomCharacter: []
-  clearpanel: {fileID: 0}
-  canMissionChoice: 1
+  clearpanel: {fileID: 513870893}
+  canMissionChoice: 0
   openUI: 0
   selectSceneNum: 0
   sceneGoal: 0
