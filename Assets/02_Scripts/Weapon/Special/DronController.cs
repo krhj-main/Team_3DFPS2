@@ -121,5 +121,7 @@ public class DronController : SpecialWeapon
     private void OnDestroy()
     {
         Destroy(dron);
+        PlayerController.Instance.deadAction -= PlayerDead;
+        GameManager.Instance.sconeLoaded -= Init;
     }
 }
