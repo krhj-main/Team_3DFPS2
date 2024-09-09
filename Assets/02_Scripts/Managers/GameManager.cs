@@ -51,7 +51,7 @@ public class GameManager : Singleton<GameManager>
 
     public GameObject[] applyCustomCharacter;
 
-    public ClearPanel clearpanel;
+    public GameObject clearpanel;
 
     [HideInInspector] public Action sconeLoaded; //외부에서 씬 로드할때 할 행동 액션
 
