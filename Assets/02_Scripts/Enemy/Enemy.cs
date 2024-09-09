@@ -40,7 +40,6 @@ public class Enemy : MonoBehaviour, IDamageAble
     [Header("체력")]
     public int hp;
     public int maxHp = 15;
-    Slider hpSlider;
 
     // 속도 변수
     [Header("추적 시 속도")]
@@ -124,7 +123,7 @@ public class Enemy : MonoBehaviour, IDamageAble
     [HideInInspector]
     public Vector3 chasePos;  // 시야각 내에 있을 때 플레이어를 담는 변수
     [HideInInspector]
-    Vector3 originPos;
+    Vector3 originPos;        // 원래 자리로 돌아가기 위한 초기 위치값을 담은 변수
 
     [Header("머리 비율 설정")]
     public float headRatio = 0.3f;
@@ -144,7 +143,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         cc = GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
-        hpSlider = GetComponentInChildren<Slider>();
         anim = transform.GetComponentInChildren<Animator>();
         weapon = GetComponentInChildren<MainWeapon>();
     }
@@ -169,9 +167,6 @@ public class Enemy : MonoBehaviour, IDamageAble
 
     void Update()
     {
-        // HP 실시간 파악
-        hpSlider.value = (float)hp / (float)maxHp;
-
         switch (enemyState)
         {
             case EnemyState.Idle:
@@ -555,8 +550,6 @@ public class Enemy : MonoBehaviour, IDamageAble
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
         GameManager.Instance.enemies.Remove(this);
-        // HP 슬라이더 비활성화
-        hpSlider.gameObject.SetActive(false);
 
         //UI 업데이트
         UIManager.Instance.RemainEnemy();
