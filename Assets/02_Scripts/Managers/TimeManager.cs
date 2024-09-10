@@ -31,7 +31,7 @@ public class TimeManager : MonoBehaviour
     {
         GameManager.Instance.clearGoals[0][1] = true;
 
-        yield return new WaitForSeconds(300);
+        yield return new WaitForSeconds(180);
 
         GameManager.Instance.clearGoals[0][1] = false;
 
@@ -42,7 +42,7 @@ public class TimeManager : MonoBehaviour
             { 
                 break;
             }
-            yield return new WaitForSeconds(15f);
+            yield return new WaitForSeconds(10f);
         } 
     }
 }
