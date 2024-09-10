@@ -91,6 +91,7 @@ public class ShotGun : MainWeapon
             Debug.Log("남은 탄약 없음");
             return;
         }
+        isReloading = true;
         //stopReloading = false;
         //StartCoroutine(ShotgunReloading());
         anim.SetBool("isReloading", true);
