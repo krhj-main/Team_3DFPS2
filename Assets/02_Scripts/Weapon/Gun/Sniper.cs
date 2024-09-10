@@ -144,6 +144,7 @@ public class Sniper : MainWeapon
                     if (target != null)
                     {
                         target.Damaged(damage, hit.point);
+                        BloodEffect(hit);
                         _penetrateEnemy++;
                     }
                     // 거리 계산하고 레이캐스트 다시 앞으로 나가기

@@ -72,6 +72,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
     public AudioClip reloadFinishSound;
     public AudioClip weaponChangeSound;
     public Light effectLight;
+    public GameObject blood;
     // 플레이어 컴포넌트
     ParticleSystem playerEffect;
     protected AudioSource playerSound;
@@ -384,6 +385,23 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         playerEffect.Play();
         playerSound.clip = shootSound;
         playerSound.Play();
+    }
+
+    protected void BloodEffect(RaycastHit _hit)
+    {
+        Debug.Log("qwers");
+        ParticleSystem _bld = GameManager.Instance.PopBlood();
+
+            if (_bld != null) 
+            {
+            
+                _bld.gameObject.SetActive(true);
+                _bld.transform.position = _hit.collider.ClosestPoint(_hit.point);
+                _bld.transform.forward = _hit.normal;
+
+                _bld.Play();
+            }
+        
     }
 
     public void PlayerReloadSound()

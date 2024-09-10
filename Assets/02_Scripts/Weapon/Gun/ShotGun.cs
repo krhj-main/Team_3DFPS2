@@ -205,6 +205,7 @@ public class ShotGun : MainWeapon
                     if (target != null)
                     {
                         target.Damaged(damage, hit.point);
+                        BloodEffect(hit);
                     }
                 }
             }
