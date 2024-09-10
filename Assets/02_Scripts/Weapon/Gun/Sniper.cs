@@ -202,4 +202,8 @@ public class Sniper : MainWeapon
         UIManager.Instance.snimperZoomUI.enabled = false;
         scope.SetActive(false);
     }
+    private void OnDestroy()
+    {
+        PlayerController.Instance.deadAction -= playerDead;
+    }
 }
