@@ -54,6 +54,7 @@ public class DeadPanelButton : MonoBehaviour
         Time.timeScale = 1;                     // 시간 복구
         deathCam.Play("Nothing");               // 카메라 복구
         deathCam.enabled = false;               // 카메라 애니메이션 끄기
+        GameManager.Instance.missionTime = 0;
         WeaponAmmuReset();
 
     }
