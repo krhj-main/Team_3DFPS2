@@ -102,6 +102,7 @@ public class LoadOut : MonoBehaviour
     {
         selectEquip = GetComponent<SelectEquip>();
         animIkPlayer = playerCharacter.GetComponent<AnimIKPlayer>();
+        ApplyThrowingCount();
     }
     #endregion
 
