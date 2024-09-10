@@ -719,6 +719,7 @@ MonoBehaviour:
   crosshair: {fileID: 1885624538}
   deadPanelObj: {fileID: 444201067}
   titleBtn: {fileID: 1885624537}
+  quitBnt: {fileID: 1114426175}
   sName: 0
 --- !u!1 &505304170
 GameObject:
@@ -1754,6 +1755,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085220863}
   m_CullTransparentMesh: 1
+--- !u!114 &1114426175 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2085583167567209009, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1135908504
 PrefabInstance:
   m_ObjectHideFlags: 0

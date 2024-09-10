@@ -73,6 +73,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("ESC 메뉴")]
     public Button titleBtn;
+    public Button quitBnt;
 
 
     public enum SceneName
@@ -89,6 +90,7 @@ public class UIManager : Singleton<UIManager>
     {
         PlayerController.Instance.deadAction += playerDead;
         titleBtn.onClick.AddListener( ()=> SceneTransition((int)SceneName.MainTitle));
+        quitBnt.onClick.AddListener(OnExitClick);
         
     }
 
