@@ -10,7 +10,8 @@ public class OptionSlider : MonoBehaviour
     [SerializeField] Slider contrast;
     [SerializeField] Slider volume;
     [SerializeField] Slider mouse;
-    ColorGrading ppv;
+    PostProcessVolume ppv;
+    ColorGrading cg;
     AudioSource audio;
 
     private void Start()
@@ -20,8 +21,9 @@ public class OptionSlider : MonoBehaviour
 
     private void OnEnable()
     {
-        ppv = FindObjectOfType<PostProcessVolume>().GetComponent<ColorGrading>();//GetComponent<PostProcessVolume>();
+        ppv = GameObject.Find("Post-process Volume").GetComponent<PostProcessVolume>();//GetComponent<PostProcessVolume>();
         audio = GameObject.Find("BGM").GetComponentInChildren<AudioSource>();
+        ppv.profile.TryGetSettings(out cg);
 
 
         volume.onValueChanged.RemoveAllListeners();
@@ -45,7 +47,7 @@ public class OptionSlider : MonoBehaviour
     }
     void ExposureChagne(float _exposure)
     {
-        ppv.postExposure.value = contrast.value;
+        cg.postExposure.value = contrast.value;
     }
     void MouseSensChange(float _sensitivity)
     {
