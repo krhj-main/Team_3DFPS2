@@ -537,7 +537,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         Quaternion targetRotation = Quaternion.LookRotation(_dirP);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
-        if (enemyState != EnemyState.Attack)
+        if (enemyState != EnemyState.Attack || enemyState != EnemyState.Blind)
         {
             chasePos = PlayerController.Instance.transform.position;
             agent.SetDestination(chasePos);
@@ -549,12 +549,13 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "사망"
     void Die()
     {
-        int _enemyCnt = GameManager.Instance.enemies.Count;
         // 진행 중인 피격 코루틴을 중지
         StopAllCoroutines();
 
         // 사망 애니메이션 재생
+        anim.SetBool("isFlashbang", false);
         anim.SetTrigger("doDead");
+
         // 캐릭터 컨트롤러 컴포넌트 비활성화
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거
