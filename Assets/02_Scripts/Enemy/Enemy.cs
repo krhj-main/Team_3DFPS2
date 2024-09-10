@@ -153,8 +153,18 @@ public class Enemy : MonoBehaviour, IDamageAble
         weapon.loadedAmmo = 99999;
         atkDis = weapon.bulletRange;
         weapon.fireRate = 1.5f;
-        atkDelay = weapon.fireRate;
+        atkDelay = weapon.fireRate * 0.5f;
         weapon.bulletSpread = enemySpread;
+
+        // 무기 종류에 따라 공격력 설정
+        if (gameObject.name.Contains("Shotgun"))
+        {
+            weapon.damage = 4;
+        }
+        else
+        {
+            weapon.damage = 27;
+        }
 
         hp = maxHp;
         originFindDis = findDis;
@@ -485,7 +495,6 @@ public class Enemy : MonoBehaviour, IDamageAble
                     if (gameObject.name.Contains("Shotgun"))
                     {
                         atkDelay = Random.Range(1.5f, 2f);
-                        Debug.Log(weapon.fireRate);
                         weapon.fireRate = atkDelay;
                     }
                     else
