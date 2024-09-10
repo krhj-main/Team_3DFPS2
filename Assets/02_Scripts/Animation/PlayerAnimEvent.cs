@@ -12,12 +12,13 @@ public class PlayerAnimEvent : MonoBehaviour
         GameManager.Instance.AggroEnemy(transform.position, _radius);
     }
 
-    public void PlayerWalkSound()
+    public void PlayerWalkSound(float _radius)
     {
         if (PlayerController.Instance.anim.GetFloat("Speed") >= 1f)
         {
             PlayerController.Instance.playerSound.clip = PlayerController.Instance.walkSound;
             PlayerController.Instance.playerSound.Play();
+            GameManager.Instance.AggroEnemyFoot(transform.position, _radius);
         }
     }
 

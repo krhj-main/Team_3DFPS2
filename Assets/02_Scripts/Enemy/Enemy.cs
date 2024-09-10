@@ -153,8 +153,18 @@ public class Enemy : MonoBehaviour, IDamageAble
         weapon.loadedAmmo = 99999;
         atkDis = weapon.bulletRange;
         weapon.fireRate = 1.5f;
-        atkDelay = weapon.fireRate;
+        atkDelay = weapon.fireRate * 0.5f;
         weapon.bulletSpread = enemySpread;
+
+        // 무기 종류에 따라 공격력 설정
+        if (gameObject.name.Contains("Shotgun"))
+        {
+            weapon.damage = 4;
+        }
+        else
+        {
+            weapon.damage = 27;
+        }
 
         hp = maxHp;
         originFindDis = findDis;
@@ -485,7 +495,6 @@ public class Enemy : MonoBehaviour, IDamageAble
                     if (gameObject.name.Contains("Shotgun"))
                     {
                         atkDelay = Random.Range(1.5f, 2f);
-                        Debug.Log(weapon.fireRate);
                         weapon.fireRate = atkDelay;
                     }
                     else
@@ -528,7 +537,7 @@ public class Enemy : MonoBehaviour, IDamageAble
         Quaternion targetRotation = Quaternion.LookRotation(_dirP);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
 
-        if (enemyState != EnemyState.Attack)
+        if (enemyState != EnemyState.Attack || enemyState != EnemyState.Blind)
         {
             chasePos = PlayerController.Instance.transform.position;
             agent.SetDestination(chasePos);
@@ -540,12 +549,13 @@ public class Enemy : MonoBehaviour, IDamageAble
     #region "사망"
     void Die()
     {
-        int _enemyCnt = GameManager.Instance.enemies.Count;
         // 진행 중인 피격 코루틴을 중지
         StopAllCoroutines();
 
         // 사망 애니메이션 재생
+        anim.SetBool("isFlashbang", false);
         anim.SetTrigger("doDead");
+
         // 캐릭터 컨트롤러 컴포넌트 비활성화
         cc.enabled = false;
         // enemy의 리스트에서 죽은 자신을 제거

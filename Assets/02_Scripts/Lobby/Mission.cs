@@ -15,6 +15,7 @@ public class Mission : MonoBehaviour
     public GameObject [] zoomInImage;
     // 미션UI 캔버스
     public GameObject missionCanvas;
+    public GameObject comingsoonImage;
 
     // 마우스 커서 조작
 
@@ -70,7 +71,20 @@ public class Mission : MonoBehaviour
     // 게임 시작 버튼 ( 직접 연결 해줌 )
     public void StartBtn()
     {
+        if(GameManager.Instance.selectSceneNum > 3)
+        {
+            StartCoroutine(SetactiveFalse());
+            return;
+        }
+
         SceneManager.LoadScene(1);
+    }
+
+    IEnumerator SetactiveFalse()
+    {
+        comingsoonImage.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        comingsoonImage.SetActive(false);
     }
 
     // 미션 이미지 켜주기

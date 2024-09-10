@@ -38,8 +38,11 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] TextMeshProUGUI weaponThrow_TXT;
     int weaponThrowCount;
     [SerializeField] Image weaponTactical;
+    [SerializeField] Image weaponTacticalKeyImage;
     [SerializeField] TextMeshProUGUI weaponTactical_TXT;
     int weaponTacticalCount;
+    [SerializeField] Sprite transparentPhoto;           // 버렸을때 투명이미지
+
 
     [Header("미션 정보")]
     [SerializeField] public GameObject missionViewer;
@@ -73,6 +76,7 @@ public class UIManager : Singleton<UIManager>
 
     [Header("ESC 메뉴")]
     public Button titleBtn;
+    public Button quitBnt;
 
 
     public enum SceneName
@@ -89,6 +93,7 @@ public class UIManager : Singleton<UIManager>
     {
         PlayerController.Instance.deadAction += playerDead;
         titleBtn.onClick.AddListener( ()=> SceneTransition((int)SceneName.MainTitle));
+        quitBnt.onClick.AddListener(OnExitClick);
         
     }
 
@@ -141,11 +146,20 @@ public class UIManager : Singleton<UIManager>
         //weaponTactical_TXT.text = string.Format("{0}", weaponTactical);
     }
 
+    // 스페셜웨폰 UI 업데이트
     public void ChangeSpecialWeaponUIUpdate(Sprite _specialWeaponImage)
     {
         weaponTactical.sprite = _specialWeaponImage;
+        weaponTacticalKeyImage.enabled = true;
     }
 
+    // 무기 버렸을때 UI 업데이트
+    public void DropUpdateUI()
+    {
+        weaponMain1.sprite = transparentPhoto;
+        playerAmmo_TXT.text = "";
+        playerMaxAmmo_TXT.text = "";
+    }
 
     // 미션 정보에서의 적 수, 시간 등에 관한 UI업데이트 임시
     public void MissionInfoUIUpdate()

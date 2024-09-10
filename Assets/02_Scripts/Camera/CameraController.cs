@@ -32,7 +32,7 @@ public class CameraController : MonoBehaviour
     float lastRecoilTime;
     float recoilRecoveryDelay = 0.2f;
     private Vector2 mouseDelta;
-    private float mouseSensitivity = 2f;
+    public static float mouseSensitivity = 2f;
     Quaternion rot;
     Quaternion tilt;
     Vector3 recoilAmount;

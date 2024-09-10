@@ -400,7 +400,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         loadedAmmo++;
         remainAmmo--;
         canShoot = true;
-
+        isReloading = false;
     }
 
     public void ReloadCheck()

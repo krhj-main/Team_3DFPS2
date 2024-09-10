@@ -117036,21 +117036,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: PlayerAggroEnemy
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 3
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
     functionName: PlayerWalkSound
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.26666668
-    functionName: PlayerAggroEnemy
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 3
@@ -117060,6 +117046,6 @@ AnimationClip:
     functionName: PlayerWalkSound
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
+    floatParameter: 3
     intParameter: 0
     messageOptions: 0
