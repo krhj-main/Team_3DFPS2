@@ -38,6 +38,7 @@ public class GameManager : Singleton<GameManager>
     public List<Enemy> enemies = new List<Enemy>();
     [HideInInspector]
     public List<IDamageAble> attackables = new List<IDamageAble>();
+    public List<ParticleSystem> bloodList = new List<ParticleSystem>();
     [HideInInspector]
     public float maxEnemy;
     [HideInInspector]
@@ -76,6 +77,17 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public ParticleSystem PopBlood() 
+    {
+        ParticleSystem particle=null;
+        if (bloodList.Count > 0) {
+            particle = bloodList[0];
+            bloodList.RemoveAt(0);
+        }
+        
+       
+        return particle;
+    }
     // 씬이 로드될 때 존재하는 모든 Enemy를 List에 담는 함수 ( ScnenManager 등에서 호출 )
     public void AddEnemyOnNowScene()
     {
