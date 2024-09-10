@@ -670,7 +670,9 @@ MonoBehaviour:
   weaponThrow: {fileID: 1611524620}
   weaponThrow_TXT: {fileID: 418742487}
   weaponTactical: {fileID: 462365169}
+  weaponTacticalKeyImage: {fileID: 1857525707}
   weaponTactical_TXT: {fileID: 1883634923}
+  transparentPhoto: {fileID: 21300000, guid: 160d015527750d744a93087d4f53526b, type: 3}
   missionViewer: {fileID: 762825774}
   missionTitle: {fileID: 513870892}
   missionDetail: {fileID: 513870891}
@@ -1690,7 +1692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1085220864
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6210,6 +6212,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d3c877aaaaf5d40ad206958a1dee80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1857525707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4098108107589950025, guid: 055d3f070e832e343955fc595e70cf36,
+    type: 3}
+  m_PrefabInstance: {fileID: 1885624533}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1883634923 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3093526620249778692, guid: 055d3f070e832e343955fc595e70cf36,
@@ -6381,6 +6395,23 @@ PrefabInstance:
       propertyPath: m_text
       value: "\uBC1D\uAE30"
       objectReference: {fileID: 0}
+    - target: {fileID: 776377678305755725, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 160d015527750d744a93087d4f53526b,
+        type: 3}
+    - target: {fileID: 988362574365631771, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 160d015527750d744a93087d4f53526b,
+        type: 3}
+    - target: {fileID: 1732037754389253478, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1745040632359349398, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_Pivot.x
@@ -6486,6 +6517,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2752170849915691944, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 160d015527750d744a93087d4f53526b,
+        type: 3}
     - target: {fileID: 3245245718739435108, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: cam
@@ -6496,6 +6533,11 @@ PrefabInstance:
       propertyPath: character
       value: 
       objectReference: {fileID: 1135908505}
+    - target: {fileID: 4098108107589950025, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5439801675158452290, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -6510,6 +6552,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546890925639369150, guid: 055d3f070e832e343955fc595e70cf36,
+        type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5902423536592165547, guid: 055d3f070e832e343955fc595e70cf36,
         type: 3}

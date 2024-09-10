@@ -96,6 +96,7 @@ public class EquipmentsSwap : MonoBehaviour
             {
                 DropWeapon(equip, Index);
                 Swap(-2);
+                UIManager.Instance.DropUpdateUI();
             }
         }
 
@@ -167,7 +168,6 @@ public class EquipmentsSwap : MonoBehaviour
         if (_setIndex == -2)
         {
             equip = null;
-
         }
         else
         {
