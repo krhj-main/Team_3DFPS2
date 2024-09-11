@@ -37,6 +37,11 @@ public class PlayerAnimEvent : MonoBehaviour
     {
         weapon.ReloadCheck();
     }
+
+    public void PlayerReloadingFalse()
+    {
+        weapon.ReloadingFalse();
+    }
     #endregion
 
     #region "무기 재장전 로직"

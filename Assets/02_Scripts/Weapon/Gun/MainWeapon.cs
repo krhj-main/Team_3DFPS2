@@ -418,7 +418,7 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         loadedAmmo++;
         remainAmmo--;
         canShoot = true;
-        isReloading = false;
+        //isReloading = false;
     }
 
     public void ReloadCheck()
@@ -431,6 +431,11 @@ public class MainWeapon : MonoBehaviour, Interactable, IEquipMent
         {
             anim.SetTrigger("doReload");
         }
+    }
+
+    public void ReloadingFalse()
+    {
+        isReloading = false;
     }
 
     #endregion

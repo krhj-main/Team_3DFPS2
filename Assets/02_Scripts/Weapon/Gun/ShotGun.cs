@@ -210,6 +210,7 @@ public class ShotGun : MainWeapon
                 }
             }
         }
+
     }
     #endregion
 
