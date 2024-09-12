@@ -73,8 +73,6 @@ public class ExitWeaopnEquip : MonoBehaviour
             yield return null;
         }
 
-        
-
         fadeOutCanvas.gameObject.SetActive(false);                  // 페이드아웃 패널 꺼줌
     }
 

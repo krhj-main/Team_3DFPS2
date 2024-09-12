@@ -92,7 +92,6 @@ public class LoadOut : MonoBehaviour
     public GameObject specialWeaponPanel;
     #endregion
 
-
     #region Awake
     SelectEquip selectEquip;
     public GameObject playerCharacter;
