@@ -114,17 +114,15 @@ public class CameraController : MonoBehaviour
         // 무기가 있으면 해당 무기의 반동 회복 속도를 사용, 없으면 기본값 5 사용
         float recoilRecoverySpeed = (mainWeapon != null&& mainWeapon.type==EquipType.Weapon) ? ((MainWeapon)mainWeapon).recoilRecoverySpeed : 5f;
 
-        // 반동을 서서히 0으로 줄임
+        // 반동방향에 따라 다르게 작동 변화량을 저장
         if (Vector3.Distance(recoilRotation, targetRotation) < 0.5f) {
-           /* if (Time.time - lastRecoilTime > recoilRecoveryDelay)
-            {
-                
-            }*/
+        //중앙으로 점점 돌아옴
             recoilRotation = Vector3.Lerp(recoilRotation, Vector3.zero, Time.deltaTime * recoilRecoverySpeed);
             recoilAmount += (Vector3.zero - recoilRotation) * Time.deltaTime * recoilRecoverySpeed;
             targetRotation = recoilRotation;
         }
         else {
+        //화면 윗부분으로 이동
             recoilRotation = Vector3.Lerp(recoilRotation, targetRotation, Time.deltaTime * recoilRecoverySpeed*1.5f);
             recoilAmount += (targetRotation - recoilRotation) * Time.deltaTime * recoilRecoverySpeed * 1.5f;
         }
@@ -133,21 +131,11 @@ public class CameraController : MonoBehaviour
     void ApplyFinalRotation()
     {
         // 현재 회전값에서 목표 회전값으로 부드럽게 전환 ( 기울기 )
-        //Quaternion tiltRotation = Quaternion.Slerp(tilt, targetTiltRotation, Time.deltaTime * smoothSpeed);
         tilt = Quaternion.Slerp(tilt, targetTiltRotation, Time.deltaTime * smoothSpeed);
         // 반동 회전값을 Quaternion으로 변환
-        // 원래 회전값, 기울기 회전값, 반동 회전값을 모두 합산
-        //arm.localRotation = Quaternion.Euler(new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, tilt.eulerAngles.z)+ recoilAmount);
+        // 원래 회전값, 기울기 회전값, 반동 회전 변화량값을 모두 합산
         arm.localRotation = Quaternion.Euler(new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, tilt.eulerAngles.z) + recoilAmount);
-        //waist.localRotation = Quaternion.Euler(0, 0, tilt.eulerAngles.z);
         recoilAmount = Vector3.zero;
-        if (arm.localRotation.eulerAngles.x > 0)
-        {
-           
-            
-            //recoilRotation = Vector3.zero;
-        }
-
     }
 
     public void ApplyRecoil(float recoilX, float recoilY)
@@ -155,8 +143,6 @@ public class CameraController : MonoBehaviour
         Vector3 recoil= new Vector3(-recoilY, Random.Range(-recoilX, recoilX), 0);
         recoil.x = Mathf.Clamp(recoil.x, -100f, 100f);
         // 새로운 반동값을 현재 반동에 추가
-        //recoilRotation += recoil;
-        //recoilAmount += recoil;
         targetRotation = recoilRotation + recoil;
         targetRotation.x = Mathf.Clamp(targetRotation.x, -40, 360);
         
